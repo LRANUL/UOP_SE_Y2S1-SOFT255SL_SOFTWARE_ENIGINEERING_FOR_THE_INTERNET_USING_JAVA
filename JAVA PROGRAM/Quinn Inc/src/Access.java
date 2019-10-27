@@ -177,7 +177,7 @@ public class Access extends javax.swing.JFrame {
        {
            Teller t1 = new Teller();
            t1.setVisible(true);
-           //closes the login form prevent unnessary tab creation
+           //closes the login form prevent unnecessary tab creation
            this.setVisible(false);
        }
        else if (btnmanager.isSelected())
