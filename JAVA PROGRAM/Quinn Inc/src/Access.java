@@ -164,6 +164,9 @@ public class Access extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        //Opens the Relevant Frame for Authorised User
+       
+//      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019
+
        if(btnmanager.isSelected()==false && btnteller.isSelected()==false) {
            JOptionPane.showMessageDialog(null, 
                               "Please Select your role position to continue.", 
@@ -174,6 +177,8 @@ public class Access extends javax.swing.JFrame {
        {
            Teller t1 = new Teller();
            t1.setVisible(true);
+           //closes the login form prevent unnessary tab creation
+           this.setVisible(false);
        }
        else if (btnmanager.isSelected())
        {
