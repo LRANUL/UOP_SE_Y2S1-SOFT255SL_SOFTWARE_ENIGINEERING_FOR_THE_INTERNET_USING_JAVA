@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+ import javax.swing.JOptionPane;
 /**
  *
  * @author ranul
@@ -26,7 +26,7 @@ public class Access extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        AccessPanel = new javax.swing.JPanel();
         UName = new javax.swing.JLabel();
         Password = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -34,13 +34,16 @@ public class Access extends javax.swing.JFrame {
         Trademark = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnteller = new javax.swing.JRadioButton();
+        btnmanager = new javax.swing.JRadioButton();
+        Selection = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 123, 146));
-        jPanel1.setMaximumSize(new java.awt.Dimension(1200, 800));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1200, 800));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1200, 800));
+        AccessPanel.setBackground(new java.awt.Color(0, 123, 146));
+        AccessPanel.setMaximumSize(new java.awt.Dimension(1200, 800));
+        AccessPanel.setMinimumSize(new java.awt.Dimension(1200, 800));
+        AccessPanel.setPreferredSize(new java.awt.Dimension(1200, 800));
 
         UName.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
         UName.setForeground(new java.awt.Color(255, 255, 255));
@@ -70,48 +73,74 @@ public class Access extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("LOGIN");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QUINN_LOGO.gif"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/QUINN_LOGO.gif"))); // NOI18N
         jLabel2.setText("jLabel2");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnteller.setText("Teller");
+
+        btnmanager.setText("Manager");
+
+        Selection.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
+        Selection.setForeground(new java.awt.Color(255, 255, 255));
+        Selection.setText("Select:");
+
+        javax.swing.GroupLayout AccessPanelLayout = new javax.swing.GroupLayout(AccessPanel);
+        AccessPanel.setLayout(AccessPanelLayout);
+        AccessPanelLayout.setHorizontalGroup(
+            AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Trademark, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(AccessPanelLayout.createSequentialGroup()
+                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AccessPanelLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(AccessPanelLayout.createSequentialGroup()
                         .addGap(74, 74, 74)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(UName)
-                            .addComponent(Password))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))))
+                        .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Selection)
+                            .addGroup(AccessPanelLayout.createSequentialGroup()
+                                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(UName)
+                                    .addComponent(Password))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(AccessPanelLayout.createSequentialGroup()
+                                        .addComponent(btnteller)
+                                        .addGap(41, 41, 41)
+                                        .addComponent(btnmanager))
+                                    .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField1)
+                                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        AccessPanelLayout.setVerticalGroup(
+            AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AccessPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(97, 97, 97)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UName)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Password))
-                .addGap(58, 58, 58)
-                .addComponent(jButton1)
+                .addGap(33, 33, 33)
+                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnteller)
+                    .addComponent(btnmanager)
+                    .addComponent(Selection))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(36, 36, 36)
                 .addComponent(Trademark))
         );
 
@@ -119,11 +148,11 @@ public class Access extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, Short.MAX_VALUE)
+            .addComponent(AccessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 578, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, Short.MAX_VALUE)
+            .addComponent(AccessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 497, Short.MAX_VALUE)
         );
 
         pack();
@@ -132,6 +161,26 @@ public class Access extends javax.swing.JFrame {
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       //Opens the Relevant Frame for Authorised User
+       if(btnmanager.isSelected()==false && btnteller.isSelected()==false) {
+           JOptionPane.showMessageDialog(null, 
+                              "Please Select your role position to continue.", 
+                              "WARNING !", 
+                              JOptionPane.WARNING_MESSAGE);
+       }
+       else if (btnteller.isSelected())
+       {
+           Teller t1 = new Teller();
+           t1.setVisible(true);
+       }
+       else if (btnmanager.isSelected())
+       {
+           //
+       }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,12 +218,15 @@ public class Access extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AccessPanel;
     private javax.swing.JLabel Password;
+    private javax.swing.JLabel Selection;
     private javax.swing.JLabel Trademark;
     private javax.swing.JLabel UName;
+    private javax.swing.JRadioButton btnmanager;
+    private javax.swing.JRadioButton btnteller;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
