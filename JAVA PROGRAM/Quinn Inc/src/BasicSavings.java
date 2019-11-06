@@ -8,6 +8,6 @@
  *
  * @author ranul
  */
-class RunTimeException {
+public class BasicSavings extends Account {
     
 }

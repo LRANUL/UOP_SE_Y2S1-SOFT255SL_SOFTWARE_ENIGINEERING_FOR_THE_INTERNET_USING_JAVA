@@ -2,6 +2,7 @@
 import java.awt.Color;
 import java.text.SimpleDateFormat;  
 import java.util.Date; 
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,8 +14,10 @@ import java.util.Date;
  *
  * @author ranul
  */
-public class Teller extends javax.swing.JFrame {
-
+public class Teller extends javax.swing.JFrame{
+    static int basic = 250000000;
+    static int bonus = 450000000;
+    static int premier = 750000000;
     /**
      * Creates new form Teller
      */
@@ -100,10 +103,10 @@ public class Teller extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        listOfAccountTypes = new javax.swing.JComboBox<>();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtGeneratedAccountNo = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         accNoGen = new javax.swing.JButton();
         accNoGen1 = new javax.swing.JButton();
@@ -626,8 +629,8 @@ public class Teller extends javax.swing.JFrame {
 
         jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ACCOUNT TYPE--", "NORMAL SAVINGS", "BONUS SAVINGS", "PRIMIER SAVINGS" }));
+        listOfAccountTypes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        listOfAccountTypes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ACCOUNT TYPE--", "NORMAL SAVINGS", "BONUS SAVINGS", "PRIMIER SAVINGS" }));
 
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -635,10 +638,10 @@ public class Teller extends javax.swing.JFrame {
         jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField4.setText("0.00");
 
-        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        txtGeneratedAccountNo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtGeneratedAccountNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                txtGeneratedAccountNoActionPerformed(evt);
             }
         });
 
@@ -683,13 +686,13 @@ public class Teller extends javax.swing.JFrame {
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(listOfAccountTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel17Layout.createSequentialGroup()
                                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(txtGeneratedAccountNo, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGap(31, 31, 31)
                                         .addComponent(accNoGen))))
                             .addGroup(jPanel17Layout.createSequentialGroup()
@@ -727,7 +730,7 @@ public class Teller extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(listOfAccountTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -753,7 +756,7 @@ public class Teller extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGeneratedAccountNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(accNoGen))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -792,17 +795,18 @@ public class Teller extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(185, 185, 185)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1062, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1)
+                        .addGap(185, 185, 185)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1062, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -866,12 +870,40 @@ public class Teller extends javax.swing.JFrame {
 
     private void accNoGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNoGenActionPerformed
         // Token Generator to Generate New Account Numbers
-        
+        String AccountType = (String) listOfAccountTypes.getSelectedItem();
+         if(AccountType == "--SELECT ACCOUNT TYPE--")
+        {
+            JOptionPane.showMessageDialog(null, 
+                              "Please An Account Type !", 
+                              "Account Generation Halted!", 
+                              JOptionPane.WARNING_MESSAGE);
+        }
+        else if(AccountType == "NORMAL SAVINGS")
+        {
+            int generatedAccount = basic;
+            basic += 1;
+
+            txtGeneratedAccountNo.setText(String.valueOf(generatedAccount));
+        }
+        else if(AccountType == "BONUS SAVINGS")
+        {
+            int generatedAccount = bonus;
+            bonus += 1;
+
+            txtGeneratedAccountNo.setText(String.valueOf(generatedAccount));
+        }
+        else if(AccountType == "PRIMIER SAVINGS")
+        {
+            int generatedAccount = premier;
+            premier += 1;
+
+            txtGeneratedAccountNo.setText(String.valueOf(generatedAccount));
+        }
     }//GEN-LAST:event_accNoGenActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtGeneratedAccountNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGeneratedAccountNoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtGeneratedAccountNoActionPerformed
 
     private void holderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holderActionPerformed
         // TODO add your handling code here:
@@ -1011,7 +1043,6 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JTextField holder;
     private javax.swing.JTextField holder1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1066,10 +1097,11 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JComboBox<String> listOfAccountTypes;
     private javax.swing.JMenuItem logout;
+    private javax.swing.JTextField txtGeneratedAccountNo;
     private javax.swing.JTextField withdraw;
     private javax.swing.JTextField withdraw1;
     // End of variables declaration//GEN-END:variables
