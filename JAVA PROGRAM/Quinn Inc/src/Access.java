@@ -5,7 +5,6 @@
  */
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-
 /**
  *
  * @author ranul
@@ -269,17 +268,7 @@ public class Access extends javax.swing.JFrame {
        }
        else if(selected.toString().equals("Bank Manager"))
        {
-           Manager m1 = new Manager();
-           m1.setVisible(true);
-           //closes the login form prevent unnecessary tab creation
-           this.setVisible(false);
-       }
-       else if(selected.toString().equals("Bank Data Administrator"))
-       {
-           AdminPanel a1 = new AdminPanel();
-           a1.setVisible(true);
-           //closes the login form prevent unnecessary tab creation
-           this.setVisible(false);
+           //
        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
