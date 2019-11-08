@@ -41,7 +41,7 @@ public class Manager extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        AccountINFO = new javax.swing.JTable();
         jFileChooser1 = new javax.swing.JFileChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -57,7 +57,7 @@ public class Manager extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        AccountINFO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -99,7 +99,7 @@ public class Manager extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(AccountINFO);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -233,6 +233,7 @@ public class Manager extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable AccountINFO;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
@@ -245,6 +246,5 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }

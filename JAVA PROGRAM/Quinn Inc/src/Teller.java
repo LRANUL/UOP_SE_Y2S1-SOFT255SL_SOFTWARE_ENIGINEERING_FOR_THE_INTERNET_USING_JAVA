@@ -49,19 +49,19 @@ public class Teller extends javax.swing.JFrame{
         SubmitSA = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        accno3 = new javax.swing.JTextField();
-        holder1 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        balance1 = new javax.swing.JTextField();
-        withdraw1 = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        dAccount = new javax.swing.JLabel();
+        DAccno = new javax.swing.JTextField();
+        holderName = new javax.swing.JTextField();
+        dName = new javax.swing.JLabel();
+        dBalance = new javax.swing.JLabel();
+        currentBalance = new javax.swing.JTextField();
+        DEPAmount = new javax.swing.JTextField();
+        dAmmount = new javax.swing.JLabel();
+        dType = new javax.swing.JLabel();
         ACCType = new javax.swing.JTextField();
         DepositBonus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        bonusINFO = new javax.swing.JTextArea();
         jLabel21 = new javax.swing.JLabel();
         FinalDeposit = new javax.swing.JTextField();
         jSplitPane5 = new javax.swing.JSplitPane();
@@ -70,47 +70,47 @@ public class Teller extends javax.swing.JFrame{
         CheckSA1 = new javax.swing.JButton();
         SubmitSA1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        holder = new javax.swing.JTextField();
-        balance = new javax.swing.JTextField();
-        accno2 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        withdraw = new javax.swing.JTextField();
+        wACCT = new javax.swing.JLabel();
+        wName = new javax.swing.JLabel();
+        wBalance = new javax.swing.JLabel();
+        WHolder = new javax.swing.JTextField();
+        DCurrentBalance = new javax.swing.JTextField();
+        WAccno = new javax.swing.JTextField();
+        WDRL = new javax.swing.JLabel();
+        Dwithdraw = new javax.swing.JTextField();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        interestINFO = new javax.swing.JTextArea();
         CheckSA3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel22 = new javax.swing.JLabel();
+        processInterest = new javax.swing.JButton();
+        day = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jSplitPane4 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
         Generate = new javax.swing.JButton();
-        SubmitSA4 = new javax.swing.JButton();
+        RSubmit = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        ACCTType = new javax.swing.JLabel();
+        FName = new javax.swing.JLabel();
+        ACCTNumber = new javax.swing.JLabel();
+        PhoneNum = new javax.swing.JLabel();
+        IDeposit = new javax.swing.JLabel();
+        Mail = new javax.swing.JLabel();
+        NewFName = new javax.swing.JTextField();
+        LName = new javax.swing.JLabel();
+        NewLName = new javax.swing.JTextField();
         listOfAccountTypes = new javax.swing.JComboBox<>();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        NewMail = new javax.swing.JTextField();
+        IDepositAMT = new javax.swing.JTextField();
         txtGeneratedAccountNo = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        NewPhoneNum = new javax.swing.JTextField();
         accNoGen = new javax.swing.JButton();
         accNoGen1 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
+        PNumber = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -187,51 +187,51 @@ public class Teller extends javax.swing.JFrame{
 
         jSplitPane1.setLeftComponent(jPanel4);
 
-        jLabel16.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel16.setText("Account No:");
+        dAccount.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dAccount.setText("Account No:");
 
-        accno3.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        accno3.addActionListener(new java.awt.event.ActionListener() {
+        DAccno.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        DAccno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accno3ActionPerformed(evt);
+                DAccnoActionPerformed(evt);
             }
         });
 
-        holder1.setEditable(false);
-        holder1.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        holder1.addActionListener(new java.awt.event.ActionListener() {
+        holderName.setEditable(false);
+        holderName.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        holderName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                holder1ActionPerformed(evt);
+                holderNameActionPerformed(evt);
             }
         });
 
-        jLabel17.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel17.setText("Holder Name:");
+        dName.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dName.setText("Holder Name:");
 
-        jLabel18.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel18.setText("Current Balance: ");
+        dBalance.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dBalance.setText("Current Balance: ");
 
-        balance1.setEditable(false);
-        balance1.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        balance1.addActionListener(new java.awt.event.ActionListener() {
+        currentBalance.setEditable(false);
+        currentBalance.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        currentBalance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                balance1ActionPerformed(evt);
+                currentBalanceActionPerformed(evt);
             }
         });
 
-        withdraw1.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        withdraw1.setText("0.00");
-        withdraw1.addActionListener(new java.awt.event.ActionListener() {
+        DEPAmount.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        DEPAmount.setText("0.00");
+        DEPAmount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                withdraw1ActionPerformed(evt);
+                DEPAmountActionPerformed(evt);
             }
         });
 
-        jLabel19.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel19.setText("Deposit Amount:");
+        dAmmount.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dAmmount.setText("Deposit Amount:");
 
-        jLabel20.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel20.setText("Account Type");
+        dType.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dType.setText("Account Type");
 
         ACCType.setEditable(false);
         ACCType.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
@@ -248,11 +248,11 @@ public class Teller extends javax.swing.JFrame{
             }
         });
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("QUINN BANK DAILY DEPOSIT BONUS - DECEMBER / APRIL (SESONAL))\n\nNormal Savings : 1.25%\nBonus Savings : 3%\nPremier Savings : 7%");
-        jScrollPane1.setViewportView(jTextArea1);
+        bonusINFO.setEditable(false);
+        bonusINFO.setColumns(20);
+        bonusINFO.setRows(5);
+        bonusINFO.setText("QUINN BANK DAILY DEPOSIT BONUS - DECEMBER / APRIL (SESONAL))\n\nNormal Savings : 1.25%\nBonus Savings : 3%\nPremier Savings : 7%");
+        jScrollPane1.setViewportView(bonusINFO);
 
         jLabel21.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
         jLabel21.setText("Final Total:");
@@ -282,22 +282,22 @@ public class Teller extends javax.swing.JFrame{
                     .addGroup(jPanel18Layout.createSequentialGroup()
                         .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel18Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
+                                .addComponent(dAccount)
                                 .addGap(33, 33, 33)
-                                .addComponent(accno3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(DAccno, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel18Layout.createSequentialGroup()
                                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jLabel20)
+                                    .addComponent(dName)
+                                    .addComponent(dType)
                                     .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel19)
-                                        .addComponent(jLabel18)))
+                                        .addComponent(dAmmount)
+                                        .addComponent(dBalance)))
                                 .addGap(4, 4, 4)
                                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(ACCType, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(holder1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(balance1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(withdraw1)))
+                                    .addComponent(holderName, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                    .addComponent(currentBalance, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                                    .addComponent(DEPAmount)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(242, Short.MAX_VALUE))))
         );
@@ -306,24 +306,24 @@ public class Teller extends javax.swing.JFrame{
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(accno3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dAccount)
+                    .addComponent(DAccno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(holder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dName)
+                    .addComponent(holderName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(balance1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dBalance)
+                    .addComponent(currentBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
+                    .addComponent(dType)
                     .addComponent(ACCType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(withdraw1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dAmmount)
+                    .addComponent(DEPAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -382,46 +382,46 @@ public class Teller extends javax.swing.JFrame{
 
         jSplitPane5.setLeftComponent(jPanel2);
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel2.setText("Account No:");
+        wACCT.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        wACCT.setText("Account No:");
 
-        jLabel13.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel13.setText("Holder Name:");
+        wName.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        wName.setText("Holder Name:");
 
-        jLabel14.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel14.setText("Current Balance: ");
+        wBalance.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        wBalance.setText("Current Balance: ");
 
-        holder.setEditable(false);
-        holder.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        holder.addActionListener(new java.awt.event.ActionListener() {
+        WHolder.setEditable(false);
+        WHolder.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        WHolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                holderActionPerformed(evt);
+                WHolderActionPerformed(evt);
             }
         });
 
-        balance.setEditable(false);
-        balance.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        balance.addActionListener(new java.awt.event.ActionListener() {
+        DCurrentBalance.setEditable(false);
+        DCurrentBalance.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        DCurrentBalance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                balanceActionPerformed(evt);
+                DCurrentBalanceActionPerformed(evt);
             }
         });
 
-        accno2.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        accno2.addActionListener(new java.awt.event.ActionListener() {
+        WAccno.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        WAccno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accno2ActionPerformed(evt);
+                WAccnoActionPerformed(evt);
             }
         });
 
-        jLabel15.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        jLabel15.setText("Withdraw Amount:");
+        WDRL.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        WDRL.setText("Withdraw Amount:");
 
-        withdraw.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
-        withdraw.setText("0.00");
-        withdraw.addActionListener(new java.awt.event.ActionListener() {
+        Dwithdraw.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        Dwithdraw.setText("0.00");
+        Dwithdraw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                withdrawActionPerformed(evt);
+                DwithdrawActionPerformed(evt);
             }
         });
 
@@ -436,22 +436,22 @@ public class Teller extends javax.swing.JFrame{
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(71, 71, 71)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel13))
+                                    .addComponent(wACCT)
+                                    .addComponent(wName))
                                 .addGap(24, 24, 24))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jLabel14)
+                                .addComponent(wBalance)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(accno2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(holder, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(WAccno, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(WHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DCurrentBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addComponent(jLabel15)
+                        .addComponent(WDRL)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(withdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Dwithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(637, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -459,20 +459,20 @@ public class Teller extends javax.swing.JFrame{
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(accno2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(wACCT)
+                    .addComponent(WAccno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(holder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(wName)
+                    .addComponent(WHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(balance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(wBalance)
+                    .addComponent(DCurrentBalance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(61, 61, 61)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(withdraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(WDRL)
+                    .addComponent(Dwithdraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(277, Short.MAX_VALUE))
         );
 
@@ -484,28 +484,28 @@ public class Teller extends javax.swing.JFrame{
 
         jTabbedPane4.setBackground(new java.awt.Color(255, 204, 255));
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setFont(new java.awt.Font("MS Gothic", 1, 18)); // NOI18N
-        jTextArea2.setRows(5);
-        jTextArea2.setText("BUILDING ECONOMY TOGETHER, EMPOWERING LIVES - QUINN BANK (MANUAL INTERST PROCESSING SYSTEM)\n\n\nDate: 22th every month (Double Interst on December Season)\n\n*Finance department verifies all interests and finals them by 28th.");
-        jScrollPane2.setViewportView(jTextArea2);
+        interestINFO.setEditable(false);
+        interestINFO.setColumns(20);
+        interestINFO.setFont(new java.awt.Font("MS Gothic", 1, 18)); // NOI18N
+        interestINFO.setRows(5);
+        interestINFO.setText("BUILDING ECONOMY TOGETHER, EMPOWERING LIVES - QUINN BANK (MANUAL INTERST PROCESSING SYSTEM)\n\n\nDate: 22th every month (Double Interst on December Season)\n\n*Finance department verifies all interests and finals them by 28th.");
+        jScrollPane2.setViewportView(interestINFO);
 
         CheckSA3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         CheckSA3.setText("FETCH ALL ACCOUNTS");
 
-        jButton1.setBackground(java.awt.Color.orange);
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jButton1.setForeground(java.awt.Color.red);
-        jButton1.setText("PROCESS INTEREST");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        processInterest.setBackground(java.awt.Color.orange);
+        processInterest.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        processInterest.setForeground(java.awt.Color.red);
+        processInterest.setText("PROCESS INTEREST");
+        processInterest.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
+                processInterestMousePressed(evt);
             }
         });
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel22.setText("Today:");
+        day.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        day.setText("Today:");
 
         date.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         date.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -522,13 +522,13 @@ public class Teller extends javax.swing.JFrame{
                 .addGap(45, 45, 45)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel22)
+                        .addComponent(day)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(processInterest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
                             .addComponent(CheckSA3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(45, 45, 45))))
@@ -538,14 +538,14 @@ public class Teller extends javax.swing.JFrame{
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel22)
+                    .addComponent(day)
                     .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CheckSA3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(processInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(127, Short.MAX_VALUE))
         );
 
@@ -558,22 +558,22 @@ public class Teller extends javax.swing.JFrame{
         Generate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         Generate.setText("Generate");
 
-        SubmitSA4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        SubmitSA4.setText("Submit");
+        RSubmit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        RSubmit.setText("Submit");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Generate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(SubmitSA4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(RSubmit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(Generate, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 401, Short.MAX_VALUE)
-                .addComponent(SubmitSA4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(RSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane4.setLeftComponent(jPanel8);
@@ -599,44 +599,44 @@ public class Teller extends javax.swing.JFrame{
 
         jPanel17.setBackground(new java.awt.Color(102, 102, 0));
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel5.setText("Account Type");
+        ACCTType.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        ACCTType.setText("Account Type");
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel6.setText("First Name");
+        FName.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        FName.setText("First Name");
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel7.setText("Account Number");
+        ACCTNumber.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        ACCTNumber.setText("Account Number");
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel8.setText("Phone                    +44");
+        PhoneNum.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        PhoneNum.setText("Phone                    +44");
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel9.setText("Initial Deposit (£100)");
+        IDeposit.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        IDeposit.setText("Initial Deposit (£100)");
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel10.setText("Email");
+        Mail.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Mail.setText("Email");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        NewFName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewFName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                NewFNameActionPerformed(evt);
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel11.setText("Last Name");
+        LName.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        LName.setText("Last Name");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewLName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         listOfAccountTypes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         listOfAccountTypes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ACCOUNT TYPE--", "NORMAL SAVINGS", "BONUS SAVINGS", "PRIMIER SAVINGS" }));
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewMail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField4.setText("0.00");
+        IDepositAMT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        IDepositAMT.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        IDepositAMT.setText("0.00");
 
         txtGeneratedAccountNo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtGeneratedAccountNo.addActionListener(new java.awt.event.ActionListener() {
@@ -645,7 +645,7 @@ public class Teller extends javax.swing.JFrame{
             }
         });
 
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewPhoneNum.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         accNoGen.setBackground(new java.awt.Color(51, 51, 51));
         accNoGen.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -662,8 +662,8 @@ public class Teller extends javax.swing.JFrame{
         accNoGen1.setForeground(new java.awt.Color(255, 255, 255));
         accNoGen1.setText("Create Account");
 
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel12.setText("Passport Number / ID Number (Foreign Nationals)");
+        PNumber.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        PNumber.setText("Passport Number / ID Number (Foreign Nationals)");
 
         jTextField7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -679,36 +679,36 @@ public class Teller extends javax.swing.JFrame{
                             .addGroup(jPanel17Layout.createSequentialGroup()
                                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(ACCTType, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                        .addComponent(Mail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(PhoneNum, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(IDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ACCTNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(listOfAccountTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel17Layout.createSequentialGroup()
                                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                                            .addComponent(NewMail, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(NewPhoneNum, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(IDepositAMT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                                             .addComponent(txtGeneratedAccountNo, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addGap(31, 31, 31)
                                         .addComponent(accNoGen))))
                             .addGroup(jPanel17Layout.createSequentialGroup()
                                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel6))
+                                    .addComponent(LName)
+                                    .addComponent(FName))
                                 .addGap(106, 106, 106)
                                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField2)
+                                    .addComponent(NewLName)
                                     .addGroup(jPanel17Layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(NewFName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                         .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                        .addComponent(PNumber)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -720,33 +720,33 @@ public class Teller extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel17Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(FName)
                         .addGap(20, 20, 20)
-                        .addComponent(jLabel11))
+                        .addComponent(LName))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(NewFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(NewLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(ACCTType)
                     .addComponent(listOfAccountTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(PNumber))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Mail)
+                    .addComponent(NewMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PhoneNum)
+                    .addComponent(NewPhoneNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IDeposit)
+                    .addComponent(IDepositAMT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel17Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
@@ -755,7 +755,7 @@ public class Teller extends javax.swing.JFrame{
                     .addGroup(jPanel17Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
+                            .addComponent(ACCTNumber)
                             .addComponent(txtGeneratedAccountNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(accNoGen))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -864,9 +864,9 @@ public class Teller extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void NewFNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewFNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_NewFNameActionPerformed
 
     private void accNoGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNoGenActionPerformed
         // Token Generator to Generate New Account Numbers
@@ -905,37 +905,37 @@ public class Teller extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_txtGeneratedAccountNoActionPerformed
 
-    private void holderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holderActionPerformed
+    private void WHolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WHolderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_holderActionPerformed
+    }//GEN-LAST:event_WHolderActionPerformed
 
-    private void balanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balanceActionPerformed
+    private void DCurrentBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DCurrentBalanceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_balanceActionPerformed
+    }//GEN-LAST:event_DCurrentBalanceActionPerformed
 
-    private void accno2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accno2ActionPerformed
+    private void WAccnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WAccnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_accno2ActionPerformed
+    }//GEN-LAST:event_WAccnoActionPerformed
 
-    private void withdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withdrawActionPerformed
+    private void DwithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DwithdrawActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_withdrawActionPerformed
+    }//GEN-LAST:event_DwithdrawActionPerformed
 
-    private void accno3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accno3ActionPerformed
+    private void DAccnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DAccnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_accno3ActionPerformed
+    }//GEN-LAST:event_DAccnoActionPerformed
 
-    private void holder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holder1ActionPerformed
+    private void holderNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holderNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_holder1ActionPerformed
+    }//GEN-LAST:event_holderNameActionPerformed
 
-    private void balance1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balance1ActionPerformed
+    private void currentBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentBalanceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_balance1ActionPerformed
+    }//GEN-LAST:event_currentBalanceActionPerformed
 
-    private void withdraw1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_withdraw1ActionPerformed
+    private void DEPAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DEPAmountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_withdraw1ActionPerformed
+    }//GEN-LAST:event_DEPAmountActionPerformed
 
     private void ACCTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ACCTypeActionPerformed
         // TODO add your handling code here:
@@ -949,15 +949,15 @@ public class Teller extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_DepositBonusActionPerformed
 
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+    private void processInterestMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processInterestMousePressed
         // NOTIFIES AGENT ABOUT INTEREST PROCESS AND BLOCKS MULTIPLE CALCULATIONS
         // COLOUR CHANGES AND BUTTON DISABLED WHEN CLICKED
-    jButton1.setBackground(Color.GREEN);
-    jButton1.setForeground(Color.BLACK);
-    jButton1.setEnabled(false);
-    jButton1.setText("Done");
+    processInterest.setBackground(Color.GREEN);
+    processInterest.setForeground(Color.BLACK);
+    processInterest.setEnabled(false);
+    processInterest.setText("Done");
     
-    }//GEN-LAST:event_jButton1MousePressed
+    }//GEN-LAST:event_processInterestMousePressed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
 
@@ -1020,52 +1020,57 @@ public class Teller extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ACCTNumber;
+    private javax.swing.JLabel ACCTType;
     private javax.swing.JTextField ACCType;
     private javax.swing.JButton CheckSA;
     private javax.swing.JButton CheckSA1;
     private javax.swing.JButton CheckSA3;
     private javax.swing.JButton ClearSA;
     private javax.swing.JButton ClearSA1;
+    private javax.swing.JTextField DAccno;
+    private javax.swing.JTextField DCurrentBalance;
+    private javax.swing.JTextField DEPAmount;
     private javax.swing.JButton DepositBonus;
+    private javax.swing.JTextField Dwithdraw;
+    private javax.swing.JLabel FName;
     private javax.swing.JTextField FinalDeposit;
     private javax.swing.JButton Generate;
+    private javax.swing.JLabel IDeposit;
+    private javax.swing.JTextField IDepositAMT;
+    private javax.swing.JLabel LName;
+    private javax.swing.JLabel Mail;
+    private javax.swing.JTextField NewFName;
+    private javax.swing.JTextField NewLName;
+    private javax.swing.JTextField NewMail;
+    private javax.swing.JTextField NewPhoneNum;
     private javax.swing.JTabbedPane NewUser;
+    private javax.swing.JLabel PNumber;
+    private javax.swing.JLabel PhoneNum;
+    private javax.swing.JButton RSubmit;
     private javax.swing.JButton SubmitSA;
     private javax.swing.JButton SubmitSA1;
-    private javax.swing.JButton SubmitSA4;
+    private javax.swing.JTextField WAccno;
+    private javax.swing.JLabel WDRL;
+    private javax.swing.JTextField WHolder;
     private javax.swing.JButton accNoGen;
     private javax.swing.JButton accNoGen1;
-    private javax.swing.JTextField accno2;
-    private javax.swing.JTextField accno3;
-    private javax.swing.JTextField balance;
-    private javax.swing.JTextField balance1;
+    private javax.swing.JTextArea bonusINFO;
+    private javax.swing.JTextField currentBalance;
+    private javax.swing.JLabel dAccount;
+    private javax.swing.JLabel dAmmount;
+    private javax.swing.JLabel dBalance;
+    private javax.swing.JLabel dName;
+    private javax.swing.JLabel dType;
     private javax.swing.JLabel date;
-    private javax.swing.JTextField holder;
-    private javax.swing.JTextField holder1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel day;
+    private javax.swing.JTextField holderName;
+    private javax.swing.JTextArea interestINFO;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -1091,18 +1096,13 @@ public class Teller extends javax.swing.JFrame{
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JComboBox<String> listOfAccountTypes;
     private javax.swing.JMenuItem logout;
+    private javax.swing.JButton processInterest;
     private javax.swing.JTextField txtGeneratedAccountNo;
-    private javax.swing.JTextField withdraw;
-    private javax.swing.JTextField withdraw1;
+    private javax.swing.JLabel wACCT;
+    private javax.swing.JLabel wBalance;
+    private javax.swing.JLabel wName;
     // End of variables declaration//GEN-END:variables
 }
