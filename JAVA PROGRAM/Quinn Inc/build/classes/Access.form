@@ -74,7 +74,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
-                          <Component id="login" min="-2" pref="270" max="-2" attributes="0"/>
+                          <Component id="login_Btn" min="-2" pref="270" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
@@ -83,11 +83,11 @@
                                   <Component id="logo" min="-2" pref="234" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="374" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="bankName" max="32767" attributes="0"/>
-                                      <Component id="Slogan" min="-2" pref="236" max="-2" attributes="0"/>
+                                      <Component id="bankName_Lbl" max="32767" attributes="0"/>
+                                      <Component id="Slogan_Lbl" min="-2" pref="236" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                              <Component id="qService_pnl" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -101,16 +101,16 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="bankName" min="-2" max="-2" attributes="0"/>
+                          <Component id="bankName_Lbl" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="Slogan" min="-2" max="-2" attributes="0"/>
+                          <Component id="Slogan_Lbl" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="logo" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" pref="278" max="-2" attributes="0"/>
+                  <Component id="qService_pnl" min="-2" pref="278" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="login" min="-2" max="-2" attributes="0"/>
+                  <Component id="login_Btn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -127,7 +127,7 @@
             <Property name="text" type="java.lang.String" value="jLabel2"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="jPanel1">
+        <Container class="javax.swing.JPanel" name="qService_pnl">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="48" green="3f" red="12" type="rgb"/>
@@ -137,19 +137,19 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="Services" alignment="0" max="32767" attributes="0"/>
+                  <Component id="Services_Lbl" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="237" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="UName" min="-2" max="-2" attributes="0"/>
-                          <Component id="Password" min="-2" max="-2" attributes="0"/>
-                          <Component id="Selection" min="-2" max="-2" attributes="0"/>
+                          <Component id="UName_Lbl" min="-2" max="-2" attributes="0"/>
+                          <Component id="Password_Lbl" min="-2" max="-2" attributes="0"/>
+                          <Component id="SelectionLbl" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="usernameField" min="-2" pref="235" max="-2" attributes="0"/>
-                          <Component id="passwordField" min="-2" pref="199" max="-2" attributes="0"/>
-                          <Component id="selectedRole" min="-2" pref="199" max="-2" attributes="0"/>
+                          <Component id="username_Txt" min="-2" pref="235" max="-2" attributes="0"/>
+                          <Component id="password_Txt" min="-2" pref="199" max="-2" attributes="0"/>
+                          <Component id="role_DD" min="-2" pref="199" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="220" max="-2" attributes="0"/>
                   </Group>
@@ -159,21 +159,21 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="Services" min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="Services_Lbl" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="UName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="usernameField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="UName_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="username_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="passwordField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Password" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="password_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Password_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="Selection" min="-2" max="-2" attributes="0"/>
-                          <Component id="selectedRole" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="SelectionLbl" min="-2" max="-2" attributes="0"/>
+                          <Component id="role_DD" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
                   </Group>
@@ -181,7 +181,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="UName">
+            <Component class="javax.swing.JLabel" name="UName_Lbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Constantia" size="24" style="0"/>
@@ -192,7 +192,7 @@
                 <Property name="text" type="java.lang.String" value="Username"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="Password">
+            <Component class="javax.swing.JLabel" name="Password_Lbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Constantia" size="24" style="0"/>
@@ -203,7 +203,7 @@
                 <Property name="text" type="java.lang.String" value="Password"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JPasswordField" name="passwordField">
+            <Component class="javax.swing.JPasswordField" name="password_Txt">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d9" green="fc" red="fe" type="rgb"/>
@@ -213,10 +213,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordFieldActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="password_TxtActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="usernameField">
+            <Component class="javax.swing.JTextField" name="username_Txt">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d9" green="fc" red="fe" type="rgb"/>
@@ -226,10 +226,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="usernameFieldKeyPressed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="username_TxtKeyPressed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="Selection">
+            <Component class="javax.swing.JLabel" name="SelectionLbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Constantia" size="24" style="0"/>
@@ -240,7 +240,7 @@
                 <Property name="text" type="java.lang.String" value="Select:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="Services">
+            <Component class="javax.swing.JLabel" name="Services_Lbl">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="96" green="3f" red="12" type="rgb"/>
@@ -252,7 +252,7 @@
                 <Property name="text" type="java.lang.String" value="QUINN BANKING SERVICES"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="selectedRole">
+            <Component class="javax.swing.JComboBox" name="role_DD">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -273,7 +273,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="bankName">
+        <Component class="javax.swing.JLabel" name="bankName_Lbl">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Bodoni MT" size="36" style="0"/>
@@ -284,7 +284,7 @@
             <Property name="text" type="java.lang.String" value="QUINN BANK"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Slogan">
+        <Component class="javax.swing.JLabel" name="Slogan_Lbl">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Script MT Bold" size="18" style="0"/>
@@ -333,7 +333,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="login">
+        <Component class="javax.swing.JButton" name="login_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="19" green="a9" red="29" type="rgb"/>
@@ -347,7 +347,7 @@
             <Property name="text" type="java.lang.String" value="LOGIN"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="login_BtnActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

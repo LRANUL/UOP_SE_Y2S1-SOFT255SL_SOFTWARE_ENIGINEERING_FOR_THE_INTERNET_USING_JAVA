@@ -27,18 +27,18 @@ public class AdminPanel extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        jPanel1 = new javax.swing.JPanel();
+        admin_pnl = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        showTellers = new javax.swing.JButton();
-        removeTellers = new javax.swing.JButton();
-        updateCred1 = new javax.swing.JButton();
+        panel_Lbl = new javax.swing.JLabel();
+        showTellers_Btn = new javax.swing.JButton();
+        removeTellers_Btn = new javax.swing.JButton();
+        updateCred1_Btn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TellersINFO = new javax.swing.JTable();
-        currentTXN = new javax.swing.JButton();
-        showManagers = new javax.swing.JButton();
-        removeManagers = new javax.swing.JButton();
-        updateCred2 = new javax.swing.JButton();
+        transaction_Btn = new javax.swing.JButton();
+        showManagers_Btn = new javax.swing.JButton();
+        removeManagers_Btn = new javax.swing.JButton();
+        updateCred2_Btn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         ManagersINFO = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -49,41 +49,41 @@ public class AdminPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(246, 246, 246));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        admin_pnl.setBackground(new java.awt.Color(246, 246, 246));
+        admin_pnl.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 51));
 
-        jLabel1.setFont(new java.awt.Font("Constantia", 0, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ADMIN PANEL - QUINN INC BANK");
+        panel_Lbl.setFont(new java.awt.Font("Constantia", 0, 36)); // NOI18N
+        panel_Lbl.setForeground(new java.awt.Color(255, 255, 255));
+        panel_Lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        panel_Lbl.setText("ADMIN PANEL - QUINN INC BANK");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        showTellers.setBackground(new java.awt.Color(0, 102, 204));
-        showTellers.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        showTellers.setForeground(new java.awt.Color(255, 255, 255));
-        showTellers.setText("Show All Tellers");
+        showTellers_Btn.setBackground(new java.awt.Color(0, 102, 204));
+        showTellers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        showTellers_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        showTellers_Btn.setText("Show All Tellers");
 
-        removeTellers.setBackground(new java.awt.Color(204, 0, 0));
-        removeTellers.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        removeTellers.setForeground(new java.awt.Color(255, 255, 255));
-        removeTellers.setText("Remove Teller");
+        removeTellers_Btn.setBackground(new java.awt.Color(204, 0, 0));
+        removeTellers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        removeTellers_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        removeTellers_Btn.setText("Remove Teller");
 
-        updateCred1.setBackground(new java.awt.Color(0, 204, 0));
-        updateCred1.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        updateCred1.setForeground(new java.awt.Color(255, 255, 255));
-        updateCred1.setText("Update Credentials");
+        updateCred1_Btn.setBackground(new java.awt.Color(0, 204, 0));
+        updateCred1_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        updateCred1_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        updateCred1_Btn.setText("Update Credentials");
 
         TellersINFO.setBorder(new javax.swing.border.MatteBorder(null));
         TellersINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -136,25 +136,25 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TellersINFO);
 
-        currentTXN.setBackground(new java.awt.Color(255, 255, 0));
-        currentTXN.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        currentTXN.setForeground(new java.awt.Color(204, 0, 0));
-        currentTXN.setText("Current transactions");
+        transaction_Btn.setBackground(new java.awt.Color(255, 255, 0));
+        transaction_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        transaction_Btn.setForeground(new java.awt.Color(204, 0, 0));
+        transaction_Btn.setText("Current transactions");
 
-        showManagers.setBackground(new java.awt.Color(0, 102, 204));
-        showManagers.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        showManagers.setForeground(new java.awt.Color(255, 255, 255));
-        showManagers.setText("Show All Managers");
+        showManagers_Btn.setBackground(new java.awt.Color(0, 102, 204));
+        showManagers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        showManagers_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        showManagers_Btn.setText("Show All Managers");
 
-        removeManagers.setBackground(new java.awt.Color(204, 0, 0));
-        removeManagers.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        removeManagers.setForeground(new java.awt.Color(255, 255, 255));
-        removeManagers.setText("Remove Manager");
+        removeManagers_Btn.setBackground(new java.awt.Color(204, 0, 0));
+        removeManagers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        removeManagers_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        removeManagers_Btn.setText("Remove Manager");
 
-        updateCred2.setBackground(new java.awt.Color(0, 204, 0));
-        updateCred2.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        updateCred2.setForeground(new java.awt.Color(255, 255, 255));
-        updateCred2.setText("Update Credentials");
+        updateCred2_Btn.setBackground(new java.awt.Color(0, 204, 0));
+        updateCred2_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        updateCred2_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        updateCred2_Btn.setText("Update Credentials");
 
         ManagersINFO.setBorder(new javax.swing.border.MatteBorder(null));
         ManagersINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -244,59 +244,59 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(currentTNX_table);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout admin_pnlLayout = new javax.swing.GroupLayout(admin_pnl);
+        admin_pnl.setLayout(admin_pnlLayout);
+        admin_pnlLayout.setHorizontalGroup(
+            admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(admin_pnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane3)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(currentTXN)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(transaction_Btn)
+                        .addGroup(admin_pnlLayout.createSequentialGroup()
+                            .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(showTellers)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, admin_pnlLayout.createSequentialGroup()
+                                    .addComponent(showTellers_Btn)
                                     .addGap(31, 31, 31)
-                                    .addComponent(removeTellers)
+                                    .addComponent(removeTellers_Btn)
                                     .addGap(28, 28, 28)
-                                    .addComponent(updateCred1)))
+                                    .addComponent(updateCred1_Btn)))
                             .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(showManagers)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, admin_pnlLayout.createSequentialGroup()
+                                    .addComponent(showManagers_Btn)
                                     .addGap(31, 31, 31)
-                                    .addComponent(removeManagers)
+                                    .addComponent(removeManagers_Btn)
                                     .addGap(28, 28, 28)
-                                    .addComponent(updateCred2))))))
+                                    .addComponent(updateCred2_Btn))))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        admin_pnlLayout.setVerticalGroup(
+            admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(admin_pnlLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(removeTellers)
-                            .addComponent(showTellers)
-                            .addComponent(updateCred1))
+                .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
+                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(removeTellers_Btn)
+                            .addComponent(showTellers_Btn)
+                            .addComponent(updateCred1_Btn))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(removeManagers)
-                            .addComponent(showManagers)
-                            .addComponent(updateCred2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
+                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(removeManagers_Btn)
+                            .addComponent(showManagers_Btn)
+                            .addComponent(updateCred2_Btn))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(currentTXN)
+                .addComponent(transaction_Btn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -325,11 +325,11 @@ public class AdminPanel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(admin_pnl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(admin_pnl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -391,23 +391,23 @@ public class AdminPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ManagersINFO;
     private javax.swing.JTable TellersINFO;
+    private javax.swing.JPanel admin_pnl;
     private javax.swing.JTable currentTNX_table;
-    private javax.swing.JButton currentTXN;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenuItem logout;
-    private javax.swing.JButton removeManagers;
-    private javax.swing.JButton removeTellers;
-    private javax.swing.JButton showManagers;
-    private javax.swing.JButton showTellers;
-    private javax.swing.JButton updateCred1;
-    private javax.swing.JButton updateCred2;
+    private javax.swing.JLabel panel_Lbl;
+    private javax.swing.JButton removeManagers_Btn;
+    private javax.swing.JButton removeTellers_Btn;
+    private javax.swing.JButton showManagers_Btn;
+    private javax.swing.JButton showTellers_Btn;
+    private javax.swing.JButton transaction_Btn;
+    private javax.swing.JButton updateCred1_Btn;
+    private javax.swing.JButton updateCred2_Btn;
     // End of variables declaration//GEN-END:variables
 }

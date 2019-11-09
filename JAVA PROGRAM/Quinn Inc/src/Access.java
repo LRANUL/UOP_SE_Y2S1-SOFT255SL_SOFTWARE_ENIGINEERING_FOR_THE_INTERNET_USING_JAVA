@@ -30,19 +30,19 @@ public class Access extends javax.swing.JFrame {
 
         AccessPanel = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        UName = new javax.swing.JLabel();
-        Password = new javax.swing.JLabel();
-        passwordField = new javax.swing.JPasswordField();
-        usernameField = new javax.swing.JTextField();
-        Selection = new javax.swing.JLabel();
-        Services = new javax.swing.JLabel();
-        selectedRole = new javax.swing.JComboBox<>();
-        bankName = new javax.swing.JLabel();
-        Slogan = new javax.swing.JLabel();
+        qService_pnl = new javax.swing.JPanel();
+        UName_Lbl = new javax.swing.JLabel();
+        Password_Lbl = new javax.swing.JLabel();
+        password_Txt = new javax.swing.JPasswordField();
+        username_Txt = new javax.swing.JTextField();
+        SelectionLbl = new javax.swing.JLabel();
+        Services_Lbl = new javax.swing.JLabel();
+        role_DD = new javax.swing.JComboBox<>();
+        bankName_Lbl = new javax.swing.JLabel();
+        Slogan_Lbl = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Trademark = new javax.swing.JLabel();
-        login = new javax.swing.JButton();
+        login_Btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -63,89 +63,89 @@ public class Access extends javax.swing.JFrame {
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/QUINN_LOGO.gif"))); // NOI18N
         logo.setText("jLabel2");
 
-        jPanel1.setBackground(new java.awt.Color(18, 63, 72));
+        qService_pnl.setBackground(new java.awt.Color(18, 63, 72));
 
-        UName.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
-        UName.setForeground(new java.awt.Color(255, 255, 255));
-        UName.setText("Username");
+        UName_Lbl.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
+        UName_Lbl.setForeground(new java.awt.Color(255, 255, 255));
+        UName_Lbl.setText("Username");
 
-        Password.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
-        Password.setForeground(new java.awt.Color(255, 255, 255));
-        Password.setText("Password");
+        Password_Lbl.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
+        Password_Lbl.setForeground(new java.awt.Color(255, 255, 255));
+        Password_Lbl.setText("Password");
 
-        passwordField.setBackground(new java.awt.Color(254, 252, 217));
-        passwordField.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
+        password_Txt.setBackground(new java.awt.Color(254, 252, 217));
+        password_Txt.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
+        password_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
+                password_TxtActionPerformed(evt);
             }
         });
 
-        usernameField.setBackground(new java.awt.Color(254, 252, 217));
-        usernameField.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
-        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+        username_Txt.setBackground(new java.awt.Color(254, 252, 217));
+        username_Txt.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
+        username_Txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                usernameFieldKeyPressed(evt);
+                username_TxtKeyPressed(evt);
             }
         });
 
-        Selection.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
-        Selection.setForeground(new java.awt.Color(255, 255, 255));
-        Selection.setText("Select:");
+        SelectionLbl.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
+        SelectionLbl.setForeground(new java.awt.Color(255, 255, 255));
+        SelectionLbl.setText("Select:");
 
-        Services.setBackground(new java.awt.Color(18, 63, 150));
-        Services.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
-        Services.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Services.setText("QUINN BANKING SERVICES");
+        Services_Lbl.setBackground(new java.awt.Color(18, 63, 150));
+        Services_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        Services_Lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Services_Lbl.setText("QUINN BANKING SERVICES");
 
-        selectedRole.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        selectedRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ROLE--", "Bank Teller", "Bank Manager", "Bank Data Administrator", " " }));
+        role_DD.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        role_DD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ROLE--", "Bank Teller", "Bank Manager", "Bank Data Administrator", " " }));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Services, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout qService_pnlLayout = new javax.swing.GroupLayout(qService_pnl);
+        qService_pnl.setLayout(qService_pnlLayout);
+        qService_pnlLayout.setHorizontalGroup(
+            qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Services_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qService_pnlLayout.createSequentialGroup()
                 .addContainerGap(237, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(UName)
-                    .addComponent(Password)
-                    .addComponent(Selection))
+                .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(UName_Lbl)
+                    .addComponent(Password_Lbl)
+                    .addComponent(SelectionLbl))
                 .addGap(44, 44, 44)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectedRole, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(username_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(password_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(role_DD, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(220, 220, 220))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        qService_pnlLayout.setVerticalGroup(
+            qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qService_pnlLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Services, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Services_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UName)
-                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UName_Lbl)
+                    .addComponent(username_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Password))
+                .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(password_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Password_Lbl))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Selection)
-                    .addComponent(selectedRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(SelectionLbl)
+                    .addComponent(role_DD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(129, 129, 129))
         );
 
-        bankName.setFont(new java.awt.Font("Bodoni MT", 0, 36)); // NOI18N
-        bankName.setForeground(new java.awt.Color(255, 255, 255));
-        bankName.setText("QUINN BANK");
+        bankName_Lbl.setFont(new java.awt.Font("Bodoni MT", 0, 36)); // NOI18N
+        bankName_Lbl.setForeground(new java.awt.Color(255, 255, 255));
+        bankName_Lbl.setText("QUINN BANK");
 
-        Slogan.setFont(new java.awt.Font("Script MT Bold", 0, 18)); // NOI18N
-        Slogan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Slogan.setText("Guarding Day & Night");
+        Slogan_Lbl.setFont(new java.awt.Font("Script MT Bold", 0, 18)); // NOI18N
+        Slogan_Lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Slogan_Lbl.setText("Guarding Day & Night");
 
         jPanel2.setBackground(new java.awt.Color(10, 10, 18));
 
@@ -168,13 +168,13 @@ public class Access extends javax.swing.JFrame {
             .addComponent(Trademark, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
         );
 
-        login.setBackground(new java.awt.Color(41, 169, 25));
-        login.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
-        login.setForeground(new java.awt.Color(255, 255, 255));
-        login.setText("LOGIN");
-        login.addActionListener(new java.awt.event.ActionListener() {
+        login_Btn.setBackground(new java.awt.Color(41, 169, 25));
+        login_Btn.setFont(new java.awt.Font("Constantia", 1, 24)); // NOI18N
+        login_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        login_Btn.setText("LOGIN");
+        login_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginActionPerformed(evt);
+                login_BtnActionPerformed(evt);
             }
         });
 
@@ -187,7 +187,7 @@ public class Access extends javax.swing.JFrame {
                 .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AccessPanelLayout.createSequentialGroup()
                         .addGap(327, 327, 327)
-                        .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(AccessPanelLayout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,9 +195,9 @@ public class Access extends javax.swing.JFrame {
                                 .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(374, 374, 374)
                                 .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(bankName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Slogan, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(bankName_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Slogan_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         AccessPanelLayout.setVerticalGroup(
@@ -206,14 +206,14 @@ public class Access extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AccessPanelLayout.createSequentialGroup()
-                        .addComponent(bankName)
+                        .addComponent(bankName_Lbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Slogan))
+                        .addComponent(Slogan_Lbl))
                     .addComponent(logo))
                 .addGap(48, 48, 48)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(login)
+                .addComponent(login_Btn)
                 .addGap(63, 63, 63)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -237,15 +237,15 @@ public class Access extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+    private void password_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_password_TxtActionPerformed
 
-    }//GEN-LAST:event_passwordFieldActionPerformed
+    }//GEN-LAST:event_password_TxtActionPerformed
 
-    private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+    private void login_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_BtnActionPerformed
        //Opens the Relevant Frame for Authorised User
        
 //      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019
-       JComboBox cmb = (selectedRole);
+       JComboBox cmb = (role_DD);
        Object selected = cmb.getSelectedItem();
        
        if(cmb.getSelectedIndex()==0) {
@@ -254,7 +254,7 @@ public class Access extends javax.swing.JFrame {
                               "WARNING !", 
                               JOptionPane.WARNING_MESSAGE);
        }
-       if(usernameField.getText().isEmpty()) {
+       if(username_Txt.getText().isEmpty()) {
            JOptionPane.showMessageDialog(null, 
                               "Please Enter Your Credentials.", 
                               "ERROR !", 
@@ -282,11 +282,11 @@ public class Access extends javax.swing.JFrame {
            this.setVisible(false);
        }
         
-    }//GEN-LAST:event_loginActionPerformed
+    }//GEN-LAST:event_login_BtnActionPerformed
 
-    private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyPressed
+    private void username_TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_username_TxtKeyPressed
 
-    }//GEN-LAST:event_usernameFieldKeyPressed
+    }//GEN-LAST:event_username_TxtKeyPressed
     
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
 
@@ -329,19 +329,19 @@ public class Access extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AccessPanel;
-    private javax.swing.JLabel Password;
-    private javax.swing.JLabel Selection;
-    private javax.swing.JLabel Services;
-    private javax.swing.JLabel Slogan;
+    private javax.swing.JLabel Password_Lbl;
+    private javax.swing.JLabel SelectionLbl;
+    private javax.swing.JLabel Services_Lbl;
+    private javax.swing.JLabel Slogan_Lbl;
     private javax.swing.JLabel Trademark;
-    private javax.swing.JLabel UName;
-    private javax.swing.JLabel bankName;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel UName_Lbl;
+    private javax.swing.JLabel bankName_Lbl;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton login;
+    private javax.swing.JButton login_Btn;
     private javax.swing.JLabel logo;
-    private javax.swing.JPasswordField passwordField;
-    private javax.swing.JComboBox<String> selectedRole;
-    private javax.swing.JTextField usernameField;
+    private javax.swing.JPasswordField password_Txt;
+    private javax.swing.JPanel qService_pnl;
+    private javax.swing.JComboBox<String> role_DD;
+    private javax.swing.JTextField username_Txt;
     // End of variables declaration//GEN-END:variables
 }

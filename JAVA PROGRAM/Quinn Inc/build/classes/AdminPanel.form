@@ -54,17 +54,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+          <Component id="admin_pnl" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+          <Component id="admin_pnl" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="admin_pnl">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="f6" green="f6" red="f6" type="rgb"/>
@@ -85,27 +85,27 @@
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Component id="jScrollPane3" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="currentTXN" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="transaction_Btn" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="showTellers" min="-2" max="-2" attributes="0"/>
+                                      <Component id="showTellers_Btn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                      <Component id="removeTellers" min="-2" max="-2" attributes="0"/>
+                                      <Component id="removeTellers_Btn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                      <Component id="updateCred1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="updateCred1_Btn" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="showManagers" min="-2" max="-2" attributes="0"/>
+                                      <Component id="showManagers_Btn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                      <Component id="removeManagers" min="-2" max="-2" attributes="0"/>
+                                      <Component id="removeManagers_Btn" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                      <Component id="updateCred2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="updateCred2_Btn" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -123,25 +123,25 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="removeTellers" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="showTellers" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="updateCred1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="removeTellers_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="showTellers_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="updateCred1_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="268" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="removeManagers" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="showManagers" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="updateCred2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="removeManagers_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="showManagers_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="updateCred2_Btn" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="268" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="currentTXN" min="-2" max="-2" attributes="0"/>
+                  <Component id="transaction_Btn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane3" min="-2" pref="224" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -160,17 +160,17 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Component id="panel_Lbl" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Component id="panel_Lbl" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="panel_Lbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Constantia" size="36" style="0"/>
@@ -184,7 +184,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="showTellers">
+        <Component class="javax.swing.JButton" name="showTellers_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="66" red="0" type="rgb"/>
@@ -198,7 +198,7 @@
             <Property name="text" type="java.lang.String" value="Show All Tellers"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="removeTellers">
+        <Component class="javax.swing.JButton" name="removeTellers_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="cc" type="rgb"/>
@@ -212,7 +212,7 @@
             <Property name="text" type="java.lang.String" value="Remove Teller"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="updateCred1">
+        <Component class="javax.swing.JButton" name="updateCred1_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="cc" red="0" type="rgb"/>
@@ -276,7 +276,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="currentTXN">
+        <Component class="javax.swing.JButton" name="transaction_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="ff" red="ff" type="rgb"/>
@@ -290,7 +290,7 @@
             <Property name="text" type="java.lang.String" value="Current transactions"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="showManagers">
+        <Component class="javax.swing.JButton" name="showManagers_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="66" red="0" type="rgb"/>
@@ -304,7 +304,7 @@
             <Property name="text" type="java.lang.String" value="Show All Managers"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="removeManagers">
+        <Component class="javax.swing.JButton" name="removeManagers_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="cc" type="rgb"/>
@@ -318,7 +318,7 @@
             <Property name="text" type="java.lang.String" value="Remove Manager"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="updateCred2">
+        <Component class="javax.swing.JButton" name="updateCred2_Btn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="cc" red="0" type="rgb"/>
