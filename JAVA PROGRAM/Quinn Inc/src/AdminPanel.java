@@ -70,17 +70,17 @@ public class AdminPanel extends javax.swing.JFrame {
             .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        showTellers_Btn.setBackground(new java.awt.Color(0, 102, 204));
+        showTellers_Btn.setBackground(new java.awt.Color(51, 51, 51));
         showTellers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         showTellers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         showTellers_Btn.setText("Show All Tellers");
 
-        removeTellers_Btn.setBackground(new java.awt.Color(204, 0, 0));
+        removeTellers_Btn.setBackground(new java.awt.Color(51, 51, 51));
         removeTellers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         removeTellers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         removeTellers_Btn.setText("Remove Teller");
 
-        updateCred1_Btn.setBackground(new java.awt.Color(0, 204, 0));
+        updateCred1_Btn.setBackground(new java.awt.Color(51, 51, 51));
         updateCred1_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         updateCred1_Btn.setForeground(new java.awt.Color(255, 255, 255));
         updateCred1_Btn.setText("Update Credentials");
@@ -141,17 +141,17 @@ public class AdminPanel extends javax.swing.JFrame {
         transaction_Btn.setForeground(new java.awt.Color(204, 0, 0));
         transaction_Btn.setText("Current transactions");
 
-        showManagers_Btn.setBackground(new java.awt.Color(0, 102, 204));
+        showManagers_Btn.setBackground(new java.awt.Color(51, 51, 51));
         showManagers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         showManagers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         showManagers_Btn.setText("Show All Managers");
 
-        removeManagers_Btn.setBackground(new java.awt.Color(204, 0, 0));
+        removeManagers_Btn.setBackground(new java.awt.Color(51, 51, 51));
         removeManagers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         removeManagers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         removeManagers_Btn.setText("Remove Manager");
 
-        updateCred2_Btn.setBackground(new java.awt.Color(0, 204, 0));
+        updateCred2_Btn.setBackground(new java.awt.Color(51, 51, 51));
         updateCred2_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         updateCred2_Btn.setForeground(new java.awt.Color(255, 255, 255));
         updateCred2_Btn.setText("Update Credentials");
@@ -279,7 +279,7 @@ public class AdminPanel extends javax.swing.JFrame {
             admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(admin_pnlLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
                         .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -303,12 +303,14 @@ public class AdminPanel extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Menu");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
             }
         });
 
+        logout.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         logout.setText("Logout");
         logout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
