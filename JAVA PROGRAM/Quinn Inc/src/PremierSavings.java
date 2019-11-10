@@ -8,6 +8,6 @@
  *
  * @author ranul
  */
-public class PremierSavings extends Account {
-
+public class PremierSavings extends Account{
+    
 }

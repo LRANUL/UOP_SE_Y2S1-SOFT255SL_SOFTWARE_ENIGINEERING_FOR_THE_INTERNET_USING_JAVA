@@ -47,7 +47,6 @@ public class Access extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFocusTraversalPolicyProvider(true);
-        setLocationByPlatform(true);
         setResizable(false);
         setSize(new java.awt.Dimension(923, 596));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -75,7 +74,7 @@ public class Access extends javax.swing.JFrame {
         Password_Lbl.setText("Password");
 
         password_Txt.setBackground(new java.awt.Color(254, 252, 217));
-        password_Txt.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        password_Txt.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
         password_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 password_TxtActionPerformed(evt);
@@ -83,7 +82,7 @@ public class Access extends javax.swing.JFrame {
         });
 
         username_Txt.setBackground(new java.awt.Color(254, 252, 217));
-        username_Txt.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        username_Txt.setFont(new java.awt.Font("Constantia", 0, 24)); // NOI18N
         username_Txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 username_TxtKeyPressed(evt);
@@ -107,18 +106,18 @@ public class Access extends javax.swing.JFrame {
         qService_pnlLayout.setHorizontalGroup(
             qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Services_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(qService_pnlLayout.createSequentialGroup()
-                .addGap(362, 362, 362)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qService_pnlLayout.createSequentialGroup()
+                .addContainerGap(237, Short.MAX_VALUE)
                 .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(UName_Lbl)
                     .addComponent(Password_Lbl)
                     .addComponent(SelectionLbl))
                 .addGap(44, 44, 44)
-                .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(username_Txt)
-                    .addComponent(role_DD, 0, 235, Short.MAX_VALUE)
-                    .addComponent(password_Txt))
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addGroup(qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(username_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(password_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(role_DD, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(220, 220, 220))
         );
         qService_pnlLayout.setVerticalGroup(
             qService_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,23 +183,22 @@ public class Access extends javax.swing.JFrame {
         AccessPanelLayout.setHorizontalGroup(
             AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(460, 460, 460))
             .addGroup(AccessPanelLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
                 .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AccessPanelLayout.createSequentialGroup()
-                        .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 43, Short.MAX_VALUE))
+                        .addGap(327, 327, 327)
+                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(AccessPanelLayout.createSequentialGroup()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bankName_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Slogan_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59))))
+                        .addGap(45, 45, 45)
+                        .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AccessPanelLayout.createSequentialGroup()
+                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(374, 374, 374)
+                                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(bankName_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Slogan_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         AccessPanelLayout.setVerticalGroup(
             AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,12 +211,12 @@ public class Access extends javax.swing.JFrame {
                         .addComponent(Slogan_Lbl))
                     .addComponent(logo))
                 .addGap(48, 48, 48)
-                .addComponent(qService_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(login_Btn)
-                .addGap(38, 38, 38)
+                .addGap(63, 63, 63)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -226,12 +224,14 @@ public class Access extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(AccessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(AccessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 923, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(AccessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(AccessPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         pack();
@@ -242,50 +242,56 @@ public class Access extends javax.swing.JFrame {
     }//GEN-LAST:event_password_TxtActionPerformed
 
     private void login_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_BtnActionPerformed
-        //Opens the Relevant Frame for Authorised User
-
+       //Opens the Relevant Frame for Authorised User
+       
 //      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019
-        JComboBox cmb = (role_DD);
-        Object selected = cmb.getSelectedItem();
-
-        if (cmb.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Please Select your role position to continue.",
-                    "WARNING !",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-        if (username_Txt.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "Please Enter Your Credentials.",
-                    "ERROR !",
-                    JOptionPane.ERROR_MESSAGE);
-        } else if (selected.toString().equals("Bank Teller")) {
-            Teller t1 = new Teller();
-            t1.setVisible(true);
-            //closes the login form prevent unnecessary tab creation
-            this.setVisible(false);
-        } else if (selected.toString().equals("Bank Manager")) {
-            Manager m1 = new Manager();
-            m1.setVisible(true);
-            //closes the login form prevent unnecessary tab creation
-            this.setVisible(false);
-        } else if (selected.toString().equals("Bank Data Administrator")) {
-            AdminPanel a1 = new AdminPanel();
-            a1.setVisible(true);
-            //closes the login form prevent unnecessary tab creation
-            this.setVisible(false);
-        }
-
+       JComboBox cmb = (role_DD);
+       Object selected = cmb.getSelectedItem();
+       
+       if(cmb.getSelectedIndex()==0) {
+           JOptionPane.showMessageDialog(null, 
+                              "Please Select your role position to continue.", 
+                              "WARNING !", 
+                              JOptionPane.WARNING_MESSAGE);
+       }
+       if(username_Txt.getText().isEmpty()) {
+           JOptionPane.showMessageDialog(null, 
+                              "Please Enter Your Credentials.", 
+                              "ERROR !", 
+                              JOptionPane.ERROR_MESSAGE);
+       }
+       else if(selected.toString().equals("Bank Teller"))
+       {     
+           Teller t1 = new Teller();
+           t1.setVisible(true);
+           //closes the login form prevent unnecessary tab creation
+           this.setVisible(false);
+       }
+       else if(selected.toString().equals("Bank Manager"))
+       {
+           Manager m1 = new Manager();
+           m1.setVisible(true);
+           //closes the login form prevent unnecessary tab creation
+           this.setVisible(false);
+       }
+       else if(selected.toString().equals("Bank Data Administrator"))
+       {
+           AdminPanel a1 = new AdminPanel();
+           a1.setVisible(true);
+           //closes the login form prevent unnecessary tab creation
+           this.setVisible(false);
+       }
+        
     }//GEN-LAST:event_login_BtnActionPerformed
 
     private void username_TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_username_TxtKeyPressed
 
     }//GEN-LAST:event_username_TxtKeyPressed
-
+    
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
 
     }//GEN-LAST:event_formMouseDragged
-
+  
     /**
      * @param args the command line arguments
      */
