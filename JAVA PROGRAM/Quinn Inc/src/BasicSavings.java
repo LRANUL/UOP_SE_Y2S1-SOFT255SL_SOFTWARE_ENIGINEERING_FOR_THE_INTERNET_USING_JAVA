@@ -9,5 +9,5 @@
  * @author ranul
  */
 public class BasicSavings extends Account {
-    
+
 }

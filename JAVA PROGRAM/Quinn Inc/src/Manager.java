@@ -12,7 +12,6 @@ import sun.security.util.SecurityConstants.AWT;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ranul
@@ -172,7 +171,7 @@ public class Manager extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-          //Closing Form and Reopening the Login Screeen
+        //Closing Form and Reopening the Login Screeen
         Access a1 = new Access();
         a1.setVisible(true);
         //closes the login form prevent unnecessary tab creation
@@ -183,18 +182,18 @@ public class Manager extends javax.swing.JFrame {
         File folder = new File("C:\\Users\\ranul\\Documents\\GitHub\\SOFT255SL_SOFTWARE_ENIGINEERING_FOR_THE_INTERNET_USING_JAVA\\JAVA PROGRAM"); // path to the directory to be opened
         Desktop desktop = null;
         if (Desktop.isDesktopSupported()) {
-        desktop = Desktop.getDesktop();
+            desktop = Desktop.getDesktop();
         }
 
         try {
-        desktop.open(folder);
+            desktop.open(folder);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, 
-                              "Oops GENERATED REPORTS cannot be located, Please contact the bank administration for RECOVERY PROCESS.\n\n THANK YOU.", 
-                              "E01 - FOLDER MISSING !", 
-                              JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "Oops GENERATED REPORTS cannot be located, Please contact the bank administration for RECOVERY PROCESS.\n\n THANK YOU.",
+                    "E01 - FOLDER MISSING !",
+                    JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
