@@ -1,7 +1,13 @@
 
 import java.awt.Color;
-import java.text.SimpleDateFormat;  
-import java.util.Date; 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -9,20 +15,21 @@ import javax.swing.JOptionPane;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ranul
  */
-public class Teller extends javax.swing.JFrame{
+public class Teller extends javax.swing.JFrame {
+
     static int basic = 250000000;
     static int bonus = 450000000;
     static int premier = 750000000;
+
     /**
      * Creates new form Teller
      */
     public Teller() {
-        initComponents(); 
+        initComponents();
         date.setText(java.time.LocalDate.now().toString());
     }
 
@@ -150,21 +157,28 @@ public class Teller extends javax.swing.JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        setSize(new java.awt.Dimension(997, 598));
+        setSize(new java.awt.Dimension(1200, 800));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
         NewUser.setBackground(new java.awt.Color(255, 204, 255));
+        NewUser.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         savingsAcc_pnl.setBackground(new java.awt.Color(255, 255, 204));
+        savingsAcc_pnl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        ClearSA_Btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ClearSA_Btn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         ClearSA_Btn.setText("Clear");
+        ClearSA_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearSA_BtnActionPerformed(evt);
+            }
+        });
 
-        CheckSA_Btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CheckSA_Btn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         CheckSA_Btn.setText("Check");
 
-        SubmitSA.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        SubmitSA.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         SubmitSA.setText("Submit");
 
         javax.swing.GroupLayout dOption_pnlLayout = new javax.swing.GroupLayout(dOption_pnl);
@@ -181,16 +195,16 @@ public class Teller extends javax.swing.JFrame{
                 .addComponent(ClearSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
                 .addComponent(SubmitSA, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane1.setLeftComponent(dOption_pnl);
 
-        dAccount.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dAccount.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         dAccount.setText("Account No:");
 
-        DAccno_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        DAccno_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         DAccno_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DAccno_TxtActionPerformed(evt);
@@ -198,28 +212,29 @@ public class Teller extends javax.swing.JFrame{
         });
 
         holderName_Txt.setEditable(false);
-        holderName_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        holderName_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         holderName_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 holderName_TxtActionPerformed(evt);
             }
         });
 
-        dName_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dName_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         dName_Lbl.setText("Holder Name:");
 
-        dBalance_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dBalance_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         dBalance_Lbl.setText("Current Balance: ");
 
         currentBalance_Txt.setEditable(false);
-        currentBalance_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        currentBalance_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         currentBalance_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 currentBalance_TxtActionPerformed(evt);
             }
         });
 
-        DEPAmount_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        DEPAmount_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        DEPAmount_Txt.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         DEPAmount_Txt.setText("0.00");
         DEPAmount_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,20 +242,25 @@ public class Teller extends javax.swing.JFrame{
             }
         });
 
-        dAmmount_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dAmmount_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         dAmmount_Lbl.setText("Deposit Amount:");
 
-        dType_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        dType_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         dType_Lbl.setText("Account Type");
 
         ACCType_Txt.setEditable(false);
-        ACCType_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        ACCType_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        ACCType_Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ACCType_Txt.setText("BONUS SAVINGS");
         ACCType_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ACCType_TxtActionPerformed(evt);
             }
         });
 
+        DepositBonus.setBackground(new java.awt.Color(0, 0, 153));
+        DepositBonus.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        DepositBonus.setForeground(new java.awt.Color(255, 255, 255));
         DepositBonus.setText("Bonus Calculate");
         DepositBonus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,15 +270,17 @@ public class Teller extends javax.swing.JFrame{
 
         bonusINFO_tarea.setEditable(false);
         bonusINFO_tarea.setColumns(20);
+        bonusINFO_tarea.setFont(new java.awt.Font("Courier New", 0, 16)); // NOI18N
         bonusINFO_tarea.setRows(5);
         bonusINFO_tarea.setText("QUINN BANK DAILY DEPOSIT BONUS - DECEMBER / APRIL (SESONAL))\n\nNormal Savings : 1.25%\nBonus Savings : 3%\nPremier Savings : 7%");
         jScrollPane1.setViewportView(bonusINFO_tarea);
 
-        total_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        total_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         total_Lbl.setText("Final Total:");
 
         FinalDeposit_Txt.setEditable(false);
-        FinalDeposit_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        FinalDeposit_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        FinalDeposit_Txt.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         FinalDeposit_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FinalDeposit_TxtActionPerformed(evt);
@@ -275,16 +297,16 @@ public class Teller extends javax.swing.JFrame{
                     .addGroup(Deposit_pnlLayout.createSequentialGroup()
                         .addComponent(total_Lbl)
                         .addGap(43, 43, 43)
-                        .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(FinalDeposit_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(DepositBonus))
+                        .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(DepositBonus, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                            .addComponent(FinalDeposit_Txt))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(Deposit_pnlLayout.createSequentialGroup()
                         .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Deposit_pnlLayout.createSequentialGroup()
                                 .addComponent(dAccount)
                                 .addGap(33, 33, 33)
-                                .addComponent(DAccno_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(DAccno_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(Deposit_pnlLayout.createSequentialGroup()
                                 .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(dName_Lbl)
@@ -293,13 +315,14 @@ public class Teller extends javax.swing.JFrame{
                                         .addComponent(dAmmount_Lbl)
                                         .addComponent(dBalance_Lbl)))
                                 .addGap(4, 4, 4)
-                                .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ACCType_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(holderName_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(currentBalance_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                                    .addComponent(DEPAmount_Txt)))
+                                .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(DEPAmount_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(holderName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(ACCType_Txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                        .addComponent(currentBalance_Txt, javax.swing.GroupLayout.Alignment.LEADING))))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(242, Short.MAX_VALUE))))
+                        .addContainerGap(367, Short.MAX_VALUE))))
         );
         Deposit_pnlLayout.setVerticalGroup(
             Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,38 +351,39 @@ public class Teller extends javax.swing.JFrame{
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Deposit_pnlLayout.createSequentialGroup()
-                        .addComponent(total_Lbl)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Deposit_pnlLayout.createSequentialGroup()
-                        .addComponent(FinalDeposit_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addComponent(total_Lbl)
+                    .addComponent(FinalDeposit_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addComponent(DepositBonus)
-                .addGap(53, 53, 53))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Deposit_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(Deposit_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Deposit_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(Deposit_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(jPanel5);
 
         savingsAcc_pnl.addTab("Deposits", jSplitPane1);
 
-        ClearSA1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ClearSA1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         ClearSA1.setText("Clear");
 
-        CheckSA1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        CheckSA1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         CheckSA1.setText("Check");
 
-        SubmitSA1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        SubmitSA1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         SubmitSA1.setText("Submit");
 
         javax.swing.GroupLayout wOption_pnlLayout = new javax.swing.GroupLayout(wOption_pnl);
@@ -376,23 +400,23 @@ public class Teller extends javax.swing.JFrame{
                 .addComponent(ClearSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
                 .addComponent(SubmitSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane5.setLeftComponent(wOption_pnl);
 
-        wACCT.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        wACCT.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         wACCT.setText("Account No:");
 
-        wName_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        wName_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         wName_Lbl.setText("Holder Name:");
 
-        wBalance_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        wBalance_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         wBalance_Lbl.setText("Current Balance: ");
 
         WHolder_Txt.setEditable(false);
-        WHolder_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        WHolder_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         WHolder_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 WHolder_TxtActionPerformed(evt);
@@ -400,24 +424,24 @@ public class Teller extends javax.swing.JFrame{
         });
 
         DCurrentBalance_Txt.setEditable(false);
-        DCurrentBalance_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        DCurrentBalance_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         DCurrentBalance_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DCurrentBalance_TxtActionPerformed(evt);
             }
         });
 
-        WAccno_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        WAccno_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         WAccno_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 WAccno_TxtActionPerformed(evt);
             }
         });
 
-        WDRL_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        WDRL_Lbl.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         WDRL_Lbl.setText("Withdraw Amount:");
 
-        Dwithdraw_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        Dwithdraw_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         Dwithdraw_Txt.setText("0.00");
         Dwithdraw_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -445,14 +469,14 @@ public class Teller extends javax.swing.JFrame{
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(withdrawal_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(WAccno_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(WHolder_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(WHolder_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(DCurrentBalance_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(withdrawal_pnlLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
                         .addComponent(WDRL_Lbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Dwithdraw_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(637, Short.MAX_VALUE))
+                        .addComponent(Dwithdraw_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)))
+                .addContainerGap(647, Short.MAX_VALUE))
         );
         withdrawal_pnlLayout.setVerticalGroup(
             withdrawal_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -469,11 +493,11 @@ public class Teller extends javax.swing.JFrame{
                 .addGroup(withdrawal_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(wBalance_Lbl)
                     .addComponent(DCurrentBalance_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(61, 61, 61)
+                .addGap(30, 30, 30)
                 .addGroup(withdrawal_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(WDRL_Lbl)
                     .addComponent(Dwithdraw_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         jSplitPane5.setRightComponent(withdrawal_pnl);
@@ -483,6 +507,7 @@ public class Teller extends javax.swing.JFrame{
         NewUser.addTab("Savings Account", savingsAcc_pnl);
 
         mInterest_pnl.setBackground(new java.awt.Color(255, 204, 255));
+        mInterest_pnl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         interestINFO_tarea.setEditable(false);
         interestINFO_tarea.setColumns(20);
@@ -491,11 +516,16 @@ public class Teller extends javax.swing.JFrame{
         interestINFO_tarea.setText("BUILDING ECONOMY TOGETHER, EMPOWERING LIVES - QUINN BANK (MANUAL INTERST PROCESSING SYSTEM)\n\n\nDate: 22th every month (Double Interst on December Season)\n\n*Finance department verifies all interests and finals them by 28th.");
         jScrollPane2.setViewportView(interestINFO_tarea);
 
-        CheckSA3_Btn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        CheckSA3_Btn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         CheckSA3_Btn.setText("FETCH ALL ACCOUNTS");
+        CheckSA3_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckSA3_BtnActionPerformed(evt);
+            }
+        });
 
         processInterest_Btn.setBackground(java.awt.Color.orange);
-        processInterest_Btn.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        processInterest_Btn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         processInterest_Btn.setForeground(java.awt.Color.red);
         processInterest_Btn.setText("PROCESS INTEREST");
         processInterest_Btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -529,7 +559,7 @@ public class Teller extends javax.swing.JFrame{
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(processInterest_Btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1076, Short.MAX_VALUE)
                             .addComponent(CheckSA3_Btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(45, 45, 45))))
         );
@@ -546,7 +576,7 @@ public class Teller extends javax.swing.JFrame{
                 .addComponent(CheckSA3_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(processInterest_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         mInterest_pnl.addTab("HOME", jPanel6);
@@ -554,11 +584,12 @@ public class Teller extends javax.swing.JFrame{
         NewUser.addTab("Monthly Interests", mInterest_pnl);
 
         reports_pnl.setBackground(new java.awt.Color(204, 204, 255));
+        reports_pnl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        Generate_Btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Generate_Btn.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         Generate_Btn.setText("Generate");
 
-        RSubmit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        RSubmit.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         RSubmit.setText("Submit");
 
         javax.swing.GroupLayout rOptions_jblLayout = new javax.swing.GroupLayout(rOptions_jbl);
@@ -572,7 +603,7 @@ public class Teller extends javax.swing.JFrame{
             rOptions_jblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rOptions_jblLayout.createSequentialGroup()
                 .addComponent(Generate_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 401, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 466, Short.MAX_VALUE)
                 .addComponent(RSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -582,11 +613,11 @@ public class Teller extends javax.swing.JFrame{
         dReport_pnl.setLayout(dReport_pnlLayout);
         dReport_pnlLayout.setHorizontalGroup(
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 958, Short.MAX_VALUE)
+            .addGap(0, 1072, Short.MAX_VALUE)
         );
         dReport_pnlLayout.setVerticalGroup(
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGap(0, 571, Short.MAX_VALUE)
         );
 
         jSplitPane4.setRightComponent(dReport_pnl);
@@ -599,56 +630,61 @@ public class Teller extends javax.swing.JFrame{
 
         nCustomer_pnl.setBackground(new java.awt.Color(102, 102, 0));
 
-        ACCTType_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        ACCTType_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         ACCTType_Lbl.setText("Account Type");
 
-        FName_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        FName_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         FName_Lbl.setText("First Name");
 
-        ACCTNumber_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        ACCTNumber_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         ACCTNumber_Lbl.setText("Account Number");
 
-        PhoneNum_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        PhoneNum_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         PhoneNum_Lbl.setText("Phone                    +44");
 
-        IDeposit_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        IDeposit_Lbl.setText("Initial Deposit (£100)");
+        IDeposit_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        IDeposit_Lbl.setText("Initial Deposit");
 
-        Mail_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Mail_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         Mail_Lbl.setText("Email");
 
-        NewFName_Txt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewFName_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         NewFName_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NewFName_TxtActionPerformed(evt);
             }
         });
 
-        LName_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        LName_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         LName_Lbl.setText("Last Name");
 
-        NewLName_Txt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewLName_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        listOfAccountTypes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        listOfAccountTypes.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         listOfAccountTypes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ACCOUNT TYPE--", "NORMAL SAVINGS", "BONUS SAVINGS", "PRIMIER SAVINGS" }));
+        listOfAccountTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listOfAccountTypesActionPerformed(evt);
+            }
+        });
 
-        NewMail_Txt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewMail_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        IDepositAMT_Txt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        IDepositAMT_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         IDepositAMT_Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         IDepositAMT_Txt.setText("0.00");
 
-        GeneratedAccountNo_Txt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        GeneratedAccountNo_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         GeneratedAccountNo_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GeneratedAccountNo_TxtActionPerformed(evt);
             }
         });
 
-        NewPhoneNum_Txt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        NewPhoneNum_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         accNoGen_btn.setBackground(new java.awt.Color(51, 51, 51));
-        accNoGen_btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        accNoGen_btn.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         accNoGen_btn.setForeground(new java.awt.Color(255, 255, 255));
         accNoGen_btn.setText("Generate");
         accNoGen_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -658,19 +694,23 @@ public class Teller extends javax.swing.JFrame{
         });
 
         accNoGen1.setBackground(new java.awt.Color(0, 0, 153));
-        accNoGen1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        accNoGen1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         accNoGen1.setForeground(new java.awt.Color(255, 255, 255));
         accNoGen1.setText("Create Account");
 
-        PNumber_Lbl.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        PNumber_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         PNumber_Lbl.setText("Passport Number / ID Number (Foreign Nationals)");
 
-        Nationals_Lbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Nationals_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout nCustomer_pnlLayout = new javax.swing.GroupLayout(nCustomer_pnl);
         nCustomer_pnl.setLayout(nCustomer_pnlLayout);
         nCustomer_pnlLayout.setHorizontalGroup(
             nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -679,8 +719,8 @@ public class Teller extends javax.swing.JFrame{
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(ACCTType_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                                        .addComponent(Mail_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(ACCTType_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Mail_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(PhoneNum_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(IDeposit_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(ACCTNumber_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -691,8 +731,8 @@ public class Teller extends javax.swing.JFrame{
                                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(NewMail_Txt, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(NewPhoneNum_Txt, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(IDepositAMT_Txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                                            .addComponent(GeneratedAccountNo_Txt, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(IDepositAMT_Txt, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(GeneratedAccountNo_Txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(31, 31, 31)
                                         .addComponent(accNoGen_btn))))
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
@@ -705,19 +745,17 @@ public class Teller extends javax.swing.JFrame{
                                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                         .addGap(1, 1, 1)
                                         .addComponent(NewFName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
-                        .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addComponent(PNumber_Lbl)
                         .addGap(18, 18, 18)
-                        .addComponent(Nationals_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(Nationals_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(482, Short.MAX_VALUE))
         );
         nCustomer_pnlLayout.setVerticalGroup(
             nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addComponent(FName_Lbl)
@@ -747,18 +785,14 @@ public class Teller extends javax.swing.JFrame{
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IDeposit_Lbl)
                     .addComponent(IDepositAMT_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ACCTNumber_Lbl)
-                            .addComponent(GeneratedAccountNo_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(accNoGen_btn))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ACCTNumber_Lbl)
+                    .addComponent(GeneratedAccountNo_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accNoGen_btn))
+                .addGap(30, 30, 30)
+                .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -766,16 +800,16 @@ public class Teller extends javax.swing.JFrame{
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
+                .addGap(61, 61, 61))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addContainerGap(57, Short.MAX_VALUE)
                 .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(52, 52, 52))
         );
 
         NewUser.addTab("NEW Customer", jPanel16);
@@ -796,18 +830,17 @@ public class Teller extends javax.swing.JFrame{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1)
-                        .addGap(185, 185, 185)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1062, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addGap(250, 250, 250)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(456, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -824,8 +857,12 @@ public class Teller extends javax.swing.JFrame{
                 .addContainerGap())
         );
 
-        jMenu2.setText("File");
+        jMenuBar2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        jMenu2.setText("File");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem1.setText("Manager Access");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -834,6 +871,7 @@ public class Teller extends javax.swing.JFrame{
         });
         jMenu2.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem2.setText("Logout");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -850,9 +888,7 @@ public class Teller extends javax.swing.JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -871,29 +907,22 @@ public class Teller extends javax.swing.JFrame{
     private void accNoGen_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNoGen_btnActionPerformed
         // Token Generator to Generate New Account Numbers
         String AccountType = (String) listOfAccountTypes.getSelectedItem();
-         if(AccountType == "--SELECT ACCOUNT TYPE--")
-        {
-            JOptionPane.showMessageDialog(null, 
-                              "Please An Account Type !", 
-                              "Account Generation Halted!", 
-                              JOptionPane.WARNING_MESSAGE);
-        }
-        else if(AccountType == "NORMAL SAVINGS")
-        {
+        if (AccountType == "--SELECT ACCOUNT TYPE--") {
+            JOptionPane.showMessageDialog(null,
+                    "Please An Account Type !",
+                    "Account Generation Halted!",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (AccountType == "NORMAL SAVINGS") {
             int generatedAccount = basic;
             basic += 1;
 
             GeneratedAccountNo_Txt.setText(String.valueOf(generatedAccount));
-        }
-        else if(AccountType == "BONUS SAVINGS")
-        {
+        } else if (AccountType == "BONUS SAVINGS") {
             int generatedAccount = bonus;
             bonus += 1;
 
             GeneratedAccountNo_Txt.setText(String.valueOf(generatedAccount));
-        }
-        else if(AccountType == "PRIMIER SAVINGS")
-        {
+        } else if (AccountType == "PRIMIER SAVINGS") {
             int generatedAccount = premier;
             premier += 1;
 
@@ -947,16 +976,36 @@ public class Teller extends javax.swing.JFrame{
 
     private void DepositBonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositBonusActionPerformed
         // TODO add your handling code here:
+        String Type = ACCType_Txt.getText();
+        DecimalFormat decimalCorrection = new DecimalFormat("#.00");
+        if (Type.equals("NORMAL SAVINGS")) {
+
+            String Formulae = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) * 1.00125);
+            FinalDeposit_Txt.setText(Formulae);
+
+        } else if (Type.equals("BONUS SAVINGS")) {
+
+            String Formulae = decimalCorrection.format((Double.valueOf(DEPAmount_Txt.getText()) * 1.03));
+            FinalDeposit_Txt.setText(Formulae);
+
+        } else if (Type.equals("PRIMIER SAVINGS")) {
+
+            String Formulae = decimalCorrection.format((Double.valueOf(DEPAmount_Txt.getText()) * 1.07));
+            FinalDeposit_Txt.setText(Formulae);
+
+        }
+
     }//GEN-LAST:event_DepositBonusActionPerformed
 
     private void processInterest_BtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processInterest_BtnMousePressed
         // NOTIFIES AGENT ABOUT INTEREST PROCESS AND BLOCKS MULTIPLE CALCULATIONS
         // COLOUR CHANGES AND BUTTON DISABLED WHEN CLICKED
-    processInterest_Btn.setBackground(Color.GREEN);
-    processInterest_Btn.setForeground(Color.BLACK);
-    processInterest_Btn.setEnabled(false);
-    processInterest_Btn.setText("Done");
-    
+        processInterest_Btn.setBackground(Color.GREEN);
+        processInterest_Btn.setForeground(Color.BLACK);
+        processInterest_Btn.setEnabled(false);
+        processInterest_Btn.setText("Done");
+        DepositBonus.setEnabled(true);
+
     }//GEN-LAST:event_processInterest_BtnMousePressed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
@@ -964,12 +1013,12 @@ public class Teller extends javax.swing.JFrame{
     }//GEN-LAST:event_logoutActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-     
+
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-         //Closing Form and Reopening the Login Screeen
+        //Closing Form and Reopening the Login Screeen
         Access a1 = new Access();
         a1.setVisible(true);
         //closes the login form prevent unnecessary tab creation
@@ -983,6 +1032,45 @@ public class Teller extends javax.swing.JFrame{
     private void datePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_datePropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_datePropertyChange
+
+    private void CheckSA3_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSA3_BtnActionPerformed
+//        try {
+        // TODO add your handling code here:
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            String url = "jdbc:sqlserver//localhost:1433:databaseName=quinnbank;user=admin;password=SOFT255sl";
+//            Connection connect = DriverManager.getConnection(url);
+//            String sql = "SELECT * FROM CUSTOMER";
+//            PreparedStatement statement = connect.prepareStatement(sql);
+//            statement.setString()
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+    }//GEN-LAST:event_CheckSA3_BtnActionPerformed
+
+    private void ClearSA_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearSA_BtnActionPerformed
+        // TODO add your handling code here:
+        DAccno_Txt.setText("");
+        holderName_Txt.setText("");
+        currentBalance_Txt.setText("");
+        ACCType_Txt.setText("");
+        DEPAmount_Txt.setText("0.00");
+        FinalDeposit_Txt.setText("");
+    }//GEN-LAST:event_ClearSA_BtnActionPerformed
+
+    private void listOfAccountTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfAccountTypesActionPerformed
+        String AccountType = (String) listOfAccountTypes.getSelectedItem();
+        if (AccountType == "--SELECT ACCOUNT TYPE--") {
+            IDeposit_Lbl.setText("Initial Deposit");
+
+        } else if (AccountType == "NORMAL SAVINGS") {
+            IDeposit_Lbl.setText("Initial Deposit (£100)");
+        } else if (AccountType == "BONUS SAVINGS") {
+            IDeposit_Lbl.setText("Initial Deposit (£300)");
+        } else if (AccountType == "PRIMIER SAVINGS") {
+            IDeposit_Lbl.setText("Initial Deposit (£1000)");
+        }
+    }//GEN-LAST:event_listOfAccountTypesActionPerformed
 
     /**
      * @param args the command line arguments

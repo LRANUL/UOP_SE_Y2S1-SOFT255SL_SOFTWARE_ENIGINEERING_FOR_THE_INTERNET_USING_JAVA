@@ -8,6 +8,6 @@
  *
  * @author ranul
  */
-public class BonusSavings extends Account{
-    
+public class BonusSavings extends Account {
+
 }
