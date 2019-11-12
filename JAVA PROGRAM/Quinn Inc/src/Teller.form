@@ -45,6 +45,9 @@
     </Container>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar2">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="48" green="3f" red="12" type="rgb"/>
+        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
@@ -57,6 +60,9 @@
               <Font name="Segoe UI" size="20" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu2MouseEntered"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
@@ -77,6 +83,7 @@
                 <Property name="text" type="java.lang.String" value="Logout"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenuItem2MouseEntered"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
               </Events>
             </MenuItem>
@@ -112,14 +119,15 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanel1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -128,7 +136,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="33" red="33" type="rgb"/>
+          <Color blue="48" green="3f" red="12" type="rgb"/>
         </Property>
       </Properties>
 
@@ -136,19 +144,22 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="250" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLabel4" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="250" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel4" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="NewUser" min="-2" pref="1132" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="456" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="NewUser" pref="0" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -164,9 +175,9 @@
                       </Group>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="NewUser" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="NewUser" min="-2" pref="630" max="-2" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -215,6 +226,11 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JPanel" name="dOption_pnl">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="92" green="7b" red="0" type="rgb"/>
+                        </Property>
+                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                           <JSplitPaneConstraints position="left"/>
@@ -235,7 +251,7 @@
                                   <Component id="ClearSA_Btn" min="-2" pref="38" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                                   <Component id="CheckSA_Btn" min="-2" pref="49" max="-2" attributes="0"/>
-                                  <EmptySpace pref="384" max="32767" attributes="0"/>
+                                  <EmptySpace pref="373" max="32767" attributes="0"/>
                                   <Component id="SubmitSA" min="-2" pref="56" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -250,6 +266,7 @@
                             <Property name="text" type="java.lang.String" value="Clear"/>
                           </Properties>
                           <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ClearSA_BtnMouseEntered"/>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ClearSA_BtnActionPerformed"/>
                           </Events>
                         </Component>
@@ -260,6 +277,9 @@
                             </Property>
                             <Property name="text" type="java.lang.String" value="Check"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="CheckSA_BtnMouseEntered"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="SubmitSA">
                           <Properties>
@@ -268,6 +288,9 @@
                             </Property>
                             <Property name="text" type="java.lang.String" value="Submit"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SubmitSAMouseEntered"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -281,270 +304,322 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="Deposit_pnl" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="Deposit_pnl" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="Deposit_pnl" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="Deposit_pnl" alignment="0" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
                         <Container class="javax.swing.JPanel" name="Deposit_pnl">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="92" green="7b" red="0" type="rgb"/>
+                            </Property>
+                          </Properties>
 
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="65" pref="65" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="total_Lbl" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="DepositBonus" pref="166" max="32767" attributes="0"/>
-                                                  <Component id="FinalDeposit_Txt" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Component id="dAccount" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                                                      <Component id="DAccno_Txt" min="-2" pref="182" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="dName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="dType_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                                              <Component id="dAmmount_Lbl" min="-2" max="-2" attributes="0"/>
-                                                              <Component id="dBalance_Lbl" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="DEPAmount_Txt" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                                                          <Component id="holderName_Txt" min="-2" pref="284" max="-2" attributes="0"/>
-                                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                              <Component id="ACCType_Txt" alignment="0" pref="178" max="32767" attributes="0"/>
-                                                              <Component id="currentBalance_Txt" alignment="0" max="32767" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                  </Group>
-                                                  <Component id="jScrollPane1" min="-2" pref="657" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace pref="367" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace pref="63" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="dAccount" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="DAccno_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
                                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="dName_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="holderName_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="dBalance_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="currentBalance_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="dType_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="ACCType_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="dAmmount_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="DEPAmount_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jScrollPane1" min="-2" pref="119" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="total_Lbl" min="-2" max="-2" attributes="0"/>
-                                          <Component id="FinalDeposit_Txt" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                                      <Component id="DepositBonus" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="71" max="32767" attributes="0"/>
+                                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace pref="35" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                           </Layout>
                           <SubComponents>
-                            <Component class="javax.swing.JLabel" name="dAccount">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Account No:"/>
-                              </Properties>
-                            </Component>
-                            <Component class="javax.swing.JTextField" name="DAccno_Txt">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DAccno_TxtActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Component class="javax.swing.JTextField" name="holderName_Txt">
-                              <Properties>
-                                <Property name="editable" type="boolean" value="false"/>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="holderName_TxtActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Component class="javax.swing.JLabel" name="dName_Lbl">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Holder Name:"/>
-                              </Properties>
-                            </Component>
-                            <Component class="javax.swing.JLabel" name="dBalance_Lbl">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Current Balance: "/>
-                              </Properties>
-                            </Component>
-                            <Component class="javax.swing.JTextField" name="currentBalance_Txt">
-                              <Properties>
-                                <Property name="editable" type="boolean" value="false"/>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="currentBalance_TxtActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Component class="javax.swing.JTextField" name="DEPAmount_Txt">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="horizontalAlignment" type="int" value="11"/>
-                                <Property name="text" type="java.lang.String" value="0.00"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DEPAmount_TxtActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Component class="javax.swing.JLabel" name="dAmmount_Lbl">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Deposit Amount:"/>
-                              </Properties>
-                            </Component>
-                            <Component class="javax.swing.JLabel" name="dType_Lbl">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Account Type"/>
-                              </Properties>
-                            </Component>
-                            <Component class="javax.swing.JTextField" name="ACCType_Txt">
-                              <Properties>
-                                <Property name="editable" type="boolean" value="false"/>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="horizontalAlignment" type="int" value="0"/>
-                                <Property name="text" type="java.lang.String" value="BONUS SAVINGS"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ACCType_TxtActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Component class="javax.swing.JButton" name="DepositBonus">
+                            <Container class="javax.swing.JPanel" name="jPanel4">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="99" green="0" red="0" type="rgb"/>
+                                  <Color blue="48" green="3f" red="12" type="rgb"/>
                                 </Property>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Bonus Calculate"/>
                               </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DepositBonusActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-                              <AuxValues>
-                                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                              </AuxValues>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                              <Layout>
+                                <DimensionLayout dim="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace pref="133" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="DepositBonus" min="-2" pref="166" max="-2" attributes="0"/>
+                                              <Component id="FinalDeposit_Txt" min="-2" pref="166" max="-2" attributes="0"/>
+                                              <Component id="jScrollPane1" min="-2" pref="657" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="dBalance_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="dAccount" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="DAccno_Txt" min="-2" pref="182" max="-2" attributes="0"/>
+                                              <Component id="currentBalance_Txt" min="-2" pref="178" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="total_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="dName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Group type="102" alignment="0" attributes="0">
+                                                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                                              <Component id="dAmmount_Lbl" min="-2" max="-2" attributes="0"/>
+                                                          </Group>
+                                                          <Component id="dType_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="DEPAmount_Txt" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                                                          <Component id="holderName_Txt" alignment="0" min="-2" pref="284" max="-2" attributes="0"/>
+                                                          <Component id="ACCType_Txt" alignment="0" min="-2" pref="178" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace pref="489" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                </DimensionLayout>
+                                <DimensionLayout dim="1">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="dAccount" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="DAccno_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace pref="56" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="dBalance_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="currentBalance_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane1" min="-2" pref="119" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="FinalDeposit_Txt" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="DepositBonus" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="dName_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="holderName_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="dType_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="ACCType_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="dAmmount_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="DEPAmount_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="139" max="-2" attributes="0"/>
+                                              <Component id="total_Lbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace pref="114" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                </DimensionLayout>
+                              </Layout>
                               <SubComponents>
-                                <Component class="javax.swing.JTextArea" name="bonusINFO_tarea">
+                                <Component class="javax.swing.JLabel" name="dAccount">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Account No:"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JTextField" name="DAccno_Txt">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DAccno_TxtActionPerformed"/>
+                                  </Events>
+                                </Component>
+                                <Component class="javax.swing.JTextField" name="holderName_Txt">
                                   <Properties>
                                     <Property name="editable" type="boolean" value="false"/>
-                                    <Property name="columns" type="int" value="20"/>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Courier New" size="16" style="0"/>
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
                                     </Property>
-                                    <Property name="rows" type="int" value="5"/>
-                                    <Property name="text" type="java.lang.String" value="QUINN BANK DAILY DEPOSIT BONUS - DECEMBER / APRIL (SESONAL))&#xa;&#xa;Normal Savings : 1.25%&#xa;Bonus Savings : 3%&#xa;Premier Savings : 7%"/>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="holderName_TxtActionPerformed"/>
+                                  </Events>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="dName_Lbl">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Holder Name:"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="dBalance_Lbl">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Current Balance: "/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JTextField" name="currentBalance_Txt">
+                                  <Properties>
+                                    <Property name="editable" type="boolean" value="false"/>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="currentBalance_TxtActionPerformed"/>
+                                  </Events>
+                                </Component>
+                                <Component class="javax.swing.JTextField" name="ACCType_Txt">
+                                  <Properties>
+                                    <Property name="editable" type="boolean" value="false"/>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="horizontalAlignment" type="int" value="0"/>
+                                    <Property name="text" type="java.lang.String" value="BONUS SAVINGS"/>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ACCType_TxtActionPerformed"/>
+                                  </Events>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="dType_Lbl">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Account Type"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="dAmmount_Lbl">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Deposit Amount:"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JTextField" name="DEPAmount_Txt">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="horizontalAlignment" type="int" value="11"/>
+                                    <Property name="text" type="java.lang.String" value="0.00"/>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DEPAmount_TxtActionPerformed"/>
+                                  </Events>
+                                </Component>
+                                <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                                  <AuxValues>
+                                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                                  </AuxValues>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JTextArea" name="bonusINFO_tarea">
+                                      <Properties>
+                                        <Property name="editable" type="boolean" value="false"/>
+                                        <Property name="columns" type="int" value="20"/>
+                                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                          <Font name="Courier New" size="16" style="0"/>
+                                        </Property>
+                                        <Property name="rows" type="int" value="5"/>
+                                        <Property name="text" type="java.lang.String" value="QUINN BANK DAILY DEPOSIT BONUS - DECEMBER / APRIL (SESONAL))&#xa;&#xa;Normal Savings : 1.25%&#xa;Bonus Savings : 3%&#xa;Premier Savings : 7%"/>
+                                      </Properties>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
+                                <Component class="javax.swing.JTextField" name="FinalDeposit_Txt">
+                                  <Properties>
+                                    <Property name="editable" type="boolean" value="false"/>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="horizontalAlignment" type="int" value="11"/>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FinalDeposit_TxtActionPerformed"/>
+                                  </Events>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="total_Lbl">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Final Total:"/>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JButton" name="DepositBonus">
+                                  <Properties>
+                                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="d1" green="b4" id="Active Caption" palette="2" red="99" type="palette"/>
+                                    </Property>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Yu Gothic UI" size="16" style="0"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" value="Bonus Calculate"/>
+                                  </Properties>
+                                  <Events>
+                                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="DepositBonusMouseEntered"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DepositBonusActionPerformed"/>
+                                  </Events>
                                 </Component>
                               </SubComponents>
                             </Container>
-                            <Component class="javax.swing.JLabel" name="total_Lbl">
-                              <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Final Total:"/>
-                              </Properties>
-                            </Component>
-                            <Component class="javax.swing.JTextField" name="FinalDeposit_Txt">
-                              <Properties>
-                                <Property name="editable" type="boolean" value="false"/>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Yu Gothic UI" size="16" style="0"/>
-                                </Property>
-                                <Property name="horizontalAlignment" type="int" value="11"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FinalDeposit_TxtActionPerformed"/>
-                              </Events>
-                            </Component>
                           </SubComponents>
                         </Container>
                       </SubComponents>
@@ -563,6 +638,11 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JPanel" name="wOption_pnl">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="92" green="7b" red="0" type="rgb"/>
+                        </Property>
+                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                           <JSplitPaneConstraints position="left"/>
@@ -583,7 +663,7 @@
                                   <Component id="ClearSA1" min="-2" pref="38" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                                   <Component id="CheckSA1" min="-2" pref="49" max="-2" attributes="0"/>
-                                  <EmptySpace pref="384" max="32767" attributes="0"/>
+                                  <EmptySpace pref="373" max="32767" attributes="0"/>
                                   <Component id="SubmitSA1" min="-2" pref="56" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -597,6 +677,9 @@
                             </Property>
                             <Property name="text" type="java.lang.String" value="Clear"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ClearSA1MouseEntered"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="CheckSA1">
                           <Properties>
@@ -605,6 +688,9 @@
                             </Property>
                             <Property name="text" type="java.lang.String" value="Check"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="CheckSA1MouseEntered"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="SubmitSA1">
                           <Properties>
@@ -613,10 +699,18 @@
                             </Property>
                             <Property name="text" type="java.lang.String" value="Submit"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SubmitSA1MouseEntered"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
                     <Container class="javax.swing.JPanel" name="withdrawal_pnl">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="92" green="7b" red="0" type="rgb"/>
+                        </Property>
+                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                           <JSplitPaneConstraints position="right"/>
@@ -626,145 +720,183 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="wACCT" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="wName_Lbl" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="wBalance_Lbl" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="WAccno_Txt" min="-2" pref="148" max="-2" attributes="0"/>
-                                              <Component id="WHolder_Txt" alignment="0" min="-2" pref="240" max="-2" attributes="0"/>
-                                              <Component id="DCurrentBalance_Txt" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="WDRL_Lbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="Dwithdraw_Txt" min="-2" pref="130" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace pref="647" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace pref="75" max="32767" attributes="0"/>
+                                  <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="wACCT" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="WAccno_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="wName_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="WHolder_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="wBalance_Lbl" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DCurrentBalance_Txt" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="WDRL_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="Dwithdraw_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="365" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="42" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JLabel" name="wACCT">
+                        <Container class="javax.swing.JPanel" name="jPanel7">
                           <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" value="Account No:"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="wName_Lbl">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" value="Holder Name:"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="wBalance_Lbl">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" value="Current Balance: "/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JTextField" name="WHolder_Txt">
-                          <Properties>
-                            <Property name="editable" type="boolean" value="false"/>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="48" green="3f" red="12" type="rgb"/>
                             </Property>
                           </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WHolder_TxtActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JTextField" name="DCurrentBalance_Txt">
-                          <Properties>
-                            <Property name="editable" type="boolean" value="false"/>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
-                            </Property>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DCurrentBalance_TxtActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JTextField" name="WAccno_Txt">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
-                            </Property>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WAccno_TxtActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JLabel" name="WDRL_Lbl">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" value="Withdraw Amount:"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JTextField" name="Dwithdraw_Txt">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Yu Gothic UI" size="16" style="0"/>
-                            </Property>
-                            <Property name="text" type="java.lang.String" value="0.00"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Dwithdraw_TxtActionPerformed"/>
-                          </Events>
-                        </Component>
+
+                          <Layout>
+                            <DimensionLayout dim="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="wACCT" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="wName_Lbl" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="WAccno_Txt" min="-2" pref="148" max="-2" attributes="0"/>
+                                                  <Component id="WHolder_Txt" min="-2" pref="240" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="wBalance_Lbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                              <Component id="DCurrentBalance_Txt" min="-2" pref="148" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                              <Component id="WDRL_Lbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="Dwithdraw_Txt" min="-2" pref="147" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace pref="380" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                            </DimensionLayout>
+                            <DimensionLayout dim="1">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="wACCT" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="WAccno_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="wName_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="WHolder_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="wBalance_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="DCurrentBalance_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="WDRL_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="Dwithdraw_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace pref="184" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                            </DimensionLayout>
+                          </Layout>
+                          <SubComponents>
+                            <Component class="javax.swing.JLabel" name="wACCT">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Account No:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="WAccno_Txt">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WAccno_TxtActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="WHolder_Txt">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="WHolder_TxtActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="wName_Lbl">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Holder Name:"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="wBalance_Lbl">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Current Balance: "/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="DCurrentBalance_Txt">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DCurrentBalance_TxtActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JTextField" name="Dwithdraw_Txt">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                                <Property name="horizontalAlignment" type="int" value="11"/>
+                                <Property name="text" type="java.lang.String" value="0.00"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Dwithdraw_TxtActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="WDRL_Lbl">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Yu Gothic UI" size="16" style="0"/>
+                                </Property>
+                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" value="Withdraw Amount:"/>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
                       </SubComponents>
                     </Container>
                   </SubComponents>
@@ -791,6 +923,11 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="jPanel6">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="92" green="7b" red="0" type="rgb"/>
+                    </Property>
+                  </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="HOME">
@@ -803,112 +940,161 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="day_Lbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="date" min="-2" pref="189" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="processInterest_Btn" max="32767" attributes="0"/>
-                                          <Component id="jScrollPane2" alignment="0" pref="1076" max="32767" attributes="0"/>
-                                          <Component id="CheckSA3_Btn" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="80" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="day_Lbl" min="-2" max="-2" attributes="0"/>
-                                  <Component id="date" min="-2" pref="31" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="154" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="CheckSA3_Btn" min="-2" pref="49" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                              <Component id="processInterest_Btn" min="-2" pref="46" max="-2" attributes="0"/>
-                              <EmptySpace pref="192" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace pref="42" max="32767" attributes="0"/>
+                              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-                      <AuxValues>
-                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                      </AuxValues>
+                    <Container class="javax.swing.JPanel" name="jPanel3">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="48" green="3f" red="12" type="rgb"/>
+                        </Property>
+                      </Properties>
 
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace pref="323" max="32767" attributes="0"/>
+                                  <Component id="processInterest_Btn" min="-2" pref="329" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="315" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="350" max="-2" attributes="0"/>
+                                  <Component id="FetchAcc_Btn" min="-2" pref="255" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jScrollPane2" pref="946" max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="day_Lbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="date" min="-2" pref="189" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="677" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace pref="238" max="32767" attributes="0"/>
+                                  <Component id="FetchAcc_Btn" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+                                  <Component id="processInterest_Btn" min="-2" pref="46" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="day_Lbl" min="-2" max="-2" attributes="0"/>
+                                          <Component id="date" min="-2" pref="31" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane2" min="-2" pref="154" max="-2" attributes="0"/>
+                                      <EmptySpace pref="241" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JTextArea" name="interestINFO_tarea">
+                        <Component class="javax.swing.JLabel" name="date">
                           <Properties>
-                            <Property name="editable" type="boolean" value="false"/>
-                            <Property name="columns" type="int" value="20"/>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="MS Gothic" size="18" style="1"/>
+                              <Font name="Tahoma" size="24" style="0"/>
                             </Property>
-                            <Property name="rows" type="int" value="5"/>
-                            <Property name="text" type="java.lang.String" value="BUILDING ECONOMY TOGETHER, EMPOWERING LIVES - QUINN BANK (MANUAL INTERST PROCESSING SYSTEM)&#xa;&#xa;&#xa;Date: 22th every month (Double Interst on December Season)&#xa;&#xa;*Finance department verifies all interests and finals them by 28th."/>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="datePropertyChange"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="day_Lbl">
+                          <Properties>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Tahoma" size="24" style="0"/>
+                            </Property>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Today:"/>
+                          </Properties>
+                        </Component>
+                        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                          <AuxValues>
+                            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                          </AuxValues>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JTextArea" name="interestINFO_tarea">
+                              <Properties>
+                                <Property name="editable" type="boolean" value="false"/>
+                                <Property name="columns" type="int" value="20"/>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="MS Gothic" size="18" style="1"/>
+                                </Property>
+                                <Property name="rows" type="int" value="5"/>
+                                <Property name="text" type="java.lang.String" value="BUILDING ECONOMY TOGETHER, EMPOWERING LIVES - QUINN BANK (MANUAL INTEREST PROCESSING SYSTEM)&#xa;&#xa;&#xa;Date: 22th every month (Double Interst on December Season)&#xa;&#xa;*Finance department verifies all interests and finals them by 28th."/>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                        <Component class="javax.swing.JButton" name="FetchAcc_Btn">
+                          <Properties>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Tahoma" size="16" style="1"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="FETCH ALL ACCOUNTS"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="FetchAcc_BtnMouseEntered"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FetchAcc_BtnActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="processInterest_Btn">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="0" green="0" red="99" type="rgb"/>
+                            </Property>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Tahoma" size="16" style="1"/>
+                            </Property>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="PROCESS INTEREST"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="processInterest_BtnMouseEntered"/>
+                            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="processInterest_BtnMousePressed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="CheckSA3_Btn">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="16" style="1"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="FETCH ALL ACCOUNTS"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CheckSA3_BtnActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JButton" name="processInterest_Btn">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="c8" id="orange" palette="1" red="ff" type="palette"/>
-                        </Property>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="16" style="1"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" id="red" palette="1" red="ff" type="palette"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="PROCESS INTEREST"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="processInterest_BtnMousePressed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="day_Lbl">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="24" style="0"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Today:"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="date">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="24" style="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="datePropertyChange"/>
-                      </Events>
-                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -944,6 +1130,11 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Container class="javax.swing.JPanel" name="rOptions_jbl">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="92" green="7b" red="0" type="rgb"/>
+                        </Property>
+                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                           <JSplitPaneConstraints position="left"/>
@@ -961,7 +1152,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="Generate_Btn" min="-2" pref="49" max="-2" attributes="0"/>
-                                  <EmptySpace pref="466" max="32767" attributes="0"/>
+                                  <EmptySpace pref="455" max="32767" attributes="0"/>
                                   <Component id="RSubmit" min="-2" pref="56" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -987,6 +1178,11 @@
                       </SubComponents>
                     </Container>
                     <Container class="javax.swing.JPanel" name="dReport_pnl">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="92" green="7b" red="0" type="rgb"/>
+                        </Property>
+                      </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                           <JSplitPaneConstraints position="right"/>
@@ -996,15 +1192,45 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="1072" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace pref="35" max="32767" attributes="0"/>
+                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="571" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                         </DimensionLayout>
                       </Layout>
+                      <SubComponents>
+                        <Container class="javax.swing.JPanel" name="jPanel2">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="48" green="3f" red="12" type="rgb"/>
+                            </Property>
+                          </Properties>
+
+                          <Layout>
+                            <DimensionLayout dim="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <EmptySpace min="0" pref="956" max="32767" attributes="0"/>
+                              </Group>
+                            </DimensionLayout>
+                            <DimensionLayout dim="1">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <EmptySpace min="0" pref="485" max="32767" attributes="0"/>
+                              </Group>
+                            </DimensionLayout>
+                          </Layout>
+                        </Container>
+                      </SubComponents>
                     </Container>
                   </SubComponents>
                 </Container>
@@ -1013,7 +1239,7 @@
             <Container class="javax.swing.JPanel" name="jPanel16">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="33" red="33" type="rgb"/>
+                  <Color blue="92" green="7b" red="0" type="rgb"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -1028,18 +1254,18 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="62" max="32767" attributes="0"/>
+                          <EmptySpace pref="42" max="32767" attributes="0"/>
                           <Component id="nCustomer_pnl" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="57" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           <Component id="nCustomer_pnl" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                          <EmptySpace pref="50" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1048,7 +1274,7 @@
                 <Container class="javax.swing.JPanel" name="nCustomer_pnl">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="0" green="66" red="66" type="rgb"/>
+                      <Color blue="48" green="3f" red="12" type="rgb"/>
                     </Property>
                   </Properties>
 
@@ -1065,47 +1291,45 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="ACCTType_Lbl" max="32767" attributes="0"/>
-                                                      <Component id="Mail_Lbl" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="PhoneNum_Lbl" min="-2" pref="176" max="-2" attributes="0"/>
-                                                  <Component id="IDeposit_Lbl" min="-2" pref="167" max="-2" attributes="0"/>
-                                                  <Component id="ACCTNumber_Lbl" min="-2" pref="159" max="-2" attributes="0"/>
-                                              </Group>
+                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="ACCTType_Lbl" max="32767" attributes="0"/>
+                                              <Component id="Mail_Lbl" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="PhoneNum_Lbl" min="-2" pref="176" max="-2" attributes="0"/>
+                                          <Component id="IDeposit_Lbl" min="-2" pref="167" max="-2" attributes="0"/>
+                                          <Component id="ACCTNumber_Lbl" min="-2" pref="159" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="listOfAccountTypes" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Group type="102" alignment="0" attributes="0">
-                                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                          <Component id="NewMail_Txt" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="NewPhoneNum_Txt" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="IDepositAMT_Txt" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="GeneratedAccountNo_Txt" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                                      <Component id="accNoGen_btn" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="NewMail_Txt" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="NewPhoneNum_Txt" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="IDepositAMT_Txt" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="GeneratedAccountNo_Txt" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
                                               </Group>
+                                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                              <Component id="accNoGen_btn" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="LName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="FName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="NewLName_Txt" alignment="1" max="32767" attributes="0"/>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                                      <Component id="NewFName_Txt" min="-2" pref="162" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
+                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                              <Component id="listOfAccountTypes" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="LName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="NewLName_Txt" alignment="1" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                              <Component id="NewFName_Txt" min="-2" pref="162" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="PNumber_Lbl" min="-2" max="-2" attributes="0"/>
@@ -1177,6 +1401,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
                         </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Account Type"/>
                       </Properties>
                     </Component>
@@ -1184,6 +1411,9 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="First Name"/>
                       </Properties>
@@ -1193,6 +1423,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
                         </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Account Number"/>
                       </Properties>
                     </Component>
@@ -1200,6 +1433,9 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Phone                    +44"/>
                       </Properties>
@@ -1209,6 +1445,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
                         </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Initial Deposit"/>
                       </Properties>
                     </Component>
@@ -1216,6 +1455,9 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Email"/>
                       </Properties>
@@ -1234,6 +1476,9 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Last Name"/>
                       </Properties>
@@ -1302,13 +1547,10 @@
                     <Component class="javax.swing.JButton" name="accNoGen_btn">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="33" green="33" red="33" type="rgb"/>
+                          <Color blue="66" green="ff" red="66" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Generate"/>
                       </Properties>
@@ -1319,13 +1561,10 @@
                     <Component class="javax.swing.JButton" name="accNoGen1">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="99" green="0" red="0" type="rgb"/>
+                          <Color blue="66" green="ff" red="66" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Create Account"/>
                       </Properties>
@@ -1334,6 +1573,9 @@
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="16" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Passport Number / ID Number (Foreign Nationals)"/>
                       </Properties>

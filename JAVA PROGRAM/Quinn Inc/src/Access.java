@@ -76,6 +76,14 @@ public class Access extends javax.swing.JFrame {
 
         password_Txt.setBackground(new java.awt.Color(254, 252, 217));
         password_Txt.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        password_Txt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                password_TxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                password_TxtMouseExited(evt);
+            }
+        });
         password_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 password_TxtActionPerformed(evt);
@@ -84,6 +92,14 @@ public class Access extends javax.swing.JFrame {
 
         username_Txt.setBackground(new java.awt.Color(254, 252, 217));
         username_Txt.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        username_Txt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                username_TxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                username_TxtMouseExited(evt);
+            }
+        });
         username_Txt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 username_TxtKeyPressed(evt);
@@ -285,6 +301,24 @@ public class Access extends javax.swing.JFrame {
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
 
     }//GEN-LAST:event_formMouseDragged
+
+    private void username_TxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_username_TxtMouseEntered
+        // TODO add your handling code here:
+        username_Txt.setToolTipText("Enter your assigned username.");
+    }//GEN-LAST:event_username_TxtMouseEntered
+
+    private void password_TxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseEntered
+        // TODO add your handling code here:
+        password_Txt.setToolTipText("Enter your assigned password.");
+    }//GEN-LAST:event_password_TxtMouseEntered
+
+    private void username_TxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_username_TxtMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_username_TxtMouseExited
+
+    private void password_TxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_password_TxtMouseExited
 
     /**
      * @param args the command line arguments
