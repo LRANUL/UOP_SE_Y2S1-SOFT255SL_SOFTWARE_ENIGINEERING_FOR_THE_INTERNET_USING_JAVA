@@ -59,6 +59,7 @@ public class Access extends javax.swing.JFrame {
         AccessPanel.setBackground(new java.awt.Color(0, 123, 146));
         AccessPanel.setMaximumSize(new java.awt.Dimension(1200, 800));
         AccessPanel.setMinimumSize(new java.awt.Dimension(1200, 800));
+        AccessPanel.setName("Quinn Bank Access"); // NOI18N
         AccessPanel.setPreferredSize(new java.awt.Dimension(1200, 800));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/QUINN_LOGO.gif"))); // NOI18N
