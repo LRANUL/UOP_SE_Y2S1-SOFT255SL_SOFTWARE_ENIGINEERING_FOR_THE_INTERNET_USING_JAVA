@@ -69,18 +69,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="login_Btn" min="-2" pref="270" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="460" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="qService_pnl" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="43" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="logo" min="-2" pref="234" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -90,7 +81,22 @@
                           </Group>
                           <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="qService_pnl" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="43" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="login_Btn" min="-2" pref="270" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="395" max="-2" attributes="0"/>
+                          <Component id="jlbl_localTime" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jlbl_localDate" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -109,8 +115,18 @@
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   <Component id="qService_pnl" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="login_Btn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="login_Btn" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jlbl_localTime" min="-2" pref="33" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jlbl_localDate" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -352,6 +368,28 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="login_BtnActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jlbl_localTime">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Leelawadee UI" size="16" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Time"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jlbl_localDate">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Leelawadee UI" size="16" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Date"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

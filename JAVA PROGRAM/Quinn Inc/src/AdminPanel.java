@@ -1,3 +1,6 @@
+
+import LocalTimeAndDate.LocalTimeAndDate;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,11 +13,25 @@
  */
 public class AdminPanel extends javax.swing.JFrame {
 
+    // Creating new object to retreive current date and time
+    LocalTimeAndDate ltad;
+    
     /**
      * Creates new form AdminPanel
      */
     public AdminPanel() {
         initComponents();
+
+        
+        // Creating new object to retrieve current date and time
+        ltad = new LocalTimeAndDate();
+        
+        // Setting current time
+        jlbl_localTime.setText(ltad.retrieveLocalTimeWith12HourClock());
+        
+        // Setting current date
+        jlbl_localDate.setText(ltad.retrieveLocalDate());
+
     }
 
     /**
@@ -30,6 +47,8 @@ public class AdminPanel extends javax.swing.JFrame {
         admin_pnl = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         panel_Lbl = new javax.swing.JLabel();
+        jlbl_localDate = new javax.swing.JLabel();
+        jlbl_localTime = new javax.swing.JLabel();
         showTellers_Btn = new javax.swing.JButton();
         removeTellers_Btn = new javax.swing.JButton();
         updateCred1_Btn = new javax.swing.JButton();
@@ -59,15 +78,36 @@ public class AdminPanel extends javax.swing.JFrame {
         panel_Lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         panel_Lbl.setText("ADMIN PANEL - QUINN INC BANK");
 
+        jlbl_localDate.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localDate.setForeground(new java.awt.Color(255, 255, 255));
+        jlbl_localDate.setText("Date");
+
+        jlbl_localTime.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localTime.setForeground(new java.awt.Color(255, 255, 255));
+        jlbl_localTime.setText("Time");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jlbl_localTime)
+                .addGap(27, 27, 27)
+                .addComponent(jlbl_localDate)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbl_localDate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_localTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         showTellers_Btn.setBackground(new java.awt.Color(51, 51, 51));
@@ -279,7 +319,7 @@ public class AdminPanel extends javax.swing.JFrame {
             admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(admin_pnlLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
                         .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -402,6 +442,8 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jlbl_localDate;
+    private javax.swing.JLabel jlbl_localTime;
     private javax.swing.JMenuItem logout;
     private javax.swing.JLabel panel_Lbl;
     private javax.swing.JButton removeManagers_Btn;

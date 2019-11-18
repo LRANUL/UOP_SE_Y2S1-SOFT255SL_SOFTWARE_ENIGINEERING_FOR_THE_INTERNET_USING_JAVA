@@ -125,7 +125,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="44" max="32767" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -166,12 +166,28 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="panel_Lbl" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
+                      <Component id="panel_Lbl" pref="926" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jlbl_localTime" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="jlbl_localDate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="panel_Lbl" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jlbl_localDate" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="jlbl_localTime" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="panel_Lbl" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -186,6 +202,28 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="ADMIN PANEL - QUINN INC BANK"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jlbl_localDate">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Leelawadee UI" size="16" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Date"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jlbl_localTime">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Leelawadee UI" size="16" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Time"/>
               </Properties>
             </Component>
           </SubComponents>

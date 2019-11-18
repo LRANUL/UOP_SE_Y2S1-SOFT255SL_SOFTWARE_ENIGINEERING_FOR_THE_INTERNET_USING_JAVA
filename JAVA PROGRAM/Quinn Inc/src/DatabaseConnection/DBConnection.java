@@ -9,8 +9,10 @@ package DatabaseConnection;
  *
  * @author Lucas.L.H.H
  */
+
 public class DBConnection {
     public String DatabaseConnectionUrl(){
+        // Sending database connection URL to wherever called
         return "jdbc:sqlserver://localhost:1433;databaseName=quinn_inc;user=quinn_inc_admin;password=soft255sl;";
     }
 }

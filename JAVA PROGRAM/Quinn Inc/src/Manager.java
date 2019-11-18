@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import sun.security.util.SecurityConstants.AWT;
 
+import LocalTimeAndDate.LocalTimeAndDate;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,11 +19,26 @@ import sun.security.util.SecurityConstants.AWT;
  */
 public class Manager extends javax.swing.JFrame {
 
+     // Creating new object to retreive current date and time
+    LocalTimeAndDate ltad;
+    
     /**
      * Creates new form Manager
      */
     public Manager() {
         initComponents();
+        
+        
+        // Creating new object to retrieve current date and time
+        ltad = new LocalTimeAndDate();
+        
+        // Setting current time
+        jlbl_localTime.setText(ltad.retrieveLocalTimeWith12HourClock());
+        
+        // Setting current date
+        jlbl_localDate.setText(ltad.retrieveLocalDate());
+        
+        
     }
 
     /**
@@ -41,6 +57,8 @@ public class Manager extends javax.swing.JFrame {
         AccInfo_pnl = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         AccountINFO = new javax.swing.JTable();
+        jlbl_localTime = new javax.swing.JLabel();
+        jlbl_localDate = new javax.swing.JLabel();
         jFileChooser1 = new javax.swing.JFileChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -100,20 +118,35 @@ public class Manager extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(AccountINFO);
 
+        jlbl_localTime.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localTime.setText("Time");
+
+        jlbl_localDate.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localDate.setText("Date");
+
         javax.swing.GroupLayout AccInfo_pnlLayout = new javax.swing.GroupLayout(AccInfo_pnl);
         AccInfo_pnl.setLayout(AccInfo_pnlLayout);
         AccInfo_pnlLayout.setHorizontalGroup(
             AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AccInfo_pnlLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccInfo_pnlLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1040, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccInfo_pnlLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlbl_localTime)
+                .addGap(27, 27, 27)
+                .addComponent(jlbl_localDate)
+                .addContainerGap())
         );
         AccInfo_pnlLayout.setVerticalGroup(
             AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AccInfo_pnlLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbl_localTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbl_localDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -249,5 +282,7 @@ public class Manager extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel jlbl_localDate;
+    private javax.swing.JLabel jlbl_localTime;
     // End of variables declaration//GEN-END:variables
 }

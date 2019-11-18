@@ -6,15 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +27,12 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.*;
 
+import javax.swing.table.DefaultTableModel;
+
 import DatabaseConnection.DBConnection;
+import LocalTimeAndDate.LocalTimeAndDate;
+import ReportGeneration.ReportGeneration;
+import ReceiptGeneration.CustomerReceiptGeneration;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -47,12 +49,885 @@ public class Teller extends javax.swing.JFrame {
     static int bonus = 450000000;
     static int premier = 750000000;
     
+    // Creating new table model for customer transaction records table in daily reports tab
+    DefaultTableModel customerTransactionRecordsTableModel;
+    
+    // Creating new table model for customer details record table in monthly reports tab
+    DefaultTableModel customerDetailsRecordTableModel;
+    
+    // Creating new table model for transaction details records table in monthly reports tab
+    DefaultTableModel transactionDetailsRecordsTableModel;
+    
+    // Creating new object to retreive current date and time
+    LocalTimeAndDate ltad;
+    
+    // Creating new object for database connection url
+    DBConnection db;
+    
+    // Creating new object to call procedures, report generating
+    ReportGeneration rg;
+    
+    // Creating new object to call procedure, receipt generating
+    CustomerReceiptGeneration crg;
+    
     /**
      * Creates new form Teller
      */
     public Teller() {
         initComponents();
         date.setText(java.time.LocalDate.now().toString());
+        
+        // Creating new object to retrieve current date and time
+        ltad = new LocalTimeAndDate();
+        
+        // Creating new object to retrieve database connection url
+        db = new DBConnection();
+        
+        // Creating new object to call procedures, report generating
+        rg = new ReportGeneration();
+        
+        // Creating new object to call procedure, receipt generating
+        crg = new CustomerReceiptGeneration();
+        
+        // Setting current time
+        jlbl_localTime.setText(ltad.retrieveLocalTimeWith12HourClock());
+        
+        // Setting current date
+        jlbl_localDate.setText(ltad.retrieveLocalDate()); 
+        
+        // Invloving monthly report tab
+        // Assigning values to month chioce  
+        c_month.add("");   
+        c_month.add("January");  
+        c_month.add("February");  
+        c_month.add("March");  
+        c_month.add("April"); 
+        c_month.add("May");
+        c_month.add("June");  
+        c_month.add("July");  
+        c_month.add("August");  
+        c_month.add("September"); 
+        c_month.add("October");
+        c_month.add("November"); 
+        c_month.add("December");
+        
+        // Assigning table model to the customer details record table
+        customerDetailsRecordTableModel = (DefaultTableModel) jtb_customerDetailsRecord.getModel();
+        
+        // Assigning columns header name for customer details record table
+        customerDetailsRecordTableModel.addColumn("Account Number");
+        customerDetailsRecordTableModel.addColumn("Customer First Name:");
+        customerDetailsRecordTableModel.addColumn("Customer Middle Name");
+        customerDetailsRecordTableModel.addColumn("Customer Last Name");
+        customerDetailsRecordTableModel.addColumn("Account Type");
+        
+        // Assigning table model to the transaction details records table
+        transactionDetailsRecordsTableModel = (DefaultTableModel) jtb_transactionDetailsRecords.getModel();
+        
+        // Assigning columns header name for transaction details records table
+        transactionDetailsRecordsTableModel.addColumn("Transaction Number");
+        transactionDetailsRecordsTableModel.addColumn("Account Number");
+        transactionDetailsRecordsTableModel.addColumn("Transaction Type");
+        transactionDetailsRecordsTableModel.addColumn("Transaction Amount");
+        transactionDetailsRecordsTableModel.addColumn("Date Time");
+        
+        
+        // Involving daily reports tab
+        // Assigning table model to the customer transaction records table
+        customerTransactionRecordsTableModel = (DefaultTableModel) jtb_customerTransactionRecords.getModel();
+       
+        // Assigning columns header name for customer transaction records table
+        customerTransactionRecordsTableModel.addColumn("Account Number");
+        customerTransactionRecordsTableModel.addColumn("Transaction Type");
+        customerTransactionRecordsTableModel.addColumn("Account Type");
+        customerTransactionRecordsTableModel.addColumn("Amount");
+        customerTransactionRecordsTableModel.addColumn("Date Time");
+          
+        
+        // Automatic daily customer transaction report generation
+        // Retrieving current date
+        String localDate = ltad.retrieveLocalDate();
+        
+        System.out.println("Date: " + localDate);
+        
+        // Retrieving current date for SQL query, different format (yyyy-MM-dd)
+        String localDateSqlQuery = ltad.retrieveLocalDateSqlQuery();
+        
+        System.out.println("Date (SQL format): " + localDateSqlQuery);
+        
+        // Retrieving current time only hour and minute
+        String localTimeHourMin = ltad.retrieveLocalTimeHourMin();
+        
+        // Converting localTimeHourMin to float to check for the relavent conditions
+        float localTimeHourMinFloat = Float.valueOf(localTimeHourMin);
+        
+        System.out.println("Time (Float Data Type): " + localTimeHourMinFloat);
+        
+        if( (localTimeHourMinFloat >= 00.00) & (localTimeHourMinFloat <= 23.59) ) { // Condition checking if the current time is inbetween 00.00 to 23.59
+            if ( (localTimeHourMinFloat >= 10.00) & (localTimeHourMinFloat <= 14.00)){ // Condition checking if current time is inbetween 10.00 to 14.00
+                
+                // checking if the daily report was already generated for the same day
+                File checkFileExistence = new File("../Reports/Daily_Customer_Transaction_Record_Reports/Automatic/"
+                        + "Automatic_Daily_Customer_Transaction_Records_'" + localDate + "'.pdf");
+                
+                boolean checkFileExistenceResult = checkFileExistence.exists();
+
+                System.out.println("Automatic Daily Report Exist: " + checkFileExistenceResult);
+
+                // If report is not exisiting, a new one will be generated
+                if (checkFileExistenceResult == false) {
+                    // Creating a new document
+                    Document autoDailyCTDocument = new Document(PageSize.A4);
+                    
+                    System.out.println("Document is created");
+                    
+                    try {
+                        // Checking if any records are available in the database for this month
+                        try (Connection checkingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement checkingDataStmt = checkingDataCon.createStatement();) {
+
+                            // Assigning SQL query
+                            String checkingDataSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction WHERE "
+                                    + "convert(nvarchar(50), date_time,126) LIKE '" + localDateSqlQuery + "%' ";
+                            
+                            // Executing SQL query
+                            ResultSet checkingDataRs = checkingDataStmt.executeQuery(checkingDataSqlQuery);
+                            
+                            
+                            //If any record data was not returned
+                            if(checkingDataRs.next() == false){
+                                
+                                // Assigning pathway for the document
+                                PdfWriter.getInstance(autoDailyCTDocument, new FileOutputStream("../Reports/Daily_Customer_Transaction_Record_Reports/Automatic/"
+                                        + "Automatic_Daily_Customer_Transaction_Records_'" + localDate + "'.pdf"));
+                                
+                                autoDailyCTDocument.addAuthor("Quinn_INC");
+                                autoDailyCTDocument.addTitle("Transaction Report");
+                                autoDailyCTDocument.setMargins(10, 10, 10, 10);
+
+                                autoDailyCTDocument.open();
+                                System.out.println("Document is open");
+
+                                // Retrieving header image from pathway
+                                Image quinnIncHeaderImage = Image.getInstance("src/Resources/Daily_Customer_Transaction_Report_Header_V1.jpg");
+
+                                // Setting image scale to fit document
+                                quinnIncHeaderImage.scaleAbsolute(585f, 100f);
+
+                                // Adding image to document
+                                autoDailyCTDocument.add(quinnIncHeaderImage);
+
+                                // Assigning column width size for table
+                                float[] autoCTTableColumnWidths = {6, 8, 6, 6, 10};
+
+                                // Creating new table
+                                PdfPTable autoCTTable = new PdfPTable(autoCTTableColumnWidths);
+
+                                // Assigning total width of the table
+                                autoCTTable.setWidthPercentage(87);
+
+                                // Creating new object for each cell in the table
+                                PdfPCell autoCTTableCell;              
+
+                                // Adding font style for column headers in table
+                                Font headerStyle = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
+
+                                // Column headers
+                                String accountNumber = "ACCOUNT NUMBER";
+                                autoCTTableCell = new PdfPCell(new Phrase(accountNumber, headerStyle));
+                                autoCTTable.addCell(autoCTTableCell);
+
+                                String transactionType = "TRANSACTION TYPE";
+                                autoCTTableCell = new PdfPCell(new Phrase(transactionType, headerStyle));
+                                autoCTTable.addCell(autoCTTableCell);
+
+                                String accountType = "ACCOUNT TYPE";
+                                autoCTTableCell = new PdfPCell(new Phrase(accountType, headerStyle));
+                                autoCTTable.addCell(autoCTTableCell);
+
+                                String amount = "AMOUNT";
+                                autoCTTableCell = new PdfPCell(new Phrase(amount, headerStyle));
+                                autoCTTable.addCell(autoCTTableCell);
+
+                                String dateTime = "DATE TIME";
+                                autoCTTableCell = new PdfPCell(new Phrase(dateTime, headerStyle));
+                                autoCTTable.addCell(autoCTTableCell);
+
+                                // Adding table to document
+                                autoDailyCTDocument.add(autoCTTable);    
+
+                                // Assigning paragraph to show message in document
+                                Paragraph noRecordAvailable = new Paragraph("No Records are Available for this day");
+
+                                noRecordAvailable.setAlignment(Element.ALIGN_CENTER);
+
+                                autoDailyCTDocument.add(noRecordAvailable);
+
+                                // Creating new object to retrieve current date and time
+                                ltad = new LocalTimeAndDate();
+
+                                // Creating parapgraph to represent the report generated date and time
+                                Paragraph exportDateAndTime = new Paragraph("Report Generated Period: " + ltad.retrieveLocalTimeAndDate());
+
+                                // Setting paragraph to the center alignment of the document
+                                exportDateAndTime.setAlignment(Element.ALIGN_CENTER);
+
+                                // dding paragraph to the document
+                                autoDailyCTDocument.add(exportDateAndTime);
+
+                                // Retrieving footer image from pathway
+                                Image quinnIncFooterImage = Image.getInstance("src/Resources/Customer_Transaction_Report_Footer_V1.jpg");
+
+                                // Setting image scale to fit document
+                                quinnIncFooterImage.scaleAbsolute(570f, 30f);
+
+                                // Setting image to an appropriate place in document
+                                quinnIncFooterImage.setAbsolutePosition(10f, 10f);
+
+                                // Adding image to the document
+                                autoDailyCTDocument.add(quinnIncFooterImage);
+                            }
+                            // If any record data was returned
+                            else{                         
+                                // Assigning pathway for the document
+                                PdfWriter.getInstance(autoDailyCTDocument, new FileOutputStream("../Reports/Daily_Customer_Transaction_Record_Reports/"
+                                        + "Automatic/Automatic_Daily_Customer_Transaction_Records_'" + localDate + "'.pdf"));
+                                
+                                autoDailyCTDocument.addAuthor("Quinn_INC");
+                                autoDailyCTDocument.addTitle("Transaction Report");
+                                autoDailyCTDocument.setMargins(10, 10, 10, 10);
+
+                                autoDailyCTDocument.open();
+                                System.out.println("Document is open");
+
+                                // Retrieving header image from pathway
+                                Image quinnIncHeaderImage = Image.getInstance("src/Resources/Daily_Customer_Transaction_Report_Header_V1.jpg");
+
+                                // Setting image scale to fit document
+                                quinnIncHeaderImage.scaleAbsolute(585f, 100f);
+
+                                // Adding image to document
+                                autoDailyCTDocument.add(quinnIncHeaderImage);
+
+                                // Assigning column width size for table
+                                float[] autoCTTableColumnWidths = {6, 8, 6, 6, 10};
+
+                                // Creating new table
+                                PdfPTable autoCTTable = new PdfPTable(autoCTTableColumnWidths);
+
+                                // Assigning total width of the table
+                                autoCTTable.setWidthPercentage(87);
+
+                                // Creating new object for each cell in the table
+                                PdfPCell autoCTTableCell;              
+
+                                // Retriving record data from database
+                                try (Connection retrievingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    Statement retrievingDataStmt = retrievingDataCon.createStatement();) {
+
+                                    // Executing SQL query, uses the same SQL query as used in checkingDataSqlQuery
+                                    ResultSet retrievingDataRs = retrievingDataStmt.executeQuery(checkingDataSqlQuery);
+
+                                    // Adding font style for column headers in table
+                                    Font header_style = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
+
+                                    // Column headers
+                                    String accountNumber = "ACCOUNT NUMBER";
+                                    autoCTTableCell = new PdfPCell(new Phrase(accountNumber, header_style));
+                                    autoCTTable.addCell(autoCTTableCell);
+
+                                    String transactionType = "TRANSACTION TYPE";
+                                    autoCTTableCell = new PdfPCell(new Phrase(transactionType, header_style));
+                                    autoCTTable.addCell(autoCTTableCell);
+
+                                    String accountType = "ACCOUNT TYPE";
+                                    autoCTTableCell = new PdfPCell(new Phrase(accountType, header_style));
+                                    autoCTTable.addCell(autoCTTableCell);
+
+                                    String amount = "AMOUNT";
+                                    autoCTTableCell = new PdfPCell(new Phrase(amount, header_style));
+                                    autoCTTable.addCell(autoCTTableCell);
+
+                                    String dateTime = "DATE TIME";
+                                    autoCTTableCell = new PdfPCell(new Phrase(dateTime, header_style));
+                                    autoCTTable.addCell(autoCTTableCell);
+
+                                    // All the returning data is iterated and assigned to each cell accordingly
+                                    while (retrievingDataRs.next()) {
+                                        accountNumber = retrievingDataRs.getString("ACCOUNT_NUMBER");
+                                        autoCTTableCell = new PdfPCell(new Phrase(accountNumber));
+                                        autoCTTable.addCell(autoCTTableCell);
+
+                                        transactionType = retrievingDataRs.getString("TRANSACTION_TYPE");
+                                        autoCTTableCell = new PdfPCell(new Phrase(transactionType));
+                                        autoCTTable.addCell(autoCTTableCell);
+
+                                        accountType = retrievingDataRs.getString("ACCOUNT_TYPE");
+                                        autoCTTableCell = new PdfPCell(new Phrase(accountType));
+                                        autoCTTable.addCell(autoCTTableCell);
+
+                                        amount = "£ " + retrievingDataRs.getString("AMOUNT");
+                                        autoCTTableCell = new PdfPCell(new Phrase(amount));
+                                        autoCTTable.addCell(autoCTTableCell);
+
+                                        dateTime = retrievingDataRs.getString("DATE_TIME");
+                                        autoCTTableCell = new PdfPCell(new Phrase(dateTime));
+                                        autoCTTable.addCell(autoCTTableCell);
+                                    }
+
+                                    // Adding table to document
+                                    autoDailyCTDocument.add(autoCTTable);
+                                } 
+                                // Error handling. Handles any SQL related errors.
+                                catch (SQLException SqlEx) {
+                                    System.out.println("Error found: " + SqlEx);
+                                }
+
+                                // Retrieving footer image from pathway
+                                Image quinnIncFooterImage = Image.getInstance("src/Resources/Customer_Transaction_Report_Footer_V1.jpg");
+
+                                // Setting image scale to fit document
+                                quinnIncFooterImage.scaleAbsolute(570f, 30f);
+
+                                // Setting image to an appropriate place in document
+                                quinnIncFooterImage.setAbsolutePosition(10f, 10f);
+
+                                // Adding image to the document
+                                autoDailyCTDocument.add(quinnIncFooterImage);
+
+                                // Creating new object to retrieve current date and time
+                                ltad = new LocalTimeAndDate();
+
+                                // Creating parapgraph to represent the report generated date and time
+                                Paragraph exportDateAndTime = new Paragraph("Report Generated Period: " + ltad.retrieveLocalTimeAndDate());
+
+                                // Setting paragraph to the center alignment of the document
+                                exportDateAndTime.setAlignment(Element.ALIGN_CENTER);
+
+                                // dding paragraph to the document
+                                autoDailyCTDocument.add(exportDateAndTime);
+                            }
+                        }
+                        // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx) {
+                            System.out.println("Unable to verify data. Error found: " + SqlEx);
+                        }
+                    }
+                    // Error handling. Handles any possible errors.
+                    catch (Throwable ThrowableEx) {
+                        System.out.println("Error found: " + ThrowableEx);
+                    }
+                    finally {
+                        autoDailyCTDocument.close();
+                        System.out.println("Document Closed");
+                    } 
+                }
+                // Assigning string to show automate report generation status
+                lbl_status.setText("Report is Up To Date");
+            }
+            else{
+                // Assigning string to show automate report generation status
+                lbl_status.setText("Report Generation Pending, Awaiting Till Default Time");
+            }
+        } 
+        
+        
+        // Automatic monthly customer transaction report generation
+        // retrieving current date from localhost
+        String monthlylocalDate = ltad.retrieveLocalDate();
+
+        System.out.println("Date: " + monthlylocalDate);
+        
+        // retrieving current month from localhost
+        String monthlylocalMonth = ltad.retrieveLocalMonth();
+
+        System.out.println("Month: " + monthlylocalMonth); 
+        
+        // retrieving current day from localhost
+        String localDay = ltad.retrieveLocalDay();
+        
+        System.out.println("Day: " + localDay);
+
+        int localDayInt = Integer.parseInt(localDay);
+
+        if ((localDayInt >= 1) & (localDayInt <= 31)) { // Condition to check if the cuurent day is inbetween 1 and 31
+            if ((localDayInt >= 1) || (localDayInt <= 22)) { // Condition to check is the day is inbetween 1 and 22, this is the report generation time period
+                // Condition has two days is becasue one of these days could be a non-working day, and application won't be used, hence the report won't be generated
+                
+                // checking if monthly report is already generated
+                File checkFileExistence = new File("../Reports/Monthly_Customer_Transaction_Record_Reports/Automatic/"
+                        + "Automatic_Monthly_Customer_Transaction_Records_'" + monthlylocalDate + "'.pdf");
+                boolean checkFileExistenceResult = checkFileExistence.exists();
+
+                System.out.println("Automatic Monthly Report Exist: " + checkFileExistenceResult);
+
+                // If the report doesn't already exist
+                if (checkFileExistenceResult == false) {
+                    
+                    // Creating new document
+                    Document monthlyCustomerTransactionReport = new Document(PageSize.A4);
+
+                    System.out.println("Document is created");
+                    
+                    // Checking if any records are avialbe in the database for this month
+                    try (Connection checkingTransactionRecordCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        Statement checkingTransactionRecordStmt = checkingTransactionRecordCon.createStatement();) {
+
+                        // Assigning SQL query
+                        String checkingTransactionRecordSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction WHERE "
+                                + "convert(nvarchar(50), date_time,126) LIKE '_____" + monthlylocalMonth + "%' ";
+
+                        // Executing SQL query
+                        ResultSet checkingTransactionRecordRs = checkingTransactionRecordStmt.executeQuery(checkingTransactionRecordSqlQuery);
+                        
+                        System.out.println("Transactions Record Exist: " + checkingTransactionRecordRs);
+                        
+                        // If no values are returned
+                        if( checkingTransactionRecordRs.next() == false ){
+                            try {
+                                // Setting pathway for new document
+                                PdfWriter.getInstance(monthlyCustomerTransactionReport, new FileOutputStream("../Reports/Monthly_Customer_Transaction_Record_Reports/Automatic/"
+                                        + "Automatic_Monthly_Customer_Transaction_Records_'" + monthlylocalDate + "'.pdf"));
+                                
+                                monthlyCustomerTransactionReport.addAuthor("Quinn_INC");
+                                monthlyCustomerTransactionReport.addTitle("Monthly Customer Transaction Report");
+                                monthlyCustomerTransactionReport.setMargins(25, 10, 10, 10);
+
+                                // Opening document
+                                monthlyCustomerTransactionReport.open();
+
+                                System.out.println("Document is open");
+
+                                // Retrieving header image from pathway
+                                Image quinnIncMHeader = Image.getInstance("src/Resources/Monthly_Transaction_Report_Header_V1.jpg");
+
+                                // Setting image scale to fit document
+                                quinnIncMHeader.scaleAbsolute(555f, 110f);
+
+                                // Adding image to document
+                                monthlyCustomerTransactionReport.add(quinnIncMHeader);
+
+                                // Assigning column width for customer details table
+                                float[] customerDetailsTableColumnWidths = {5, 7};
+
+                                // Creating customer details table
+                                PdfPTable customerDetailsTable = new PdfPTable(customerDetailsTableColumnWidths);
+
+                                // Setting table width
+                                customerDetailsTable.setWidthPercentage(60);
+
+                                // Setting customer details table to left alignment
+                                customerDetailsTable.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+                                // Setting space before table placement
+                                customerDetailsTable.setSpacingBefore(10);
+
+                                // Setting space after table placement
+                                customerDetailsTable.setSpacingAfter(10);
+
+                                // Creating table cells
+                                PdfPCell customerDetailsTableCell;
+                                
+
+                                // Setting column header style
+                                Font headerStyle = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
+
+                                // Customer details table column header
+                                String accountNumber = "ACCOUNT NUMBER";
+                                customerDetailsTableCell = new PdfPCell(new Phrase(accountNumber, headerStyle));
+                                customerDetailsTable.addCell(customerDetailsTableCell);
+                                
+                                // Customer details record data
+                                String accountNumberNotFound = " No Records are Available for this Month ";
+                                customerDetailsTableCell = new PdfPCell(new Phrase(accountNumberNotFound));
+                                customerDetailsTable.addCell(customerDetailsTableCell);
+                                
+
+                                // Customer details table column header
+                                String customerName = "CUSTOMER NAME";
+                                customerDetailsTableCell = new PdfPCell(new Phrase(customerName, headerStyle));
+                                customerDetailsTable.addCell(customerDetailsTableCell);
+                                
+                                // Customer details record data
+                                String customerNameNotFound = " No Records are Available for this Month ";
+                                customerDetailsTableCell = new PdfPCell(new Phrase(customerNameNotFound));
+                                customerDetailsTable.addCell(customerDetailsTableCell);
+                                
+
+                                // Customer details table column header
+                                String accountType = "ACCOUNT TYPE";
+                                customerDetailsTableCell = new PdfPCell(new Phrase(accountType, headerStyle));
+                                customerDetailsTable.addCell(customerDetailsTableCell);
+
+                                // Customer details record data
+                                String accountTypeNotFound = " No Records are Available for this Month ";
+                                customerDetailsTableCell = new PdfPCell(new Phrase(accountTypeNotFound));
+                                customerDetailsTable.addCell(customerDetailsTableCell);
+                                
+                                
+                                
+                                // Adding customer details table to document 
+                                monthlyCustomerTransactionReport.add(customerDetailsTable);                           
+
+                                System.out.println("Customer Details Table Complete");
+
+
+                                // Assigning column widths for transaction details table
+                                float[] transactionDetailsTableColumnWidths = {6, 8, 7, 8};
+
+                                // Creating transaction details table
+                                PdfPTable transactionDetailsTable = new PdfPTable(transactionDetailsTableColumnWidths);
+
+                                // Setting table width
+                                transactionDetailsTable.setWidthPercentage(87);
+
+                                // Setting space after table placement
+                                transactionDetailsTable.setSpacingAfter(5);
+
+                                // Creating table cells
+                                PdfPCell transactionDetailsTableCell;
+
+                                // Creating column headers
+                                String transactionNumber = "TRANSACTION NUMBER";
+                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionNumber, headerStyle));
+                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                String transactionType = "TRANSACTION TYPE";
+                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionType, headerStyle));
+                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                String transactionAmount = "TRANSACTION AMOUNT";
+                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionAmount, headerStyle));
+                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                String dateTime = "DATE TIME";
+                                transactionDetailsTableCell = new PdfPCell(new Phrase(dateTime, headerStyle));
+                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                // Adding transaction details table to document
+                                monthlyCustomerTransactionReport.add(transactionDetailsTable);
+                                
+                                
+                                // Assigning paragraph to show message in document
+                                Paragraph noRecordAvailable = new Paragraph("No Records are Available for this Month");
+
+                                noRecordAvailable.setAlignment(Element.ALIGN_CENTER);
+                                
+                                // Assigning paragraph to show message in document
+                                monthlyCustomerTransactionReport.add(noRecordAvailable);
+                                
+                                
+
+                                Paragraph horizontalLine = new Paragraph("-----------------------------------------------------------------"
+                                        + "-------------------------------------------------------------------");
+
+                                monthlyCustomerTransactionReport.add(horizontalLine);
+
+                                System.out.println("Transaction Details Table Complete");
+                                    
+                                // Retrieving footer image from pathway
+                                Image quinnIncMFooter = Image.getInstance("src/Resources/Customer_Transaction_Report_Footer_V1.jpg");
+
+                                // Setting image scale to fit document
+                                quinnIncMFooter.scaleAbsolute(575f, 40f);
+
+                                // Setting image placement in document
+                                quinnIncMFooter.setAbsolutePosition(10f, 10f);
+
+                                // Adding image to document
+                                monthlyCustomerTransactionReport.add(quinnIncMFooter);
+
+                                // Retrieving current date and time, setting as report generation date and time 
+                                Paragraph reportGeneration = new Paragraph("Report Generated Period: " + ltad.retrieveLocalTimeAndDate());
+
+                                // Setting parapgraph to center alignment of the document
+                                reportGeneration.setAlignment(Element.ALIGN_CENTER);
+
+                                // Adding paragraph to document
+                                monthlyCustomerTransactionReport.add(reportGeneration);
+
+                                // Closing document
+                                monthlyCustomerTransactionReport.close();
+
+                                System.out.println("Document is closed");  
+                            }
+                            // Error handling. Catches any possible errors
+                            catch (Throwable ThrowableEx) {
+                                System.out.println("Error found: " + ThrowableEx);
+                            }
+                        }
+                        // If any values are returned
+                        else {
+                            try {
+                                // Setting pathway for new document
+                                PdfWriter.getInstance(monthlyCustomerTransactionReport, new FileOutputStream("../Reports/Monthly_Customer_Transaction_Record_Reports/"
+                                        + "Automatic/Automatic_Monthly_Customer_Transaction_Records_'" + monthlylocalDate + "'.pdf"));
+                                
+                                monthlyCustomerTransactionReport.addAuthor("Quinn_INC");
+                                monthlyCustomerTransactionReport.addTitle("Monthly Customer Transaction Report");
+                                monthlyCustomerTransactionReport.setMargins(25, 10, 10, 10);
+
+                                // Opening document
+                                monthlyCustomerTransactionReport.open();
+
+                                System.out.println("Document is open");
+
+                                // Retrieving header image from pathway
+                                Image quinnIncMHeader = Image.getInstance("src/Resources/Monthly_Transaction_Report_Header_V1.jpg");
+
+                                // Setting image scale to fit document
+                                quinnIncMHeader.scaleAbsolute(555f, 110f);
+
+                                // Adding image to document
+                                monthlyCustomerTransactionReport.add(quinnIncMHeader);
+
+                                // Retriving customer account number from customer_trasaction relation
+                                try (Connection retrievingCNCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                        Statement retrievingCNStmt = retrievingCNCon.createStatement();) {
+                                    
+                                    // Assigning SQL query
+                                    String retrievingCNSqlQuery = "SELECT DISTINCT account_number FROM customer_transaction "
+                                            + "WHERE convert(nvarchar(50), date_time,126) LIKE '_____" + monthlylocalMonth + "%' ";
+
+                                    // Executing SQL query
+                                    ResultSet retrievingCNRs = retrievingCNStmt.executeQuery(retrievingCNSqlQuery);
+
+                                    // Assigning customer number and retrieving other details
+                                    while (retrievingCNRs.next()) {
+                                        String customerAccountNumberCT = retrievingCNRs.getString("ACCOUNT_NUMBER");
+
+                                        System.out.println(customerAccountNumberCT);
+
+                                        // Assigning column width for customer details table
+                                        float[] customerDetailsTableColumnWidths = {5, 7};
+
+                                        // Creating customer details table
+                                        PdfPTable customerDetailsTable = new PdfPTable(customerDetailsTableColumnWidths);
+
+                                        // Setting table width
+                                        customerDetailsTable.setWidthPercentage(60);
+
+                                        // Setting customer details table to left alignment
+                                        customerDetailsTable.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+                                        // Setting space before table placement
+                                        customerDetailsTable.setSpacingBefore(10);
+
+                                        // Setting space after table placement
+                                        customerDetailsTable.setSpacingAfter(10);
+
+                                        // Creating table cells
+                                        PdfPCell customerDetailsTableCell;
+
+                                        // Setting column header style
+                                        Font headerStyle = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
+
+                                        // Customer details table column header
+                                        String accountNumber = "ACCOUNT NUMBER";
+                                        customerDetailsTableCell = new PdfPCell(new Phrase(accountNumber, headerStyle));
+                                        customerDetailsTable.addCell(customerDetailsTableCell);
+
+                                        // Customer details record data
+                                        // Assigning customer account number
+                                        customerDetailsTableCell = new PdfPCell(new Phrase(customerAccountNumberCT));
+                                        customerDetailsTable.addCell(customerDetailsTableCell);
+
+                                        // Customer details table column header
+                                        String customerName = "CUSTOMER NAME";
+                                        customerDetailsTableCell = new PdfPCell(new Phrase(customerName, headerStyle));
+                                        customerDetailsTable.addCell(customerDetailsTableCell);
+
+                                        // Customer details record data
+                                        // Retriving customer names from customer relation in the database
+                                        try (Connection customerNamesCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                                Statement customerNamesStmt = customerNamesCon.createStatement();) {
+
+                                            // Assigning SQL query
+                                            String customerNamesSqlQuery = "SELECT first_name, middle_name, last_name FROM customer "
+                                                    + "WHERE account_number = '" + customerAccountNumberCT + "' ";
+
+                                            // Executing SQL query
+                                            ResultSet customerNamesRs = customerNamesStmt.executeQuery(customerNamesSqlQuery);
+
+                                            // Iterating of returning data
+                                            while (customerNamesRs.next()) {
+                                                customerName = "First Name:      " + customerNamesRs.getString("FIRST_NAME")
+                                                        + "\nMiddle Name:   " + customerNamesRs.getString("MIDDLE_NAME")
+                                                        + "\nLast Name:      " + customerNamesRs.getString("LAST_NAME");
+                                                customerDetailsTableCell = new PdfPCell(new Phrase(customerName));
+                                                customerDetailsTable.addCell(customerDetailsTableCell);
+                                            }
+                                        } 
+                                        // Error handling. Handles any SQL related errors.
+                                        catch (SQLException SqlEx) {
+                                            System.out.println("Error found: " + SqlEx);
+                                        }
+
+                                        // Customer details table column header
+                                        String accountType = "ACCOUNT TYPE";
+                                        customerDetailsTableCell = new PdfPCell(new Phrase(accountType, headerStyle));
+                                        customerDetailsTable.addCell(customerDetailsTableCell);
+
+                                        // Customer details record data
+                                        // Retriving customer type from customer relation in the database
+                                        try (Connection customerTypeCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                                Statement customerTypeStmt = customerTypeCon.createStatement();) {
+
+                                            // Assigning SQL query
+                                            String customerTypeSqlQuery = "SELECT acc_type FROM customer "
+                                                    + "WHERE account_number = '" + customerAccountNumberCT + "' ";
+
+                                            // Executing SQL query
+                                            ResultSet customerTypeRs = customerTypeStmt.executeQuery(customerTypeSqlQuery);
+
+                                            // Iterating returning data
+                                            while (customerTypeRs.next()) {
+                                                accountType = customerTypeRs.getString("ACC_TYPE");
+                                                customerDetailsTableCell = new PdfPCell(new Phrase(accountType));
+                                                customerDetailsTable.addCell(customerDetailsTableCell);
+                                            }
+                                        } 
+                                        // Error handling. Handles any SQL related errors.
+                                        catch (SQLException SqlEx) {
+                                            System.out.println("Error found: " + SqlEx);
+                                        }
+
+                                        // Adding customer details table to document 
+                                        monthlyCustomerTransactionReport.add(customerDetailsTable);
+
+                                        System.out.println("Customer Details Table Complete");
+
+
+                                        // Assigning column widths for transaction details table
+                                        float[] transactionDetailsTableColumnWidths = {6, 8, 7, 8};
+
+                                        // Creating transaction details table
+                                        PdfPTable transactionDetailsTable = new PdfPTable(transactionDetailsTableColumnWidths);
+
+                                        // Setting table width
+                                        transactionDetailsTable.setWidthPercentage(87);
+
+                                        // Setting space after table placement
+                                        transactionDetailsTable.setSpacingAfter(5);
+
+                                        // Creating table cells
+                                        PdfPCell transactionDetailsTableCell;
+
+                                        // Creating column headers
+                                        String transactionNumber = "TRANSACTION NUMBER";
+                                        transactionDetailsTableCell = new PdfPCell(new Phrase(transactionNumber, headerStyle));
+                                        transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                        String transactionType = "TRANSACTION TYPE";
+                                        transactionDetailsTableCell = new PdfPCell(new Phrase(transactionType, headerStyle));
+                                        transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                        String transactionAmount = "TRANSACTION AMOUNT";
+                                        transactionDetailsTableCell = new PdfPCell(new Phrase(transactionAmount, headerStyle));
+                                        transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                        String dateTime = "DATE TIME";
+                                        transactionDetailsTableCell = new PdfPCell(new Phrase(dateTime, headerStyle));
+                                        transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                        // Transaction details record data
+                                        // Retriving transaction details from customer_transaction relation in the database
+                                        try (Connection transactionDetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                                Statement transactionDetailsStmt = transactionDetailsCon.createStatement();) {
+
+                                            // Assigning SQL query
+                                            String transactionDetailsSqlQuery = "SELECT transaction_number, transaction_type, amount, date_time "
+                                                    + "FROM customer_transaction "
+                                                    + "WHERE account_number = '" + customerAccountNumberCT + "' ";
+
+                                            // Executing SQL query
+                                            ResultSet transactionDetailsRs = transactionDetailsStmt.executeQuery(transactionDetailsSqlQuery);
+
+                                            // Itegrating returning data
+                                            while (transactionDetailsRs.next()) {
+                                                transactionNumber = transactionDetailsRs.getString("TRANSACTION_NUMBER");
+                                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionNumber));
+                                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                                transactionType = transactionDetailsRs.getString("TRANSACTION_TYPE");
+                                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionType));
+                                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                                transactionAmount = transactionDetailsRs.getString("AMOUNT");
+                                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionAmount));
+                                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+
+                                                dateTime = transactionDetailsRs.getString("DATE_TIME");
+                                                transactionDetailsTableCell = new PdfPCell(new Phrase(dateTime));
+                                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+                                            }
+                                        } 
+                                        // Error handling. Handles any SQL related errors.
+                                        catch (SQLException SqlEx) {
+                                            System.out.println("Error found: " + SqlEx);
+                                        }
+
+                                        // Adding transaction details table to document
+                                        monthlyCustomerTransactionReport.add(transactionDetailsTable);
+
+                                        Paragraph horizontalLine = new Paragraph("-----------------------------------------------------------------"
+                                                + "-------------------------------------------------------------------");
+
+                                        monthlyCustomerTransactionReport.add(horizontalLine);
+
+                                        System.out.println("Transaction Details Table Complete");
+                                    }
+
+                                    // Retrieving footer image from pathway
+                                    Image quinnIncMFooter = Image.getInstance("src/Resources/Customer_Transaction_Report_Footer_V1.jpg");
+
+                                    // Setting image scale to fit document
+                                    quinnIncMFooter.scaleAbsolute(575f, 40f);
+
+                                    // Setting image placement in document
+                                    quinnIncMFooter.setAbsolutePosition(10f, 10f);
+
+                                    // Adding image to document
+                                    monthlyCustomerTransactionReport.add(quinnIncMFooter);
+
+                                    // Retrieving current date and time, setting as report generation date and time 
+                                    Paragraph reportGeneration = new Paragraph("Report Generated Period: " + ltad.retrieveLocalTimeAndDate());
+
+                                    // Setting parapgraph to center alignment of the document
+                                    reportGeneration.setAlignment(Element.ALIGN_CENTER);
+
+                                    // Adding paragraph to document
+                                    monthlyCustomerTransactionReport.add(reportGeneration);
+
+                                    // Closing document
+                                    monthlyCustomerTransactionReport.close();
+
+                                    System.out.println("Document is closed");
+                                } 
+                                // Error handling. Handles any SQL related errors.
+                                catch (SQLException SqlEx) {
+                                    System.out.println("Error found: " + SqlEx);
+                                }
+                            } 
+                            // Error handling. Handles any possible errors.
+                            catch (Throwable ThrowableEx) {
+                                System.out.println("Error found: " + ThrowableEx);
+                            }
+                        }
+                    }
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                    }  
+                }
+                // Assigning string to show automate report generation status
+                lbl_mstatus.setText("Report is Up To Date");
+            }
+            else{
+                // Assigning string to show automate report generation status
+                lbl_mstatus.setText("Report Generation Pending, Awaiting Till Default Time");
+            }
+        }
     }
 
     /**
@@ -94,11 +969,12 @@ public class Teller extends javax.swing.JFrame {
         FinalDeposit_Txt = new javax.swing.JTextField();
         total_Lbl = new javax.swing.JLabel();
         DepositBonus = new javax.swing.JButton();
+        jcb_autoPreviewReceipt = new javax.swing.JCheckBox();
         jSplitPane5 = new javax.swing.JSplitPane();
         wOption_pnl = new javax.swing.JPanel();
         ClearSA1 = new javax.swing.JButton();
         CheckSA1 = new javax.swing.JButton();
-        SubmitSA1 = new javax.swing.JButton();
+        SubmitSAWithdrawal = new javax.swing.JButton();
         withdrawal_pnl = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         wACCT = new javax.swing.JLabel();
@@ -109,6 +985,7 @@ public class Teller extends javax.swing.JFrame {
         DCurrentBalance_Txt = new javax.swing.JTextField();
         Dwithdraw_Txt = new javax.swing.JTextField();
         WDRL_Lbl = new javax.swing.JLabel();
+        jcb_autoPreviewReceiptWithdrawal = new javax.swing.JCheckBox();
         mInterest_pnl = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -119,15 +996,43 @@ public class Teller extends javax.swing.JFrame {
         FetchAcc_Btn = new javax.swing.JButton();
         processInterest_Btn = new javax.swing.JButton();
         reports_pnl = new javax.swing.JTabbedPane();
-        jSplitPane4 = new javax.swing.JSplitPane();
+        dailyReport_jsp = new javax.swing.JSplitPane();
         rOptions_jbl = new javax.swing.JPanel();
-        Generate_Btn = new javax.swing.JButton();
-        RSubmit = new javax.swing.JButton();
+        btn_retrieveRecords = new javax.swing.JButton();
+        btn_generateReport = new javax.swing.JButton();
+        btn_clear = new javax.swing.JButton();
         dReport_pnl = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        lbl_selectDate = new javax.swing.JLabel();
+        lbl_autoStatus = new javax.swing.JLabel();
         jdp_selectDate = new org.jdesktop.swingx.JXDatePicker();
         jcb_autoPreviewReport = new javax.swing.JCheckBox();
+        lbl_customerTransactionRecords = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtb_customerTransactionRecords = new javax.swing.JTable();
+        lbl_automaticlDailyCT = new javax.swing.JLabel();
+        lbl_manualDailyCT1 = new javax.swing.JLabel();
+        lbl_selectDate1 = new javax.swing.JLabel();
+        lbl_status = new javax.swing.JLabel();
+        monthlyReport_jsp = new javax.swing.JSplitPane();
+        rOptions_jbl1 = new javax.swing.JPanel();
+        btn_monthlyRetrieveRecords = new javax.swing.JButton();
+        btn_monthlyGenerateReport = new javax.swing.JButton();
+        btn_monthlyClear = new javax.swing.JButton();
+        dReport_pnl1 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        lbl_mautoStatus1 = new javax.swing.JLabel();
+        jcb_monthlyAutoPreviewReport = new javax.swing.JCheckBox();
+        lbl_mcustomerDetailsRecord = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtb_customerDetailsRecord = new javax.swing.JTable();
+        lbl_mautomaticlDailyCT1 = new javax.swing.JLabel();
+        lbl_mmanualDailyCT2 = new javax.swing.JLabel();
+        lbl_selectMonth = new javax.swing.JLabel();
+        lbl_mstatus = new javax.swing.JLabel();
+        c_month = new java.awt.Choice();
+        lbl_mtransactionDetailsRecords = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtb_transactionDetailsRecords = new javax.swing.JTable();
         jPanel16 = new javax.swing.JPanel();
         nCustomer_pnl = new javax.swing.JPanel();
         ACCTType_Lbl = new javax.swing.JLabel();
@@ -151,6 +1056,8 @@ public class Teller extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jlbl_localTime = new javax.swing.JLabel();
+        jlbl_localDate = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -226,6 +1133,11 @@ public class Teller extends javax.swing.JFrame {
                 SubmitSAMouseEntered(evt);
             }
         });
+        SubmitSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SubmitSAActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout dOption_pnlLayout = new javax.swing.GroupLayout(dOption_pnl);
         dOption_pnl.setLayout(dOption_pnlLayout);
@@ -241,7 +1153,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(ClearSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
                 .addComponent(SubmitSA, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -347,27 +1259,38 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
+        jcb_autoPreviewReceipt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jcb_autoPreviewReceipt.setForeground(new java.awt.Color(255, 255, 255));
+        jcb_autoPreviewReceipt.setText("Auto Preview Receipt");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(133, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DepositBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FinalDeposit_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(116, 116, 116))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dBalance_Lbl)
-                    .addComponent(dAccount))
-                .addGap(4, 4, 4)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DAccno_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(currentBalance_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dBalance_Lbl)
+                            .addComponent(dAccount))
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DAccno_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(currentBalance_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 123, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(DepositBonus, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(FinalDeposit_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(116, 116, 116))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jcb_autoPreviewReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addContainerGap()
@@ -404,7 +1327,9 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(FinalDeposit_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(DepositBonus)
-                .addGap(63, 63, 63))
+                .addGap(17, 17, 17)
+                .addComponent(jcb_autoPreviewReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(65, 65, 65)
@@ -431,14 +1356,14 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(Deposit_pnlLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(268, Short.MAX_VALUE))
         );
         Deposit_pnlLayout.setVerticalGroup(
             Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Deposit_pnlLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -474,11 +1399,16 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
-        SubmitSA1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        SubmitSA1.setText("Submit");
-        SubmitSA1.addMouseListener(new java.awt.event.MouseAdapter() {
+        SubmitSAWithdrawal.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        SubmitSAWithdrawal.setText("Submit");
+        SubmitSAWithdrawal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                SubmitSA1MouseEntered(evt);
+                SubmitSAWithdrawalMouseEntered(evt);
+            }
+        });
+        SubmitSAWithdrawal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SubmitSAWithdrawalActionPerformed(evt);
             }
         });
 
@@ -488,7 +1418,7 @@ public class Teller extends javax.swing.JFrame {
             wOption_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(ClearSA1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(CheckSA1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(SubmitSA1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(SubmitSAWithdrawal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         wOption_pnlLayout.setVerticalGroup(
             wOption_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,8 +1426,8 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(ClearSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
-                .addComponent(SubmitSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
+                .addComponent(SubmitSAWithdrawal, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane5.setLeftComponent(wOption_pnl);
@@ -554,6 +1484,10 @@ public class Teller extends javax.swing.JFrame {
         WDRL_Lbl.setForeground(new java.awt.Color(255, 255, 255));
         WDRL_Lbl.setText("Withdraw Amount:");
 
+        jcb_autoPreviewReceiptWithdrawal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jcb_autoPreviewReceiptWithdrawal.setForeground(new java.awt.Color(255, 255, 255));
+        jcb_autoPreviewReceiptWithdrawal.setText("Auto Preview Receipt");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -579,6 +1513,10 @@ public class Teller extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Dwithdraw_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(380, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jcb_autoPreviewReceiptWithdrawal, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -599,7 +1537,9 @@ public class Teller extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(WDRL_Lbl)
                     .addComponent(Dwithdraw_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addComponent(jcb_autoPreviewReceiptWithdrawal, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout withdrawal_pnlLayout = new javax.swing.GroupLayout(withdrawal_pnl);
@@ -607,7 +1547,7 @@ public class Teller extends javax.swing.JFrame {
         withdrawal_pnlLayout.setHorizontalGroup(
             withdrawal_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, withdrawal_pnlLayout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+                .addContainerGap(89, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
         );
@@ -616,7 +1556,7 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(withdrawal_pnlLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         jSplitPane5.setRightComponent(withdrawal_pnl);
@@ -727,12 +1667,12 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(285, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+                .addContainerGap(102, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
         );
@@ -746,93 +1686,419 @@ public class Teller extends javax.swing.JFrame {
 
         rOptions_jbl.setBackground(new java.awt.Color(0, 123, 146));
 
-        Generate_Btn.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        Generate_Btn.setText("Generate");
-        Generate_Btn.addActionListener(new java.awt.event.ActionListener() {
+        btn_retrieveRecords.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btn_retrieveRecords.setText("<html>\n<p>Retrieve <br> Records</p>\n</html>");
+        btn_retrieveRecords.setActionCommand("Retrieve \nRecords");
+        btn_retrieveRecords.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Generate_BtnActionPerformed(evt);
+                btn_retrieveRecordsActionPerformed(evt);
             }
         });
 
-        RSubmit.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        RSubmit.setText("Submit");
+        btn_generateReport.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btn_generateReport.setText("<html>\n<p> Generate Report</p>\n</html>");
+        btn_generateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_generateReportActionPerformed(evt);
+            }
+        });
+
+        btn_clear.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btn_clear.setText("Clear");
+        btn_clear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_clearMouseEntered(evt);
+            }
+        });
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout rOptions_jblLayout = new javax.swing.GroupLayout(rOptions_jbl);
         rOptions_jbl.setLayout(rOptions_jblLayout);
         rOptions_jblLayout.setHorizontalGroup(
             rOptions_jblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Generate_Btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(RSubmit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(rOptions_jblLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(btn_retrieveRecords)
+            .addComponent(btn_generateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         rOptions_jblLayout.setVerticalGroup(
             rOptions_jblLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rOptions_jblLayout.createSequentialGroup()
-                .addComponent(Generate_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
-                .addComponent(RSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(75, 75, 75)
+                .addComponent(btn_retrieveRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110)
+                .addComponent(btn_generateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jSplitPane4.setLeftComponent(rOptions_jbl);
+        dailyReport_jsp.setLeftComponent(rOptions_jbl);
 
         dReport_pnl.setBackground(new java.awt.Color(0, 123, 146));
 
         jPanel2.setBackground(new java.awt.Color(18, 63, 72));
         jPanel2.setToolTipText("");
+        jPanel2.setMaximumSize(new java.awt.Dimension(3270, 3210));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1100, 535));
 
-        lbl_selectDate.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbl_selectDate.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_selectDate.setText("Select a Date:");
+        lbl_autoStatus.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbl_autoStatus.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_autoStatus.setText("Automatic Report Generation Status: ");
 
         jcb_autoPreviewReport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jcb_autoPreviewReport.setForeground(new java.awt.Color(255, 255, 255));
         jcb_autoPreviewReport.setText("Auto Preview Report");
+
+        lbl_customerTransactionRecords.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbl_customerTransactionRecords.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_customerTransactionRecords.setText("Customer Transaction Records:");
+
+        jtb_customerTransactionRecords.setFont(new java.awt.Font("Segoe UI Symbol", 1, 14)); // NOI18N
+        jtb_customerTransactionRecords.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(jtb_customerTransactionRecords);
+
+        lbl_automaticlDailyCT.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lbl_automaticlDailyCT.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_automaticlDailyCT.setText("Automatic Daily Customer Transaction Report");
+
+        lbl_manualDailyCT1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lbl_manualDailyCT1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_manualDailyCT1.setText("Manual Daily Customer Transaction Report");
+
+        lbl_selectDate1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbl_selectDate1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_selectDate1.setText("Select a Date:");
+
+        lbl_status.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_status.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbl_status.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(lbl_selectDate)
-                .addGap(18, 18, 18)
-                .addComponent(jdp_selectDate, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127)
-                .addComponent(jcb_autoPreviewReport, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_customerTransactionRecords)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(116, 116, 116)
+                                        .addComponent(jdp_selectDate, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(154, 154, 154)
+                                .addComponent(jcb_autoPreviewReport, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(lbl_automaticlDailyCT))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(lbl_autoStatus)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_status, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(34, 34, 34)
+                    .addComponent(lbl_manualDailyCT1)
+                    .addContainerGap(529, Short.MAX_VALUE)))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(86, 86, 86)
+                    .addComponent(lbl_selectDate1)
+                    .addContainerGap(812, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addGap(74, 74, 74)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_selectDate)
                     .addComponent(jdp_selectDate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcb_autoPreviewReport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(398, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lbl_customerTransactionRecords)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(lbl_automaticlDailyCT)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(lbl_autoStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_status, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(32, 32, 32)
+                    .addComponent(lbl_manualDailyCT1)
+                    .addContainerGap(538, Short.MAX_VALUE)))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(83, 83, 83)
+                    .addComponent(lbl_selectDate1)
+                    .addContainerGap(492, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout dReport_pnlLayout = new javax.swing.GroupLayout(dReport_pnl);
         dReport_pnl.setLayout(dReport_pnlLayout);
         dReport_pnlLayout.setHorizontalGroup(
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dReport_pnlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+            .addGroup(dReport_pnlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(212, Short.MAX_VALUE))
         );
         dReport_pnlLayout.setVerticalGroup(
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnlLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jSplitPane4.setRightComponent(dReport_pnl);
+        dailyReport_jsp.setRightComponent(dReport_pnl);
 
-        reports_pnl.addTab("Daily Report", jSplitPane4);
+        reports_pnl.addTab("Daily Report", dailyReport_jsp);
 
-        NewUser.addTab("Reports", reports_pnl);
+        rOptions_jbl1.setBackground(new java.awt.Color(0, 123, 146));
+
+        btn_monthlyRetrieveRecords.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btn_monthlyRetrieveRecords.setText("<html> <p>Retrieve <br> Records</p> </html>");
+        btn_monthlyRetrieveRecords.setActionCommand("Retrieve \nRecords");
+        btn_monthlyRetrieveRecords.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_monthlyRetrieveRecordsActionPerformed(evt);
+            }
+        });
+
+        btn_monthlyGenerateReport.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btn_monthlyGenerateReport.setText("<html>\n<p> Generate Report</p>\n</html>");
+        btn_monthlyGenerateReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_monthlyGenerateReportActionPerformed(evt);
+            }
+        });
+
+        btn_monthlyClear.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        btn_monthlyClear.setText("Clear");
+        btn_monthlyClear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_monthlyClearMouseEntered(evt);
+            }
+        });
+        btn_monthlyClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_monthlyClearActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout rOptions_jbl1Layout = new javax.swing.GroupLayout(rOptions_jbl1);
+        rOptions_jbl1.setLayout(rOptions_jbl1Layout);
+        rOptions_jbl1Layout.setHorizontalGroup(
+            rOptions_jbl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rOptions_jbl1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_monthlyClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(btn_monthlyRetrieveRecords)
+            .addComponent(btn_monthlyGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+        rOptions_jbl1Layout.setVerticalGroup(
+            rOptions_jbl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rOptions_jbl1Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(btn_monthlyRetrieveRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110)
+                .addComponent(btn_monthlyGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addComponent(btn_monthlyClear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        monthlyReport_jsp.setLeftComponent(rOptions_jbl1);
+
+        dReport_pnl1.setBackground(new java.awt.Color(0, 123, 146));
+
+        jPanel8.setBackground(new java.awt.Color(18, 63, 72));
+        jPanel8.setToolTipText("");
+        jPanel8.setMaximumSize(new java.awt.Dimension(3270, 3210));
+        jPanel8.setPreferredSize(new java.awt.Dimension(1100, 535));
+
+        lbl_mautoStatus1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbl_mautoStatus1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_mautoStatus1.setText("Automatic Report Generation Status: ");
+
+        jcb_monthlyAutoPreviewReport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jcb_monthlyAutoPreviewReport.setForeground(new java.awt.Color(255, 255, 255));
+        jcb_monthlyAutoPreviewReport.setText("Auto Preview Report");
+
+        lbl_mcustomerDetailsRecord.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbl_mcustomerDetailsRecord.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_mcustomerDetailsRecord.setText("Customer Details:");
+
+        jtb_customerDetailsRecord.setFont(new java.awt.Font("Segoe UI Symbol", 1, 14)); // NOI18N
+        jtb_customerDetailsRecord.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(jtb_customerDetailsRecord);
+
+        lbl_mautomaticlDailyCT1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lbl_mautomaticlDailyCT1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_mautomaticlDailyCT1.setText("Automatic Monthly Customer Transaction Report");
+
+        lbl_mmanualDailyCT2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lbl_mmanualDailyCT2.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_mmanualDailyCT2.setText("Manual Monthly Customer Transaction Report");
+
+        lbl_selectMonth.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbl_selectMonth.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_selectMonth.setText("Select a Month:");
+
+        lbl_mstatus.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_mstatus.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbl_mstatus.setForeground(new java.awt.Color(255, 255, 255));
+
+        c_month.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+
+        lbl_mtransactionDetailsRecords.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbl_mtransactionDetailsRecords.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_mtransactionDetailsRecords.setText("Transaction Details:");
+
+        jtb_transactionDetailsRecords.setFont(new java.awt.Font("Segoe UI Symbol", 1, 14)); // NOI18N
+        jtb_transactionDetailsRecords.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane5.setViewportView(jtb_transactionDetailsRecords);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGap(205, 205, 205)
+                            .addComponent(c_month, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(193, 193, 193)
+                            .addComponent(jcb_monthlyAutoPreviewReport, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGap(39, 39, 39)
+                            .addComponent(lbl_mautomaticlDailyCT1))
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGap(100, 100, 100)
+                            .addComponent(lbl_mautoStatus1)
+                            .addGap(18, 18, 18)
+                            .addComponent(lbl_mstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGap(76, 76, 76)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addGap(62, 62, 62)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbl_mtransactionDetailsRecords)
+                                .addComponent(lbl_mcustomerDetailsRecord)))))
+                .addContainerGap(78, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(34, 34, 34)
+                    .addComponent(lbl_mmanualDailyCT2)
+                    .addContainerGap(529, Short.MAX_VALUE)))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(86, 86, 86)
+                    .addComponent(lbl_selectMonth)
+                    .addContainerGap(812, Short.MAX_VALUE)))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jcb_monthlyAutoPreviewReport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(c_month, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addComponent(lbl_mcustomerDetailsRecord)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbl_mtransactionDetailsRecords)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_mautomaticlDailyCT1)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(lbl_mautoStatus1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_mstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(32, 32, 32)
+                    .addComponent(lbl_mmanualDailyCT2)
+                    .addContainerGap(538, Short.MAX_VALUE)))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(83, 83, 83)
+                    .addComponent(lbl_selectMonth)
+                    .addContainerGap(492, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout dReport_pnl1Layout = new javax.swing.GroupLayout(dReport_pnl1);
+        dReport_pnl1.setLayout(dReport_pnl1Layout);
+        dReport_pnl1Layout.setHorizontalGroup(
+            dReport_pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dReport_pnl1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134))
+        );
+        dReport_pnl1Layout.setVerticalGroup(
+            dReport_pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dReport_pnl1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        monthlyReport_jsp.setRightComponent(dReport_pnl1);
+
+        reports_pnl.addTab("Monthly Report", monthlyReport_jsp);
+
+        NewUser.addTab("Customer Transaction Reports", reports_pnl);
 
         jPanel16.setBackground(new java.awt.Color(0, 123, 146));
 
@@ -1012,17 +2278,17 @@ public class Teller extends javax.swing.JFrame {
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
                 .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(21, 21, 21)
                 .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         NewUser.addTab("NEW Customer", jPanel16);
@@ -1038,37 +2304,52 @@ public class Teller extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Guarding Day & Night");
 
+        jlbl_localTime.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localTime.setForeground(new java.awt.Color(255, 255, 255));
+        jlbl_localTime.setText("Time");
+
+        jlbl_localDate.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localDate.setForeground(new java.awt.Color(255, 255, 255));
+        jlbl_localDate.setText("Date");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addGap(250, 250, 250)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1)
-                        .addGap(250, 250, 250)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jlbl_localDate, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlbl_localTime, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(20, 20, 20))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4))
-                    .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlbl_localTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlbl_localDate)))
                 .addGap(18, 18, 18)
-                .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(NewUser)
+                .addContainerGap())
         );
 
         jMenuBar2.setBackground(new java.awt.Color(18, 63, 72));
@@ -1113,14 +2394,11 @@ public class Teller extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -1338,10 +2616,10 @@ public class Teller extends javax.swing.JFrame {
          CheckSA1.setToolTipText("Query Bank Systems for Records.");
     }//GEN-LAST:event_CheckSA1MouseEntered
 
-    private void SubmitSA1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitSA1MouseEntered
+    private void SubmitSAWithdrawalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SubmitSAWithdrawalMouseEntered
         // TODO add your handling code here:
-        SubmitSA1.setToolTipText("Authorise the Withdrawal Transaction Request to Bank Systems");
-    }//GEN-LAST:event_SubmitSA1MouseEntered
+        SubmitSAWithdrawal.setToolTipText("Authorise the Withdrawal Transaction Request to Bank Systems");
+    }//GEN-LAST:event_SubmitSAWithdrawalMouseEntered
 
     private void FetchAcc_BtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FetchAcc_BtnMouseEntered
         // TODO add your handling code here:
@@ -1353,222 +2631,968 @@ public class Teller extends javax.swing.JFrame {
         processInterest_Btn.setToolTipText("Click Approve Bank Systems to Process Interest to Accounts");
     }//GEN-LAST:event_processInterest_BtnMouseEntered
 
-    private void Generate_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Generate_BtnActionPerformed
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+
+        // Sets date picker to null value (resets)
+        jdp_selectDate.setDate(null);
+
+        // Resets auto preview report check box
+        jcb_autoPreviewReport.setSelected(false);
+
+        // Removing all the exiting records in the customer transaction table
+        int ctrCountRemove = customerTransactionRecordsTableModel.getRowCount();
+        for (int i = ctrCountRemove - 1; i >= 0 ; i--) {
+            customerTransactionRecordsTableModel.removeRow(i);
+        }
         
-        // Daily customer transaction generation source code
+    }//GEN-LAST:event_btn_clearActionPerformed
+
+    private void btn_clearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_clearMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_clearMouseEntered
+
+    private void btn_generateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generateReportActionPerformed
+
+        // Daily customer transaction report generation source code
         try {
-            // Retriving user selected date 
-            Date sd = jdp_selectDate.getDate();
-            DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String selectedDate = sdFormat.format(sd);
+            // Retrieving user selected date
+            Date retrievingSelectedDate = jdp_selectDate.getDate();
+            DateFormat retrievingSelectedDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String selectedDate = retrievingSelectedDateFormat.format(retrievingSelectedDate);
             System.out.println("Selected Date: " + selectedDate);
             
-            // Checking if any any records are available in the database from the selected date
-            // Creating a new object to retrieve database connection url
-            DBConnection DCU = new DBConnection();
+            // Retrieving user selected date
+            Date retrievingSelectedDateSql = jdp_selectDate.getDate();
+            DateFormat retrievingSelectedDateSqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String selectedDateSql = retrievingSelectedDateSqlFormat.format(retrievingSelectedDateSql);
+            System.out.println("Selected Date: " + selectedDateSql);
 
-            try (Connection verificationCon = DriverManager.getConnection(DCU.DatabaseConnectionUrl());
+            // Checking if any any records are available in the database from the selected date
+            try (Connection verificationCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
                 Statement verificationStmt = verificationCon.createStatement();) {
-                
+
                 // Assigning SQL query
                 String verificationSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction "
-                        + "WHERE convert(nvarchar(50), date_time,126) LIKE '" + selectedDate + "%' ";
-                
+                + "WHERE convert(nvarchar(50), date_time,126) LIKE '" + selectedDateSql + "%' ";
+
                 // Executing SQL query
                 ResultSet verificationResult = verificationStmt.executeQuery(verificationSqlQuery);
-                    
+
                 // Checking if any results were returned
                 if(verificationResult.next() == false){
                     // Displaying message box showing error message
-                    JOptionPane.showMessageDialog(null, 
-                              "No records are available in the database for the selected date."
-                                      + "\nPlease select a different date", 
-                              "ERROR !", 
-                              JOptionPane.ERROR_MESSAGE);
-                    
-                    System.out.println("Not found");
+                    JOptionPane.showMessageDialog(null,
+                        "No records are available in the database for the selected date."
+                        + "\nPlease select a different date",
+                        "ERROR !",
+                        JOptionPane.ERROR_MESSAGE);
+                    System.out.println("No Records found in Database for Selected Date");
                 }
                 else{
-                    // Report generation if any records are available
-                    
-                    // Creating a new document A4 sized
-                    Document dailyCustomerTransactionsPdfDocument = new Document(PageSize.A4);
-                     
-                    System.out.println("PDF Document is Created");
-                    
-                    try {
-                        // Creating PDF document to assigned pathway
-                        PdfWriter.getInstance(dailyCustomerTransactionsPdfDocument, new FileOutputStream("../Reports/Daily_Customer_Transaction_Records_'" + selectedDate + "'.pdf"));
-                        // Assigning PDF document author
-                        dailyCustomerTransactionsPdfDocument.addAuthor("Quinn_INC");
-                        // Assigning PDF document title
-                        dailyCustomerTransactionsPdfDocument.addTitle("Transaction Report");
-                        // Setting all four margins in PDF document
-                        dailyCustomerTransactionsPdfDocument.setMargins(10, 10, 10, 10);
-                        // Opening newly created PDF document
-                        dailyCustomerTransactionsPdfDocument.open();
-                        
-                        System.out.println("PDF Document is Open");
-                        
-                        // Retrieving Quinn_Inc header image to PDF document
-                        Image documentHeaderImg = Image.getInstance("src/Resources/Daily_Customer_Transaction_Report_Header_V1.jpg");
-
-                        // Fixing the image scale
-                        documentHeaderImg.scaleAbsolute(585f, 100f);
-
-                        // Adding header image to PDF document
-                        dailyCustomerTransactionsPdfDocument.add(documentHeaderImg);
-
-                        // Setting number of coloumns and size of each column
-                        float[] dailyCTWidths = {6, 8, 6, 6, 10};
-
-                        // Creating a table for records
-                        PdfPTable dailyCTTable = new PdfPTable(dailyCTWidths);
-
-                        // Setting total size of table width
-                        dailyCTTable.setWidthPercentage(87);     
-
-                        // Creating dtable cell
-                        PdfPCell dailyCTTableCell;
-
-                        
-                        // Adding style to table headers
-                        Font header_style = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
-                        
-                        // Table Headers
-                        String account_number = "ACCOUNT NUMBER";
-                        dailyCTTableCell = new PdfPCell(new Phrase(account_number, header_style));
-                        dailyCTTable.addCell(dailyCTTableCell);
-
-                        String transaction_type = "TRANSACTION TYPE";
-                        dailyCTTableCell = new PdfPCell(new Phrase(transaction_type, header_style));
-                        dailyCTTable.addCell(dailyCTTableCell);
-
-                        String account_type = "ACCOUNT TYPE";
-                        dailyCTTableCell = new PdfPCell(new Phrase(account_type, header_style));
-                        dailyCTTable.addCell(dailyCTTableCell);
-
-                        String amount = "AMOUNT";
-                        dailyCTTableCell = new PdfPCell(new Phrase(amount, header_style));
-                        dailyCTTable.addCell(dailyCTTableCell);
-
-                        String date_time = "DATE TIME";
-                        dailyCTTableCell = new PdfPCell(new Phrase(date_time, header_style));
-                        dailyCTTable.addCell(dailyCTTableCell);
-
-                        // Retrieving data from database and assigning to each cell
-                        try (Connection dataRetrievalCon = DriverManager.getConnection(DCU.DatabaseConnectionUrl());
-                            Statement dataRetrievalSTMT = dataRetrievalCon.createStatement();) {
-                        
-                            // Executing same SQL query that was used before for record verification
-                            ResultSet rs = dataRetrievalSTMT.executeQuery(verificationSqlQuery);
-
-                            // Iterating through each tuple in database and assigning to table cell
-                            while (rs.next()) {
-                                account_number = rs.getString("ACCOUNT_NUMBER");
-                                dailyCTTableCell = new PdfPCell(new Phrase(account_number));
-                                dailyCTTable.addCell(dailyCTTableCell);
-
-                                transaction_type = rs.getString("TRANSACTION_TYPE");
-                                dailyCTTableCell = new PdfPCell(new Phrase(transaction_type));
-                                dailyCTTable.addCell(dailyCTTableCell);
-
-                                account_type = rs.getString("ACCOUNT_TYPE");
-                                dailyCTTableCell = new PdfPCell(new Phrase(account_type));
-                                dailyCTTable.addCell(dailyCTTableCell);
-
-                                amount = "£ " + rs.getString("AMOUNT");
-                                dailyCTTableCell = new PdfPCell(new Phrase(amount));
-                                dailyCTTable.addCell(dailyCTTableCell);
-
-                                date_time = rs.getString("DATE_TIME");
-                                dailyCTTableCell = new PdfPCell(new Phrase(date_time));
-                                dailyCTTable.addCell(dailyCTTableCell);
-                            }
-
-                            // Adding customer transaction table to PDF document
-                            dailyCustomerTransactionsPdfDocument.add(dailyCTTable);
-                        } 
-                        // Error handling. Checking for any SQL connection errors
-                        catch (SQLException SQLEx) {
-                            System.out.println("Error found: " + SQLEx);
+                    // Retrieving records from database and inserting into table
+                    try{
+                        // Removing all the exiting records in the customer transaction table and repopulating with new records
+                        int ctrCountRemove = customerTransactionRecordsTableModel.getRowCount();
+                        for (int i = ctrCountRemove - 1; i >= 0 ; i--) {
+                            customerTransactionRecordsTableModel.removeRow(i);
                         }
-                        
-                        // Retrieving Quinn_Inc footer image to PDF document
-                        Image documentFooterImg = Image.getInstance("src/Resources/Customer_Transaction_Report_Footer_V1.jpg");
 
-                        // Fixing the image scale
-                        documentFooterImg.scaleAbsolute(570f, 30f);
-                        
-                        // Fixing position of image
-                        documentFooterImg.setAbsolutePosition(10f, 10f);
-                        
-                        // Adding image to PDF document
-                        dailyCustomerTransactionsPdfDocument.add(documentFooterImg);
+                        System.out.println("Selected Date: " + selectedDate);
 
-                        
-                        // Retrieving current date and time from localhost to show report generated date and time
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                        // Retrieving records from the database for the selected date
+                        try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
 
-                        LocalDateTime now = LocalDateTime.now();
-                        
-                        // Creating paragraph to show report generated date and time
-                        Paragraph exportDateAndTime = new Paragraph("Report Generated Period: " + dtf.format(now));
+                            // Executing SQL query
+                            ResultSet retrieveCTRResult = retrieveCTRstmt.executeQuery(verificationSqlQuery);
 
-                        // Setting report generated date and time to center alignment 
-                        exportDateAndTime.setAlignment(Element.ALIGN_CENTER);
-                        
-                        // Adding report generated date and time to PDF document
-                        dailyCustomerTransactionsPdfDocument.add(exportDateAndTime);
+                            // Creating new table rows and inserting record data into them
+                            while(retrieveCTRResult.next()){
+                                customerTransactionRecordsTableModel.insertRow(customerTransactionRecordsTableModel.getRowCount(), new Object[]{retrieveCTRResult.getString(1), 
+                                    retrieveCTRResult.getString(2), retrieveCTRResult.getString(3), retrieveCTRResult.getString(4), retrieveCTRResult.getString(5)});
+                            }
+                        }
+                        // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx)
+                        {
+                            System.out.println("Error found: " + SqlEx);
+                        }
+                    }
+                    // Error handling. Checking for index out of range in array when removing the exisitng records from the table
+                    catch(ArrayIndexOutOfBoundsException ctrRecordsRemovalEx){
+                        System.out.println("Error: " + ctrRecordsRemovalEx);
+                    }
 
-                    } 
-                    // Error handling. Checking for all possible errors
-                    catch (Throwable reportGenerationEx) {
-                        System.out.println("Error found: " + reportGenerationEx);
-                    } 
-                    finally {
-                        // Closing PDF document
-                        dailyCustomerTransactionsPdfDocument.close();
-                        System.out.println("PDF Document is Closed");
-                        
-                        // Displaying message box showing confirmation message
-                        JOptionPane.showMessageDialog(null, 
-                            "Daily Customer Transaction Records Report has been successfully generated.", 
-                            "REPORT GENERATED CONFIRMATION", 
-                            JOptionPane.INFORMATION_MESSAGE);
-                        
-                        
-                        // Automatically opening the PDF document after generation in user's default PDF opening application
-                        // Checks if auto preview report check box is selected
-                        if(jcb_autoPreviewReport.isSelected()){ 
-                            // Opening PDF document
-                            File myFile = new File("../Reports/Daily_Customer_Transaction_Records_'" + selectedDate + "'.pdf");
-                            try {
-                                Desktop.getDesktop().open(myFile);
-                            } catch (IOException ex) {
-                                Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, ex);
+                    // Message box to verify if the user wants to generate report according to the data shown in the table
+                    int userChoice = JOptionPane.showConfirmDialog(null, "Report will be generated according to data shown in the table."
+                        + "\nDo you want to continue? ", "Verification", JOptionPane.YES_NO_OPTION);
+
+                    // If uers select 'Yes' option
+                    if (userChoice == 0) {
+                        // checking if manual daily customer transaction report was already generated for this day
+                        File checkFileExistence = new File("../Reports/Daily_Customer_Transaction_Record_Reports/Manual/Manual_Daily_Customer_Transaction_Records_'" + selectedDate + "'.pdf");
+
+                        boolean checkFileExistenceResult = checkFileExistence.exists();
+
+                        System.out.println(checkFileExistenceResult);
+
+                        // If a report is already existing with the same filename
+                        if (checkFileExistenceResult == true) {
+                            
+                            System.out.println("Manual Daily Customer Transaction Report is already created for this day");
+                            
+                            // Message box to verify if the user wants to generate report according to the data shown in the table
+                            int checkFileExistenceUserChoice = JOptionPane.showConfirmDialog(null, "Manual Daily Customer Transaction Report was already generated for this day."
+                                + "\nDo you want to continue?  (This action will overwrite the exisitng report)", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                            
+                            // If the user selects 'Yes' option
+                            if (checkFileExistenceUserChoice == 0) {
+                                // Report generation if user selectes 'Yes'
+                                // Calling method to generate manual daily report
+                                // The implementation is placed in another class, becuase the same implementation will repeat twice. 
+                                // Without repeating the same procedure twice we have implemented the procedure into a diffenent class and called it twice.
+                                String reportGenerationStatus = rg.generateManualDailyCTReport(selectedDate, selectedDateSql);
+                                
+                                System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);
+                                
+                                // Automatically opening the PDF document after generation in user's default PDF opening application
+                                // Checks if auto preview report check box is selected
+                                if(jcb_autoPreviewReport.isSelected()){
+                                    // Opening PDF document
+                                    File report = new File("../Reports/Daily_Customer_Transaction_Record_Reports/Manual/Manual_Daily_Customer_Transaction_Records_'" + selectedDate + "'.pdf");
+                                    try {
+                                        Desktop.getDesktop().open(report);
+                                    } 
+                                    // Error handling. Handles any data input and output errors.
+                                    catch (IOException IoEx) {
+                                        Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
+                                    }
+                                }
+                            }
+                        }
+                        // If there is no report already exisitng
+                        else{
+                            // Report generation if a report with same filename doesn't exist
+                            // Calling method to generate manual daily report
+                            // The implementation is placed in another class, becuase the same implementation will repeat twice. 
+                            // Without repeating the same procedure twice we have implemented the procedure into a diffenent class and called it twice.
+                            String reportGenerationStatus = rg.generateManualDailyCTReport(selectedDate, selectedDateSql);
+
+                            System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);
+
+                            // Automatically opening the PDF document after generation in user's default PDF opening application
+                            // Checks if auto preview report check box is selected
+                            if(jcb_autoPreviewReport.isSelected()){
+                                // Opening PDF document
+                                File report = new File("../Reports/Daily_Customer_Transaction_Record_Reports/Manual/Manual_Daily_Customer_Transaction_Records_'" + selectedDate + "'.pdf");
+                                try {
+                                    Desktop.getDesktop().open(report);
+                                } 
+                                // Error handling. Handles any data input and output errors.
+                                catch (IOException IoEx) {
+                                    Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
+                                }
                             }
                         }
                     }
                 }
-            } 
-            // Error handling. Checking for SQL connection errors
-            catch (SQLException SQLEx) {
-                System.out.println("Error found: " + SQLEx);
-            }      
-        } 
+            }
+            // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+            }
+        }
         // Error handling. Checking if a date is selected before user clicks on 'Genearate' button
         catch (NullPointerException NullValueEx) {
             // Displaying message box showing error message
-            JOptionPane.showMessageDialog(null, 
-                "Date not selected. Please select a date", 
-                "ERROR !", 
+            JOptionPane.showMessageDialog(null,
+                "Date not selected. Please select a date",
+                "ERROR !",
                 JOptionPane.ERROR_MESSAGE);
-            
             System.out.println("Date Not Selected. Error: " + NullValueEx);
         }
+    }//GEN-LAST:event_btn_generateReportActionPerformed
+
+    private void btn_retrieveRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retrieveRecordsActionPerformed
+
+        // Retrieving daily customer transaction records from database source code
+        try{ // Checking if the user has selected a date from the datepicker
+            try{
+                // Removing all the exiting records in the customer transaction table and repopulating with new records
+                int ctrCountRemove = customerTransactionRecordsTableModel.getRowCount();
+                for (int i = ctrCountRemove - 1; i >= 0 ; i--) {
+                    customerTransactionRecordsTableModel.removeRow(i);
+                }
+
+                // Assigning user selected date to a string variable
+                Date userSelectedDate = jdp_selectDate.getDate();
+                DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String selectedDate = oDateFormat.format(userSelectedDate);
+
+                System.out.println("Selected Date: " + selectedDate);
+
+                //checking if there are any recrds in the database for the selected date
+                try (Connection checkingCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement checkingCTRstmt = checkingCTRCon.createStatement();) {
+
+                    // SQL query to retrieve relavent record data
+                    String checkingCTRSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction WHERE "
+                            + "convert(nvarchar(50), date_time,126) LIKE '" + selectedDate + "%' ";
+
+                    // Executing SQL query
+                    ResultSet checkingCTRResult = checkingCTRstmt.executeQuery(checkingCTRSqlQuery);
+
+                    // Checking if any values were returned
+                    if(checkingCTRResult.next() == false){
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                            "No records are available in the database for the selected date."
+                            + "\nPlease select a different date",
+                            "ERROR !",
+                            JOptionPane.ERROR_MESSAGE);
+                        System.out.println("No Records found in Database for Selected Date");
+                    }
+                    // If values were returned
+                    else{
+                        // Retriving record data from the database for the selected date and inserting into table
+                        try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
+
+                            // Executing SQL query
+                            ResultSet retrieveCTRResult = retrieveCTRstmt.executeQuery(checkingCTRSqlQuery);
+
+                            // Creating new table rows and inserting record data into them
+                            while(retrieveCTRResult.next()){
+                                customerTransactionRecordsTableModel.insertRow(customerTransactionRecordsTableModel.getRowCount(), new Object[]{retrieveCTRResult.getString(1),
+                                    retrieveCTRResult.getString(2), retrieveCTRResult.getString(3), retrieveCTRResult.getString(4), retrieveCTRResult.getString(5)});
+                            }
+
+                            // Displaying message box showing confirmation message
+                            JOptionPane.showMessageDialog(null,
+                                "Customer Tranasaction Records for Selected Date are shown in table below. "
+                                + "\n Please verify records and click on 'Generate Report' button to produce report",
+                                "Record Retrieval Successful",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx)
+                        {
+                            System.out.println("Error found: " + SqlEx);
+                        }
+                    }
+                }
+                // Error handling. Handles any SQL related errors.
+                catch (SQLException SqlEx)
+                {
+                    System.out.println("Error found: " + SqlEx);
+                }
+            }
+            // Error handling. Checking for index out of range in array when removing the exisitng records from the table
+            catch(ArrayIndexOutOfBoundsException ctrRecordsRemovalEx){
+                System.out.println("Error: " + ctrRecordsRemovalEx);
+            }
+        }
+        // Error handling. Checking if a date is selected before user clicks on 'Retrieve Records' button
+        catch (NullPointerException NullValueEx) {
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                "Date not selected. Please select a date",
+                "ERROR !",
+                JOptionPane.ERROR_MESSAGE);
+            System.out.println("Date Not Selected. Error: " + NullValueEx);
+        }
+    }//GEN-LAST:event_btn_retrieveRecordsActionPerformed
+
+    private void btn_monthlyRetrieveRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_monthlyRetrieveRecordsActionPerformed
         
-    }//GEN-LAST:event_Generate_BtnActionPerformed
+        System.out.println("User Selected Month (Default Item Value): " + c_month.getSelectedItem());
+        System.out.println("User Selected Month (Default Index Value): " + c_month.getSelectedIndex());
+        
+        // Record data retrieval for customer details table
+        try{
+            // Removing any exisitng records from customer details table
+            int existingRowsCustomerDetailsTable = customerDetailsRecordTableModel.getRowCount();
+            for (int i = existingRowsCustomerDetailsTable - 1; i >= 0 ; i--) {
+                customerDetailsRecordTableModel.removeRow(i);
+            }
+            
+            // Removing any exisitng records from transaction details table
+            int existingRowsTransactionDetailsTable = transactionDetailsRecordsTableModel.getRowCount();
+            for (int i = existingRowsTransactionDetailsTable - 1; i >= 0 ; i--) {
+                transactionDetailsRecordsTableModel.removeRow(i);
+            }
+
+            if( c_month.getSelectedIndex() == 0 ){ //checks if the user has selected a month
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                    "Month is not selected. Please select a month.",
+                    "ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+                System.out.println("Month Not Selected.");
+            }
+            // If the user has selected a month
+            else {            
+                String selectedMonthSqlCompatible = "";
+                
+                // Setting the user selected item string value to a date time comparison compatible string value in Microsoft SQL Server
+                // Becuase the if retrving the index value, in one digts values the zero would be removed.
+                // So inorder for it to be compatible with records in the database, a switch statement is used to set the relevant value to the user preferred month.
+                switch(c_month.getSelectedItem()){
+                    case "January":
+                        selectedMonthSqlCompatible = "01";
+                        break;
+                    case "February":
+                        selectedMonthSqlCompatible = "02";
+                        break;
+                    case "March":
+                        selectedMonthSqlCompatible = "03";
+                        break;
+                    case "April":
+                        selectedMonthSqlCompatible = "04";
+                        break;
+                    case "May":
+                        selectedMonthSqlCompatible = "05";
+                        break;
+                    case "June":
+                        selectedMonthSqlCompatible = "06";
+                        break;
+                    case "July":
+                        selectedMonthSqlCompatible = "07";
+                        break;
+                    case "August":
+                        selectedMonthSqlCompatible = "08";
+                        break;
+                    case "September":
+                        selectedMonthSqlCompatible = "09";
+                        break;
+                    case "October":
+                        selectedMonthSqlCompatible = "10";
+                        break;
+                    case "November":
+                        selectedMonthSqlCompatible = "11";
+                        break;
+                    case "December":
+                        selectedMonthSqlCompatible = "12";
+                        break;
+                }
+                
+                System.out.println("Use Selected Month SQL Comparison Compatible: " + selectedMonthSqlCompatible);
+                 
+                //checking if there are any transaction records available in the database for the selected month
+                try (Connection verifyTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement verifyTransactionRecordsStmt = verifyTransactionRecordsCon.createStatement();) {
+
+                    // Assinging SQL query
+                    String verifyTransactionRecordsSqlQuery = "SELECT transaction_number, account_number, transaction_type, amount, date_time FROM "
+                            + "customer_transaction WHERE convert(nvarchar(50), date_time,126) LIKE '_____" + selectedMonthSqlCompatible + "%' ";
+
+                    // Executing SQL query
+                    ResultSet verifyTransactionRecordsRs = verifyTransactionRecordsStmt.executeQuery(verifyTransactionRecordsSqlQuery);
+
+                    System.out.println("Transaction Records Availability: " + verifyTransactionRecordsRs.next());
+                    
+                    // Checking if a value is returned
+                    // If no value are returned
+                    if( verifyTransactionRecordsRs.next() == false ){
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                            "No Transaction Records are Available for Selected Month. "
+                                    + "Please select a different month.",
+                            "ERROR!",
+                            JOptionPane.ERROR_MESSAGE);
+                        System.out.println("No Transaction Records Available");
+                    }
+                    // If any values are returned
+                    else {
+                        // Retriveing customer record data from the database and assigning to customer details table cells
+                        try (Connection retrieveCustomerRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        Statement retrieveCustomerRecordsStmt = retrieveCustomerRecordsCon.createStatement();) {
+
+                            String retrieveCustomerRecordsSqlQuery = "SELECT DISTINCT c.account_number, c.first_name, c.middle_name, c.last_name, c.acc_type FROM customer c INNER JOIN"
+                                    + " customer_transaction ct ON c.account_number = ct.account_number WHERE convert(nvarchar(50), ct.date_time,126) LIKE '_____" + selectedMonthSqlCompatible + "%' ";
+                            
+                            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
+                            ResultSet retrieveCustomerRecordsRs = retrieveCustomerRecordsStmt.executeQuery(retrieveCustomerRecordsSqlQuery);
+
+                            // Assigning returned values to transaction details table cells
+                            while(retrieveCustomerRecordsRs.next()){
+                                customerDetailsRecordTableModel.insertRow(customerDetailsRecordTableModel.getRowCount(), new Object[]{retrieveCustomerRecordsRs.getString(1), 
+                                    retrieveCustomerRecordsRs.getString(2), retrieveCustomerRecordsRs.getString(3), retrieveCustomerRecordsRs.getString(4), retrieveCustomerRecordsRs.getString(5)});
+                            }
+                        
+                        }
+                        // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx) {
+                            System.out.println("Error found: " + SqlEx);
+                        }  
+                        
+                        // Retriveing transaction record data from the database and assigning to transaction details table cells
+                        try (Connection retrieveTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        Statement retrieveTransactionRecordsStmt = retrieveTransactionRecordsCon.createStatement();) {
+
+                            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
+                            ResultSet retrieveTransactionRecordsRs = retrieveTransactionRecordsStmt.executeQuery(verifyTransactionRecordsSqlQuery);
+
+                            // Assigning returned values to transaction details table cells
+                            while(retrieveTransactionRecordsRs.next()){
+                                transactionDetailsRecordsTableModel.insertRow(transactionDetailsRecordsTableModel.getRowCount(), new Object[]{retrieveTransactionRecordsRs.getString(1), 
+                                    retrieveTransactionRecordsRs.getString(2), retrieveTransactionRecordsRs.getString(3), retrieveTransactionRecordsRs.getString(4), 
+                                    retrieveTransactionRecordsRs.getString(5)});
+                            }
+                        }
+                        // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx) {
+                            System.out.println("Error found: " + SqlEx);
+                        }  
+                        
+                        // Displaying message box showing confirmation message
+                        JOptionPane.showMessageDialog(null,
+                            "Customer Details and Transaction Details for Selected Month is shown in the two tables below. "
+                            + "\n Please verify records and click on 'Generate Report' button to produce report",
+                            "Records Retrieval Successful",
+                            JOptionPane.INFORMATION_MESSAGE);
+                        
+                    }
+                }
+                // Error handling. Handles any SQL related errors.
+                catch (SQLException e) {
+                    System.out.println("Error found: " + e);
+                }
+            }
+        }
+        catch(ArrayIndexOutOfBoundsException IndexOutofBoundEx){
+            System.out.println("Error: " + IndexOutofBoundEx);
+        } 
+        
+    }//GEN-LAST:event_btn_monthlyRetrieveRecordsActionPerformed
+
+    private void btn_monthlyGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_monthlyGenerateReportActionPerformed
+
+        // Manual monthly customer transaction report generation source code
+        
+        // Retrieving current month from local
+        String monthlyLocalMonth = ltad.retrieveLocalMonth();
+        
+        System.out.println("Month: " + monthlyLocalMonth);   
+        
+        // Retrieving current date from localhost
+        String monthlyLocalDate = ltad.retrieveLocalDate();
+
+        System.out.println("Date: " + monthlyLocalDate);
+        
+        
+        String selectedMonthSqlCompatible = "";
+
+        // Setting the user selected item string value to a date time comparison compatible string value in Microsoft SQL server
+        // Becuase the if retrving the index value, in one digts values the zero would be removed.
+        // So inorder for it to be compatible with records in the database, a switch statement is used to set the relevant value to the user preferred month.
+        switch(c_month.getSelectedItem()){
+            case "January":
+                selectedMonthSqlCompatible = "01";
+                break;
+            case "February":
+                selectedMonthSqlCompatible = "02";
+                break;
+            case "March":
+                selectedMonthSqlCompatible = "03";
+                break;
+            case "April":
+                selectedMonthSqlCompatible = "04";
+                break;
+            case "May":
+                selectedMonthSqlCompatible = "05";
+                break;
+            case "June":
+                selectedMonthSqlCompatible = "06";
+                break;
+            case "July":
+                selectedMonthSqlCompatible = "07";
+                break;
+            case "August":
+                selectedMonthSqlCompatible = "08";
+                break;
+            case "September":
+                selectedMonthSqlCompatible = "09";
+                break;
+            case "October":
+                selectedMonthSqlCompatible = "10";
+                break;
+            case "November":
+                selectedMonthSqlCompatible = "11";
+                break;
+            case "December":
+                selectedMonthSqlCompatible = "12";
+                break;
+        }
+
+        System.out.println("Use Selected Month SQL Comparison Compatible: " + selectedMonthSqlCompatible);
+        
+        // If the user doesn't select a month
+        if(c_month.getSelectedIndex() == 0){
+            // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                    "Month is not selected. Please select a month.",
+                    "ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+                System.out.println("Month Not Selected.");
+        }
+        // If the user selects a month
+        else{
+            // Checking if any records are avialbe in the database for this month
+            try (Connection checkingTransactionRecordCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+            Statement checkingTransactionRecordStmt = checkingTransactionRecordCon.createStatement();) {
+
+                // Assigning SQL query
+                String checkingTransactionRecordSqlQuery = "SELECT transaction_number, account_number, transaction_type, amount, date_time FROM "
+                        + "customer_transaction WHERE convert(nvarchar(50), date_time,126) LIKE '_____" + selectedMonthSqlCompatible + "%' ";
+
+                // Executing SQL query
+                ResultSet checkingTransactionRecordRs = checkingTransactionRecordStmt.executeQuery(checkingTransactionRecordSqlQuery);
+
+                System.out.println("Transactions Record Exist: " + checkingTransactionRecordRs);
+
+                // If no values are returned
+                if( checkingTransactionRecordRs.next() == false ){
+                    // Displaying message box showing error message
+                    JOptionPane.showMessageDialog(null,
+                        "No records are available in the database for the selected date."
+                        + "\nPlease select a different month",
+                        "ERROR !",
+                        JOptionPane.ERROR_MESSAGE);
+                    System.out.println("No Records found in Database for Selected Month");
+                }
+                // If any values are returned
+                else {
+
+                    // Retrieving records from database and inserting into table
+                    try{
+                        // Removing all the exiting records in the customer details table and repopulating with new records
+                        int cdCountRemove = customerDetailsRecordTableModel.getRowCount();
+
+                        for (int i = cdCountRemove - 1; i >= 0 ; i--) {
+                            customerDetailsRecordTableModel.removeRow(i);
+                        }
+
+                        // Retriving customer details from the database for the selected month
+                        try (Connection retrieveCDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement retrieveCDStmt = retrieveCDCon.createStatement();) {
+
+                            String retrieveCDSqlQuery = "SELECT DISTINCT c.account_number, c.first_name, c.middle_name, c.last_name, c.acc_type FROM customer c INNER JOIN"
+                                    + " customer_transaction ct ON c.account_number = ct.account_number WHERE convert(nvarchar(50), ct.date_time,126) LIKE '_____" + selectedMonthSqlCompatible + "%' ";
+
+                            // Executing SQL query
+                            ResultSet retrieveCDResult = retrieveCDStmt.executeQuery(retrieveCDSqlQuery);
+
+                            // Creating new table rows and inserting record data into them
+                            while(retrieveCDResult.next()){
+                                customerDetailsRecordTableModel.insertRow(customerDetailsRecordTableModel.getRowCount(), new Object[]{retrieveCDResult.getString(1), 
+                                    retrieveCDResult.getString(2), retrieveCDResult.getString(3), retrieveCDResult.getString(4), retrieveCDResult.getString(5)});
+                            }
+                        }
+                        // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx)
+                        {
+                            System.out.println("Error found: " + SqlEx);
+                        }
+
+                        // Removing all the exiting records in the transaction details table and repopulating with new records
+                        int tdCountRemove = transactionDetailsRecordsTableModel.getRowCount();
+
+                        for (int i = tdCountRemove - 1; i >= 0 ; i--) {
+                            transactionDetailsRecordsTableModel.removeRow(i);
+                        }
+
+                        // Retriving transaction details from the database for the selected month
+                        try (Connection retrieveTDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement retrieveTDStmt = retrieveTDCon.createStatement();) {
+
+                            // Same SQL query as in checkingTransactionRecordSqlQuery
+                            // Executing SQL query
+                            ResultSet retrieveTDResult = retrieveTDStmt.executeQuery(checkingTransactionRecordSqlQuery);
+
+                            // Creating new table rows and inserting record data into them
+                            while(retrieveTDResult.next()){
+                                transactionDetailsRecordsTableModel.insertRow(transactionDetailsRecordsTableModel.getRowCount(), new Object[]{retrieveTDResult.getString(1),
+                                    retrieveTDResult.getString(2), retrieveTDResult.getString(3), retrieveTDResult.getString(4), retrieveTDResult.getString(5)});
+                            }
+                        }
+                        // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx)
+                        {
+                            System.out.println("Error found: " + SqlEx);
+                        }
+                    }
+                    // Error handling. Checking for index out of range in array when removing the exisitng records from the table
+                    catch(ArrayIndexOutOfBoundsException ctrRecordsRemovalEx){
+                        System.out.println("Error: " + ctrRecordsRemovalEx);
+                    }
+
+                    // Message box to verify if the user wants to generate report according to the data shown in the table
+                    int userChoice = JOptionPane.showConfirmDialog(null, "Report will be generated according to data shown in the two tables."
+                        + "\nDo you want to continue? ", "Verification", JOptionPane.YES_NO_OPTION);
+
+                    // If the user selects 'Yes' option 
+                    if (userChoice == 0) {
+                        File checkFileExistence = new File("../Reports/Monthly_Customer_Transaction_Record_Reports/Manual/Manual_Monthly_Customer_Transaction_Records_'" + monthlyLocalDate + "'.pdf");
+
+                        boolean checkFileExistenceResult = checkFileExistence.exists();
+
+                        System.out.println("Automatic Monthly Report Existk: " + checkFileExistenceResult);
+
+                        // If there is report already with the same filename
+                        if (checkFileExistenceResult == true) {
+                            // Message box to verify if the user wants to generate report according to the data shown in the table
+                            int checkFileExistenceUserChoice = JOptionPane.showConfirmDialog(null, "Manual Monthly Customer Transaction Report was already generated for this Month."
+                                + "\nDo you want to continue?  (This action will overwrite the exisitng report)", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                            // If the user selects ' Yes' option
+                            if (checkFileExistenceUserChoice == 0) {
+                                // Report generation if user selectes 'Yes'
+                                // Calling method to generate manual daily report
+                                // The implementation is placed in another class, becuase the same implementation will repeat twice. 
+                                // Without repeating the same procedure twice we have implemented the procedure into a diffenent class and called it twice.
+                                String reportGenerationStatus = rg.generateManualMonthlyCTReport(selectedMonthSqlCompatible);
+
+                                System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);        
+
+                                // Automatically opening the PDF document after generation in user's default PDF opening application
+                                // Checks if auto preview report check box is selected
+                                if(jcb_monthlyAutoPreviewReport.isSelected()){
+                                    // Opening PDF document
+                                    File myFile = new File("../Reports/Monthly_Customer_Transaction_Record_Reports/Manual/Manual_Monthly_Customer_Transaction_Records_'" + monthlyLocalDate + "'.pdf");
+                                    try {
+                                        Desktop.getDesktop().open(myFile);
+                                    } 
+                                    // Error handling. Handles any data input and output errors.
+                                    catch (IOException IoEx) {
+                                        Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
+                                    }
+                                    
+                                    // Displays the directory pathway
+                                    File directoryPathway = new File("./");
+                                    System.out.println("Directory Absolute Pathway: " + directoryPathway.getAbsolutePath());
+                                    
+                                }              
+                            }
+                        }
+                        // If there is no report existing
+                        else{
+                            // Report generation if a report with same filename doesn't exist
+                            // Calling method to generate manual daily report
+                            // The implementation is placed in another class, becuase the same implementation will repeat twice. 
+                            // Without repeating the same procedure twice we have implemented the procedure into a diffenent class and called it twice.
+                            String reportGenerationStatus = rg.generateManualMonthlyCTReport(selectedMonthSqlCompatible);
+
+                            System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);        
+                            
+                            // Automatically opening the PDF document after generation in user's default PDF opening application
+                            // Checks if auto preview report check box is selected
+                            if(jcb_monthlyAutoPreviewReport.isSelected()){
+                                // Opening PDF document
+                                File myFile = new File("../Reports/Monthly_Customer_Transaction_Record_Reports/Manual/Manual_Monthly_Customer_Transaction_Records_'" + monthlyLocalDate + "'.pdf");
+                                try {
+                                    Desktop.getDesktop().open(myFile);
+                                } 
+                                // Error handling. Handles any data input and output errors.
+                                catch (IOException IoEx) {
+                                    Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
+                                }
+
+                                // Displays the directory pathway
+                                File directoryPathway = new File("./");
+                                System.out.println("Directory Absolute Pathway: " + directoryPathway.getAbsolutePath());
+
+                            }         
+                        }
+                    }
+                }
+            }
+            // Error handling. Handles any SQL related errors.
+            catch(SQLException SqlEx){
+                System.out.println("Error: " + SqlEx);
+            }
+        }
+    }//GEN-LAST:event_btn_monthlyGenerateReportActionPerformed
+
+    private void btn_monthlyClearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_monthlyClearMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_monthlyClearMouseEntered
+
+    private void btn_monthlyClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_monthlyClearActionPerformed
+        
+        // Sets date picker to null value (resets)
+        c_month.select(0);
+
+        // Resets auto preview report check box
+        jcb_monthlyAutoPreviewReport.setSelected(false);
+
+        // Removing all the exiting records in the customer details table
+        int cdCountRemove = customerDetailsRecordTableModel.getRowCount();
+        
+        for (int i = cdCountRemove - 1; i >= 0 ; i--) {
+            customerDetailsRecordTableModel.removeRow(i);
+        }
+        
+        
+        // Removing all the exiting records in the transaction details table
+        int tdCountRemove = transactionDetailsRecordsTableModel.getRowCount();
+        
+        for (int i = tdCountRemove - 1; i >= 0 ; i--) {
+            transactionDetailsRecordsTableModel.removeRow(i);
+        }
+        
+    }//GEN-LAST:event_btn_monthlyClearActionPerformed
+
+    private void SubmitSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAActionPerformed
+        
+        // Generating customer receipt source code
+        
+        // Retrieving current time from localhost
+        String localTime = ltad.retrieveLocalTimeWith12HourClock();
+        
+        System.out.println("Current Time: " + localTime);
+        
+        // Retrieving current date from localhost
+        String localDate = ltad.retrieveLocalDate();
+        
+        System.out.println("Current Date: " + localDate);
+        
+        // Retrieving current date and time from localhost 
+        String localDateTimeCReceipt = ltad.retrieveLocalDateTimeCReceipt();
+        
+        System.out.println("Current Date and Time: " + localDateTimeCReceipt);
+        
+        // Setting date and time to the period of transaction
+        String transactionDateAndTime = localDateTimeCReceipt;
+        
+        
+        // Retrieving the account number from the panel and assigning to a long variable
+        String customerAcountNumberString = DAccno_Txt.getText();
+        // INT data type size is not enough for this length
+        long customerAcountNumberLong = Long.parseLong(customerAcountNumberString);
+        
+        
+        // Checking if such transaction has occurred from the database
+        try (Connection verifyTransactionCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement verifyTransactionStmt = verifyTransactionCon.createStatement();) {
+            
+            // Assigning SQL query
+            String verifyTransactionSqlQuery = "SELECT transaction_number FROM customer_transaction WHERE"
+                    + " account_number = '"+ customerAcountNumberLong +"' AND date_time = '"+ transactionDateAndTime +"'";
+                   
+            // Executing SQL query
+            ResultSet verifyTransactionRs = verifyTransactionStmt.executeQuery(verifyTransactionSqlQuery);
+
+            // If there is a transaction record this generates a receipt
+            if (verifyTransactionRs.next()) {
+                
+                
+                int transactionNumber = 0;
+                String transactionType = "";
+                
+                // Retrieving transaction number and transaction type from the database, customer_transaction relation
+                try (Connection retrievingTransactiondetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        Statement retrievingTransactiondetailsStmt = retrievingTransactiondetailsCon.createStatement();) {
+                    
+                    // Assigning SQL query
+                    String retrievingTransactiondetailsSqlQuery = "SELECT transaction_number, transaction_type FROM customer_transaction WHERE"
+                            + " account_number = '"+ customerAcountNumberLong +"' AND date_time = '"+ transactionDateAndTime +"'";
+
+                    // Executing SQL query
+                    ResultSet retrievingTransactiondetailsRs = retrievingTransactiondetailsStmt.executeQuery(retrievingTransactiondetailsSqlQuery);
+
+                    if (retrievingTransactiondetailsRs.next()) {
+                        transactionNumber = retrievingTransactiondetailsRs.getInt(1);
+                        transactionType = retrievingTransactiondetailsRs.getString(2);
+                    }
+                }
+                // Error handling. Checks for SQL related issues
+                catch (SQLException SqlEx) {
+                    System.out.println("Error found: " + SqlEx);
+                }
+
+                // Checks if transaction type is (D) deposit
+                if("D".equals(transactionType)){
+                    // Calling receipt generation method and passing the relevant data
+                    String customerReceiptGenerationStatus = crg.CRGeneration(customerAcountNumberLong, transactionNumber, transactionType, transactionDateAndTime);
+
+                    System.out.println("Customer Receipt Generation Status: " + customerReceiptGenerationStatus);
+
+                    // Displaying message box showing confirmation message
+                    JOptionPane.showMessageDialog(null,
+                        "Customer Transaction Receipt has been Generated",
+                        "CONFIRMATION",
+                        JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println("Customer Transaction Receipt has been Generated");
+                    
+                    
+                    if(jcb_autoPreviewReceipt.isSelected()){
+                        File myFile = new File("../Receipts/Customer_Receipts/Deposit_Receipts/Customer_Transaction_Receipt_'"+ transactionNumber +"'_'"+ localDate +"'.pdf");
+                        try {
+                            Desktop.getDesktop().open(myFile);
+                        } 
+                        // Error handling. Handles any data input and output errors.
+                        catch (IOException IoEx) {
+                            Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
+                        }
+                    } 
+                }
+                else{
+                    // Displaying message box showing error message
+                    JOptionPane.showMessageDialog(null,
+                        "No Transaction has been Executed",
+                        "ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+                    System.out.println("No Transaction has been Executed");
+                }  
+            }
+            // If there is no record in the database, an error message is shown
+            else{
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                    "No Transaction has been Excecuted",
+                    "ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+                System.out.println("No Transaction has been Executed");
+            }
+        } 
+        // Error handling. Checks for SQL related issues.
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+        } 
+
+    }//GEN-LAST:event_SubmitSAActionPerformed
+
+    private void SubmitSAWithdrawalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAWithdrawalActionPerformed
+        
+        
+        // Generating customer receipt source code
+        
+        // Retrieving current time from localhost
+        String localTime = ltad.retrieveLocalTimeWith12HourClock();
+        
+        System.out.println("Current Time: " + localTime);
+        
+        // Retrieving current date from localhost
+        String localDate = ltad.retrieveLocalDate();
+        
+        System.out.println("Current Date: " + localDate);
+        
+        // Retrieving current date and time from localhost 
+        String localDateTimeCReceipt ="2019-11-15 08:14:12.913";// ltad.retrieveLocalDateTimeCReceipt();
+        
+        System.out.println("Current Date and Time: " + localDateTimeCReceipt);
+        
+        // Setting date and time to the period of transaction
+        String transactionDateAndTime = localDateTimeCReceipt;
+        
+        
+        // Retrieving the account number from the panel and assigning to a long variable
+        String customerAcountNumberString = WAccno_Txt.getText();
+        // INT data type size is not enough for this length
+        long customerAcountNumberLong = Long.parseLong(customerAcountNumberString);
+        
+        
+        
+        // Checking if such transaction has occurred from the database
+        try (Connection verifyTransactionCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement verifyTransactionStmt = verifyTransactionCon.createStatement();) {
+
+            // Assignign SQL query
+            String verifyTransactionSqlQuery = "SELECT transaction_number FROM customer_transaction WHERE"
+                    + " account_number = '"+ customerAcountNumberLong +"' AND date_time = '"+ transactionDateAndTime +"'";
+            
+            // Executing SQL query
+            ResultSet verifyTransactionRs = verifyTransactionStmt.executeQuery(verifyTransactionSqlQuery);
+
+            // If there is a transaction record this generates a receipt
+            if (verifyTransactionRs.next()) {
+                 
+                
+                int transactionNumber = 0;
+                String transactionType = "";
+                
+                // Retrieving transaction number and transaction type from the database, customer_transaction relation
+                try (Connection retrievingTransactiondetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        Statement retrievingTransactiondetailsStmt = retrievingTransactiondetailsCon.createStatement();) {
+                    
+                    // Assigning SQL query
+                    String retrievingTransactiondetailsSqlQuery = "SELECT transaction_number, transaction_type FROM customer_transaction WHERE"
+                            + " account_number = '"+ customerAcountNumberLong +"' AND date_time = '"+ transactionDateAndTime +"'";
+
+                    // Executing SQL query
+                    ResultSet retrievingTransactiondetailsRs = retrievingTransactiondetailsStmt.executeQuery(retrievingTransactiondetailsSqlQuery);
+
+                    if (retrievingTransactiondetailsRs.next()) {
+                        transactionNumber = retrievingTransactiondetailsRs.getInt(1);
+                        transactionType = retrievingTransactiondetailsRs.getString(2);
+                    }
+                }
+                // Error handling. Checks for SQL related issues
+                catch (SQLException SqlEx) {
+                    System.out.println("Error found: " + SqlEx);
+                }
+                
+                System.out.println(transactionType);
+                // Checks if transaction type is (W) withdrawal
+                if("W".equals(transactionType)){
+                    // Calling receipt generation method and passing the relevant data
+                    String customerReceiptGenerationStatus = crg.CRGeneration(customerAcountNumberLong, transactionNumber, transactionType, transactionDateAndTime);
+
+                    System.out.println("Customer Receipt Generation Status: " + customerReceiptGenerationStatus);
+
+                    // Displaying message box showing confirmation message
+                    JOptionPane.showMessageDialog(null,
+                        "Customer Transaction Receipt has been Generated",
+                        "CONFIRMATION",
+                        JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println("Customer Transaction Receipt has been Generated");
+                }
+                else{
+                    // Displaying message box showing error message
+                    JOptionPane.showMessageDialog(null,
+                        "No Transaction has been Executed",
+                        "ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+                    System.out.println("Customer Transaction Receipt has been Generated");
+                }
+                
+                
+                if(jcb_autoPreviewReceiptWithdrawal.isSelected()){
+                    File myFile = new File("../Receipts/Customer_Receipts/Withdrawal_Receipts/Customer_Transaction_Receipt_'"+ transactionNumber +"'_'"+ localDate +"'.pdf");
+                    try {
+                        Desktop.getDesktop().open(myFile);
+                    } 
+                    // Error handling. Handles any data input and output errors.
+                    catch (IOException IoEx) {
+                        Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
+                    }
+                } 
+                     
+                
+            }
+            // If there is no record in the database, an error message is shown
+            else{
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                    "No Transaction has been Excecuted",
+                    "ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+                System.out.println("No Transaction has been Executed");
+            }
+        } 
+        // Error handling. Checks for SQL related issues.
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+        }
+
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_SubmitSAWithdrawalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1622,7 +3646,6 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JLabel FName_Lbl;
     private javax.swing.JButton FetchAcc_Btn;
     private javax.swing.JTextField FinalDeposit_Txt;
-    private javax.swing.JButton Generate_Btn;
     private javax.swing.JTextField GeneratedAccountNo_Txt;
     private javax.swing.JTextField IDepositAMT_Txt;
     private javax.swing.JLabel IDeposit_Lbl;
@@ -1636,15 +3659,21 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JTabbedPane NewUser;
     private javax.swing.JLabel PNumber_Lbl;
     private javax.swing.JLabel PhoneNum_Lbl;
-    private javax.swing.JButton RSubmit;
     private javax.swing.JButton SubmitSA;
-    private javax.swing.JButton SubmitSA1;
+    private javax.swing.JButton SubmitSAWithdrawal;
     private javax.swing.JTextField WAccno_Txt;
     private javax.swing.JLabel WDRL_Lbl;
     private javax.swing.JTextField WHolder_Txt;
     private javax.swing.JButton accNoGen1;
     private javax.swing.JButton accNoGen_btn;
     private javax.swing.JTextArea bonusINFO_tarea;
+    private javax.swing.JButton btn_clear;
+    private javax.swing.JButton btn_generateReport;
+    private javax.swing.JButton btn_monthlyClear;
+    private javax.swing.JButton btn_monthlyGenerateReport;
+    private javax.swing.JButton btn_monthlyRetrieveRecords;
+    private javax.swing.JButton btn_retrieveRecords;
+    private java.awt.Choice c_month;
     private javax.swing.JTextField currentBalance_Txt;
     private javax.swing.JLabel dAccount;
     private javax.swing.JLabel dAmmount_Lbl;
@@ -1652,7 +3681,9 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JLabel dName_Lbl;
     private javax.swing.JPanel dOption_pnl;
     private javax.swing.JPanel dReport_pnl;
+    private javax.swing.JPanel dReport_pnl1;
     private javax.swing.JLabel dType_Lbl;
+    private javax.swing.JSplitPane dailyReport_jsp;
     private javax.swing.JLabel date;
     private javax.swing.JLabel day_Lbl;
     private javax.swing.JTextField holderName_Txt;
@@ -1675,20 +3706,45 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JSplitPane jSplitPane4;
     private javax.swing.JSplitPane jSplitPane5;
+    private javax.swing.JCheckBox jcb_autoPreviewReceipt;
+    private javax.swing.JCheckBox jcb_autoPreviewReceiptWithdrawal;
     private javax.swing.JCheckBox jcb_autoPreviewReport;
+    private javax.swing.JCheckBox jcb_monthlyAutoPreviewReport;
     private org.jdesktop.swingx.JXDatePicker jdp_selectDate;
-    private javax.swing.JLabel lbl_selectDate;
+    private javax.swing.JLabel jlbl_localDate;
+    private javax.swing.JLabel jlbl_localTime;
+    private javax.swing.JTable jtb_customerDetailsRecord;
+    private javax.swing.JTable jtb_customerTransactionRecords;
+    private javax.swing.JTable jtb_transactionDetailsRecords;
+    private javax.swing.JLabel lbl_autoStatus;
+    private javax.swing.JLabel lbl_automaticlDailyCT;
+    private javax.swing.JLabel lbl_customerTransactionRecords;
+    private javax.swing.JLabel lbl_manualDailyCT1;
+    private javax.swing.JLabel lbl_mautoStatus1;
+    private javax.swing.JLabel lbl_mautomaticlDailyCT1;
+    private javax.swing.JLabel lbl_mcustomerDetailsRecord;
+    private javax.swing.JLabel lbl_mmanualDailyCT2;
+    private javax.swing.JLabel lbl_mstatus;
+    private javax.swing.JLabel lbl_mtransactionDetailsRecords;
+    private javax.swing.JLabel lbl_selectDate1;
+    private javax.swing.JLabel lbl_selectMonth;
+    private javax.swing.JLabel lbl_status;
     private javax.swing.JComboBox<String> listOfAccountTypes;
     private javax.swing.JMenuItem logout;
     private javax.swing.JTabbedPane mInterest_pnl;
+    private javax.swing.JSplitPane monthlyReport_jsp;
     private javax.swing.JPanel nCustomer_pnl;
     private javax.swing.JButton processInterest_Btn;
     private javax.swing.JPanel rOptions_jbl;
+    private javax.swing.JPanel rOptions_jbl1;
     private javax.swing.JTabbedPane reports_pnl;
     private javax.swing.JTabbedPane savingsAcc_pnl;
     private javax.swing.JLabel total_Lbl;

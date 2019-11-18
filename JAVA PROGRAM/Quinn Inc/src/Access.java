@@ -6,17 +6,33 @@
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
+import LocalTimeAndDate.LocalTimeAndDate;
 /**
  *
  * @author ranul
  */
 public class Access extends javax.swing.JFrame {
 
+    // Creating new object to retreive current date and time
+    LocalTimeAndDate ltad;
+    
+    
     /**
      * Creates new form Access
      */
     public Access() {
         initComponents();
+        
+        
+        // Creating new object to retrieve current date and time
+        ltad = new LocalTimeAndDate();
+        
+        // Setting current time
+        jlbl_localTime.setText(ltad.retrieveLocalTimeWith12HourClock());
+        
+        // Setting current date
+        jlbl_localDate.setText(ltad.retrieveLocalDate());
+        
     }
 
     /**
@@ -43,6 +59,8 @@ public class Access extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         Trademark = new javax.swing.JLabel();
         login_Btn = new javax.swing.JButton();
+        jlbl_localTime = new javax.swing.JLabel();
+        jlbl_localDate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -196,28 +214,41 @@ public class Access extends javax.swing.JFrame {
             }
         });
 
+        jlbl_localTime.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localTime.setForeground(new java.awt.Color(255, 255, 255));
+        jlbl_localTime.setText("Time");
+
+        jlbl_localDate.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localDate.setForeground(new java.awt.Color(255, 255, 255));
+        jlbl_localDate.setText("Date");
+
         javax.swing.GroupLayout AccessPanelLayout = new javax.swing.GroupLayout(AccessPanel);
         AccessPanel.setLayout(AccessPanelLayout);
         AccessPanelLayout.setHorizontalGroup(
             AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(460, 460, 460))
             .addGroup(AccessPanelLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AccessPanelLayout.createSequentialGroup()
-                        .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 43, Short.MAX_VALUE))
                     .addGroup(AccessPanelLayout.createSequentialGroup()
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bankName_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Slogan_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59))))
+                        .addGap(59, 59, 59))
+                    .addGroup(AccessPanelLayout.createSequentialGroup()
+                        .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 43, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
+                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(395, 395, 395)
+                        .addComponent(jlbl_localTime)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlbl_localDate)
+                .addContainerGap())
         );
         AccessPanelLayout.setVerticalGroup(
             AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,8 +263,15 @@ public class Access extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(qService_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(login_Btn)
-                .addGap(38, 38, 38)
+                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AccessPanelLayout.createSequentialGroup()
+                        .addComponent(login_Btn)
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
+                        .addComponent(jlbl_localTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlbl_localDate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -366,6 +404,8 @@ public class Access extends javax.swing.JFrame {
     private javax.swing.JLabel UName_Lbl;
     private javax.swing.JLabel bankName_Lbl;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jlbl_localDate;
+    private javax.swing.JLabel jlbl_localTime;
     private javax.swing.JButton login_Btn;
     private javax.swing.JLabel logo;
     private javax.swing.JPasswordField password_Txt;
