@@ -241,6 +241,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Show All Tellers"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showTellers_BtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="removeTellers_Btn">
           <Properties>
@@ -255,6 +258,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Remove Teller"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeTellers_BtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="updateCred1_Btn">
           <Properties>
@@ -333,6 +339,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Current transactions"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transaction_BtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="showManagers_Btn">
           <Properties>
@@ -347,6 +356,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Show All Managers"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showManagers_BtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="removeManagers_Btn">
           <Properties>

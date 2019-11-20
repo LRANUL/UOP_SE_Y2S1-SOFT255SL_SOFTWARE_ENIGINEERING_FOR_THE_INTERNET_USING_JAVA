@@ -1,6 +1,15 @@
 
+import DatabaseConnection.DBConnection;
 import LocalTimeAndDate.LocalTimeAndDate;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +24,15 @@ public class AdminPanel extends javax.swing.JFrame {
 
     // Creating new object to retreive current date and time
     LocalTimeAndDate ltad;
+    //
+    Connection conn = null;
+    PreparedStatement ps=null;
+    ResultSet rs=null;
+    
+    //creating a new object to get database connection class
+    DBConnection db;
+    
+  
     
     /**
      * Creates new form AdminPanel
@@ -22,6 +40,7 @@ public class AdminPanel extends javax.swing.JFrame {
     public AdminPanel() {
         initComponents();
 
+        db=new DBConnection();
         
         // Creating new object to retrieve current date and time
         ltad = new LocalTimeAndDate();
@@ -114,11 +133,21 @@ public class AdminPanel extends javax.swing.JFrame {
         showTellers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         showTellers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         showTellers_Btn.setText("Show All Tellers");
+        showTellers_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showTellers_BtnActionPerformed(evt);
+            }
+        });
 
         removeTellers_Btn.setBackground(new java.awt.Color(51, 51, 51));
         removeTellers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         removeTellers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         removeTellers_Btn.setText("Remove Teller");
+        removeTellers_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeTellers_BtnActionPerformed(evt);
+            }
+        });
 
         updateCred1_Btn.setBackground(new java.awt.Color(51, 51, 51));
         updateCred1_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -180,11 +209,21 @@ public class AdminPanel extends javax.swing.JFrame {
         transaction_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         transaction_Btn.setForeground(new java.awt.Color(204, 0, 0));
         transaction_Btn.setText("Current transactions");
+        transaction_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transaction_BtnActionPerformed(evt);
+            }
+        });
 
         showManagers_Btn.setBackground(new java.awt.Color(51, 51, 51));
         showManagers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         showManagers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         showManagers_Btn.setText("Show All Managers");
+        showManagers_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showManagers_BtnActionPerformed(evt);
+            }
+        });
 
         removeManagers_Btn.setBackground(new java.awt.Color(51, 51, 51));
         removeManagers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -394,6 +433,85 @@ public class AdminPanel extends javax.swing.JFrame {
         //closes the login form prevent unnecessary tab creation
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
+
+    private void showTellers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showTellers_BtnActionPerformed
+        
+        try {
+            //connection to the databbase
+            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
+            //The select statement
+            String sql="SELECT * FROM dbo.Tellers_login";
+            ps=conn.prepareStatement(sql);
+            //executes the query
+            rs=ps.executeQuery();
+            
+            //display the retrived data in the table
+            TellersINFO.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_showTellers_BtnActionPerformed
+
+    private void removeTellers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTellers_BtnActionPerformed
+        
+          try {
+              // The database connection
+            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
+            //get and store selected row
+            int row=TellersINFO.getSelectedRow();
+            // get the data from row 
+            String value=TellersINFO.getModel().getValueAt(row,0).toString();
+            //sql select statement
+            String sql="DELETE FROM dbo.Tellers_login  WHERE EmployeeId="+value;
+            ps=conn.prepareStatement(sql);
+            //executes the update
+            ps.executeUpdate();
+            //Display the message 
+            JOptionPane.showMessageDialog(null,"Delete Successful ");
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_removeTellers_BtnActionPerformed
+
+    private void showManagers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showManagers_BtnActionPerformed
+        
+         try {
+            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
+            String sql="SELECT * FROM dbo.Manager_details";
+            ps=conn.prepareStatement(sql);
+            rs=ps.executeQuery();
+            
+            ManagersINFO.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          
+    }//GEN-LAST:event_showManagers_BtnActionPerformed
+
+    private void transaction_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transaction_BtnActionPerformed
+       
+        try {
+            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
+            String sql="SELECT * FROM Customer_transaction";
+            ps=conn.prepareStatement(sql);
+            rs=ps.executeQuery();
+            
+            currentTNX_table.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_transaction_BtnActionPerformed
 
     /**
      * @param args the command line arguments
