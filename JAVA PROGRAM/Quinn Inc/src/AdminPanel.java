@@ -153,6 +153,11 @@ public class AdminPanel extends javax.swing.JFrame {
         updateCred1_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         updateCred1_Btn.setForeground(new java.awt.Color(255, 255, 255));
         updateCred1_Btn.setText("Update Credentials");
+        updateCred1_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateCred1_BtnActionPerformed(evt);
+            }
+        });
 
         TellersINFO.setBorder(new javax.swing.border.MatteBorder(null));
         TellersINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -234,6 +239,11 @@ public class AdminPanel extends javax.swing.JFrame {
         updateCred2_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         updateCred2_Btn.setForeground(new java.awt.Color(255, 255, 255));
         updateCred2_Btn.setText("Update Credentials");
+        updateCred2_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateCred2_BtnActionPerformed(evt);
+            }
+        });
 
         ManagersINFO.setBorder(new javax.swing.border.MatteBorder(null));
         ManagersINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -512,6 +522,20 @@ public class AdminPanel extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_transaction_BtnActionPerformed
+
+    private void updateCred2_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCred2_BtnActionPerformed
+       UpdateManagers up=new UpdateManagers();
+       up.setVisible(true);
+       
+    }//GEN-LAST:event_updateCred2_BtnActionPerformed
+
+    private void updateCred1_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCred1_BtnActionPerformed
+        
+        UpdateTellers up= new UpdateTellers();
+        up.setVisible(true);
+        
+        
+    }//GEN-LAST:event_updateCred1_BtnActionPerformed
 
     /**
      * @param args the command line arguments
