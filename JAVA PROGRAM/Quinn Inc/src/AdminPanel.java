@@ -81,6 +81,8 @@ public class AdminPanel extends javax.swing.JFrame {
         ManagersINFO = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         currentTNX_table = new javax.swing.JTable();
+        insertManager_Btn = new javax.swing.JButton();
+        insertTeller_Btn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         logout = new javax.swing.JMenuItem();
@@ -111,7 +113,7 @@ public class AdminPanel extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(146, 146, 146)
-                .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 926, Short.MAX_VALUE)
+                .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jlbl_localTime)
                 .addGap(27, 27, 27)
@@ -234,6 +236,11 @@ public class AdminPanel extends javax.swing.JFrame {
         removeManagers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         removeManagers_Btn.setForeground(new java.awt.Color(255, 255, 255));
         removeManagers_Btn.setText("Remove Manager");
+        removeManagers_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeManagers_BtnActionPerformed(evt);
+            }
+        });
 
         updateCred2_Btn.setBackground(new java.awt.Color(51, 51, 51));
         updateCred2_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
@@ -333,6 +340,26 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(currentTNX_table);
 
+        insertManager_Btn.setBackground(new java.awt.Color(51, 51, 51));
+        insertManager_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        insertManager_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        insertManager_Btn.setText("Insert New Managers");
+        insertManager_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertManager_BtnActionPerformed(evt);
+            }
+        });
+
+        insertTeller_Btn.setBackground(new java.awt.Color(51, 51, 51));
+        insertTeller_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        insertTeller_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        insertTeller_Btn.setText("Insert New Tellers");
+        insertTeller_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertTeller_BtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout admin_pnlLayout = new javax.swing.GroupLayout(admin_pnl);
         admin_pnl.setLayout(admin_pnlLayout);
         admin_pnlLayout.setHorizontalGroup(
@@ -340,29 +367,34 @@ public class AdminPanel extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(admin_pnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane3)
-                    .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(admin_pnlLayout.createSequentialGroup()
                         .addComponent(transaction_Btn)
-                        .addGroup(admin_pnlLayout.createSequentialGroup()
-                            .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, admin_pnlLayout.createSequentialGroup()
-                                    .addComponent(showTellers_Btn)
-                                    .addGap(31, 31, 31)
-                                    .addComponent(removeTellers_Btn)
-                                    .addGap(28, 28, 28)
-                                    .addComponent(updateCred1_Btn)))
-                            .addGap(18, 18, 18)
-                            .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, admin_pnlLayout.createSequentialGroup()
-                                    .addComponent(showManagers_Btn)
-                                    .addGap(31, 31, 31)
-                                    .addComponent(removeManagers_Btn)
-                                    .addGap(28, 28, 28)
-                                    .addComponent(updateCred2_Btn))))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(admin_pnlLayout.createSequentialGroup()
+                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(admin_pnlLayout.createSequentialGroup()
+                                .addComponent(showTellers_Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removeTellers_Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(updateCred1_Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(insertTeller_Btn))
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(admin_pnlLayout.createSequentialGroup()
+                                .addComponent(showManagers_Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(removeManagers_Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(updateCred2_Btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(insertManager_Btn))
+                            .addComponent(jScrollPane2)))
+                    .addComponent(jScrollPane3))
+                .addGap(22, 22, 22))
         );
         admin_pnlLayout.setVerticalGroup(
             admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,14 +406,16 @@ public class AdminPanel extends javax.swing.JFrame {
                         .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(removeTellers_Btn)
                             .addComponent(showTellers_Btn)
-                            .addComponent(updateCred1_Btn))
+                            .addComponent(updateCred1_Btn)
+                            .addComponent(insertTeller_Btn))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
                         .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(removeManagers_Btn)
                             .addComponent(showManagers_Btn)
-                            .addComponent(updateCred2_Btn))
+                            .addComponent(updateCred2_Btn)
+                            .addComponent(insertManager_Btn))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -416,7 +450,7 @@ public class AdminPanel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(admin_pnl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(admin_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -537,6 +571,42 @@ public class AdminPanel extends javax.swing.JFrame {
         
     }//GEN-LAST:event_updateCred1_BtnActionPerformed
 
+    private void insertManager_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertManager_BtnActionPerformed
+        CreateManager cm= new CreateManager();
+        cm.setVisible(true);
+        
+    }//GEN-LAST:event_insertManager_BtnActionPerformed
+
+    private void insertTeller_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertTeller_BtnActionPerformed
+        CreateTellers ct = new CreateTellers();
+        ct.setVisible(true);
+    }//GEN-LAST:event_insertTeller_BtnActionPerformed
+
+    private void removeManagers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeManagers_BtnActionPerformed
+        
+        try {
+              // The database connection
+            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
+            //get and store selected row
+            int row=ManagersINFO.getSelectedRow();
+            // get the data from row 
+            String value=ManagersINFO.getModel().getValueAt(row,0).toString();
+            //sql select statement
+            String sql="DELETE FROM dbo.Manager_details  WHERE ManagerId="+value;
+            ps=conn.prepareStatement(sql);
+            //executes the update
+            ps.executeUpdate();
+            //Display the message 
+            JOptionPane.showMessageDialog(null,"Delete Successful ");
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_removeManagers_BtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -577,6 +647,8 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTable TellersINFO;
     private javax.swing.JPanel admin_pnl;
     private javax.swing.JTable currentTNX_table;
+    private javax.swing.JButton insertManager_Btn;
+    private javax.swing.JButton insertTeller_Btn;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;

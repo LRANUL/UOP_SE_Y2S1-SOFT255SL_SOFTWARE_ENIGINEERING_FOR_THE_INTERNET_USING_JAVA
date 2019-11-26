@@ -145,7 +145,9 @@ public class UpdateManagers extends javax.swing.JFrame {
             ps.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Update successful");
-            this.setVisible(false);
+            
+            //closes the window
+            this.dispose();
           
             
         } catch (SQLException ex) {

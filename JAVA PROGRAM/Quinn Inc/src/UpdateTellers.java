@@ -159,8 +159,8 @@ public class UpdateTellers extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Update Successful");
             
-            this.setVisible(false);
-        
+            //closes the window
+            this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(UpdateTellers.class.getName()).log(Level.SEVERE, null, ex);
         }
