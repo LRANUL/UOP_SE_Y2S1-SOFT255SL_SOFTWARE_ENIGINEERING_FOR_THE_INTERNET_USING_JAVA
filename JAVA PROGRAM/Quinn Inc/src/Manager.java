@@ -74,6 +74,11 @@ public class Manager extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(18, 63, 72));
+
+        AccInfo_pnl.setBackground(new java.awt.Color(18, 63, 72));
+
+        AccountINFO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         AccountINFO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -119,9 +124,11 @@ public class Manager extends javax.swing.JFrame {
         jScrollPane3.setViewportView(AccountINFO);
 
         jlbl_localTime.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localTime.setForeground(new java.awt.Color(255, 255, 255));
         jlbl_localTime.setText("Time");
 
         jlbl_localDate.setFont(new java.awt.Font("Leelawadee UI", 1, 16)); // NOI18N
+        jlbl_localDate.setForeground(new java.awt.Color(255, 255, 255));
         jlbl_localDate.setText("Date");
 
         javax.swing.GroupLayout AccInfo_pnlLayout = new javax.swing.GroupLayout(AccInfo_pnl);

@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import LocalTimeAndDate.LocalTimeAndDate;
+import java.sql.Connection;
 /**
  *
  * @author ranul
@@ -61,11 +62,13 @@ public class Access extends javax.swing.JFrame {
         login_Btn = new javax.swing.JButton();
         jlbl_localTime = new javax.swing.JLabel();
         jlbl_localDate = new javax.swing.JLabel();
+        close = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFocusTraversalPolicyProvider(true);
         setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
         setSize(new java.awt.Dimension(923, 596));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -222,6 +225,16 @@ public class Access extends javax.swing.JFrame {
         jlbl_localDate.setForeground(new java.awt.Color(255, 255, 255));
         jlbl_localDate.setText("Date");
 
+        close.setBackground(new java.awt.Color(204, 0, 0));
+        close.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setText("X");
+        close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AccessPanelLayout = new javax.swing.GroupLayout(AccessPanel);
         AccessPanel.setLayout(AccessPanelLayout);
         AccessPanelLayout.setHorizontalGroup(
@@ -231,20 +244,22 @@ public class Access extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AccessPanelLayout.createSequentialGroup()
+                        .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 43, Short.MAX_VALUE))
+                    .addGroup(AccessPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(409, 409, 409)
+                        .addComponent(jlbl_localTime)
+                        .addContainerGap())
+                    .addGroup(AccessPanelLayout.createSequentialGroup()
                         .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bankName_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Slogan_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59))
-                    .addGroup(AccessPanelLayout.createSequentialGroup()
-                        .addComponent(qService_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 43, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
-                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(395, 395, 395)
-                        .addComponent(jlbl_localTime)
-                        .addContainerGap())))
+                        .addGap(30, 30, 30)
+                        .addComponent(close))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlbl_localDate)
@@ -253,25 +268,25 @@ public class Access extends javax.swing.JFrame {
         AccessPanelLayout.setVerticalGroup(
             AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AccessPanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AccessPanelLayout.createSequentialGroup()
-                        .addComponent(bankName_Lbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Slogan_Lbl))
-                    .addComponent(logo))
+                        .addGap(20, 20, 20)
+                        .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AccessPanelLayout.createSequentialGroup()
+                                .addComponent(bankName_Lbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Slogan_Lbl))
+                            .addComponent(logo)))
+                    .addComponent(close))
                 .addGap(48, 48, 48)
                 .addComponent(qService_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AccessPanelLayout.createSequentialGroup()
-                        .addComponent(login_Btn)
-                        .addGap(38, 38, 38))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AccessPanelLayout.createSequentialGroup()
-                        .addComponent(jlbl_localTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlbl_localDate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGap(24, 24, 24)
+                .addGroup(AccessPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbl_localTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(login_Btn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlbl_localDate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -290,6 +305,7 @@ public class Access extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void password_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_password_TxtActionPerformed
@@ -359,6 +375,15 @@ public class Access extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_password_TxtMouseExited
 
+    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //closes the application
+       JOptionPane.showMessageDialog(null,
+                    "You have succesfully closed the program",
+                    "Program Exited",
+                    JOptionPane.INFORMATION_MESSAGE);
+        System.exit(0);
+    }//GEN-LAST:event_closeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -403,6 +428,7 @@ public class Access extends javax.swing.JFrame {
     private javax.swing.JLabel Trademark;
     private javax.swing.JLabel UName_Lbl;
     private javax.swing.JLabel bankName_Lbl;
+    private javax.swing.JButton close;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel jlbl_localDate;
     private javax.swing.JLabel jlbl_localTime;
