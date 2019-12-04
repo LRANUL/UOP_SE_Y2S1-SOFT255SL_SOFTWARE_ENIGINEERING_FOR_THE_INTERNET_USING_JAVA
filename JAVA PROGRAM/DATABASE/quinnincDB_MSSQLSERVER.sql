@@ -9,6 +9,32 @@ USE quinnincDB
 
 GO
 
+-- Creating a new SQL authentication login for the database to be accessed
+CREATE LOGIN quinnincDB_Admin WITH PASSWORD = 'soft255sl'
+
+GO
+
+ALTER SERVER ROLE [sysadmin] ADD MEMBER [quinnincDB_Admin]
+
+GO
+
+ALTER SERVER ROLE [securityadmin] ADD MEMBER [quinnincDB_Admin]
+
+GO
+
+ALTER SERVER ROLE [serveradmin] ADD MEMBER [quinnincDB_Admin]
+
+GO
+
+ALTER SERVER ROLE [diskadmin] ADD MEMBER [quinnincDB_Admin]
+
+GO
+
+ALTER SERVER ROLE [dbcreator] ADD MEMBER [quinnincDB_Admin]
+
+GO
+
+
 -- Creating Table 1 - Customer
 CREATE TABLE Customer(
   PassportNumber CHAR(9) NOT NULL PRIMARY KEY,

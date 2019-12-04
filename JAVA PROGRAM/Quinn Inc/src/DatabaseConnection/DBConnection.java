@@ -13,6 +13,6 @@ package DatabaseConnection;
 public class DBConnection {
     public String DatabaseConnectionUrl(){
         // Sending database connection URL to wherever called
-        return "jdbc:sqlserver://localhost:1433;databaseName=quinn_inc;user=quinn_inc_admin;password=soft255sl;";
+        return "jdbc:sqlserver://localhost:1433;databaseName=quinnincDB;user=quinnincDB_Admin;password=soft255sl;";
     }
 }
