@@ -267,24 +267,24 @@ GO
 
 -- Inserting records to Table 7 - SystemLogin
 INSERT INTO SystemLogin (Username, Password, slpPositionID, saAdminID) VALUES
-('AdPeterF@33442', '1', 'PT000003', 'SA000001'),
-('ToRasesy@66431', '2', 'PT000003', 'SA000002'),
-('BasiCthClia@45762', '3', 'PT000003', 'SA000003'),
-('ArthaNeliagh@34733', '4', 'PT000003', 'SA000004'),
-('RiaFransRan@56846', '5', 'PT000003', 'SA000005'),
-('EixenGuittiEllod@39482', '6', 'PT000003', 'SA000006'),
-('OdenAdrasWiln@38593', '7', 'PT000002', 'SA000001'),
-('HcketonZaCary@28549', '8', 'PT000002', 'SA000002'),
-('MatiRuFeli@58375', '9', 'PT000001', 'SA000002'),
-('BersJOdy@79205', '10', 'PT000001', 'SA000002'),
-('JanskiRalhGar@58105', '11', 'PT000001', 'SA000001'),
-('TreAoBel@68205', '12', 'PT000001', 'SA000004'),
-('SeanRodDlon@58503', '13', 'PT000001', 'SA000001'),
-('AbreyHarDil@48205', '14', 'PT000001', 'SA000001'),
-('BlaxrYananElo@69205', '15', 'PT000001', 'SA000004'),
-('GernFeliaMay@19503', '16', 'PT000001', 'SA000006'),
-('BaitAryBlain@50284', '17', 'PT000001', 'SA000006'),
-('MedsKayMartca@60482', '18', 'PT000001', 'SA000004')
+('BankT', '4381dc2ab14285160c808659aee005d51255add7264b318d07c7417292c7442c', 'PT000003', 'SA000001'),   --password String : bank    Role : Bank Teller
+('ToRasesy@66431', 'c78b8bf63d17fc397dfc10c3aaf66e0a95bc93b19e83a9d483af91f5d2b47c44', 'PT000003', 'SA000002'),  --password String :  Rasesy@66         Role : Bank Teller
+('BasiCthClia@45762', '344c5228ba17f8111c285c28951d03e73f832ebcc612c29a3a74d880ea31b318', 'PT000003', 'SA000003'),  --password String : BasiCthClia@45       Role : Bank Teller
+('ArthaNeliagh@34733', '01fb0707fa0cddaa60c9d890cab5fec68af44797d19fd2d0b72023a83985c149', 'PT000003', 'SA000004'), --password String :  ArthaNeliagh@34       Role : Bank Teller
+('RiaFransRan@56846', '620bba49c6fe20ad43e69afc236de9cd26092b6b6c8132c4dea1f1ab3f74164c', 'PT000003', 'SA000005'), --password String :  RiaFransRan@56        Role : Bank Teller  
+('EixenGuittiEllod@39482', '811edaff4ab0f1134b19bcf23278edb6d189517a96140fb487b733eba08d07b0', 'PT000003', 'SA000006'), --password String :  EixenGuittiEllod@39     Role : Bank Teller
+('OdenAdrasWiln@38593', '48b93387577718cc813672b06b7f8556ee0c64270c715cfbb2b89205f107954c', 'PT000002', 'SA000001'), --password String :  OdenAdrasWiln@38     Role : Bank Manager
+('HcketonZaCary@28549', '956853b66e5da3711d92c755daee02db1f2a90c9b4fc18f65fe07aa592fd718f', 'PT000002', 'SA000002'), --password String :  HcketonZaCary@28	    Role : Bank Manager		
+('MatiRuFeli@58375', '8c435c62a4a2f6dfb9c0695dbd9d8e04dc7d2a5e36271a6459a7f336fcf6dec4', 'PT000001', 'SA000002'), --password String :  MatiRuFeli@58    Role : Bank Data Administrator
+('BersJOdy@79205', 'b6e4676d4d0f8f0d7192ad5a450a401e7ea2f51892bb0671a19550eff6d1f154', 'PT000001', 'SA000002'), --password String :   BersJOdy@79	      Role : Bank Data Administrator
+('JanskiRalhGar@58105', '8995796d950e15f219d6acc39c0fb439458c3f0c4a982a673c708e33f653f9e6', 'PT000001', 'SA000001'), --password String :  JanskiRalhGar@58     Role : Bank Data Administrator
+('TreAoBel@68205', '32f41454a4557e3b0d73e1469dad6916bd0b2365712051b6a55ce106ef699e24', 'PT000001', 'SA000004'), --password String :  TreAoBel@68     Role : Bank Data Administrator
+('SeanRodDlon@58503', '29d5167464bf98d7c2a0fbf325026417a6094ee54d43eb428df302e6af937e52', 'PT000001', 'SA000001'), --password String :  SeanRodDlon@58     Role : Bank Data Administrator
+('AbreyHarDil@48205', '9df5a66ddc929603225663e3295902e70fef668c5a4f1646db89b333131b623c', 'PT000001', 'SA000001'), --password String :  AbreyHarDil@48     Role : Bank Data Administrator
+('BlaxrYananElo@69205', '24c7ad78d95a2ada9da282b7b8c0960800bba44647de9669c5799988451de450', 'PT000001', 'SA000004'), --password String :  BlaxrYananElo@692     Role : Bank Data Administrator
+('GernFeliaMay@19503', 'f9ed2601857f9c3804ed96362302e0effdf509e3f09bb03adcb2eee0d7157985', 'PT000001', 'SA000006'), --password String :  GernFeliaMay@19     Role : Bank Data Administrator
+('BaitAryBlain@50284', '19566e09fc2af820ab322c835c358a1e3aabc287982240dc9d779de559b85247', 'PT000001', 'SA000006'),  --password String :  BaitAryBlain@502     Role : Bank Data Administrator
+('MedsKayMartca@60482', 'fc040371fc88998da38b4b9703a35778ef84e94bd3a89d91fe6c372327bd08fb', 'PT000001', 'SA000004') --password String :  MedsKayMartca@604     Role : Bank Data Administrator
 
 GO
 

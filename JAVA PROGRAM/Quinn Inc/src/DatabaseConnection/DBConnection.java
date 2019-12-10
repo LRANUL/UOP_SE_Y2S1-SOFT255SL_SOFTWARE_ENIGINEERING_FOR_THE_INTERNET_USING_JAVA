@@ -15,4 +15,9 @@ public class DBConnection {
         // Sending database connection URL to wherever called
         return "jdbc:sqlserver://localhost:1433;databaseName=quinnincDB;user=quinnincDB_Admin;password=soft255sl;";
     }
+    
+    public static String DatabaseConnectionUrlStc(){
+        // Sending database connection URL to wherever called
+        return "jdbc:sqlserver://localhost:1433;databaseName=quinnincDB;user=quinnincDB_Admin;password=soft255sl;";
+    }
 }

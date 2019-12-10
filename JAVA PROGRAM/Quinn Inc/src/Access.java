@@ -3,11 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import DatabaseConnection.DBConnection;
+import Encription.sha256;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import LocalTimeAndDate.LocalTimeAndDate;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 /**
  *
  * @author ranul
@@ -313,40 +319,101 @@ public class Access extends javax.swing.JFrame {
     }//GEN-LAST:event_password_TxtActionPerformed
 
     private void login_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_BtnActionPerformed
-        //Opens the Relevant Frame for Authorised User
-
-//      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019
+         //Opens the Relevant Frame for Authorised User
+        PreparedStatement st;
+        ResultSet rs;
         JComboBox cmb = (role_DD);
         Object selected = cmb.getSelectedItem();
-
-        if (cmb.getSelectedIndex() == 0) {
+        
+        String userName = username_Txt.getText();
+       //String password = String.valueOf(password_Txt.getPassword());
+       String password = sha256.hash(String.valueOf(password_Txt.getPassword()));
+       
+        
+       
+        
+        String Qr = "SELECT * FROM SystemLogin WHERE username = ? AND password = ? And slpPositionID = ?";
+        
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
+            st = con.prepareStatement(Qr);
+           
+            st.setString(1, userName);
+            st.setString(2, password);
+            
+            switch (selected.toString()) {
+                case "Bank Teller":
+                    st.setString(3, "PT000003");
+                    break;
+                case "Bank Manager":
+                    st.setString(3, "PT000002");
+                    break;
+                case "Bank Data Administrator":
+                    st.setString(3, "PT000001");
+                    break;
+                default:
+                    st.setString(3, "");
+                    break;
+            }
+            
+         
+            rs = st.executeQuery();
+            
+            
+            
+            if (cmb.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(null,
                     "Please Select your role position to continue.",
                     "WARNING !",
                     JOptionPane.WARNING_MESSAGE);
         }
-        if (username_Txt.getText().isEmpty()) {
+            else if (String.valueOf(password_Txt.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "Please Enter Your Credentials.",
                     "ERROR !",
                     JOptionPane.ERROR_MESSAGE);
-        } else if (selected.toString().equals("Bank Teller")) {
+        }
+            
+            
+            else if (username_Txt.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Please Enter Your Credentials.",
+                    "ERROR !",
+                    JOptionPane.ERROR_MESSAGE);
+        }  else if (selected.toString().equals("Bank Teller") && rs.next()) {
+            
             Teller t1 = new Teller();
             t1.setVisible(true);
             //closes the login form prevent unnecessary tab creation
             this.setVisible(false);
-        } else if (selected.toString().equals("Bank Manager")) {
+        } else if (selected.toString().equals("Bank Manager") && rs.next()) {
             Manager m1 = new Manager();
             m1.setVisible(true);
             //closes the login form prevent unnecessary tab creation
             this.setVisible(false);
-        } else if (selected.toString().equals("Bank Data Administrator")) {
+        } else if (selected.toString().equals("Bank Data Administrator") && rs.next()) {
             AdminPanel a1 = new AdminPanel();
             a1.setVisible(true);
             //closes the login form prevent unnecessary tab creation
             this.setVisible(false);
+        }else {
+            JOptionPane.showMessageDialog(null,
+                    "Please Check Your Credentials .",
+                    "WARNING !",
+                    JOptionPane.WARNING_MESSAGE);
         }
-
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Please Check your Program Files",
+                    "ERROR !",
+                    JOptionPane.ERROR_MESSAGE);
+            
+        }
+//      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019
+        
+//      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019
     }//GEN-LAST:event_login_BtnActionPerformed
 
     private void username_TxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_username_TxtKeyPressed
