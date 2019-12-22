@@ -28,10 +28,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -52,16 +49,17 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="jPanel1" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -84,20 +82,28 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="tUpdate_btn" min="-2" pref="123" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Username_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="employeeId_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Email_Lbl" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="Password_Lbl" alignment="1" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="Username_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tellerId_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="branch_Lbl" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="Password_Lbl" alignment="1" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="city_Txt" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Address_Txt" min="-2" max="-2" attributes="0"/>
+                                  <Component id="email_Txt" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Username_Txt" alignment="0" pref="315" max="32767" attributes="0"/>
-                                  <Component id="Email_Txt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="Username_Txt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="Branch_Txt" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Password_Txt" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="employeeId_Txt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="TellerId_Txt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lAddress_Txt" alignment="0" pref="355" max="32767" attributes="0"/>
+                                  <Component id="cCity_Txt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="Email_Txt" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -114,35 +120,52 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="close" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="employeeId_Lbl" min="-2" max="-2" attributes="0"/>
-                          <Component id="employeeId_Txt" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="TellerId_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tellerId_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="Username_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Username_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="Password_Lbl" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="Password_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="branch_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Branch_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="Address_Txt" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lAddress_Txt" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Username_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Username_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="city_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cCity_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Password_Lbl" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                          <Component id="Password_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Email_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="email_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Email_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                      <EmptySpace pref="55" max="32767" attributes="0"/>
                       <Component id="tUpdate_btn" min="-2" pref="44" max="-2" attributes="0"/>
-                      <EmptySpace pref="76" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="employeeId_Lbl">
+            <Component class="javax.swing.JLabel" name="tellerId_Lbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -150,7 +173,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Employee Id"/>
+                <Property name="text" type="java.lang.String" value="System Login ID"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="Username_Lbl">
@@ -194,7 +217,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="Username_Txt">
             </Component>
-            <Component class="javax.swing.JLabel" name="Email_Lbl">
+            <Component class="javax.swing.JLabel" name="branch_Lbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -202,12 +225,12 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Email"/>
+                <Property name="text" type="java.lang.String" value="Branch"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="Email_Txt">
+            <Component class="javax.swing.JTextField" name="Branch_Txt">
             </Component>
-            <Component class="javax.swing.JTextField" name="employeeId_Txt">
+            <Component class="javax.swing.JTextField" name="TellerId_Txt">
             </Component>
             <Component class="javax.swing.JTextField" name="Password_Txt">
             </Component>
@@ -224,6 +247,45 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Address_Txt">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Lane Address"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="city_Txt">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="City"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="email_Txt">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="18" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Email Address"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="lAddress_Txt">
+            </Component>
+            <Component class="javax.swing.JTextField" name="cCity_Txt">
+            </Component>
+            <Component class="javax.swing.JTextField" name="Email_Txt">
             </Component>
           </SubComponents>
         </Container>

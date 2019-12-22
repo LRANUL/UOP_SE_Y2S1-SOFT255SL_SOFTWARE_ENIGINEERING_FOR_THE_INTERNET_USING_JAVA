@@ -54,10 +54,20 @@ public class UpdateManagers extends javax.swing.JFrame {
         Managerid_Lbl = new javax.swing.JLabel();
         User_Lbl = new javax.swing.JLabel();
         Password_Lbl = new javax.swing.JLabel();
-        Managerid_Txt = new javax.swing.JTextField();
+        Loginid_Txt = new javax.swing.JTextField();
         Username_Txt = new javax.swing.JTextField();
         Password_Txt = new javax.swing.JTextField();
         close = new javax.swing.JButton();
+        Branch_Lbl = new javax.swing.JLabel();
+        address_Lbl = new javax.swing.JLabel();
+        city_Lbl = new javax.swing.JLabel();
+        Email_Lbl = new javax.swing.JLabel();
+        slpPosition_Lbl = new javax.swing.JLabel();
+        position_Txt = new javax.swing.JTextField();
+        branch_Txt = new javax.swing.JTextField();
+        address_Txt = new javax.swing.JTextField();
+        email_Txt = new javax.swing.JTextField();
+        city_Txt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -79,7 +89,7 @@ public class UpdateManagers extends javax.swing.JFrame {
 
         Managerid_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Managerid_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        Managerid_Lbl.setText("Managers Id");
+        Managerid_Lbl.setText("System Login ID");
 
         User_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         User_Lbl.setForeground(new java.awt.Color(255, 255, 255));
@@ -98,27 +108,58 @@ public class UpdateManagers extends javax.swing.JFrame {
             }
         });
 
+        Branch_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Branch_Lbl.setForeground(new java.awt.Color(240, 240, 240));
+        Branch_Lbl.setText("Branch");
+
+        address_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        address_Lbl.setForeground(new java.awt.Color(240, 240, 240));
+        address_Lbl.setText("Lane Address");
+
+        city_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        city_Lbl.setForeground(new java.awt.Color(240, 240, 240));
+        city_Lbl.setText("City");
+
+        Email_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Email_Lbl.setForeground(new java.awt.Color(240, 240, 240));
+        Email_Lbl.setText("Email Address");
+
+        slpPosition_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        slpPosition_Lbl.setForeground(new java.awt.Color(240, 240, 240));
+        slpPosition_Lbl.setText("slpPosition ID");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Managerid_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(User_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Password_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Password_Txt)
-                    .addComponent(Username_Txt)
-                    .addComponent(Managerid_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(79, 79, 79))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(close))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(197, 197, 197)
+                .addGap(71, 71, 71)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(Managerid_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(User_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Password_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Email_Lbl)
+                    .addComponent(city_Lbl)
+                    .addComponent(address_Lbl)
+                    .addComponent(Branch_Lbl)
+                    .addComponent(slpPosition_Lbl))
+                .addGap(144, 144, 144)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Password_Txt)
+                    .addComponent(Username_Txt)
+                    .addComponent(email_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                    .addComponent(address_Txt)
+                    .addComponent(branch_Txt)
+                    .addComponent(position_Txt)
+                    .addComponent(Loginid_Txt)
+                    .addComponent(city_Txt))
+                .addGap(79, 79, 79))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(226, 226, 226)
                 .addComponent(mUpdate_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -129,7 +170,7 @@ public class UpdateManagers extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Managerid_Lbl)
-                    .addComponent(Managerid_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Loginid_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(User_Lbl)
@@ -138,34 +179,56 @@ public class UpdateManagers extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Password_Lbl)
                     .addComponent(Password_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(position_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(slpPosition_Lbl))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(branch_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Branch_Lbl))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(address_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(address_Lbl))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(city_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(city_Lbl))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(email_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Email_Lbl))
+                .addGap(44, 44, 44)
                 .addComponent(mUpdate_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -176,11 +239,20 @@ public class UpdateManagers extends javax.swing.JFrame {
         
         try {
             conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
-            String sql="UPDATE dbo.Manager_details SET UserName =?, Password =? WHERE ManagerId =?";
+            String sql="UPDATE dbo.SystemLogin SET Username =?, Password =? WHERE SystemLoginID =?";
             ps=conn.prepareStatement(sql);
             ps.setString(1,Username_Txt.getText());
             ps.setString(2,Password_Txt.getText());
-            ps.setString(3,Managerid_Txt.getText());
+            ps.setString(3,Loginid_Txt.getText());
+            ps.executeUpdate();
+            
+            String sql2="UPDATE dbo.Manager SET Branch=?, LaneAddress=?, City=?, EmailAddress=? where slSystemLoginID=?";
+            ps=conn.prepareStatement(sql2);
+            ps.setString(1, branch_Txt.getText());
+            ps.setString(2, address_Txt.getText());
+            ps.setString(3, city_Txt.getText());
+            ps.setString(4, email_Txt.getText());
+            ps.setString(5, Loginid_Txt.getText());
             ps.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Update successful");
@@ -238,15 +310,25 @@ public class UpdateManagers extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Branch_Lbl;
+    private javax.swing.JLabel Email_Lbl;
+    private javax.swing.JTextField Loginid_Txt;
     private javax.swing.JLabel Managerid_Lbl;
-    private javax.swing.JTextField Managerid_Txt;
     private javax.swing.JLabel Password_Lbl;
     private javax.swing.JTextField Password_Txt;
     private javax.swing.JLabel User_Lbl;
     private javax.swing.JTextField Username_Txt;
+    private javax.swing.JLabel address_Lbl;
+    private javax.swing.JTextField address_Txt;
+    private javax.swing.JTextField branch_Txt;
+    private javax.swing.JLabel city_Lbl;
+    private javax.swing.JTextField city_Txt;
     private javax.swing.JButton close;
+    private javax.swing.JTextField email_Txt;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton mUpdate_btn;
+    private javax.swing.JTextField position_Txt;
+    private javax.swing.JLabel slpPosition_Lbl;
     // End of variables declaration//GEN-END:variables
 }

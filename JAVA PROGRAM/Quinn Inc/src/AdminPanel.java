@@ -72,7 +72,7 @@ public class AdminPanel extends javax.swing.JFrame {
         removeTellers_Btn = new javax.swing.JButton();
         updateCred1_Btn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TellersINFO = new javax.swing.JTable();
+        TellerINFO = new javax.swing.JTable();
         transaction_Btn = new javax.swing.JButton();
         showManagers_Btn = new javax.swing.JButton();
         removeManagers_Btn = new javax.swing.JButton();
@@ -83,6 +83,7 @@ public class AdminPanel extends javax.swing.JFrame {
         currentTNX_table = new javax.swing.JTable();
         insertManager_Btn = new javax.swing.JButton();
         insertTeller_Btn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         logout = new javax.swing.JMenuItem();
@@ -113,12 +114,12 @@ public class AdminPanel extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(146, 146, 146)
-                .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(panel_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 1675, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlbl_localTime)
-                .addGap(27, 27, 27)
+                .addGap(36, 36, 36)
                 .addComponent(jlbl_localDate)
-                .addContainerGap())
+                .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,45 +162,45 @@ public class AdminPanel extends javax.swing.JFrame {
             }
         });
 
-        TellersINFO.setBorder(new javax.swing.border.MatteBorder(null));
-        TellersINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        TellersINFO.setModel(new javax.swing.table.DefaultTableModel(
+        TellerINFO.setBorder(new javax.swing.border.MatteBorder(null));
+        TellerINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TellerINFO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Teller ID", "User Name", "Password"
+                "Teller ID", "Branch", "First Name", "Last Name", "Lane Address", "City", "E-Mail", "Login Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, true, true, true, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -210,12 +211,12 @@ public class AdminPanel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(TellersINFO);
+        jScrollPane1.setViewportView(TellerINFO);
 
-        transaction_Btn.setBackground(new java.awt.Color(255, 255, 0));
+        transaction_Btn.setBackground(new java.awt.Color(51, 51, 51));
         transaction_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        transaction_Btn.setForeground(new java.awt.Color(204, 0, 0));
-        transaction_Btn.setText("Current transactions");
+        transaction_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        transaction_Btn.setText("Customer transactions Withdrawal");
         transaction_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 transaction_BtnActionPerformed(evt);
@@ -256,41 +257,41 @@ public class AdminPanel extends javax.swing.JFrame {
         ManagersINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         ManagersINFO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Manager ID", "User Name", "Password"
+                "Manager ID", "Branch", "First Name", "Last Name", "Lane Address", "City", "E-Mail Address", "Login Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -305,33 +306,33 @@ public class AdminPanel extends javax.swing.JFrame {
 
         currentTNX_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Transaction No", "Transaction Type", "Teller ID", "Account No", "Account Type", "Amount", "Date and Time"
+                "Transaction Number", "Transaction Amount", "Transaction date and time", "NSAccount No", "BSAccount Number", "TellerID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -360,6 +361,16 @@ public class AdminPanel extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jButton1.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Customer transaction Deposit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout admin_pnlLayout = new javax.swing.GroupLayout(admin_pnl);
         admin_pnl.setLayout(admin_pnlLayout);
         admin_pnlLayout.setHorizontalGroup(
@@ -370,30 +381,32 @@ public class AdminPanel extends javax.swing.JFrame {
                 .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(admin_pnlLayout.createSequentialGroup()
                         .addComponent(transaction_Btn)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(admin_pnlLayout.createSequentialGroup()
-                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
+                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
                             .addGroup(admin_pnlLayout.createSequentialGroup()
-                                .addComponent(showTellers_Btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeTellers_Btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(updateCred1_Btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(insertTeller_Btn))
-                            .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(showTellers_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(removeTellers_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(72, 72, 72)
+                                .addComponent(updateCred1_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(insertTeller_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(admin_pnlLayout.createSequentialGroup()
                                 .addComponent(showManagers_Btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(80, 80, 80)
                                 .addComponent(removeManagers_Btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(68, 68, 68)
                                 .addComponent(updateCred2_Btn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(55, 55, 55)
                                 .addComponent(insertManager_Btn))
-                            .addComponent(jScrollPane2)))
-                    .addComponent(jScrollPane3))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 949, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(22, 22, 22))
         );
         admin_pnlLayout.setVerticalGroup(
@@ -404,25 +417,27 @@ public class AdminPanel extends javax.swing.JFrame {
                 .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
                         .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(removeTellers_Btn)
                             .addComponent(showTellers_Btn)
-                            .addComponent(updateCred1_Btn)
-                            .addComponent(insertTeller_Btn))
+                            .addComponent(removeTellers_Btn))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
                         .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(removeManagers_Btn)
-                            .addComponent(showManagers_Btn)
                             .addComponent(updateCred2_Btn)
-                            .addComponent(insertManager_Btn))
+                            .addComponent(insertManager_Btn)
+                            .addComponent(insertTeller_Btn)
+                            .addComponent(updateCred1_Btn)
+                            .addComponent(showManagers_Btn))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(transaction_Btn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(transaction_Btn)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jMenu1.setText("Menu");
@@ -484,13 +499,13 @@ public class AdminPanel extends javax.swing.JFrame {
             //connection to the databbase
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
             //The select statement
-            String sql="SELECT * FROM dbo.Tellers_login";
+            String sql="SELECT TellerID,Branch,FirstName,LastName,LaneAddress, City, EmailAddress,slSystemLoginID FROM dbo.Teller";
             ps=conn.prepareStatement(sql);
             //executes the query
             rs=ps.executeQuery();
             
             //display the retrived data in the table
-            TellersINFO.setModel(DbUtils.resultSetToTableModel(rs));
+            TellerINFO.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -503,19 +518,20 @@ public class AdminPanel extends javax.swing.JFrame {
     private void removeTellers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTellers_BtnActionPerformed
         
           try {
+              
               // The database connection
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
             //get and store selected row
-            int row=TellersINFO.getSelectedRow();
+            int row=TellerINFO.getSelectedRow();
             // get the data from row 
-            String value=TellersINFO.getModel().getValueAt(row,0).toString();
+            String value=TellerINFO.getModel().getValueAt(row, 0).toString();
             //sql select statement
-            String sql="DELETE FROM dbo.Tellers_login  WHERE EmployeeId="+value;
+            String sql="Delete from dbo.Teller where TellerID=" + value;
             ps=conn.prepareStatement(sql);
             //executes the update
             ps.executeUpdate();
             //Display the message 
-            JOptionPane.showMessageDialog(null,"Delete Successful ");
+            JOptionPane.showMessageDialog(null,"Delete Successfull");
             
             
         } catch (SQLException ex) {
@@ -531,7 +547,7 @@ public class AdminPanel extends javax.swing.JFrame {
         
          try {
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            String sql="SELECT * FROM dbo.Manager_details";
+            String sql="SELECT ManagerId,Branch,FirstName,LastName,LaneAddress, City, EmailAddress,slSystemLoginID FROM dbo.Manager";
             ps=conn.prepareStatement(sql);
             rs=ps.executeQuery();
             
@@ -546,7 +562,7 @@ public class AdminPanel extends javax.swing.JFrame {
        
         try {
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            String sql="SELECT * FROM Customer_transaction";
+            String sql="SELECT * FROM CustomerTransactionWithdrawal";
             ps=conn.prepareStatement(sql);
             rs=ps.executeQuery();
             
@@ -592,7 +608,7 @@ public class AdminPanel extends javax.swing.JFrame {
             // get the data from row 
             String value=ManagersINFO.getModel().getValueAt(row,0).toString();
             //sql select statement
-            String sql="DELETE FROM dbo.Manager_details  WHERE ManagerId="+value;
+            String sql="DELETE FROM dbo.Manager  WHERE ManagerId="+value;
             ps=conn.prepareStatement(sql);
             //executes the update
             ps.executeUpdate();
@@ -606,6 +622,21 @@ public class AdminPanel extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_removeManagers_BtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
+            String sql1="Select * from CustomerTransactionDeposit";
+            ps=conn.prepareStatement(sql1);
+            rs=ps.executeQuery();
+            currentTNX_table.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -644,11 +675,12 @@ public class AdminPanel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ManagersINFO;
-    private javax.swing.JTable TellersINFO;
+    private javax.swing.JTable TellerINFO;
     private javax.swing.JPanel admin_pnl;
     private javax.swing.JTable currentTNX_table;
     private javax.swing.JButton insertManager_Btn;
     private javax.swing.JButton insertTeller_Btn;
+    private javax.swing.JButton jButton1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;

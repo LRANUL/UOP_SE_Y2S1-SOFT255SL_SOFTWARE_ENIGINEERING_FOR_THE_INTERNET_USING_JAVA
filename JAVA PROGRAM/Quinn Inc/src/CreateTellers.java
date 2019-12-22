@@ -3,11 +3,14 @@ import DatabaseConnection.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,6 +30,8 @@ public class CreateTellers extends javax.swing.JFrame {
     
     Connection conn=null;
     PreparedStatement ps=null;
+    Statement st=null;
+    ResultSet rs=null;
     
     DBConnection db;
    
@@ -48,18 +53,59 @@ public class CreateTellers extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        close = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         tUName_Lbl = new javax.swing.JLabel();
         tInsert_btn = new javax.swing.JButton();
         tPassword_Lbl = new javax.swing.JLabel();
-        tUName_Txt = new javax.swing.JTextField();
-        tPassword_Txt = new javax.swing.JTextField();
+        Fname_Txt = new javax.swing.JTextField();
+        Mname_Txt = new javax.swing.JTextField();
         tMail_Lbl = new javax.swing.JLabel();
-        tMail_Txt = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        Address_Txt = new javax.swing.JTextField();
+        city_Txt = new javax.swing.JTextField();
+        branch_Txt = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        Email_Txt = new javax.swing.JTextField();
+        Uname_Lbl = new javax.swing.JLabel();
+        adminID_Txt = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        Lname_Txt = new javax.swing.JTextField();
+        positionID_Txt = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        Uname_Txt = new javax.swing.JTextField();
+        Password = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        login_Txt = new javax.swing.JTextField();
+        Tclose = new javax.swing.JButton();
+
+        close.setBackground(new java.awt.Color(0, 123, 146));
+        close.setForeground(new java.awt.Color(255, 255, 255));
+        close.setText("X");
+        close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 123, 146));
 
-        tUName_Lbl.setText("Username");
+        jPanel2.setBackground(new java.awt.Color(0, 123, 146));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.setToolTipText("");
+
+        jPanel1.setBackground(new java.awt.Color(18, 63, 72));
+        jPanel1.setForeground(new java.awt.Color(0, 0, 153));
+        jPanel1.setToolTipText("");
+
+        tUName_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tUName_Lbl.setForeground(new java.awt.Color(255, 255, 255));
+        tUName_Lbl.setText("First Name");
 
         tInsert_btn.setText("Insert");
         tInsert_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -68,50 +114,193 @@ public class CreateTellers extends javax.swing.JFrame {
             }
         });
 
-        tPassword_Lbl.setText("Password");
+        tPassword_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tPassword_Lbl.setForeground(new java.awt.Color(255, 255, 255));
+        tPassword_Lbl.setText("Middle Name");
 
-        tMail_Lbl.setText("E-Mail");
+        tMail_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tMail_Lbl.setForeground(new java.awt.Color(240, 240, 240));
+        tMail_Lbl.setText("Last Name");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setText("Lane Address");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel2.setText("City");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Branch");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel4.setText("E-Mail Address");
+
+        Uname_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        Uname_Lbl.setForeground(new java.awt.Color(255, 255, 255));
+        Uname_Lbl.setText("User Name");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Password");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("slpPositionID");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("saAdminID");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel9.setText("Login ID");
+
+        login_Txt.setEditable(false);
+
+        Tclose.setBackground(new java.awt.Color(0, 123, 146));
+        Tclose.setForeground(new java.awt.Color(255, 255, 255));
+        Tclose.setText("X");
+        Tclose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TcloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(96, 96, 96)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tUName_Lbl)
-                            .addComponent(tPassword_Lbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tMail_Lbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(120, 120, 120)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tPassword_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                            .addComponent(tUName_Txt)
-                            .addComponent(tMail_Txt)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Uname_Lbl)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
-                        .addComponent(tInsert_btn)))
-                .addContainerGap(199, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(tInsert_btn))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(tUName_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(tPassword_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(tMail_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addComponent(jLabel1))
+                                        .addGap(128, 130, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Mname_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                                    .addComponent(Fname_Txt)
+                                    .addComponent(adminID_Txt, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Address_Txt, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(city_Txt, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Email_Txt, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Lname_Txt)
+                                    .addComponent(login_Txt)
+                                    .addComponent(Password)
+                                    .addComponent(positionID_Txt)
+                                    .addComponent(branch_Txt)
+                                    .addComponent(Uname_Txt))))
+                        .addGap(97, 97, 97)))
+                .addComponent(Tclose)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Uname_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Uname_Lbl))
+                        .addGap(21, 21, 21))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Tclose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tUName_Lbl)
-                    .addComponent(tUName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                    .addComponent(jLabel6)
+                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tPassword_Lbl)
-                    .addComponent(tPassword_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                    .addComponent(positionID_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tMail_Lbl)
-                    .addComponent(tMail_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                    .addComponent(adminID_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(branch_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tUName_Lbl, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Fname_Txt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Mname_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tPassword_Lbl))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Lname_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tMail_Lbl))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Address_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(city_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Email_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(login_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(tInsert_btn)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addGap(4, 4, 4))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,16 +308,15 @@ public class CreateTellers extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,11 +326,39 @@ public class CreateTellers extends javax.swing.JFrame {
         
         try {
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            String sql="INSERT INTO dbo.Tellers_login (UserName, Password, [E-Mail]) VALUES (?,?,?)";
+            String sql="INSERT INTO dbo.SystemLogin (Username, Password, slpPositionID,saAdminID) VALUES (?,?,?,?)";
             ps=conn.prepareStatement(sql);
-            ps.setString(1, tUName_Txt.getText());
-            ps.setString(2, tPassword_Txt.getText());
-            ps.setString(3, tMail_Txt.getText());
+            ps.setString(1, Uname_Txt.getText());
+            ps.setString(2, Password.getText());
+            ps.setString(3, positionID_Txt.getText());
+            ps.setString(4, adminID_Txt.getText());
+            ps.executeUpdate();
+            
+            
+            String sql1="SELECT TOP 1 SystemLoginID from dbo.SystemLogin ORDER BY SystemLoginID DESC";
+            ps=conn.prepareStatement(sql1);
+            rs=ps.executeQuery();
+            
+            //gets the coloum from systemlogin and assign it to the login_lbl label
+            while(rs.next())
+            {
+            login_Txt.setText(rs.getString("SystemLoginID"));
+            }
+            
+            
+            
+           
+            
+            String sql2="INSERT INTO dbo.Teller (Branch,FirstName,MiddleName,LastName,LaneAddress,City,EmailAddress,slSystemLoginID) VALUES(?,?,?,?,?,?,?,?)";
+            ps=conn.prepareStatement(sql2);
+            ps.setString(1,branch_Txt.getText());
+            ps.setString(2, Fname_Txt.getText());
+            ps.setString(3, Mname_Txt.getText());
+            ps.setString(4, Lname_Txt.getText());
+            ps.setString(5, Address_Txt.getText());
+            ps.setString(6, city_Txt.getText());
+            ps.setString(7, Email_Txt.getText());
+            ps.setString(8, login_Txt.getText());
             ps.executeUpdate();
             
             
@@ -158,6 +374,16 @@ public class CreateTellers extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_tInsert_btnActionPerformed
+
+    private void closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeActionPerformed
+        //Closes the Updatinf Form
+        this.setVisible(false);
+    }//GEN-LAST:event_closeActionPerformed
+
+    private void TcloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TcloseActionPerformed
+        //Closes the Updatinf Form
+        this.setVisible(false);
+    }//GEN-LAST:event_TcloseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,13 +421,34 @@ public class CreateTellers extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Address_Txt;
+    private javax.swing.JTextField Email_Txt;
+    private javax.swing.JTextField Fname_Txt;
+    private javax.swing.JTextField Lname_Txt;
+    private javax.swing.JTextField Mname_Txt;
+    private javax.swing.JTextField Password;
+    private javax.swing.JButton Tclose;
+    private javax.swing.JLabel Uname_Lbl;
+    private javax.swing.JTextField Uname_Txt;
+    private javax.swing.JTextField adminID_Txt;
+    private javax.swing.JTextField branch_Txt;
+    private javax.swing.JTextField city_Txt;
+    private javax.swing.JButton close;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField login_Txt;
+    private javax.swing.JTextField positionID_Txt;
     private javax.swing.JButton tInsert_btn;
     private javax.swing.JLabel tMail_Lbl;
-    private javax.swing.JTextField tMail_Txt;
     private javax.swing.JLabel tPassword_Lbl;
-    private javax.swing.JTextField tPassword_Txt;
     private javax.swing.JLabel tUName_Lbl;
-    private javax.swing.JTextField tUName_Txt;
     // End of variables declaration//GEN-END:variables
 }
