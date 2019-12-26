@@ -10,4 +10,14 @@
  */
 public class PremierSavings extends Account {
 
+    @Override
+    public void debit() {
+        
+    }
+
+    @Override
+    public void credit() {
+        
+    }
+
 }

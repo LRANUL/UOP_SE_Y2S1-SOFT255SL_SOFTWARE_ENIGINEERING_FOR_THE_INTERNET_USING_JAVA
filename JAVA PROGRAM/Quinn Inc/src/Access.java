@@ -344,13 +344,13 @@ public class Access extends javax.swing.JFrame {
             
             switch (selected.toString()) {
                 case "Bank Teller":
-                    st.setString(3, "PT000003");
+                    st.setString(3, "PT000001");
                     break;
                 case "Bank Manager":
                     st.setString(3, "PT000002");
                     break;
                 case "Bank Data Administrator":
-                    st.setString(3, "PT000001");
+                    st.setString(3, "PT000003");
                     break;
                 default:
                     st.setString(3, "");
