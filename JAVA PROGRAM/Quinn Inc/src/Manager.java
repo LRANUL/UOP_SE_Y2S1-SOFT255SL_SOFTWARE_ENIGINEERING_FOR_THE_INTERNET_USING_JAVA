@@ -223,7 +223,7 @@ public class Manager extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        File folder = new File("C:\\Users\\ranul\\Documents\\GitHub\\SOFT255SL_SOFTWARE_ENIGINEERING_FOR_THE_INTERNET_USING_JAVA\\JAVA PROGRAM"); // path to the directory to be opened
+        File folder = new File("C:\\Users\\ranul\\Documents\\GitHub\\SOFT255SL_SOFTWARE_ENIGINEERING_FOR_THE_INTERNET_USING_JAVA\\JAVA PROGRAM\\Reports"); // path to the directory to be opened
         Desktop desktop = null;
         if (Desktop.isDesktopSupported()) {
             desktop = Desktop.getDesktop();
