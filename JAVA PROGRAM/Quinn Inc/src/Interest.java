@@ -10,4 +10,6 @@
  */
 public interface Interest {
 
+    public double interestMonth(double amount);
+    public double interestDec(double amount);
 }
