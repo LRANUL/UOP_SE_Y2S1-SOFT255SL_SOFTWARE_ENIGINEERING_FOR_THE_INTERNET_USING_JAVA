@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 import DatabaseConnection.DBConnection;
-import Encription.sha256;
+import Encryption.sha256;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -332,7 +332,7 @@ public class Access extends javax.swing.JFrame {
         
        
         
-        String Qr = "SELECT * FROM SystemLogin WHERE username = ? AND password = ? And slpPositionID = ?";
+        String Qr = "SELECT * FROM dbo.SystemLogin WHERE username = ? AND password = ? And slpPositionID = ?";
         
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

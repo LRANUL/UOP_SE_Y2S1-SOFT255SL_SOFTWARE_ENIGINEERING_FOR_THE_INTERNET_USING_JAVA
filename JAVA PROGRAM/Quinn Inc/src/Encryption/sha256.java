@@ -1,5 +1,5 @@
 
-package Encription;
+package Encryption;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
