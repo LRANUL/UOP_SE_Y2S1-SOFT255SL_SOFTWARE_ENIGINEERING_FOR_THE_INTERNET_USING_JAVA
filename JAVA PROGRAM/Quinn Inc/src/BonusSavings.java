@@ -8,6 +8,18 @@
  *
  * @author ranul
  */
-public class BonusSavings extends Account {
+public class BonusSavings extends Account implements Interest {
 
+    @Override
+    public void debit() {
+    
+    }
+
+    @Override
+    public void credit() {
+   
+    
+   }
+
+    
 }
