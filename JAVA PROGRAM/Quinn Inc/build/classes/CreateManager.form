@@ -80,7 +80,7 @@
                                   <Component id="mail_Lbl" max="32767" attributes="0"/>
                                   <Component id="slPosition_Lbl" min="-2" max="-2" attributes="0"/>
                                   <Component id="mPassword_Lbl" min="-2" max="-2" attributes="0"/>
-                                  <Component id="saposition_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="saAdmin_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="branch_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="Fname_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="Mname_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -103,7 +103,7 @@
                                       <Component id="city_Txt" alignment="0" max="32767" attributes="0"/>
                                       <Component id="Mname_Txt" max="32767" attributes="0"/>
                                       <Component id="email_Txt" max="32767" attributes="0"/>
-                                      <Component id="position_Txt" pref="286" max="32767" attributes="0"/>
+                                      <Component id="adminID_Txt" pref="286" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -138,8 +138,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="saposition_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="position_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="saAdmin_Lbl" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="adminID_Txt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -234,7 +234,7 @@
                 <Property name="text" type="java.lang.String" value="slPosition ID"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="saposition_Lbl">
+            <Component class="javax.swing.JLabel" name="saAdmin_Lbl">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="18" style="0"/>
@@ -242,7 +242,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f0" green="f0" red="f0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="saPosition ID"/>
+                <Property name="text" type="java.lang.String" value="saAdmin ID"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="Lname_Lbl">
@@ -338,7 +338,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="email_Txt">
             </Component>
-            <Component class="javax.swing.JTextField" name="position_Txt">
+            <Component class="javax.swing.JTextField" name="adminID_Txt">
             </Component>
             <Component class="javax.swing.JLabel" name="login_Lbl">
               <Properties>
