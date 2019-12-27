@@ -1,14 +1,8 @@
 
 import DatabaseConnection.DBConnection;
-import static java.lang.Integer.parseInt;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author ranul
  */
-public class DebitCard extends javax.swing.JFrame{
+public class DebitCard extends javax.swing.JFrame {
 
     String Acc;
     Connection conn = null;
@@ -33,13 +27,13 @@ public class DebitCard extends javax.swing.JFrame{
     public DebitCard() {
         initComponents();
         db = new DBConnection();
-
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public DebitCard(String AccNo) {
         initComponents();
         accfetch.setText(AccNo);
+        accfetch1.setText(AccNo);
 
         Acc = accfetch.getText();
     }
@@ -66,6 +60,9 @@ public class DebitCard extends javax.swing.JFrame{
         accno = new javax.swing.JTextField();
         accfetch = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
+        accfetch1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -80,10 +77,10 @@ public class DebitCard extends javax.swing.JFrame{
         text.setText("YOUR ONE CARD FOR ALL YOUR NEEDS");
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("REQUEST EXTRA CARD FOR CUSTOMER FAMILY MEMBER - £7");
+        jLabel1.setText("REQUEST EXTRA CARD FOR NEW CUSTOMER FAMILY MEMBER - £7");
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("REQUEST CARD FOR CUSTOMER - £5");
+        jLabel2.setText("REQUEST CARD FOR NEW CUSTOMER - £5");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -126,20 +123,19 @@ public class DebitCard extends javax.swing.JFrame{
             }
         });
 
+        accfetch1.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+        accfetch1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Account No");
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Account No");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(famreq)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(accfetch, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(req))
-                    .addComponent(lostreq))
-                .addGap(294, 294, 294))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -149,23 +145,33 @@ public class DebitCard extends javax.swing.JFrame{
                         .addGap(51, 51, 51)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(48, 48, 48)
-                                .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lostreq))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(accfetch1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(famreq))
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(accfetch, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(req))
+                            .addComponent(jLabel1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jToggleButton1)
                     .addComponent(image))
-                .addGap(0, 12, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(54, 54, 54)
-                    .addComponent(jLabel2)
-                    .addContainerGap(574, Short.MAX_VALUE)))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,15 +181,23 @@ public class DebitCard extends javax.swing.JFrame{
                 .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(text)
-                .addGap(51, 51, 51)
+                .addGap(53, 53, 53)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(accfetch, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(req))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(req)
-                    .addComponent(accfetch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(accfetch1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(famreq))
-                .addGap(70, 70, 70)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -191,11 +205,6 @@ public class DebitCard extends javax.swing.JFrame{
                     .addComponent(lostreq)
                     .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(77, 77, 77))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(509, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addGap(236, 236, 236)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,7 +224,24 @@ public class DebitCard extends javax.swing.JFrame{
 
     private void reqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqActionPerformed
         // Charge fee from customer
-        Charges chrg = new Charges(Acc) {
+        Charges Customer = new Charges() {
+            @Override
+            public void debit() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void credit() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        };
+        Customer.ChargesCustomer(Acc);
+    }//GEN-LAST:event_reqActionPerformed
+
+    private void famreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_famreqActionPerformed
+        // 2nd card Request
+        Charges FamilyCard = new Charges() {
             @Override
             public void debit() {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -226,112 +252,35 @@ public class DebitCard extends javax.swing.JFrame{
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
-        
-    }//GEN-LAST:event_reqActionPerformed
-      
-    private void famreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_famreqActionPerformed
-        // 2nd card Request
-        String AccNo = Acc;
-        if (AccNo.length() > 2) {
-            int Type = parseInt(AccNo.substring(0, 2));
-            if (Type == 25) {
-                try {
-                    conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    String sql = "UPDATE dbo.AccountNormalSavings SET NSAccountBalance = NSAccountBalance - 7 WHERE NSAccountNumber = ?";
-                    ps = conn.prepareStatement(sql);
-                    ps.setString(1, AccNo);
-                    ps.executeUpdate();
-
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex);
-                } finally {
-                    JOptionPane.showMessageDialog(null, "Account Charged, Release the Family Card");
-                }
-            } else if (Type == 45) {
-                try {
-                    conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    String sql = "UPDATE dbo.AccountBonusSavings SET BSAccountBalance = BSAccountBalance - 7 WHERE BSAccountNumber = ?";
-                    ps = conn.prepareStatement(sql);
-                    ps.setString(1, AccNo);
-                    ps.executeUpdate();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex);
-                } finally {
-                    JOptionPane.showMessageDialog(null, "Account Charged, Release the Family Card");
-                }
-            } else if (Type == 75) {
-                try {
-                    conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    String sql = "UPDATE dbo.AccountPremierSavings SET PSAccountBalance = PSAccountBalance - 7 WHERE PSAccountNumber = ?";
-                    ps = conn.prepareStatement(sql);
-                    ps.setString(1, AccNo);
-                    ps.executeUpdate();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex);
-                } finally {
-                    JOptionPane.showMessageDialog(null, "Account Charged, Release the Family Card");
-                }
-            }
+        FamilyCard.ChargesFamily(Acc);
     }//GEN-LAST:event_famreqActionPerformed
-    }
+
     private void lostreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lostreqActionPerformed
         // lost card request
         String AccNo = accno.getText();
-        if(AccNo.isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "ENTER ACCOUNT NUMBER");
-        }
-        else if (AccNo.length() > 2) {
-            int Type = parseInt(AccNo.substring(0, 2));
-            if (Type == 25) {
-                try {
-                    conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    String sql = "UPDATE dbo.AccountNormalSavings SET NSAccountBalance = NSAccountBalance - 10 WHERE NSAccountNumber = ?";
-                    ps = conn.prepareStatement(sql);
-                    ps.setString(1, AccNo);
-                    ps.executeUpdate();
-
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex);
-                } finally {
-                    JOptionPane.showMessageDialog(null, "Account Charged, Release the Replacement Card");
-                }
-            } else if (Type == 45) {
-                try {
-                    conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    String sql = "UPDATE dbo.AccountBonusSavings SET BSAccountBalance = BSAccountBalance - 10 WHERE BSAccountNumber = ?";
-                    ps = conn.prepareStatement(sql);
-                    ps.setString(1, AccNo);
-                    ps.executeUpdate();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex);
-                } finally {
-                    JOptionPane.showMessageDialog(null, "Account Charged, Release the Replacement Card");
-                }
-            } else if (Type == 75) {
-                try {
-                    conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    String sql = "UPDATE dbo.AccountPremierSavings SET PSAccountBalance = PSAccountBalance - 10 WHERE PSAccountNumber = ?";
-                    ps = conn.prepareStatement(sql);
-                    ps.setString(1, AccNo);
-                    ps.executeUpdate();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex);
-                } finally {
-                    JOptionPane.showMessageDialog(null, "Account Charged, Release the Replacement Card");
-                }
+        Charges Lost = new Charges() {
+            @Override
+            public void debit() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
-        }
+
+            @Override
+            public void credit() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        Lost.LostCard(AccNo);
+
     }//GEN-LAST:event_lostreqActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // CLOSING
-         this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-            /**
-         * @param args the command line arguments
-         */
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -366,6 +315,7 @@ public class DebitCard extends javax.swing.JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accfetch;
+    private javax.swing.JLabel accfetch1;
     private javax.swing.JTextField accno;
     private javax.swing.JButton famreq;
     private javax.swing.JLabel image;
@@ -373,6 +323,8 @@ public class DebitCard extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JButton lostreq;

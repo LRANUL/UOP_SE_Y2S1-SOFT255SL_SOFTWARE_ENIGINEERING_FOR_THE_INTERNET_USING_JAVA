@@ -8,11 +8,26 @@
  *
  * @author ranul
  */
-public abstract class  Account implements Interest {
-private String accountNo;
-private double balance;
-private double bonus;
-private String status;
+public abstract class Account implements Interest {
+
+    private String accountNo;
+    private double balance;
+    private double bonus;
+    private String status;
+
+    public void ChargesCustomer() {
+    }
+
+    ;
+public void ChargesFamily() {
+    }
+
+    ;
+public void LostCard() {
+    }
+
+    ;
+
 
     public String getAccountNo() {
         return accountNo;
@@ -45,24 +60,26 @@ private String status;
     public void setStatus(String Status) {
         this.status = Status;
     }
-    
-    
-    public abstract void debit();
-    public abstract void credit();
-    
 
-    public void depositeInterest(){};
+    public abstract void debit();
+
+    public abstract void credit();
+
+    public void depositeInterest() {
+    }
+
+    ;
     
     @Override
     public double interestDec(double amount) {
-        
-        return (amount*0.2/12);
-        
+
+        return (amount * 0.2 / 12);
+
     }
-    
+
     @Override
     public double interestMonth(double amount) {
-        return (amount*0.1/12);
+        return (amount * 0.1 / 12);
     }
 
 }

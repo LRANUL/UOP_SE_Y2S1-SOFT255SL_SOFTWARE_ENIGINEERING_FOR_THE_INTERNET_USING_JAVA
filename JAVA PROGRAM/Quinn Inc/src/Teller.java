@@ -48,152 +48,151 @@ import java.util.regex.*;
  * @author ranul
  */
 public class Teller extends javax.swing.JFrame {
-    
+
     // Creating new object to insert account details
     NewAccountCreation anc;
-    
+
     // Declaring variable to retrieve user selected account type from the list
     String userSelectedAccountType = "";
-    
+
     // Declaring global variable to assign value in the parameterized constructor
     String systemLoginIDGlobal = "";
-    
+
     // Variable declaraton for assigning the new account number. 
     // Variable declared here because now it is accessaible within the whole code block
     int newAccountNumber = 0;
-    
+
     // Creating a new object to call retrievingPreviousAccountNumber method
     NewAccountNumberGeneration ang;
-    
+
     // Creating new table model for customer transaction records table in daily reports tab
     DefaultTableModel customerTransactionRecordsTableModel;
-    
+
     // Creating new table model for customer details record table in monthly reports tab
     DefaultTableModel customerDetailsRecordTableModel;
-    
+
     // Creating new table model for transaction details records table in monthly reports tab
     DefaultTableModel transactionDetailsRecordsTableModel;
-    
+
     // Creating new object to retreive current date and time
     LocalTimeAndDate ltad;
-    
+
     // Creating new object for database connection url
     DBConnection db;
-    
+
     // Creating new object to call procedures, report generating
     ReportGeneration rg;
-    
+
     // Creating new object to call procedure, receipt generating
     CustomerReceiptGeneration crg;
-    
+
     /**
      * Creates new form Teller
      */
     public Teller() { // Default constructor
         initComponents();
         date.setText(java.time.LocalDate.now().toString());
-        
+
         // Making the account number textfield in 'NEW Customer' panel not editable by the user
         txtAccountNumber.setEditable(false);
-        
+
         // Creating new object to retrieve current date and time
         ltad = new LocalTimeAndDate();
-        
+
         // Creating new object to insert account details
         anc = new NewAccountCreation();
-        
+
         // Creating a new object to call retrievingPreviousAccountNumber method
         ang = new NewAccountNumberGeneration();
-        
+
         // Creating new object to retrieve database connection url
         db = new DBConnection();
-        
+
         // Creating new object to call procedures, report generating
         rg = new ReportGeneration();
-        
+
         // Creating new object to call procedure, receipt generating
         crg = new CustomerReceiptGeneration();
-        
+
         // Setting current time
         jlbl_localTime.setText(ltad.retrieveLocalTimeWith12HourClock());
-        
+
         // Setting current date
-        jlbl_localDate.setText(ltad.retrieveLocalDate()); 
-        
+        jlbl_localDate.setText(ltad.retrieveLocalDate());
+
         // Invloving monthly report tab
         // Assigning values to month chioce  
-        cmbMonthlyReportMonth.add("");   
-        cmbMonthlyReportMonth.add("January");  
-        cmbMonthlyReportMonth.add("February");  
-        cmbMonthlyReportMonth.add("March");  
-        cmbMonthlyReportMonth.add("April"); 
+        cmbMonthlyReportMonth.add("");
+        cmbMonthlyReportMonth.add("January");
+        cmbMonthlyReportMonth.add("February");
+        cmbMonthlyReportMonth.add("March");
+        cmbMonthlyReportMonth.add("April");
         cmbMonthlyReportMonth.add("May");
-        cmbMonthlyReportMonth.add("June");  
-        cmbMonthlyReportMonth.add("July");  
-        cmbMonthlyReportMonth.add("August");  
-        cmbMonthlyReportMonth.add("September"); 
+        cmbMonthlyReportMonth.add("June");
+        cmbMonthlyReportMonth.add("July");
+        cmbMonthlyReportMonth.add("August");
+        cmbMonthlyReportMonth.add("September");
         cmbMonthlyReportMonth.add("October");
-        cmbMonthlyReportMonth.add("November"); 
+        cmbMonthlyReportMonth.add("November");
         cmbMonthlyReportMonth.add("December");
-        
+
         // Assigning table model to the customer details record table
         customerDetailsRecordTableModel = (DefaultTableModel) jtb_customerDetailsRecord.getModel();
-        
+
         // Assigning columns header name for customer details record table
         customerDetailsRecordTableModel.addColumn("Account Number");
         customerDetailsRecordTableModel.addColumn("Customer First Name:");
         customerDetailsRecordTableModel.addColumn("Customer Middle Name");
         customerDetailsRecordTableModel.addColumn("Customer Last Name");
         customerDetailsRecordTableModel.addColumn("Account Type");
-        
+
         // Assigning table model to the transaction details records table
         transactionDetailsRecordsTableModel = (DefaultTableModel) jtb_transactionDetailsRecords.getModel();
-        
+
         // Assigning columns header name for transaction details records table
         transactionDetailsRecordsTableModel.addColumn("Transaction Number");
         transactionDetailsRecordsTableModel.addColumn("Account Number");
         transactionDetailsRecordsTableModel.addColumn("Transaction Type");
         transactionDetailsRecordsTableModel.addColumn("Transaction Amount");
         transactionDetailsRecordsTableModel.addColumn("Date Time");
-        
-        
+
         // Involving daily reports tab
         // Assigning table model to the customer transaction records table
         customerTransactionRecordsTableModel = (DefaultTableModel) jtb_customerTransactionRecords.getModel();
-       
+
         // Assigning columns header name for customer transaction records table
         customerTransactionRecordsTableModel.addColumn("Account Number");
         customerTransactionRecordsTableModel.addColumn("Transaction Type");
         customerTransactionRecordsTableModel.addColumn("Account Type");
         customerTransactionRecordsTableModel.addColumn("Amount");
         customerTransactionRecordsTableModel.addColumn("Date Time");
- 
+
         // Automatic daily customer transaction report generation
         // Retrieving current date
         String localDate = ltad.retrieveLocalDate();
-        
+
         System.out.println("Date: " + localDate);
-        
+
         // Retrieving current date for SQL query, different format (yyyy-MM-dd)
         String localDateSqlQuery = ltad.retrieveLocalDateSqlQuery();
-        
+
         System.out.println("Date (SQL format): " + localDateSqlQuery);
-        
+
         // Retrieving current time only hour and minute
         String localTimeHourMin = ltad.retrieveLocalTimeHourMin();
-        
+
         // Converting localTimeHourMin to float to check for the relavent conditions
         float localTimeHourMinFloat = Float.valueOf(localTimeHourMin);
-        
+
         System.out.println("Time (Float Data Type): " + localTimeHourMinFloat);
-        
-        if( (localTimeHourMinFloat >= 00.00) & (localTimeHourMinFloat <= 23.59) ) { // Condition checking if the current time is inbetween 00.00 to 23.59
-            if ( (localTimeHourMinFloat >= 10.00) & (localTimeHourMinFloat <= 14.00)){ // Condition checking if current time is inbetween 10.00 to 14.00
-                
+
+        if ((localTimeHourMinFloat >= 00.00) & (localTimeHourMinFloat <= 23.59)) { // Condition checking if the current time is inbetween 00.00 to 23.59
+            if ((localTimeHourMinFloat >= 10.00) & (localTimeHourMinFloat <= 14.00)) { // Condition checking if current time is inbetween 10.00 to 14.00
+
                 // checking if the daily report was already generated for the same day
                 File checkFileExistence = new File("../Reports/Daily_Customer_Transaction_Record_Reports/Automatic/"
                         + "Automatic_Daily_Customer_Transaction_Records_'" + localDate + "'.pdf");
-                
+
                 boolean checkFileExistenceResult = checkFileExistence.exists();
 
                 System.out.println("Automatic Daily Report Exist: " + checkFileExistenceResult);
@@ -202,29 +201,28 @@ public class Teller extends javax.swing.JFrame {
                 if (checkFileExistenceResult == false) {
                     // Creating a new document
                     Document autoDailyCTDocument = new Document(PageSize.A4);
-                    
+
                     System.out.println("Document is created");
-                    
+
                     try {
                         // Checking if any records are available in the database for this month
                         try (Connection checkingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement checkingDataStmt = checkingDataCon.createStatement();) {
+                                Statement checkingDataStmt = checkingDataCon.createStatement();) {
 
                             // Assigning SQL query
                             String checkingDataSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction WHERE "
                                     + "convert(nvarchar(50), date_time,126) LIKE '" + localDateSqlQuery + "%' ";
-                            
+
                             // Executing SQL query
                             ResultSet checkingDataRs = checkingDataStmt.executeQuery(checkingDataSqlQuery);
-                            
-                            
+
                             //If any record data was not returned
-                            if(checkingDataRs.next() == false){
-                                
+                            if (checkingDataRs.next() == false) {
+
                                 // Assigning pathway for the document
                                 PdfWriter.getInstance(autoDailyCTDocument, new FileOutputStream("../Reports/Daily_Customer_Transaction_Record_Reports/Automatic/"
                                         + "Automatic_Daily_Customer_Transaction_Records_'" + localDate + "'.pdf"));
-                                
+
                                 autoDailyCTDocument.addAuthor("Quinn_INC");
                                 autoDailyCTDocument.addTitle("Transaction Report");
                                 autoDailyCTDocument.setMargins(10, 10, 10, 10);
@@ -251,7 +249,7 @@ public class Teller extends javax.swing.JFrame {
                                 autoCTTable.setWidthPercentage(87);
 
                                 // Creating new object for each cell in the table
-                                PdfPCell autoCTTableCell;              
+                                PdfPCell autoCTTableCell;
 
                                 // Adding font style for column headers in table
                                 Font headerStyle = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
@@ -278,7 +276,7 @@ public class Teller extends javax.swing.JFrame {
                                 autoCTTable.addCell(autoCTTableCell);
 
                                 // Adding table to document
-                                autoDailyCTDocument.add(autoCTTable);    
+                                autoDailyCTDocument.add(autoCTTable);
 
                                 // Assigning paragraph to show message in document
                                 Paragraph noRecordAvailable = new Paragraph("No Records are Available for this day");
@@ -310,13 +308,12 @@ public class Teller extends javax.swing.JFrame {
 
                                 // Adding image to the document
                                 autoDailyCTDocument.add(quinnIncFooterImage);
-                            }
-                            // If any record data was returned
-                            else{                         
+                            } // If any record data was returned
+                            else {
                                 // Assigning pathway for the document
                                 PdfWriter.getInstance(autoDailyCTDocument, new FileOutputStream("../Reports/Daily_Customer_Transaction_Record_Reports/"
                                         + "Automatic/Automatic_Daily_Customer_Transaction_Records_'" + localDate + "'.pdf"));
-                                
+
                                 autoDailyCTDocument.addAuthor("Quinn_INC");
                                 autoDailyCTDocument.addTitle("Transaction Report");
                                 autoDailyCTDocument.setMargins(10, 10, 10, 10);
@@ -343,11 +340,11 @@ public class Teller extends javax.swing.JFrame {
                                 autoCTTable.setWidthPercentage(87);
 
                                 // Creating new object for each cell in the table
-                                PdfPCell autoCTTableCell;              
+                                PdfPCell autoCTTableCell;
 
                                 // Retriving record data from database
                                 try (Connection retrievingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                                    Statement retrievingDataStmt = retrievingDataCon.createStatement();) {
+                                        Statement retrievingDataStmt = retrievingDataCon.createStatement();) {
 
                                     // Executing SQL query, uses the same SQL query as used in checkingDataSqlQuery
                                     ResultSet retrievingDataRs = retrievingDataStmt.executeQuery(checkingDataSqlQuery);
@@ -401,15 +398,14 @@ public class Teller extends javax.swing.JFrame {
 
                                     // Adding table to document
                                     autoDailyCTDocument.add(autoCTTable);
-                                } 
-                                // Error handling. Handles any SQL related errors.
+                                } // Error handling. Handles any SQL related errors.
                                 catch (SQLException SqlEx) {
                                     System.out.println("Error found: " + SqlEx);
                                     // Displaying message box showing error message
                                     JOptionPane.showMessageDialog(null,
-                                        "Error Occurred in SQL Connection",
-                                        "Automatic Daily Customer Transaction Report Generation - ERROR!",
-                                        JOptionPane.ERROR_MESSAGE);
+                                            "Error Occurred in SQL Connection",
+                                            "Automatic Daily Customer Transaction Report Generation - ERROR!",
+                                            JOptionPane.ERROR_MESSAGE);
                                 }
 
                                 // Retrieving footer image from pathway
@@ -436,55 +432,50 @@ public class Teller extends javax.swing.JFrame {
                                 // dding paragraph to the document
                                 autoDailyCTDocument.add(exportDateAndTime);
                             }
-                        }
-                        // Error handling. Handles any SQL related errors.
+                        } // Error handling. Handles any SQL related errors.
                         catch (SQLException SqlEx) {
                             System.out.println("Unable to verify data. Error found: " + SqlEx);
                             // Displaying message box showing error message
                             JOptionPane.showMessageDialog(null,
-                                "Error Occurred in SQL Connection",
-                                "Automatic Daily Customer Transaction Report Generation - ERROR!",
-                                JOptionPane.ERROR_MESSAGE);
+                                    "Error Occurred in SQL Connection",
+                                    "Automatic Daily Customer Transaction Report Generation - ERROR!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                    // Error handling. Handles any possible errors.
+                    } // Error handling. Handles any possible errors.
                     catch (Exception ExceptionEx) {
                         System.out.println("Error found: " + ExceptionEx);
                         // Displaying message box showing error message
                         JOptionPane.showMessageDialog(null,
-                            "Error Occurred in Exception",
-                            "Automatic Daily Customer Transaction Report Generation - ERROR!",
-                            JOptionPane.ERROR_MESSAGE);
-                    }
-                    finally {
+                                "Error Occurred in Exception",
+                                "Automatic Daily Customer Transaction Report Generation - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    } finally {
                         autoDailyCTDocument.close();
                         System.out.println("Document Closed");
-                    } 
+                    }
                 }
                 // Assigning string to show automate report generation status
                 lbl_status.setText("Report is Up To Date");
-            }
-            else{
+            } else {
                 // Assigning string to show automate report generation status
                 lbl_status.setText("Report Generation Pending, Awaiting Till Default Time");
             }
-        } 
-        
-        
+        }
+
         // Automatic monthly customer transaction report generation
         // retrieving current date from localhost
         String monthlylocalDate = ltad.retrieveLocalDate();
 
         System.out.println("Date: " + monthlylocalDate);
-        
+
         // retrieving current month from localhost
         String monthlylocalMonth = ltad.retrieveLocalMonth();
 
-        System.out.println("Month: " + monthlylocalMonth); 
-        
+        System.out.println("Month: " + monthlylocalMonth);
+
         // retrieving current day from localhost
         String localDay = ltad.retrieveLocalDay();
-        
+
         System.out.println("Day: " + localDay);
 
         int localDayInt = Integer.parseInt(localDay);
@@ -492,7 +483,7 @@ public class Teller extends javax.swing.JFrame {
         if ((localDayInt >= 1) & (localDayInt <= 31)) { // Condition to check if the cuurent day is inbetween 1 and 31
             if ((localDayInt >= 1) || (localDayInt <= 22)) { // Condition to check is the day is inbetween 1 and 22, this is the report generation time period
                 // Condition has two days is becasue one of these days could be a non-working day, and application won't be used, hence the report won't be generated
-                
+
                 // checking if monthly report is already generated
                 File checkFileExistence = new File("../Reports/Monthly_Customer_Transaction_Record_Reports/Automatic/"
                         + "Automatic_Monthly_Customer_Transaction_Records_'" + monthlylocalDate + "'.pdf");
@@ -502,19 +493,18 @@ public class Teller extends javax.swing.JFrame {
 
                 // If the report doesn't already exist
                 if (checkFileExistenceResult == false) {
-                    
+
                     // Creating new document
                     Document monthlyCustomerTransactionReport = new Document(PageSize.A4);
 
                     System.out.println("Document is created");
-                    
-                    
+
                     // Declaring new variable to check if there are new deposit records available for this month
                     Boolean newDepositRecordAvailability = false;
-                    
+
                     // Checking if any deposit records are available in the database for this month
                     try (Connection checkingDTransactionsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                        Statement checkingDTransactionStmt = checkingDTransactionsCon.createStatement();) {
+                            Statement checkingDTransactionStmt = checkingDTransactionsCon.createStatement();) {
 
                         // Assigning SQL query
                         String checkingDTransactionSqlQuery = "SELECT * FROM CustomerTransactionDeposit WHERE "
@@ -522,39 +512,36 @@ public class Teller extends javax.swing.JFrame {
 
                         // Executing SQL query
                         ResultSet checkingDTransactionsRs = checkingDTransactionStmt.executeQuery(checkingDTransactionSqlQuery);
-                        
+
                         System.out.println("Transactions Record Exist: " + checkingDTransactionsRs);
-                        
+
                         // If no values are returned
-                        if( checkingDTransactionsRs.next() == false ){
-                            
+                        if (checkingDTransactionsRs.next() == false) {
+
                             newDepositRecordAvailability = false;
-                            
-                        }
-                        // If any values are returned
+
+                        } // If any values are returned
                         else {
-                            
+
                             newDepositRecordAvailability = true;
-                            
+
                         }
-                    }
-                    // Error handling. Handles any SQL related errors.
+                    } // Error handling. Handles any SQL related errors.
                     catch (SQLException SqlEx) {
                         System.out.println("Error found: " + SqlEx);
                         // Displaying message box showing error message
                         JOptionPane.showMessageDialog(null,
-                            "Error Occurred in SQL Connection",
-                            "Automatic Monthly Customer Transaction Report Generation - ERROR!",
-                            JOptionPane.ERROR_MESSAGE);
-                    } 
+                                "Error Occurred in SQL Connection",
+                                "Automatic Monthly Customer Transaction Report Generation - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
 
-                    
                     // Declaring new variable to check if there are new withdrawal records available for this month
                     Boolean newWithdrawalRecordAvailability = false;
-                    
+
                     // Checking if any deposit records are available in the database for this month
                     try (Connection checkingWTransactionsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                        Statement checkingWTransactionStmt = checkingWTransactionsCon.createStatement();) {
+                            Statement checkingWTransactionStmt = checkingWTransactionsCon.createStatement();) {
 
                         // Assigning SQL query
                         String checkingWTransactionSqlQuery = "SELECT FROM CustomerTransactionWithdrawal WHERE "
@@ -562,219 +549,202 @@ public class Teller extends javax.swing.JFrame {
 
                         // Executing SQL query
                         ResultSet checkingWTransactionsRs = checkingWTransactionStmt.executeQuery(checkingWTransactionSqlQuery);
-                        
+
                         System.out.println("Transactions Record Exist: " + checkingWTransactionsRs);
-                        
+
                         // If no values are returned
-                        if( checkingWTransactionsRs.next() == false ){
-                            
+                        if (checkingWTransactionsRs.next() == false) {
+
                             newWithdrawalRecordAvailability = false;
-                            
-                        }
-                        // If any values are returned
+
+                        } // If any values are returned
                         else {
-                            
+
                             newDepositRecordAvailability = true;
-                            
+
                         }
-                    }
-                    // Error handling. Handles any SQL related errors.
+                    } // Error handling. Handles any SQL related errors.
                     catch (SQLException SqlEx) {
                         System.out.println("Error found: " + SqlEx);
                         // Displaying message box showing error message
                         JOptionPane.showMessageDialog(null,
-                            "Error Occurred in SQL Connection",
-                            "Automatic Monthly Customer Transaction Report Generation - ERROR!",
-                            JOptionPane.ERROR_MESSAGE);
-                    } 
-                    
-                    
-                    
+                                "Error Occurred in SQL Connection",
+                                "Automatic Monthly Customer Transaction Report Generation - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
                     // Checking if deposit or withdrawal records are available for this month
-                    
                     // If there are no records available
-                    if(newDepositRecordAvailability == false || newWithdrawalRecordAvailability == false){
+                    if (newDepositRecordAvailability == false || newWithdrawalRecordAvailability == false) {
                         try {
-                                // Setting pathway for new document
-                                PdfWriter.getInstance(monthlyCustomerTransactionReport, new FileOutputStream("../Reports/Monthly_Customer_Transaction_Record_Reports/Automatic/"
-                                        + "Automatic_Monthly_Customer_Transaction_Records_'" + monthlylocalDate + "'.pdf"));
-                                
-                                monthlyCustomerTransactionReport.addAuthor("Quinn_INC");
-                                monthlyCustomerTransactionReport.addTitle("Monthly Customer Transaction Report");
-                                monthlyCustomerTransactionReport.setMargins(25, 10, 10, 10);
+                            // Setting pathway for new document
+                            PdfWriter.getInstance(monthlyCustomerTransactionReport, new FileOutputStream("../Reports/Monthly_Customer_Transaction_Record_Reports/Automatic/"
+                                    + "Automatic_Monthly_Customer_Transaction_Records_'" + monthlylocalDate + "'.pdf"));
 
-                                // Opening document
-                                monthlyCustomerTransactionReport.open();
+                            monthlyCustomerTransactionReport.addAuthor("Quinn_INC");
+                            monthlyCustomerTransactionReport.addTitle("Monthly Customer Transaction Report");
+                            monthlyCustomerTransactionReport.setMargins(25, 10, 10, 10);
 
-                                System.out.println("Document is open");
+                            // Opening document
+                            monthlyCustomerTransactionReport.open();
 
-                                // Retrieving header image from pathway
-                                Image quinnIncMHeader = Image.getInstance("src/Resources/Monthly_Transaction_Report_Header_V1.jpg");
+                            System.out.println("Document is open");
 
-                                // Setting image scale to fit document
-                                quinnIncMHeader.scaleAbsolute(555f, 110f);
+                            // Retrieving header image from pathway
+                            Image quinnIncMHeader = Image.getInstance("src/Resources/Monthly_Transaction_Report_Header_V1.jpg");
 
-                                // Adding image to document
-                                monthlyCustomerTransactionReport.add(quinnIncMHeader);
+                            // Setting image scale to fit document
+                            quinnIncMHeader.scaleAbsolute(555f, 110f);
 
-                                // Assigning column width for customer details table
-                                float[] customerDetailsTableColumnWidths = {5, 7};
+                            // Adding image to document
+                            monthlyCustomerTransactionReport.add(quinnIncMHeader);
 
-                                // Creating customer details table
-                                PdfPTable customerDetailsTable = new PdfPTable(customerDetailsTableColumnWidths);
+                            // Assigning column width for customer details table
+                            float[] customerDetailsTableColumnWidths = {5, 7};
 
-                                // Setting table width
-                                customerDetailsTable.setWidthPercentage(60);
+                            // Creating customer details table
+                            PdfPTable customerDetailsTable = new PdfPTable(customerDetailsTableColumnWidths);
 
-                                // Setting customer details table to left alignment
-                                customerDetailsTable.setHorizontalAlignment(Element.ALIGN_LEFT);
+                            // Setting table width
+                            customerDetailsTable.setWidthPercentage(60);
 
-                                // Setting space before table placement
-                                customerDetailsTable.setSpacingBefore(10);
+                            // Setting customer details table to left alignment
+                            customerDetailsTable.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-                                // Setting space after table placement
-                                customerDetailsTable.setSpacingAfter(10);
+                            // Setting space before table placement
+                            customerDetailsTable.setSpacingBefore(10);
 
-                                // Creating table cells
-                                PdfPCell customerDetailsTableCell;
-                                
+                            // Setting space after table placement
+                            customerDetailsTable.setSpacingAfter(10);
 
-                                // Setting column header style
-                                Font headerStyle = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
+                            // Creating table cells
+                            PdfPCell customerDetailsTableCell;
 
-                                // Customer details table column header
-                                String accountNumber = "ACCOUNT NUMBER";
-                                customerDetailsTableCell = new PdfPCell(new Phrase(accountNumber, headerStyle));
-                                customerDetailsTable.addCell(customerDetailsTableCell);
-                                
-                                // Customer details record data
-                                String accountNumberNotFound = " No Records are Available for this Month ";
-                                customerDetailsTableCell = new PdfPCell(new Phrase(accountNumberNotFound));
-                                customerDetailsTable.addCell(customerDetailsTableCell);
-                                
+                            // Setting column header style
+                            Font headerStyle = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
 
-                                // Customer details table column header
-                                String customerName = "CUSTOMER NAME";
-                                customerDetailsTableCell = new PdfPCell(new Phrase(customerName, headerStyle));
-                                customerDetailsTable.addCell(customerDetailsTableCell);
-                                
-                                // Customer details record data
-                                String customerNameNotFound = " No Records are Available for this Month ";
-                                customerDetailsTableCell = new PdfPCell(new Phrase(customerNameNotFound));
-                                customerDetailsTable.addCell(customerDetailsTableCell);
-                                
+                            // Customer details table column header
+                            String accountNumber = "ACCOUNT NUMBER";
+                            customerDetailsTableCell = new PdfPCell(new Phrase(accountNumber, headerStyle));
+                            customerDetailsTable.addCell(customerDetailsTableCell);
 
-                                // Customer details table column header
-                                String accountType = "ACCOUNT TYPE";
-                                customerDetailsTableCell = new PdfPCell(new Phrase(accountType, headerStyle));
-                                customerDetailsTable.addCell(customerDetailsTableCell);
+                            // Customer details record data
+                            String accountNumberNotFound = " No Records are Available for this Month ";
+                            customerDetailsTableCell = new PdfPCell(new Phrase(accountNumberNotFound));
+                            customerDetailsTable.addCell(customerDetailsTableCell);
 
-                                // Customer details record data
-                                String accountTypeNotFound = " No Records are Available for this Month ";
-                                customerDetailsTableCell = new PdfPCell(new Phrase(accountTypeNotFound));
-                                customerDetailsTable.addCell(customerDetailsTableCell);
-                                
-                                
-                                
-                                // Adding customer details table to document 
-                                monthlyCustomerTransactionReport.add(customerDetailsTable);                           
+                            // Customer details table column header
+                            String customerName = "CUSTOMER NAME";
+                            customerDetailsTableCell = new PdfPCell(new Phrase(customerName, headerStyle));
+                            customerDetailsTable.addCell(customerDetailsTableCell);
 
-                                System.out.println("Customer Details Table Complete");
+                            // Customer details record data
+                            String customerNameNotFound = " No Records are Available for this Month ";
+                            customerDetailsTableCell = new PdfPCell(new Phrase(customerNameNotFound));
+                            customerDetailsTable.addCell(customerDetailsTableCell);
 
+                            // Customer details table column header
+                            String accountType = "ACCOUNT TYPE";
+                            customerDetailsTableCell = new PdfPCell(new Phrase(accountType, headerStyle));
+                            customerDetailsTable.addCell(customerDetailsTableCell);
 
-                                // Assigning column widths for transaction details table
-                                float[] transactionDetailsTableColumnWidths = {6, 8, 7, 8};
+                            // Customer details record data
+                            String accountTypeNotFound = " No Records are Available for this Month ";
+                            customerDetailsTableCell = new PdfPCell(new Phrase(accountTypeNotFound));
+                            customerDetailsTable.addCell(customerDetailsTableCell);
 
-                                // Creating transaction details table
-                                PdfPTable transactionDetailsTable = new PdfPTable(transactionDetailsTableColumnWidths);
+                            // Adding customer details table to document 
+                            monthlyCustomerTransactionReport.add(customerDetailsTable);
 
-                                // Setting table width
-                                transactionDetailsTable.setWidthPercentage(87);
+                            System.out.println("Customer Details Table Complete");
 
-                                // Setting space after table placement
-                                transactionDetailsTable.setSpacingAfter(5);
+                            // Assigning column widths for transaction details table
+                            float[] transactionDetailsTableColumnWidths = {6, 8, 7, 8};
 
-                                // Creating table cells
-                                PdfPCell transactionDetailsTableCell;
+                            // Creating transaction details table
+                            PdfPTable transactionDetailsTable = new PdfPTable(transactionDetailsTableColumnWidths);
 
-                                // Creating column headers
-                                String transactionNumber = "TRANSACTION NUMBER";
-                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionNumber, headerStyle));
-                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+                            // Setting table width
+                            transactionDetailsTable.setWidthPercentage(87);
 
-                                String transactionType = "TRANSACTION TYPE";
-                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionType, headerStyle));
-                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+                            // Setting space after table placement
+                            transactionDetailsTable.setSpacingAfter(5);
 
-                                String transactionAmount = "TRANSACTION AMOUNT";
-                                transactionDetailsTableCell = new PdfPCell(new Phrase(transactionAmount, headerStyle));
-                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+                            // Creating table cells
+                            PdfPCell transactionDetailsTableCell;
 
-                                String dateTime = "DATE TIME";
-                                transactionDetailsTableCell = new PdfPCell(new Phrase(dateTime, headerStyle));
-                                transactionDetailsTable.addCell(transactionDetailsTableCell);
+                            // Creating column headers
+                            String transactionNumber = "TRANSACTION NUMBER";
+                            transactionDetailsTableCell = new PdfPCell(new Phrase(transactionNumber, headerStyle));
+                            transactionDetailsTable.addCell(transactionDetailsTableCell);
 
-                                // Adding transaction details table to document
-                                monthlyCustomerTransactionReport.add(transactionDetailsTable);
-                                
-                                
-                                // Assigning paragraph to show message in document
-                                Paragraph noRecordAvailable = new Paragraph("No Records are Available for this Month");
+                            String transactionType = "TRANSACTION TYPE";
+                            transactionDetailsTableCell = new PdfPCell(new Phrase(transactionType, headerStyle));
+                            transactionDetailsTable.addCell(transactionDetailsTableCell);
 
-                                noRecordAvailable.setAlignment(Element.ALIGN_CENTER);
-                                
-                                // Assigning paragraph to show message in document
-                                monthlyCustomerTransactionReport.add(noRecordAvailable);
-                                
-                                
+                            String transactionAmount = "TRANSACTION AMOUNT";
+                            transactionDetailsTableCell = new PdfPCell(new Phrase(transactionAmount, headerStyle));
+                            transactionDetailsTable.addCell(transactionDetailsTableCell);
 
-                                Paragraph horizontalLine = new Paragraph("-----------------------------------------------------------------"
-                                        + "-------------------------------------------------------------------");
+                            String dateTime = "DATE TIME";
+                            transactionDetailsTableCell = new PdfPCell(new Phrase(dateTime, headerStyle));
+                            transactionDetailsTable.addCell(transactionDetailsTableCell);
 
-                                monthlyCustomerTransactionReport.add(horizontalLine);
+                            // Adding transaction details table to document
+                            monthlyCustomerTransactionReport.add(transactionDetailsTable);
 
-                                System.out.println("Transaction Details Table Complete");
-                                    
-                                // Retrieving footer image from pathway
-                                Image quinnIncMFooter = Image.getInstance("src/Resources/Customer_Transaction_Report_Footer_V1.jpg");
+                            // Assigning paragraph to show message in document
+                            Paragraph noRecordAvailable = new Paragraph("No Records are Available for this Month");
 
-                                // Setting image scale to fit document
-                                quinnIncMFooter.scaleAbsolute(575f, 40f);
+                            noRecordAvailable.setAlignment(Element.ALIGN_CENTER);
 
-                                // Setting image placement in document
-                                quinnIncMFooter.setAbsolutePosition(10f, 10f);
+                            // Assigning paragraph to show message in document
+                            monthlyCustomerTransactionReport.add(noRecordAvailable);
 
-                                // Adding image to document
-                                monthlyCustomerTransactionReport.add(quinnIncMFooter);
+                            Paragraph horizontalLine = new Paragraph("-----------------------------------------------------------------"
+                                    + "-------------------------------------------------------------------");
 
-                                // Retrieving current date and time, setting as report generation date and time 
-                                Paragraph reportGeneration = new Paragraph("Report Generated Period: " + ltad.retrieveLocalTimeAndDate());
+                            monthlyCustomerTransactionReport.add(horizontalLine);
 
-                                // Setting parapgraph to center alignment of the document
-                                reportGeneration.setAlignment(Element.ALIGN_CENTER);
+                            System.out.println("Transaction Details Table Complete");
 
-                                // Adding paragraph to document
-                                monthlyCustomerTransactionReport.add(reportGeneration);
+                            // Retrieving footer image from pathway
+                            Image quinnIncMFooter = Image.getInstance("src/Resources/Customer_Transaction_Report_Footer_V1.jpg");
 
-                                // Closing document
-                                monthlyCustomerTransactionReport.close();
+                            // Setting image scale to fit document
+                            quinnIncMFooter.scaleAbsolute(575f, 40f);
 
-                                System.out.println("Document is closed");  
-                            }
-                            // Error handling. Catches any possible errors
-                            catch (Exception ExceptionEx) {
-                                System.out.println("Error found: " + ExceptionEx);
-                                // Displaying message box showing error message
-                                JOptionPane.showMessageDialog(null,
+                            // Setting image placement in document
+                            quinnIncMFooter.setAbsolutePosition(10f, 10f);
+
+                            // Adding image to document
+                            monthlyCustomerTransactionReport.add(quinnIncMFooter);
+
+                            // Retrieving current date and time, setting as report generation date and time 
+                            Paragraph reportGeneration = new Paragraph("Report Generated Period: " + ltad.retrieveLocalTimeAndDate());
+
+                            // Setting parapgraph to center alignment of the document
+                            reportGeneration.setAlignment(Element.ALIGN_CENTER);
+
+                            // Adding paragraph to document
+                            monthlyCustomerTransactionReport.add(reportGeneration);
+
+                            // Closing document
+                            monthlyCustomerTransactionReport.close();
+
+                            System.out.println("Document is closed");
+                        } // Error handling. Catches any possible errors
+                        catch (Exception ExceptionEx) {
+                            System.out.println("Error found: " + ExceptionEx);
+                            // Displaying message box showing error message
+                            JOptionPane.showMessageDialog(null,
                                     "Error Occurred in Exception",
                                     "Automatic Monthly Customer Transaction Report Generation - ERROR!",
                                     JOptionPane.ERROR_MESSAGE);
-                            }
-                    }
-                    
-                    // If there are records available
-                    else if(newDepositRecordAvailability == true || newWithdrawalRecordAvailability == true){
-                    
+                        }
+                    } // If there are records available
+                    else if (newDepositRecordAvailability == true || newWithdrawalRecordAvailability == true) {
+
                         try {
                             // Setting pathway for new document
                             PdfWriter.getInstance(monthlyCustomerTransactionReport, new FileOutputStream("../Reports/Monthly_Customer_Transaction_Record_Reports/"
@@ -874,15 +844,14 @@ public class Teller extends javax.swing.JFrame {
                                             customerDetailsTableCell = new PdfPCell(new Phrase(customerName));
                                             customerDetailsTable.addCell(customerDetailsTableCell);
                                         }
-                                    } 
-                                    // Error handling. Handles any SQL related errors.
+                                    } // Error handling. Handles any SQL related errors.
                                     catch (SQLException SqlEx) {
                                         System.out.println("Error found: " + SqlEx);
                                         // Displaying message box showing error message
                                         JOptionPane.showMessageDialog(null,
-                                            "Error Occurred in SQL Connection",
-                                            "Automatic Monthly Customer Transaction Report Generation - ERROR!",
-                                            JOptionPane.ERROR_MESSAGE);
+                                                "Error Occurred in SQL Connection",
+                                                "Automatic Monthly Customer Transaction Report Generation - ERROR!",
+                                                JOptionPane.ERROR_MESSAGE);
                                     }
 
                                     // Customer details table column header
@@ -908,22 +877,20 @@ public class Teller extends javax.swing.JFrame {
                                             customerDetailsTableCell = new PdfPCell(new Phrase(accountType));
                                             customerDetailsTable.addCell(customerDetailsTableCell);
                                         }
-                                    } 
-                                    // Error handling. Handles any SQL related errors.
+                                    } // Error handling. Handles any SQL related errors.
                                     catch (SQLException SqlEx) {
                                         System.out.println("Error found: " + SqlEx);
                                         // Displaying message box showing error message
                                         JOptionPane.showMessageDialog(null,
-                                            "Error Occurred in SQL Connection",
-                                            "Automatic Monthly Customer Transaction Report Generation - ERROR!",
-                                            JOptionPane.ERROR_MESSAGE);
+                                                "Error Occurred in SQL Connection",
+                                                "Automatic Monthly Customer Transaction Report Generation - ERROR!",
+                                                JOptionPane.ERROR_MESSAGE);
                                     }
 
                                     // Adding customer details table to document 
                                     monthlyCustomerTransactionReport.add(customerDetailsTable);
 
                                     System.out.println("Customer Details Table Complete");
-
 
                                     // Assigning column widths for transaction details table
                                     float[] transactionDetailsTableColumnWidths = {6, 8, 7, 8};
@@ -988,15 +955,14 @@ public class Teller extends javax.swing.JFrame {
                                             transactionDetailsTableCell = new PdfPCell(new Phrase(dateTime));
                                             transactionDetailsTable.addCell(transactionDetailsTableCell);
                                         }
-                                    } 
-                                    // Error handling. Handles any SQL related errors.
+                                    } // Error handling. Handles any SQL related errors.
                                     catch (SQLException SqlEx) {
                                         System.out.println("Error found: " + SqlEx);
                                         // Displaying message box showing error message
                                         JOptionPane.showMessageDialog(null,
-                                            "Error Occurred in SQL Connection",
-                                            "Automatic Monthly Customer Transaction Report Generation - ERROR!",
-                                            JOptionPane.ERROR_MESSAGE);
+                                                "Error Occurred in SQL Connection",
+                                                "Automatic Monthly Customer Transaction Report Generation - ERROR!",
+                                                JOptionPane.ERROR_MESSAGE);
                                     }
 
                                     // Adding transaction details table to document
@@ -1035,42 +1001,38 @@ public class Teller extends javax.swing.JFrame {
                                 monthlyCustomerTransactionReport.close();
 
                                 System.out.println("Document is closed");
-                            } 
-                            // Error handling. Handles any SQL related errors.
+                            } // Error handling. Handles any SQL related errors.
                             catch (SQLException SqlEx) {
                                 System.out.println("Error found: " + SqlEx);
                                 // Displaying message box showing error message
                                 JOptionPane.showMessageDialog(null,
-                                    "Error Occurred in SQL Connection",
-                                    "Automatic Monthly Customer Transaction Report Generation - ERROR!",
-                                    JOptionPane.ERROR_MESSAGE);
+                                        "Error Occurred in SQL Connection",
+                                        "Automatic Monthly Customer Transaction Report Generation - ERROR!",
+                                        JOptionPane.ERROR_MESSAGE);
                             }
-                        } 
-                        // Error handling. Handles any possible errors.
+                        } // Error handling. Handles any possible errors.
                         catch (Exception ExceptionEx) {
                             System.out.println("Error found: " + ExceptionEx);
                             // Displaying message box showing error message
                             JOptionPane.showMessageDialog(null,
-                                "Error Occurred in Exception",
-                                "Automatic Monthly Customer Transaction Report Generation - ERROR!",
-                                JOptionPane.ERROR_MESSAGE);
+                                    "Error Occurred in Exception",
+                                    "Automatic Monthly Customer Transaction Report Generation - ERROR!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
-                                                
+
                     }
-                    
+
                 }
                 // Assigning string to show automate report generation status
                 lbl_mstatus.setText("Report is Up To Date");
-            }
-            else{
+            } else {
                 // Assigning string to show automate report generation status
                 lbl_mstatus.setText("Report Generation Pending, Awaiting Till Default Time");
             }
         }
     }
-    
-    
-    public Teller(String systemLoginIDTeller){ // Parameterized constructor, used to pass variable values among classes
+
+    public Teller(String systemLoginIDTeller) { // Parameterized constructor, used to pass variable values among classes
         this(); // This statement allows for the default constructor to run
         systemLoginIDGlobal = systemLoginIDTeller;
     }
@@ -1237,6 +1199,7 @@ public class Teller extends javax.swing.JFrame {
         lblCityValidator = new javax.swing.JLabel();
         lblInitialDepositValidator = new javax.swing.JLabel();
         txtFName = new javax.swing.JTextField();
+        cardrequest = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -2060,7 +2023,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2277,7 +2240,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnl1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2542,6 +2505,14 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
+        cardrequest.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        cardrequest.setText("Request Debit Card");
+        cardrequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cardrequestActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout nCustomer_pnlLayout = new javax.swing.GroupLayout(nCustomer_pnl);
         nCustomer_pnl.setLayout(nCustomer_pnlLayout);
         nCustomer_pnlLayout.setHorizontalGroup(
@@ -2581,7 +2552,7 @@ public class Teller extends javax.swing.JFrame {
                                                 .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(lblImportantAsterisk11, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 1, Short.MAX_VALUE))
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                         .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(76, 76, 76)
@@ -2595,9 +2566,7 @@ public class Teller extends javax.swing.JFrame {
                                         .addComponent(lblPhoneNumber2)
                                         .addGap(18, 18, 18)
                                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                                .addComponent(lblPhoneNumber2Validator)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(lblPhoneNumber2Validator)
                                             .addComponent(txtPhoneNumber2))))
                                 .addGap(160, 160, 160))
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
@@ -2648,14 +2617,6 @@ public class Teller extends javax.swing.JFrame {
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnGenerateAccountNumber)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblImportantAsterisk8, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                         .addComponent(lblAccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2670,7 +2631,18 @@ public class Teller extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblImportantAsterisk7, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblImportantAsterisk6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(lblImportantAsterisk6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cardrequest)
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnGenerateAccountNumber)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblImportantAsterisk8, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2678,13 +2650,13 @@ public class Teller extends javax.swing.JFrame {
                                 .addComponent(btnReset)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(FName_Lbl)
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addComponent(lblAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblImportantAsterisk10, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(FName_Lbl))
+                                .addComponent(lblImportantAsterisk10, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         nCustomer_pnlLayout.setVerticalGroup(
@@ -2769,44 +2741,7 @@ public class Teller extends javax.swing.JFrame {
                                 .addComponent(lblImportantAsterisk4))
                             .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblEmailAddress1)
-                                .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEmailAddress1Validator)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEmailAddress2)
-                            .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEmailAddress2Validator)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblPhoneNumber1)
-                                    .addComponent(txtPhoneNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblImportantAsterisk5)
-                                .addGap(14, 14, 14)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPhoneNumber1Validator)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPhoneNumber2)
-                            .addComponent(txtPhoneNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPhoneNumber2Validator)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblLaneAddress)
-                                    .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                                .addComponent(lblImportantAsterisk11)
-                                .addGap(19, 19, 19)))
-                        .addComponent(lblLaneAddressValidator))
+                                .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2814,6 +2749,43 @@ public class Teller extends javax.swing.JFrame {
                             .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblAccountStatus)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEmailAddress1Validator)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEmailAddress2)
+                    .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardrequest))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEmailAddress2Validator)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPhoneNumber1)
+                            .addComponent(txtPhoneNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblImportantAsterisk5)
+                        .addGap(14, 14, 14)))
+                .addComponent(lblPhoneNumber1Validator)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPhoneNumber2)
+                    .addComponent(txtPhoneNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPhoneNumber2Validator)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblLaneAddress)
+                            .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                        .addComponent(lblImportantAsterisk11)
+                        .addGap(19, 19, 19)))
+                .addComponent(lblLaneAddressValidator)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
@@ -2828,7 +2800,7 @@ public class Teller extends javax.swing.JFrame {
                             .addComponent(lblCity))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCityValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -3083,7 +3055,7 @@ public class Teller extends javax.swing.JFrame {
 
     private void jMenu2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseEntered
         // TODO add your handling code here:
-      
+
     }//GEN-LAST:event_jMenu2MouseEntered
 
     private void DepositBonusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DepositBonusMouseEntered
@@ -3108,7 +3080,7 @@ public class Teller extends javax.swing.JFrame {
 
     private void jMenuItem2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseEntered
         // TODO add your handling code here:
-          jMenuItem2.setToolTipText("Click to Logout the System");
+        jMenuItem2.setToolTipText("Click to Logout the System");
     }//GEN-LAST:event_jMenuItem2MouseEntered
 
     private void ClearSA1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClearSA1MouseEntered
@@ -3118,7 +3090,7 @@ public class Teller extends javax.swing.JFrame {
 
     private void CheckSA1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckSA1MouseEntered
         // TODO add your handling code here:
-         CheckSA1.setToolTipText("Query Bank Systems for Records.");
+        CheckSA1.setToolTipText("Query Bank Systems for Records.");
     }//GEN-LAST:event_CheckSA1MouseEntered
 
     private void FetchAcc_BtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FetchAcc_BtnMouseEntered
@@ -3141,10 +3113,10 @@ public class Teller extends javax.swing.JFrame {
 
         // Removing all the exiting records in the customer transaction table
         int ctrCountRemove = customerTransactionRecordsTableModel.getRowCount();
-        for (int i = ctrCountRemove - 1; i >= 0 ; i--) {
+        for (int i = ctrCountRemove - 1; i >= 0; i--) {
             customerTransactionRecordsTableModel.removeRow(i);
         }
-        
+
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_clearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_clearMouseEntered
@@ -3160,7 +3132,7 @@ public class Teller extends javax.swing.JFrame {
             DateFormat retrievingSelectedDateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String selectedDate = retrievingSelectedDateFormat.format(retrievingSelectedDate);
             System.out.println("Selected Date: " + selectedDate);
-            
+
             // Retrieving user selected date
             Date retrievingSelectedDateSql = jdp_selectDate.getDate();
             DateFormat retrievingSelectedDateSqlFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -3169,31 +3141,30 @@ public class Teller extends javax.swing.JFrame {
 
             // Checking if any any records are available in the database from the selected date
             try (Connection verificationCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                Statement verificationStmt = verificationCon.createStatement();) {
+                    Statement verificationStmt = verificationCon.createStatement();) {
 
                 // Assigning SQL query
                 String verificationSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction "
-                + "WHERE convert(nvarchar(50), date_time,126) LIKE '" + selectedDateSql + "%' ";
+                        + "WHERE convert(nvarchar(50), date_time,126) LIKE '" + selectedDateSql + "%' ";
 
                 // Executing SQL query
                 ResultSet verificationResult = verificationStmt.executeQuery(verificationSqlQuery);
 
                 // Checking if any results were returned
-                if(verificationResult.next() == false){
+                if (verificationResult.next() == false) {
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "No records are available in the database for the selected date."
-                        + "\nPlease select a different date",
-                        "ERROR !",
-                        JOptionPane.ERROR_MESSAGE);
+                            "No records are available in the database for the selected date."
+                            + "\nPlease select a different date",
+                            "ERROR !",
+                            JOptionPane.ERROR_MESSAGE);
                     System.out.println("No Records found in Database for Selected Date");
-                }
-                else{
+                } else {
                     // Retrieving records from database and inserting into table
-                    try{
+                    try {
                         // Removing all the exiting records in the customer transaction table and repopulating with new records
                         int ctrCountRemove = customerTransactionRecordsTableModel.getRowCount();
-                        for (int i = ctrCountRemove - 1; i >= 0 ; i--) {
+                        for (int i = ctrCountRemove - 1; i >= 0; i--) {
                             customerTransactionRecordsTableModel.removeRow(i);
                         }
 
@@ -3201,31 +3172,28 @@ public class Teller extends javax.swing.JFrame {
 
                         // Retrieving records from the database for the selected date
                         try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
+                                Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
 
                             // Executing SQL query
                             ResultSet retrieveCTRResult = retrieveCTRstmt.executeQuery(verificationSqlQuery);
 
                             // Creating new table rows and inserting record data into them
-                            while(retrieveCTRResult.next()){
-                                customerTransactionRecordsTableModel.insertRow(customerTransactionRecordsTableModel.getRowCount(), new Object[]{retrieveCTRResult.getString(1), 
+                            while (retrieveCTRResult.next()) {
+                                customerTransactionRecordsTableModel.insertRow(customerTransactionRecordsTableModel.getRowCount(), new Object[]{retrieveCTRResult.getString(1),
                                     retrieveCTRResult.getString(2), retrieveCTRResult.getString(3), retrieveCTRResult.getString(4), retrieveCTRResult.getString(5)});
                             }
-                        }
-                        // Error handling. Handles any SQL related errors.
-                        catch (SQLException SqlEx)
-                        {
+                        } // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                         }
-                    }
-                    // Error handling. Checking for index out of range in array when removing the exisitng records from the table
-                    catch(ArrayIndexOutOfBoundsException ctrRecordsRemovalEx){
+                    } // Error handling. Checking for index out of range in array when removing the exisitng records from the table
+                    catch (ArrayIndexOutOfBoundsException ctrRecordsRemovalEx) {
                         System.out.println("Error: " + ctrRecordsRemovalEx);
                     }
 
                     // Message box to verify if the user wants to generate report according to the data shown in the table
                     int userChoice = JOptionPane.showConfirmDialog(null, "Report will be generated according to data shown in the table."
-                        + "\nDo you want to continue? ", "Verification", JOptionPane.YES_NO_OPTION);
+                            + "\nDo you want to continue? ", "Verification", JOptionPane.YES_NO_OPTION);
 
                     // If uers select 'Yes' option
                     if (userChoice == 0) {
@@ -3238,13 +3206,13 @@ public class Teller extends javax.swing.JFrame {
 
                         // If a report is already existing with the same filename
                         if (checkFileExistenceResult == true) {
-                            
+
                             System.out.println("Manual Daily Customer Transaction Report is already created for this day");
-                            
+
                             // Message box to verify if the user wants to generate report according to the data shown in the table
                             int checkFileExistenceUserChoice = JOptionPane.showConfirmDialog(null, "Manual Daily Customer Transaction Report was already generated for this day."
-                                + "\nDo you want to continue?  (This action will overwrite the exisitng report)", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                            
+                                    + "\nDo you want to continue?  (This action will overwrite the exisitng report)", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
                             // If the user selects 'Yes' option
                             if (checkFileExistenceUserChoice == 0) {
                                 // Report generation if user selectes 'Yes'
@@ -3252,26 +3220,24 @@ public class Teller extends javax.swing.JFrame {
                                 // The implementation is placed in another class, becuase the same implementation will repeat twice. 
                                 // Without repeating the same procedure twice we have implemented the procedure into a diffenent class and called it twice.
                                 String reportGenerationStatus = rg.generateManualDailyCTReport(selectedDate, selectedDateSql);
-                                
+
                                 System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);
-                                
+
                                 // Automatically opening the PDF document after generation in user's default PDF opening application
                                 // Checks if auto preview report check box is selected
-                                if(jcb_autoPreviewReport.isSelected()){
+                                if (jcb_autoPreviewReport.isSelected()) {
                                     // Opening PDF document
                                     File report = new File("../Reports/Daily_Customer_Transaction_Record_Reports/Manual/Manual_Daily_Customer_Transaction_Records_'" + selectedDate + "'.pdf");
                                     try {
                                         Desktop.getDesktop().open(report);
-                                    } 
-                                    // Error handling. Handles any data input and output errors.
+                                    } // Error handling. Handles any data input and output errors.
                                     catch (IOException IoEx) {
                                         Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
                                     }
                                 }
                             }
-                        }
-                        // If there is no report already exisitng
-                        else{
+                        } // If there is no report already exisitng
+                        else {
                             // Report generation if a report with same filename doesn't exist
                             // Calling method to generate manual daily report
                             // The implementation is placed in another class, becuase the same implementation will repeat twice. 
@@ -3282,13 +3248,12 @@ public class Teller extends javax.swing.JFrame {
 
                             // Automatically opening the PDF document after generation in user's default PDF opening application
                             // Checks if auto preview report check box is selected
-                            if(jcb_autoPreviewReport.isSelected()){
+                            if (jcb_autoPreviewReport.isSelected()) {
                                 // Opening PDF document
                                 File report = new File("../Reports/Daily_Customer_Transaction_Record_Reports/Manual/Manual_Daily_Customer_Transaction_Records_'" + selectedDate + "'.pdf");
                                 try {
                                     Desktop.getDesktop().open(report);
-                                } 
-                                // Error handling. Handles any data input and output errors.
+                                } // Error handling. Handles any data input and output errors.
                                 catch (IOException IoEx) {
                                     Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
                                 }
@@ -3296,19 +3261,17 @@ public class Teller extends javax.swing.JFrame {
                         }
                     }
                 }
-            }
-            // Error handling. Handles any SQL related errors.
+            } // Error handling. Handles any SQL related errors.
             catch (SQLException SqlEx) {
                 System.out.println("Error found: " + SqlEx);
             }
-        }
-        // Error handling. Checking if a date is selected before user clicks on 'Genearate' button
+        } // Error handling. Checking if a date is selected before user clicks on 'Genearate' button
         catch (NullPointerException NullValueEx) {
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Date not selected. Please select a date",
-                "ERROR !",
-                JOptionPane.ERROR_MESSAGE);
+                    "Date not selected. Please select a date",
+                    "ERROR !",
+                    JOptionPane.ERROR_MESSAGE);
             System.out.println("Date Not Selected. Error: " + NullValueEx);
         }
     }//GEN-LAST:event_btn_generateReportActionPerformed
@@ -3316,11 +3279,11 @@ public class Teller extends javax.swing.JFrame {
     private void btn_retrieveRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retrieveRecordsActionPerformed
 
         // Retrieving daily customer transaction records from database source code
-        try{ // Checking if the user has selected a date from the datepicker
-            try{
+        try { // Checking if the user has selected a date from the datepicker
+            try {
                 // Removing all the exiting records in the customer transaction table and repopulating with new records
                 int ctrCountRemove = customerTransactionRecordsTableModel.getRowCount();
-                for (int i = ctrCountRemove - 1; i >= 0 ; i--) {
+                for (int i = ctrCountRemove - 1; i >= 0; i--) {
                     customerTransactionRecordsTableModel.removeRow(i);
                 }
 
@@ -3333,7 +3296,7 @@ public class Teller extends javax.swing.JFrame {
 
                 //checking if there are any recrds in the database for the selected date
                 try (Connection checkingCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    Statement checkingCTRstmt = checkingCTRCon.createStatement();) {
+                        Statement checkingCTRstmt = checkingCTRCon.createStatement();) {
 
                     // SQL query to retrieve relavent record data
                     String checkingCTRSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction WHERE "
@@ -3343,101 +3306,93 @@ public class Teller extends javax.swing.JFrame {
                     ResultSet checkingCTRResult = checkingCTRstmt.executeQuery(checkingCTRSqlQuery);
 
                     // Checking if any values were returned
-                    if(checkingCTRResult.next() == false){
+                    if (checkingCTRResult.next() == false) {
                         // Displaying message box showing error message
                         JOptionPane.showMessageDialog(null,
-                            "No records are available in the database for the selected date."
-                            + "\nPlease select a different date",
-                            "ERROR !",
-                            JOptionPane.ERROR_MESSAGE);
+                                "No records are available in the database for the selected date."
+                                + "\nPlease select a different date",
+                                "ERROR !",
+                                JOptionPane.ERROR_MESSAGE);
                         System.out.println("No Records found in Database for Selected Date");
-                    }
-                    // If values were returned
-                    else{
+                    } // If values were returned
+                    else {
                         // Retriving record data from the database for the selected date and inserting into table
                         try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
+                                Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
 
                             // Executing SQL query
                             ResultSet retrieveCTRResult = retrieveCTRstmt.executeQuery(checkingCTRSqlQuery);
 
                             // Creating new table rows and inserting record data into them
-                            while(retrieveCTRResult.next()){
+                            while (retrieveCTRResult.next()) {
                                 customerTransactionRecordsTableModel.insertRow(customerTransactionRecordsTableModel.getRowCount(), new Object[]{retrieveCTRResult.getString(1),
                                     retrieveCTRResult.getString(2), retrieveCTRResult.getString(3), retrieveCTRResult.getString(4), retrieveCTRResult.getString(5)});
                             }
 
                             // Displaying message box showing confirmation message
                             JOptionPane.showMessageDialog(null,
-                                "Customer Tranasaction Records for Selected Date are shown in table below. "
-                                + "\n Please verify records and click on 'Generate Report' button to produce report",
-                                "Record Retrieval Successful",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        }
-                        // Error handling. Handles any SQL related errors.
-                        catch (SQLException SqlEx)
-                        {
+                                    "Customer Tranasaction Records for Selected Date are shown in table below. "
+                                    + "\n Please verify records and click on 'Generate Report' button to produce report",
+                                    "Record Retrieval Successful",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                        } // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                         }
                     }
-                }
-                // Error handling. Handles any SQL related errors.
-                catch (SQLException SqlEx)
-                {
+                } // Error handling. Handles any SQL related errors.
+                catch (SQLException SqlEx) {
                     System.out.println("Error found: " + SqlEx);
                 }
-            }
-            // Error handling. Checking for index out of range in array when removing the exisitng records from the table
-            catch(ArrayIndexOutOfBoundsException ctrRecordsRemovalEx){
+            } // Error handling. Checking for index out of range in array when removing the exisitng records from the table
+            catch (ArrayIndexOutOfBoundsException ctrRecordsRemovalEx) {
                 System.out.println("Error: " + ctrRecordsRemovalEx);
             }
-        }
-        // Error handling. Checking if a date is selected before user clicks on 'Retrieve Records' button
+        } // Error handling. Checking if a date is selected before user clicks on 'Retrieve Records' button
         catch (NullPointerException NullValueEx) {
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Date not selected. Please select a date",
-                "ERROR !",
-                JOptionPane.ERROR_MESSAGE);
+                    "Date not selected. Please select a date",
+                    "ERROR !",
+                    JOptionPane.ERROR_MESSAGE);
             System.out.println("Date Not Selected. Error: " + NullValueEx);
         }
     }//GEN-LAST:event_btn_retrieveRecordsActionPerformed
 
     private void btn_monthlyRetrieveRecordsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_monthlyRetrieveRecordsActionPerformed
-        
+
         System.out.println("User Selected Month (Default Item Value): " + cmbMonthlyReportMonth.getSelectedItem());
         System.out.println("User Selected Month (Default Index Value): " + cmbMonthlyReportMonth.getSelectedIndex());
-        
+
         // Record data retrieval for customer details table
-        try{
+        try {
             // Removing any exisitng records from customer details table
             int existingRowsCustomerDetailsTable = customerDetailsRecordTableModel.getRowCount();
-            for (int i = existingRowsCustomerDetailsTable - 1; i >= 0 ; i--) {
+            for (int i = existingRowsCustomerDetailsTable - 1; i >= 0; i--) {
                 customerDetailsRecordTableModel.removeRow(i);
             }
-            
+
             // Removing any exisitng records from transaction details table
             int existingRowsTransactionDetailsTable = transactionDetailsRecordsTableModel.getRowCount();
-            for (int i = existingRowsTransactionDetailsTable - 1; i >= 0 ; i--) {
+            for (int i = existingRowsTransactionDetailsTable - 1; i >= 0; i--) {
                 transactionDetailsRecordsTableModel.removeRow(i);
             }
 
-            if( cmbMonthlyReportMonth.getSelectedIndex() == 0 ){ //checks if the user has selected a month
+            if (cmbMonthlyReportMonth.getSelectedIndex() == 0) { //checks if the user has selected a month
                 // Displaying message box showing error message
                 JOptionPane.showMessageDialog(null,
-                    "Month is not selected. Please select a month.",
-                    "ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
+                        "Month is not selected. Please select a month.",
+                        "ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
                 System.out.println("Month Not Selected.");
-            }
-            // If the user has selected a month
-            else {            
+            } // If the user has selected a month
+            else {
                 String selectedMonthSqlCompatible = "";
-                
+
                 // Setting the user selected item string value to a date time comparison compatible string value in Microsoft SQL Server
                 // Becuase the if retrving the index value, in one digts values the zero would be removed.
                 // So inorder for it to be compatible with records in the database, a switch statement is used to set the relevant value to the user preferred month.
-                switch(cmbMonthlyReportMonth.getSelectedItem()){
+                switch (cmbMonthlyReportMonth.getSelectedItem()) {
                     case "January":
                         selectedMonthSqlCompatible = "01";
                         break;
@@ -3475,12 +3430,12 @@ public class Teller extends javax.swing.JFrame {
                         selectedMonthSqlCompatible = "12";
                         break;
                 }
-                
+
                 System.out.println("Use Selected Month SQL Comparison Compatible: " + selectedMonthSqlCompatible);
-                 
+
                 //checking if there are any transaction records available in the database for the selected month
                 try (Connection verifyTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    Statement verifyTransactionRecordsStmt = verifyTransactionRecordsCon.createStatement();) {
+                        Statement verifyTransactionRecordsStmt = verifyTransactionRecordsCon.createStatement();) {
 
                     // Assinging SQL query
                     String verifyTransactionRecordsSqlQuery = "SELECT transaction_number, account_number, transaction_type, amount, date_time FROM "
@@ -3490,103 +3445,96 @@ public class Teller extends javax.swing.JFrame {
                     ResultSet verifyTransactionRecordsRs = verifyTransactionRecordsStmt.executeQuery(verifyTransactionRecordsSqlQuery);
 
                     System.out.println("Transaction Records Availability: " + verifyTransactionRecordsRs.next());
-                    
+
                     // Checking if a value is returned
                     // If no value are returned
-                    if( verifyTransactionRecordsRs.next() == false ){
+                    if (verifyTransactionRecordsRs.next() == false) {
                         // Displaying message box showing error message
                         JOptionPane.showMessageDialog(null,
-                            "No Transaction Records are Available for Selected Month. "
-                                    + "Please select a different month.",
-                            "ERROR!",
-                            JOptionPane.ERROR_MESSAGE);
+                                "No Transaction Records are Available for Selected Month. "
+                                + "Please select a different month.",
+                                "ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
                         System.out.println("No Transaction Records Available");
-                    }
-                    // If any values are returned
+                    } // If any values are returned
                     else {
                         // Retriveing customer record data from the database and assigning to customer details table cells
                         try (Connection retrieveCustomerRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                        Statement retrieveCustomerRecordsStmt = retrieveCustomerRecordsCon.createStatement();) {
+                                Statement retrieveCustomerRecordsStmt = retrieveCustomerRecordsCon.createStatement();) {
 
                             String retrieveCustomerRecordsSqlQuery = "SELECT DISTINCT c.account_number, c.first_name, c.middle_name, c.last_name, c.acc_type FROM customer c INNER JOIN"
                                     + " customer_transaction ct ON c.account_number = ct.account_number WHERE convert(nvarchar(50), ct.date_time,126) LIKE '_____" + selectedMonthSqlCompatible + "%' ";
-                            
+
                             // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
                             ResultSet retrieveCustomerRecordsRs = retrieveCustomerRecordsStmt.executeQuery(retrieveCustomerRecordsSqlQuery);
 
                             // Assigning returned values to transaction details table cells
-                            while(retrieveCustomerRecordsRs.next()){
-                                customerDetailsRecordTableModel.insertRow(customerDetailsRecordTableModel.getRowCount(), new Object[]{retrieveCustomerRecordsRs.getString(1), 
+                            while (retrieveCustomerRecordsRs.next()) {
+                                customerDetailsRecordTableModel.insertRow(customerDetailsRecordTableModel.getRowCount(), new Object[]{retrieveCustomerRecordsRs.getString(1),
                                     retrieveCustomerRecordsRs.getString(2), retrieveCustomerRecordsRs.getString(3), retrieveCustomerRecordsRs.getString(4), retrieveCustomerRecordsRs.getString(5)});
                             }
-                        
-                        }
-                        // Error handling. Handles any SQL related errors.
+
+                        } // Error handling. Handles any SQL related errors.
                         catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
-                        }  
-                        
+                        }
+
                         // Retriveing transaction record data from the database and assigning to transaction details table cells
                         try (Connection retrieveTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                        Statement retrieveTransactionRecordsStmt = retrieveTransactionRecordsCon.createStatement();) {
+                                Statement retrieveTransactionRecordsStmt = retrieveTransactionRecordsCon.createStatement();) {
 
                             // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
                             ResultSet retrieveTransactionRecordsRs = retrieveTransactionRecordsStmt.executeQuery(verifyTransactionRecordsSqlQuery);
 
                             // Assigning returned values to transaction details table cells
-                            while(retrieveTransactionRecordsRs.next()){
-                                transactionDetailsRecordsTableModel.insertRow(transactionDetailsRecordsTableModel.getRowCount(), new Object[]{retrieveTransactionRecordsRs.getString(1), 
-                                    retrieveTransactionRecordsRs.getString(2), retrieveTransactionRecordsRs.getString(3), retrieveTransactionRecordsRs.getString(4), 
+                            while (retrieveTransactionRecordsRs.next()) {
+                                transactionDetailsRecordsTableModel.insertRow(transactionDetailsRecordsTableModel.getRowCount(), new Object[]{retrieveTransactionRecordsRs.getString(1),
+                                    retrieveTransactionRecordsRs.getString(2), retrieveTransactionRecordsRs.getString(3), retrieveTransactionRecordsRs.getString(4),
                                     retrieveTransactionRecordsRs.getString(5)});
                             }
-                        }
-                        // Error handling. Handles any SQL related errors.
+                        } // Error handling. Handles any SQL related errors.
                         catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
-                        }  
-                        
+                        }
+
                         // Displaying message box showing confirmation message
                         JOptionPane.showMessageDialog(null,
-                            "Customer Details and Transaction Details for Selected Month is shown in the two tables below. "
-                            + "\n Please verify records and click on 'Generate Report' button to produce report",
-                            "Records Retrieval Successful",
-                            JOptionPane.INFORMATION_MESSAGE);
-                        
+                                "Customer Details and Transaction Details for Selected Month is shown in the two tables below. "
+                                + "\n Please verify records and click on 'Generate Report' button to produce report",
+                                "Records Retrieval Successful",
+                                JOptionPane.INFORMATION_MESSAGE);
+
                     }
-                }
-                // Error handling. Handles any SQL related errors.
+                } // Error handling. Handles any SQL related errors.
                 catch (SQLException e) {
                     System.out.println("Error found: " + e);
                 }
             }
-        }
-        catch(ArrayIndexOutOfBoundsException IndexOutofBoundEx){
+        } catch (ArrayIndexOutOfBoundsException IndexOutofBoundEx) {
             System.out.println("Error: " + IndexOutofBoundEx);
-        } 
-        
+        }
+
     }//GEN-LAST:event_btn_monthlyRetrieveRecordsActionPerformed
 
     private void btn_monthlyGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_monthlyGenerateReportActionPerformed
 
         // Manual monthly customer transaction report generation source code
-        
         // Retrieving current month from local
         String monthlyLocalMonth = ltad.retrieveLocalMonth();
-        
-        System.out.println("Month: " + monthlyLocalMonth);   
-        
+
+        System.out.println("Month: " + monthlyLocalMonth);
+
         // Retrieving current date from localhost
         String monthlyLocalDate = ltad.retrieveLocalDate();
 
         System.out.println("Date: " + monthlyLocalDate);
-        
-        
+
         String selectedMonthSqlCompatible = "";
 
         // Setting the user selected item string value to a date time comparison compatible string value in Microsoft SQL server
         // Becuase the if retrving the index value, in one digts values the zero would be removed.
         // So inorder for it to be compatible with records in the database, a switch statement is used to set the relevant value to the user preferred month.
-        switch(cmbMonthlyReportMonth.getSelectedItem()){
+        switch (cmbMonthlyReportMonth.getSelectedItem()) {
             case "January":
                 selectedMonthSqlCompatible = "01";
                 break;
@@ -3626,21 +3574,20 @@ public class Teller extends javax.swing.JFrame {
         }
 
         System.out.println("Use Selected Month SQL Comparison Compatible: " + selectedMonthSqlCompatible);
-        
+
         // If the user doesn't select a month
-        if(cmbMonthlyReportMonth.getSelectedIndex() == 0){
+        if (cmbMonthlyReportMonth.getSelectedIndex() == 0) {
             // Displaying message box showing error message
-                JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(null,
                     "Month is not selected. Please select a month.",
                     "ERROR!",
                     JOptionPane.ERROR_MESSAGE);
-                System.out.println("Month Not Selected.");
-        }
-        // If the user selects a month
-        else{
+            System.out.println("Month Not Selected.");
+        } // If the user selects a month
+        else {
             // Checking if any records are avialbe in the database for this month
             try (Connection checkingTransactionRecordCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-            Statement checkingTransactionRecordStmt = checkingTransactionRecordCon.createStatement();) {
+                    Statement checkingTransactionRecordStmt = checkingTransactionRecordCon.createStatement();) {
 
                 // Assigning SQL query
                 String checkingTransactionRecordSqlQuery = "SELECT transaction_number, account_number, transaction_type, amount, date_time FROM "
@@ -3652,30 +3599,29 @@ public class Teller extends javax.swing.JFrame {
                 System.out.println("Transactions Record Exist: " + checkingTransactionRecordRs);
 
                 // If no values are returned
-                if( checkingTransactionRecordRs.next() == false ){
+                if (checkingTransactionRecordRs.next() == false) {
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "No records are available in the database for the selected date."
-                        + "\nPlease select a different month",
-                        "ERROR !",
-                        JOptionPane.ERROR_MESSAGE);
+                            "No records are available in the database for the selected date."
+                            + "\nPlease select a different month",
+                            "ERROR !",
+                            JOptionPane.ERROR_MESSAGE);
                     System.out.println("No Records found in Database for Selected Month");
-                }
-                // If any values are returned
+                } // If any values are returned
                 else {
 
                     // Retrieving records from database and inserting into table
-                    try{
+                    try {
                         // Removing all the exiting records in the customer details table and repopulating with new records
                         int cdCountRemove = customerDetailsRecordTableModel.getRowCount();
 
-                        for (int i = cdCountRemove - 1; i >= 0 ; i--) {
+                        for (int i = cdCountRemove - 1; i >= 0; i--) {
                             customerDetailsRecordTableModel.removeRow(i);
                         }
 
                         // Retriving customer details from the database for the selected month
                         try (Connection retrieveCDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement retrieveCDStmt = retrieveCDCon.createStatement();) {
+                                Statement retrieveCDStmt = retrieveCDCon.createStatement();) {
 
                             String retrieveCDSqlQuery = "SELECT DISTINCT c.account_number, c.first_name, c.middle_name, c.last_name, c.acc_type FROM customer c INNER JOIN"
                                     + " customer_transaction ct ON c.account_number = ct.account_number WHERE convert(nvarchar(50), ct.date_time,126) LIKE '_____" + selectedMonthSqlCompatible + "%' ";
@@ -3684,52 +3630,47 @@ public class Teller extends javax.swing.JFrame {
                             ResultSet retrieveCDResult = retrieveCDStmt.executeQuery(retrieveCDSqlQuery);
 
                             // Creating new table rows and inserting record data into them
-                            while(retrieveCDResult.next()){
-                                customerDetailsRecordTableModel.insertRow(customerDetailsRecordTableModel.getRowCount(), new Object[]{retrieveCDResult.getString(1), 
+                            while (retrieveCDResult.next()) {
+                                customerDetailsRecordTableModel.insertRow(customerDetailsRecordTableModel.getRowCount(), new Object[]{retrieveCDResult.getString(1),
                                     retrieveCDResult.getString(2), retrieveCDResult.getString(3), retrieveCDResult.getString(4), retrieveCDResult.getString(5)});
                             }
-                        }
-                        // Error handling. Handles any SQL related errors.
-                        catch (SQLException SqlEx)
-                        {
+                        } // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                         }
 
                         // Removing all the exiting records in the transaction details table and repopulating with new records
                         int tdCountRemove = transactionDetailsRecordsTableModel.getRowCount();
 
-                        for (int i = tdCountRemove - 1; i >= 0 ; i--) {
+                        for (int i = tdCountRemove - 1; i >= 0; i--) {
                             transactionDetailsRecordsTableModel.removeRow(i);
                         }
 
                         // Retriving transaction details from the database for the selected month
                         try (Connection retrieveTDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement retrieveTDStmt = retrieveTDCon.createStatement();) {
+                                Statement retrieveTDStmt = retrieveTDCon.createStatement();) {
 
                             // Same SQL query as in checkingTransactionRecordSqlQuery
                             // Executing SQL query
                             ResultSet retrieveTDResult = retrieveTDStmt.executeQuery(checkingTransactionRecordSqlQuery);
 
                             // Creating new table rows and inserting record data into them
-                            while(retrieveTDResult.next()){
+                            while (retrieveTDResult.next()) {
                                 transactionDetailsRecordsTableModel.insertRow(transactionDetailsRecordsTableModel.getRowCount(), new Object[]{retrieveTDResult.getString(1),
                                     retrieveTDResult.getString(2), retrieveTDResult.getString(3), retrieveTDResult.getString(4), retrieveTDResult.getString(5)});
                             }
-                        }
-                        // Error handling. Handles any SQL related errors.
-                        catch (SQLException SqlEx)
-                        {
+                        } // Error handling. Handles any SQL related errors.
+                        catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                         }
-                    }
-                    // Error handling. Checking for index out of range in array when removing the exisitng records from the table
-                    catch(ArrayIndexOutOfBoundsException ctrRecordsRemovalEx){
+                    } // Error handling. Checking for index out of range in array when removing the exisitng records from the table
+                    catch (ArrayIndexOutOfBoundsException ctrRecordsRemovalEx) {
                         System.out.println("Error: " + ctrRecordsRemovalEx);
                     }
 
                     // Message box to verify if the user wants to generate report according to the data shown in the table
                     int userChoice = JOptionPane.showConfirmDialog(null, "Report will be generated according to data shown in the two tables."
-                        + "\nDo you want to continue? ", "Verification", JOptionPane.YES_NO_OPTION);
+                            + "\nDo you want to continue? ", "Verification", JOptionPane.YES_NO_OPTION);
 
                     // If the user selects 'Yes' option 
                     if (userChoice == 0) {
@@ -3743,7 +3684,7 @@ public class Teller extends javax.swing.JFrame {
                         if (checkFileExistenceResult == true) {
                             // Message box to verify if the user wants to generate report according to the data shown in the table
                             int checkFileExistenceUserChoice = JOptionPane.showConfirmDialog(null, "Manual Monthly Customer Transaction Report was already generated for this Month."
-                                + "\nDo you want to continue?  (This action will overwrite the exisitng report)", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                                    + "\nDo you want to continue?  (This action will overwrite the exisitng report)", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
                             // If the user selects ' Yes' option
                             if (checkFileExistenceUserChoice == 0) {
@@ -3753,47 +3694,44 @@ public class Teller extends javax.swing.JFrame {
                                 // Without repeating the same procedure twice we have implemented the procedure into a diffenent class and called it twice.
                                 String reportGenerationStatus = rg.generateManualMonthlyCTReport(selectedMonthSqlCompatible);
 
-                                System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);        
+                                System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);
 
                                 // Automatically opening the PDF document after generation in user's default PDF opening application
                                 // Checks if auto preview report check box is selected
-                                if(jcb_monthlyAutoPreviewReport.isSelected()){
+                                if (jcb_monthlyAutoPreviewReport.isSelected()) {
                                     // Opening PDF document
                                     File myFile = new File("../Reports/Monthly_Customer_Transaction_Record_Reports/Manual/Manual_Monthly_Customer_Transaction_Records_'" + monthlyLocalDate + "'.pdf");
                                     try {
                                         Desktop.getDesktop().open(myFile);
-                                    } 
-                                    // Error handling. Handles any data input and output errors.
+                                    } // Error handling. Handles any data input and output errors.
                                     catch (IOException IoEx) {
                                         Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
                                     }
-                                    
+
                                     // Displays the directory pathway
                                     File directoryPathway = new File("./");
                                     System.out.println("Directory Absolute Pathway: " + directoryPathway.getAbsolutePath());
-                                    
-                                }              
+
+                                }
                             }
-                        }
-                        // If there is no report existing
-                        else{
+                        } // If there is no report existing
+                        else {
                             // Report generation if a report with same filename doesn't exist
                             // Calling method to generate manual daily report
                             // The implementation is placed in another class, becuase the same implementation will repeat twice. 
                             // Without repeating the same procedure twice we have implemented the procedure into a diffenent class and called it twice.
                             String reportGenerationStatus = rg.generateManualMonthlyCTReport(selectedMonthSqlCompatible);
 
-                            System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);        
-                            
+                            System.out.println("Manual Daily Report Generation Status: " + reportGenerationStatus);
+
                             // Automatically opening the PDF document after generation in user's default PDF opening application
                             // Checks if auto preview report check box is selected
-                            if(jcb_monthlyAutoPreviewReport.isSelected()){
+                            if (jcb_monthlyAutoPreviewReport.isSelected()) {
                                 // Opening PDF document
                                 File myFile = new File("../Reports/Monthly_Customer_Transaction_Record_Reports/Manual/Manual_Monthly_Customer_Transaction_Records_'" + monthlyLocalDate + "'.pdf");
                                 try {
                                     Desktop.getDesktop().open(myFile);
-                                } 
-                                // Error handling. Handles any data input and output errors.
+                                } // Error handling. Handles any data input and output errors.
                                 catch (IOException IoEx) {
                                     Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
                                 }
@@ -3802,13 +3740,12 @@ public class Teller extends javax.swing.JFrame {
                                 File directoryPathway = new File("./");
                                 System.out.println("Directory Absolute Pathway: " + directoryPathway.getAbsolutePath());
 
-                            }         
+                            }
                         }
                     }
                 }
-            }
-            // Error handling. Handles any SQL related errors.
-            catch(SQLException SqlEx){
+            } // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
                 System.out.println("Error: " + SqlEx);
             }
         }
@@ -3819,7 +3756,7 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_monthlyClearMouseEntered
 
     private void btn_monthlyClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_monthlyClearActionPerformed
-        
+
         // Sets date picker to null value (resets)
         cmbMonthlyReportMonth.select(0);
 
@@ -3828,79 +3765,75 @@ public class Teller extends javax.swing.JFrame {
 
         // Removing all the exiting records in the customer details table
         int cdCountRemove = customerDetailsRecordTableModel.getRowCount();
-        
-        for (int i = cdCountRemove - 1; i >= 0 ; i--) {
+
+        for (int i = cdCountRemove - 1; i >= 0; i--) {
             customerDetailsRecordTableModel.removeRow(i);
         }
-        
-        
+
         // Removing all the exiting records in the transaction details table
         int tdCountRemove = transactionDetailsRecordsTableModel.getRowCount();
-        
-        for (int i = tdCountRemove - 1; i >= 0 ; i--) {
+
+        for (int i = tdCountRemove - 1; i >= 0; i--) {
             transactionDetailsRecordsTableModel.removeRow(i);
         }
-        
+
     }//GEN-LAST:event_btn_monthlyClearActionPerformed
 
     private void SubmitSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAActionPerformed
 
-
         // Firstly the transaction must be successful and it should have been inserted into the database
-        
         /**
-         * Receipt generation code block must be includes inside the same IF block, right after 
-         * the successful insertion of the transaction record to the database
+         * Receipt generation code block must be includes inside the same IF
+         * block, right after the successful insertion of the transaction record
+         * to the database
          */
-        
         // Generating customer receipt source code
-        
         // Retrieving current time from localhost
         String localTime = ltad.retrieveLocalTimeWith12HourClock();
-        
+
         System.out.println("Current Time: " + localTime);
-        
+
         // Retrieving current date and time from localhost 
         String localDateTimeCReceipt = ltad.retrieveLocalDateTimeCReceipt();
-        
+
         System.out.println("Current Date and Time: " + localDateTimeCReceipt);
-     
+
         // Retrieving the account number from the panel and assigning to a int variable
         String enteredAcountNumberString = DAccno_Txt.getText();
         // INT data type size is not enough for this length
         int enteredAcountNumberInt = Integer.parseInt(enteredAcountNumberString);
-        
-        
+
         // Checking if such transaction has occurred from the database
         try (Connection verifyTransactionCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
                 Statement verifyTransactionStmt = verifyTransactionCon.createStatement();) {
-            
+
             // Assigning SQL query
             String verifyTransactionSqlQuery = "SELECT TOP 1 * FROM CustomerTransactionDeposit WHERE "
-                    + "(ansNSAccountNumber = '"+ enteredAcountNumberInt +"' OR absBSAccountNumber = '"+ enteredAcountNumberInt +"' OR "
-                    + "apsPSAccountNumber = '"+ enteredAcountNumberInt +"') ORDER BY TransactionDateTime DESC";
-                   
+                    + "(ansNSAccountNumber = '" + enteredAcountNumberInt + "' OR absBSAccountNumber = '" + enteredAcountNumberInt + "' OR "
+                    + "apsPSAccountNumber = '" + enteredAcountNumberInt + "') ORDER BY TransactionDateTime DESC";
+
             // Executing SQL query
             ResultSet verifyTransactionRs = verifyTransactionStmt.executeQuery(verifyTransactionSqlQuery);
 
             // If there is a transaction record this generates a receipt
             if (verifyTransactionRs.next()) {
-                
+
                 /**
                  * Variable declaration to assign value from the database later
-                 * Declared because it will be accessible from anywhere within this code block
-                 */ 
+                 * Declared because it will be accessible from anywhere within
+                 * this code block
+                 */
                 int transactionNumberDB = 0;
                 String transactionDateTimeDB = "";
-                
+
                 // Retrieving transaction number and transaction type from the database, customer_transaction relation
                 try (Connection retrievingTransactiondetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         Statement retrievingTransactiondetailsStmt = retrievingTransactiondetailsCon.createStatement();) {
-                    
+
                     // Assigning SQL query
                     String retrievingTransactiondetailsSqlQuery = "SELECT TOP 1 DTransactionNumber, TransactionDateTime FROM CustomerTransactionDeposit WHERE "
-                     + "(ansNSAccountNumber = '"+ enteredAcountNumberInt +"' OR absBSAccountNumber = '"+ enteredAcountNumberInt +"' OR "
-                     + "apsPSAccountNumber = '"+ enteredAcountNumberInt +"') ORDER BY TransactionDateTime DESC";
+                            + "(ansNSAccountNumber = '" + enteredAcountNumberInt + "' OR absBSAccountNumber = '" + enteredAcountNumberInt + "' OR "
+                            + "apsPSAccountNumber = '" + enteredAcountNumberInt + "') ORDER BY TransactionDateTime DESC";
 
                     // Executing SQL query
                     ResultSet retrievingTransactiondetailsRs = retrievingTransactiondetailsStmt.executeQuery(retrievingTransactiondetailsSqlQuery);
@@ -3909,14 +3842,13 @@ public class Teller extends javax.swing.JFrame {
                         transactionNumberDB = retrievingTransactiondetailsRs.getInt(1);
                         transactionDateTimeDB = retrievingTransactiondetailsRs.getString(2);
                     }
-                }
-                // Error handling. Checks for SQL related issues
+                } // Error handling. Checks for SQL related issues
                 catch (SQLException SqlEx) {
                     System.out.println("Error found: " + SqlEx);
                 }
 
                 // Checks if transaction type is (D) deposit
-                if(transactionNumberDB != 0){
+                if (transactionNumberDB != 0) {
                     // Calling receipt generation method and passing the relevant data
                     String customerReceiptGenerationStatus = crg.CRGeneration(enteredAcountNumberInt, transactionNumberDB, "Deposit", transactionDateTimeDB);
 
@@ -3924,51 +3856,46 @@ public class Teller extends javax.swing.JFrame {
 
                     // Displaying message box showing confirmation message
                     JOptionPane.showMessageDialog(null,
-                        "Customer Transaction Receipt has been Generated",
-                        "CONFIRMATION",
-                        JOptionPane.INFORMATION_MESSAGE);
+                            "Customer Transaction Receipt has been Generated",
+                            "CONFIRMATION",
+                            JOptionPane.INFORMATION_MESSAGE);
                     System.out.println("Customer Transaction Receipt has been Generated");
-                    
-                    
-                    if(jcb_autoPreviewReceipt.isSelected()){
-                        File myFile = new File("../Receipts/Customer_Receipts/Deposit_Receipts/Customer_Transaction_Receipt_'"+ transactionNumberDB +"'_'"+ transactionDateTimeDB +"'.pdf");
+
+                    if (jcb_autoPreviewReceipt.isSelected()) {
+                        File myFile = new File("../Receipts/Customer_Receipts/Deposit_Receipts/Customer_Transaction_Receipt_'" + transactionNumberDB + "'_'" + transactionDateTimeDB + "'.pdf");
                         try {
                             Desktop.getDesktop().open(myFile);
-                        } 
-                        // Error handling. Handles any data input and output errors.
+                        } // Error handling. Handles any data input and output errors.
                         catch (IOException IoEx) {
                             Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
                         }
-                    } 
-                }
-                else{
+                    }
+                } else {
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "No Transaction has been Executed",
-                        "ERROR!",
-                        JOptionPane.ERROR_MESSAGE);
+                            "No Transaction has been Executed",
+                            "ERROR!",
+                            JOptionPane.ERROR_MESSAGE);
                     System.out.println("No Transaction has been Executed");
-                }  
-            }
-            // If there is no record in the database, an error message is shown
-            else{
+                }
+            } // If there is no record in the database, an error message is shown
+            else {
                 // Displaying message box showing error message
                 JOptionPane.showMessageDialog(null,
-                    "No Transaction has been Excecuted",
-                    "ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
+                        "No Transaction has been Excecuted",
+                        "ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
                 System.out.println("No Transaction has been Executed");
             }
-        } 
-        // Error handling. Checks for SQL related issues.
+        } // Error handling. Checks for SQL related issues.
         catch (SQLException SqlEx) {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
-                "ERROR!",
-                JOptionPane.ERROR_MESSAGE);
-        } 
+                    "Error Occurred in SQL Connection",
+                    "ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_SubmitSAActionPerformed
 
@@ -3977,63 +3904,60 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btnWithdrawalSubmitMouseEntered
 
     private void btnWithdrawalSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawalSubmitActionPerformed
-        
+
         // Firstly the transaction must be successful and it should have been inserted into the database
-        
         /**
-         * Receipt generation code block must be includes inside the same IF block, right after 
-         * the successful insertion of the transaction record to the database
+         * Receipt generation code block must be includes inside the same IF
+         * block, right after the successful insertion of the transaction record
+         * to the database
          */
-        
         // Generating customer receipt source code
-        
         // Retrieving current time from localhost
         String localTime = ltad.retrieveLocalTimeWith12HourClock();
-        
+
         System.out.println("Current Time: " + localTime);
-        
+
         // Retrieving current date from localhost
         String localDate = ltad.retrieveLocalDate();
-        
+
         System.out.println("Current Date: " + localDate);
-        
-        
+
         // Retrieving the account number from the panel and assigning to a int variable
         String customerAcountNumberString = txtWithdrawalAccountNo.getText();
         // INT data type size is not enough for this length
         int enteredAcountNumberInt = Integer.parseInt(customerAcountNumberString);
-        
-        
+
         // Checking if such transaction has occurred from the database
         try (Connection verifyTransactionCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
                 Statement verifyTransactionStmt = verifyTransactionCon.createStatement();) {
-            
+
             // Assigning SQL query
             String verifyTransactionSqlQuery = "SELECT TOP 1 * FROM CustomerTransactionWithdrawal WHERE "
-                    + "(ansNSAccountNumber = '"+ enteredAcountNumberInt +"' OR absBSAccountNumber = '"+ enteredAcountNumberInt +"' OR "
-                    + "apsPSAccountNumber = '"+ enteredAcountNumberInt +"') ORDER BY TransactionDateTime DESC";
-                   
+                    + "(ansNSAccountNumber = '" + enteredAcountNumberInt + "' OR absBSAccountNumber = '" + enteredAcountNumberInt + "' OR "
+                    + "apsPSAccountNumber = '" + enteredAcountNumberInt + "') ORDER BY TransactionDateTime DESC";
+
             // Executing SQL query
             ResultSet verifyTransactionRs = verifyTransactionStmt.executeQuery(verifyTransactionSqlQuery);
 
             // If there is a transaction record this generates a receipt
             if (verifyTransactionRs.next()) {
-                
+
                 /**
                  * Variable declaration to assign value from the database later
-                 * Declared because it will be accessible from anywhere within this code block
-                 */ 
+                 * Declared because it will be accessible from anywhere within
+                 * this code block
+                 */
                 int transactionNumberDB = 0;
                 String transactionDateTimeDB = "";
-                
+
                 // Retrieving transaction number and transaction type from the database, customer_transaction relation
                 try (Connection retrievingTransactiondetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         Statement retrievingTransactiondetailsStmt = retrievingTransactiondetailsCon.createStatement();) {
-                    
+
                     // Assigning SQL query
                     String retrievingTransactiondetailsSqlQuery = "SELECT TOP 1 WTransactionNumber, TransactionDateTime FROM CustomerTransactionWithdrawal WHERE "
-                     + "(ansNSAccountNumber = '"+ enteredAcountNumberInt +"' OR absBSAccountNumber = '"+ enteredAcountNumberInt +"' OR "
-                     + "apsPSAccountNumber = '"+ enteredAcountNumberInt +"') ORDER BY TransactionDateTime DESC";
+                            + "(ansNSAccountNumber = '" + enteredAcountNumberInt + "' OR absBSAccountNumber = '" + enteredAcountNumberInt + "' OR "
+                            + "apsPSAccountNumber = '" + enteredAcountNumberInt + "') ORDER BY TransactionDateTime DESC";
 
                     // Executing SQL query
                     ResultSet retrievingTransactiondetailsRs = retrievingTransactiondetailsStmt.executeQuery(retrievingTransactiondetailsSqlQuery);
@@ -4042,14 +3966,13 @@ public class Teller extends javax.swing.JFrame {
                         transactionNumberDB = retrievingTransactiondetailsRs.getInt(1);
                         transactionDateTimeDB = retrievingTransactiondetailsRs.getString(2);
                     }
-                }
-                // Error handling. Checks for SQL related issues
+                } // Error handling. Checks for SQL related issues
                 catch (SQLException SqlEx) {
                     System.out.println("Error found: " + SqlEx);
                 }
 
                 // Checks if transaction type is (D) deposit
-                if(transactionNumberDB != 0){
+                if (transactionNumberDB != 0) {
                     // Calling receipt generation method and passing the relevant data
                     String customerReceiptGenerationStatus = crg.CRGeneration(enteredAcountNumberInt, transactionNumberDB, "Withdrawal", transactionDateTimeDB);
 
@@ -4057,52 +3980,47 @@ public class Teller extends javax.swing.JFrame {
 
                     // Displaying message box showing confirmation message
                     JOptionPane.showMessageDialog(null,
-                        "Customer Transaction Receipt has been Generated",
-                        "CONFIRMATION",
-                        JOptionPane.INFORMATION_MESSAGE);
+                            "Customer Transaction Receipt has been Generated",
+                            "CONFIRMATION",
+                            JOptionPane.INFORMATION_MESSAGE);
                     System.out.println("Customer Transaction Receipt has been Generated");
-                    
-                    
-                    if(jcb_autoPreviewReceipt.isSelected()){
-                        File myFile = new File("../Receipts/Customer_Receipts/Withdrawal_Receipts/Customer_Transaction_Receipt_'"+ transactionNumberDB +"'_'"+ transactionDateTimeDB +"'.pdf");
+
+                    if (jcb_autoPreviewReceipt.isSelected()) {
+                        File myFile = new File("../Receipts/Customer_Receipts/Withdrawal_Receipts/Customer_Transaction_Receipt_'" + transactionNumberDB + "'_'" + transactionDateTimeDB + "'.pdf");
                         try {
                             Desktop.getDesktop().open(myFile);
-                        } 
-                        // Error handling. Handles any data input and output errors.
+                        } // Error handling. Handles any data input and output errors.
                         catch (IOException IoEx) {
                             Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, IoEx);
                         }
-                    } 
-                }
-                else{
+                    }
+                } else {
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "No Transaction has been Executed",
-                        "ERROR!",
-                        JOptionPane.ERROR_MESSAGE);
+                            "No Transaction has been Executed",
+                            "ERROR!",
+                            JOptionPane.ERROR_MESSAGE);
                     System.out.println("No Transaction has been Executed");
-                }  
-            }
-            // If there is no record in the database, an error message is shown
-            else{
+                }
+            } // If there is no record in the database, an error message is shown
+            else {
                 // Displaying message box showing error message
                 JOptionPane.showMessageDialog(null,
-                    "No Transaction has been Excecuted",
-                    "ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
+                        "No Transaction has been Excecuted",
+                        "ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
                 System.out.println("No Transaction has been Executed");
             }
-        } 
-        // Error handling. Checks for SQL related issues.
+        } // Error handling. Checks for SQL related issues.
         catch (SQLException SqlEx) {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
-                "ERROR!",
-                JOptionPane.ERROR_MESSAGE);
-        } 
-          
+                    "Error Occurred in SQL Connection",
+                    "ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnWithdrawalSubmitActionPerformed
 
     private void listAccountStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAccountStatusActionPerformed
@@ -4114,39 +4032,39 @@ public class Teller extends javax.swing.JFrame {
         // Clearing all the user entered values from the textboxes and clearing the validation labels
         txtFName.setText("");
         lblFNameValidator.setText("");
-        
+
         txtMName.setText("");
         lblMNameValidator.setText("");
-        
+
         txtLName.setText("");
         lblLNameValidator.setText("");
-        
+
         txtPassportNumber.setText("");
         lblPassportNumberValidator.setText("");
-        
+
         txtEmailAddress1.setText("");
         lblEmailAddress1Validator.setText("");
-        
+
         txtEmailAddress2.setText("");
         lblEmailAddress2Validator.setText("");
-        
+
         txtPhoneNumber1.setText("");
         lblPhoneNumber1Validator.setText("");
-        
+
         txtPhoneNumber2.setText("");
         lblPhoneNumber2Validator.setText("");
-        
+
         txtLaneAddress.setText("");
         lblLaneAddressValidator.setText("");
-        
+
         txtCity.setText("");
         lblCityValidator.setText("");
-        
+
         listAccountType.setSelectedIndex(0);
-        
+
         txtInitialDeposit.setText("0.00");
         lblInitialDepositValidator.setText("");
-        
+
         txtAccountNumber.setText("");
     }//GEN-LAST:event_btnResetActionPerformed
 
@@ -4200,55 +4118,43 @@ public class Teller extends javax.swing.JFrame {
 
         // Checking if valid is inserted all the required fields
         // This uses a static method to compare the text with the regex expression
-        if(
-            // Value Example: Henry
-            // Value insertion is mandatory
-            (Pattern.matches("[a-zA-Z ]+", txtMName.getText()) == true) &&
-
-            // Value Example: Jacksone
-            // Value insertion is mandatory
-            (Pattern.matches("[a-zA-Z ]+", txtLName.getText()) == true) &&
-
-            // Value Example: 330022102
-            // Value insertion is mandatory
-            (Pattern.matches("[0-9]{9}+", txtPassportNumber.getText()) == true) &&
-
-            // Value Example: sample@sample.sample
-            // Value insertion is mandatory
-            // Must use '\' bacnkslash to add a backslash in quoatation since it is a speacial character used for instances like '\n'
-            // '\w' is the short form of '[a-zA-Z0-9]'
-            (Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText()) == true) &&
-
-            // Value Example: 2587419635
-            // Value insertion is mandatory
-            (Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText()) == true) &&
-
-            // Value Example: A43, Beach Lane
-            // Value insertion is mandatory
-            (Pattern.matches("([\\w]+)+", txtLaneAddress.getText()) == true) &&
-
-            // Value Example: Liverpool
-            // Value insertion is mandatory
-            (Pattern.matches("[\\w]+", txtCity.getText()) == true) &&
-
-            // Checking if the user has selected a account type
-            // Value insertion is mandatory
-            ((listAccountType.getSelectedItem()).toString() != "--SELECT ACCOUNT TYPE--") &&
-
-            // Value Example: 150.00
-            // Value insertion is mandatory
-            (Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText()) == true) &&
-
-            // Value Example: 45000002
-            // Value insertion is mandatory
-            (Pattern.matches("([0-9]{8})+", txtAccountNumber.getText()) == true) &&
-
-            // Checking if the user has selected a account status
-            // Value insertion is mandatory
-            ((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--")
-        )
-        {
-            System.out.println("efef");}
+        if ( // Value Example: Henry
+                // Value insertion is mandatory
+                (Pattern.matches("[a-zA-Z ]+", txtMName.getText()) == true)
+                && // Value Example: Jacksone
+                // Value insertion is mandatory
+                (Pattern.matches("[a-zA-Z ]+", txtLName.getText()) == true)
+                && // Value Example: 330022102
+                // Value insertion is mandatory
+                (Pattern.matches("[0-9]{9}+", txtPassportNumber.getText()) == true)
+                && // Value Example: sample@sample.sample
+                // Value insertion is mandatory
+                // Must use '\' bacnkslash to add a backslash in quoatation since it is a speacial character used for instances like '\n'
+                // '\w' is the short form of '[a-zA-Z0-9]'
+                (Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText()) == true)
+                && // Value Example: 2587419635
+                // Value insertion is mandatory
+                (Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText()) == true)
+                && // Value Example: A43, Beach Lane
+                // Value insertion is mandatory
+                (Pattern.matches("([\\w]+)+", txtLaneAddress.getText()) == true)
+                && // Value Example: Liverpool
+                // Value insertion is mandatory
+                (Pattern.matches("[\\w]+", txtCity.getText()) == true)
+                && // Checking if the user has selected a account type
+                // Value insertion is mandatory
+                ((listAccountType.getSelectedItem()).toString() != "--SELECT ACCOUNT TYPE--")
+                && // Value Example: 150.00
+                // Value insertion is mandatory
+                (Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText()) == true)
+                && // Value Example: 45000002
+                // Value insertion is mandatory
+                (Pattern.matches("([0-9]{8})+", txtAccountNumber.getText()) == true)
+                && // Checking if the user has selected a account status
+                // Value insertion is mandatory
+                ((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--")) {
+            System.out.println("efef");
+        }
 
         // Declaring variable to store the tellerID that is retrieved from the database
         String tellerIDDB = "";
@@ -4258,10 +4164,10 @@ public class Teller extends javax.swing.JFrame {
 
         // Retrieving the tellerID from the database using the systemLoginID value
         try (Connection retrievingtellerIDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-            Statement retrievingtellerIDStmt = retrievingtellerIDCon.createStatement();) {
+                Statement retrievingtellerIDStmt = retrievingtellerIDCon.createStatement();) {
 
             // Assigning SQL query
-            String retrievingtellerIDSqlQuery = "SELECT TellerID FROM Teller WHERE slSystemLoginID = '"+ systemLoginIDGlobal +"'";
+            String retrievingtellerIDSqlQuery = "SELECT TellerID FROM Teller WHERE slSystemLoginID = '" + systemLoginIDGlobal + "'";
 
             // Executing SQL query
             ResultSet retrievingtellerIDRs = retrievingtellerIDStmt.executeQuery(retrievingtellerIDSqlQuery);
@@ -4269,15 +4175,14 @@ public class Teller extends javax.swing.JFrame {
             if (retrievingtellerIDRs.next()) {
                 tellerIDDB = retrievingtellerIDRs.getString(1);
             }
-        }
-        // Error handling. Checks for SQL related issues
+        } // Error handling. Checks for SQL related issues
         catch (SQLException SqlEx) {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
-                "New Customer Registration - ERROR!",
-                JOptionPane.ERROR_MESSAGE);
+                    "Error Occurred in SQL Connection",
+                    "New Customer Registration - ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
         // Declaring variable to store the user selected account status
@@ -4287,35 +4192,34 @@ public class Teller extends javax.swing.JFrame {
         String userSelectedAccountStatusID = "";
 
         // Switch statement to assign the appropriate accountstatusID with the selected account status
-        switch(userSelectedAccountStatus.toString()){
+        switch (userSelectedAccountStatus.toString()) {
             case "ACTIVE":
-            userSelectedAccountStatusID = "PT000001";
-            break;
+                userSelectedAccountStatusID = "PT000001";
+                break;
             case "ONHOLD":
-            userSelectedAccountStatusID = "PT000002";
-            break;
+                userSelectedAccountStatusID = "PT000002";
+                break;
             case "DISABLED":
-            userSelectedAccountStatusID = "PT000003";
-            break;
+                userSelectedAccountStatusID = "PT000003";
+                break;
             default:
-            userSelectedAccountStatusID = "";
-            break;
+                userSelectedAccountStatusID = "";
+                break;
         }
 
         // Displaying an error message if the user did not select an account status
-        if(userSelectedAccountStatusID == ""){
+        if (userSelectedAccountStatusID == "") {
             JOptionPane.showMessageDialog(null,
-                "Please Select an Account Status",
-                "New Customer Registration - ERROR",
-                JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+                    "Please Select an Account Status",
+                    "New Customer Registration - ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
             // Checking if this customer is already registered or not
             try (Connection checkingCustomerExistanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                Statement checkingCustomerExistanceStmt = checkingCustomerExistanceCon.createStatement();) {
+                    Statement checkingCustomerExistanceStmt = checkingCustomerExistanceCon.createStatement();) {
 
                 // Assigning SQL query
-                String checkingCustomerExistanceSqlQuery = "SELECT * FROM Customer WHERE PassportNumber = '"+ txtPassportNumber.getText() +"'";
+                String checkingCustomerExistanceSqlQuery = "SELECT * FROM Customer WHERE PassportNumber = '" + txtPassportNumber.getText() + "'";
 
                 // Executing SQL query
                 ResultSet checkingCustomerExistanceRs = checkingCustomerExistanceStmt.executeQuery(checkingCustomerExistanceSqlQuery);
@@ -4331,63 +4235,59 @@ public class Teller extends javax.swing.JFrame {
                     // Checking if user didn't select an option and will show an error message
                     if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
                         JOptionPane.showMessageDialog(null,
-                            "Please Select an Account Type !",
-                            "Account Generation Halted!",
-                            JOptionPane.WARNING_MESSAGE);
-                    }
-                    else if (userSelectedAccountType == "NORMAL SAVINGS") {
+                                "Please Select an Account Type !",
+                                "Account Generation Halted!",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else if (userSelectedAccountType == "NORMAL SAVINGS") {
 
                         newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountNumber, NSAccountBalance, asAccountStatusID, "
-                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
-                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
+                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
 
                         // Calling method to insert account details
                         newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
 
-                        if(newAccountCreationSuccess == false){
+                        if (newAccountCreationSuccess == false) {
                             customerRegistrationComplete += 1;
                         }
 
-                    }
-                    else if (userSelectedAccountType == "BONUS SAVINGS") {
+                    } else if (userSelectedAccountType == "BONUS SAVINGS") {
 
                         newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountNumber, BSAccountBalance, asAccountStatusID, "
-                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
-                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
+                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
 
                         // Calling method to insert account details
                         newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
 
-                        if(newAccountCreationSuccess == false){
+                        if (newAccountCreationSuccess == false) {
                             customerRegistrationComplete += 1;
                         }
 
-                    }
-                    else if (userSelectedAccountType == "PREMIER SAVINGS") {
+                    } else if (userSelectedAccountType == "PREMIER SAVINGS") {
 
                         newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountNumber, PSAccountBalance, asAccountStatusID, "
-                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
-                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
+                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
 
                         // Calling method to insert account details
                         newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
 
-                        if(newAccountCreationSuccess == false){
+                        if (newAccountCreationSuccess == false) {
                             customerRegistrationComplete += 1;
                         }
 
                     }
-                }
-                else{ // If the customer has not registered
+                } else { // If the customer has not registered
 
                     // Inserting customer details to the database, Customer relation
                     try (Connection InsertingCustomerCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                        Statement InsertingCustomerStmt = InsertingCustomerCon.createStatement();) {
+                            Statement InsertingCustomerStmt = InsertingCustomerCon.createStatement();) {
 
                         // Assigning SQL query
                         String InsertingCustomerSqlQuery = "INSERT INTO Customer (PassportNumber, FirstName, MiddleName, LastName, LaneAddress, City, tTellerID_RegisteredBy) "
-                        + "VALUES ('"+ txtPassportNumber.getText() +"', '"+ txtMName.getText() +"', '"+ txtMName.getText() +"', '"+ txtLName.getText() +"', "
-                        + "'"+ txtLaneAddress.getText() +"', '"+ txtCity.getText() +"', '"+ tellerIDDB +"')";
+                                + "VALUES ('" + txtPassportNumber.getText() + "', '" + txtMName.getText() + "', '" + txtMName.getText() + "', '" + txtLName.getText() + "', "
+                                + "'" + txtLaneAddress.getText() + "', '" + txtCity.getText() + "', '" + tellerIDDB + "')";
 
                         // Executing SQL query
                         Boolean InsertingCustomerNumberRs = InsertingCustomerStmt.execute(InsertingCustomerSqlQuery);
@@ -4398,15 +4298,14 @@ public class Teller extends javax.swing.JFrame {
                             customerRegistrationComplete += 1;
                         }
 
-                    }
-                    // Error handling. Checks for SQL related issues
+                    } // Error handling. Checks for SQL related issues
                     catch (SQLException SqlEx) {
                         System.out.println("Error found: " + SqlEx);
                         // Displaying message box showing error message
                         JOptionPane.showMessageDialog(null,
-                            "Error Occurred in SQL Connection",
-                            "New Customer Registration - ERROR!",
-                            JOptionPane.ERROR_MESSAGE);
+                                "Error Occurred in SQL Connection",
+                                "New Customer Registration - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
                     }
 
                     // Declaring variable to store each individual SQL statement at a given moment
@@ -4418,48 +4317,45 @@ public class Teller extends javax.swing.JFrame {
                     // Checking if user didn't select an option and will show an error message
                     if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
                         JOptionPane.showMessageDialog(null,
-                            "Please Select an Account Type !",
-                            "Account Generation Halted!",
-                            JOptionPane.WARNING_MESSAGE);
-                    }
-                    else if (userSelectedAccountType == "NORMAL SAVINGS") {
+                                "Please Select an Account Type !",
+                                "Account Generation Halted!",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else if (userSelectedAccountType == "NORMAL SAVINGS") {
 
                         newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountNumber, NSAccountBalance, asAccountStatusID, "
-                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
-                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
+                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
 
                         // Calling method to insert account details
                         newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
 
-                        if(newAccountCreationSuccess == false){
+                        if (newAccountCreationSuccess == false) {
                             customerRegistrationComplete += 0;
                         }
 
-                    }
-                    else if (userSelectedAccountType == "BONUS SAVINGS") {
+                    } else if (userSelectedAccountType == "BONUS SAVINGS") {
 
                         newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountNumber, BSAccountBalance, asAccountStatusID, "
-                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
-                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
+                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
 
                         // Calling method to insert account details
                         newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
 
-                        if(newAccountCreationSuccess == false){
+                        if (newAccountCreationSuccess == false) {
                             customerRegistrationComplete += 0;
                         }
 
-                    }
-                    else if (userSelectedAccountType == "PREMIER SAVINGS") {
+                    } else if (userSelectedAccountType == "PREMIER SAVINGS") {
 
                         newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountNumber, PSAccountBalance, asAccountStatusID, "
-                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
-                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
+                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
 
                         // Calling method to insert account details
                         newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
 
-                        if(newAccountCreationSuccess == false){
+                        if (newAccountCreationSuccess == false) {
                             customerRegistrationComplete += 0;
                         }
 
@@ -4467,14 +4363,14 @@ public class Teller extends javax.swing.JFrame {
 
                     // Checking if the user has entered one or two email addresses
                     // Inserting customer email address to the database, CustomerEmailAddress relation
-                    if(( txtEmailAddress2.getText()).length() == 0 ){
+                    if ((txtEmailAddress2.getText()).length() == 0) {
 
                         try (Connection insertingEmailOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement insertingEmailOneStmt = insertingEmailOneCon.createStatement();) {
+                                Statement insertingEmailOneStmt = insertingEmailOneCon.createStatement();) {
 
                             // Assigning SQL query
                             String insertingEmailOneSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
-                            + "('"+ txtPassportNumber.getText() +"', '"+ txtEmailAddress1.getText() +"')";
+                                    + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress1.getText() + "')";
 
                             // Executing SQL query
                             Boolean insertingEmailOneRs = insertingEmailOneStmt.execute(insertingEmailOneSqlQuery);
@@ -4484,26 +4380,23 @@ public class Teller extends javax.swing.JFrame {
                             if (insertingEmailOneRs == false) {
                                 customerRegistrationComplete += 1;
                             }
-                        }
-                        // Error handling. Checks for SQL related issues
+                        } // Error handling. Checks for SQL related issues
                         catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                             // Displaying message box showing error message
                             JOptionPane.showMessageDialog(null,
-                                "Error Occurred in SQL Connection",
-                                "New Customer Registration - ERROR!",
-                                JOptionPane.ERROR_MESSAGE);
+                                    "Error Occurred in SQL Connection",
+                                    "New Customer Registration - ERROR!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                    else if ( (txtEmailAddress1.getText()).length() != 0 && (txtEmailAddress2.getText()).length() != 0 )
-                    {
+                    } else if ((txtEmailAddress1.getText()).length() != 0 && (txtEmailAddress2.getText()).length() != 0) {
                         try (Connection insertingEmailTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement insertingEmailTwoStmt = insertingEmailTwoCon.createStatement();) {
+                                Statement insertingEmailTwoStmt = insertingEmailTwoCon.createStatement();) {
 
                             // Assigning SQL query
                             String insertingEmailTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
-                            + "('"+ txtPassportNumber.getText() +"', '"+ txtEmailAddress1.getText() +"'), "
-                            + "('"+ txtPassportNumber.getText() +"', '"+ txtEmailAddress2.getText() +"')";
+                                    + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress1.getText() + "'), "
+                                    + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress2.getText() + "')";
 
                             // Executing SQL query
                             Boolean insertingEmailTwoRs = insertingEmailTwoStmt.execute(insertingEmailTwoSqlQuery);
@@ -4513,28 +4406,27 @@ public class Teller extends javax.swing.JFrame {
                             if (insertingEmailTwoRs == false) {
                                 customerRegistrationComplete += 1;
                             }
-                        }
-                        // Error handling. Checks for SQL related issues
+                        } // Error handling. Checks for SQL related issues
                         catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                             // Displaying message box showing error message
                             JOptionPane.showMessageDialog(null,
-                                "Error Occurred in SQL Connection",
-                                "New Customer Registration - ERROR!",
-                                JOptionPane.ERROR_MESSAGE);
+                                    "Error Occurred in SQL Connection",
+                                    "New Customer Registration - ERROR!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     }
 
                     // Checking if the user has entered one or two phone numbers
                     // Inserting customer phone number to the database, CustomerPhoneNumber srelation
-                    if(( txtPhoneNumber2.getText()).length() == 0 ){
+                    if ((txtPhoneNumber2.getText()).length() == 0) {
 
                         try (Connection insertingPhoneOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement insertingPhoneOneStmt = insertingPhoneOneCon.createStatement();) {
+                                Statement insertingPhoneOneStmt = insertingPhoneOneCon.createStatement();) {
 
                             // Assigning SQL query
                             String insertingPhoneOneSqlQuery = "INSERT INTO CustomerPhoneNumber VALUES "
-                            + "('"+ txtPassportNumber.getText() +"', '"+ txtPhoneNumber1.getText() +"')";
+                                    + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber1.getText() + "')";
 
                             // Executing SQL query
                             Boolean insertingPhoneOneRs = insertingPhoneOneStmt.execute(insertingPhoneOneSqlQuery);
@@ -4544,26 +4436,23 @@ public class Teller extends javax.swing.JFrame {
                             if (insertingPhoneOneRs == false) {
                                 customerRegistrationComplete += 1;
                             }
-                        }
-                        // Error handling. Checks for SQL related issues
+                        } // Error handling. Checks for SQL related issues
                         catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                             // Displaying message box showing error message
                             JOptionPane.showMessageDialog(null,
-                                "Error Occurred in SQL Connection",
-                                "New Customer Registration - ERROR!",
-                                JOptionPane.ERROR_MESSAGE);
+                                    "Error Occurred in SQL Connection",
+                                    "New Customer Registration - ERROR!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                    else if ( (txtPhoneNumber1.getText()).length() != 0 && (txtPhoneNumber2.getText()).length() != 0 )
-                    {
+                    } else if ((txtPhoneNumber1.getText()).length() != 0 && (txtPhoneNumber2.getText()).length() != 0) {
                         try (Connection insertingPhoneTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement insertingPhoneTwoStmt = insertingPhoneTwoCon.createStatement();) {
+                                Statement insertingPhoneTwoStmt = insertingPhoneTwoCon.createStatement();) {
 
                             // Assigning SQL query
                             String insertingPhoneTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
-                            + "('"+ txtPassportNumber.getText() +"', '"+ txtPhoneNumber1.getText() +"'), "
-                            + "('"+ txtPassportNumber.getText() +"', '"+ txtPhoneNumber2.getText() +"')";
+                                    + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber1.getText() + "'), "
+                                    + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber2.getText() + "')";
 
                             // Executing SQL query
                             Boolean insertingPhoneTwoRs = insertingPhoneTwoStmt.execute(insertingPhoneTwoSqlQuery);
@@ -4573,27 +4462,25 @@ public class Teller extends javax.swing.JFrame {
                             if (insertingPhoneTwoRs == false) {
                                 customerRegistrationComplete += 1;
                             }
-                        }
-                        // Error handling. Checks for SQL related issues
+                        } // Error handling. Checks for SQL related issues
                         catch (SQLException SqlEx) {
                             System.out.println("Error found: " + SqlEx);
                             // Displaying message box showing error message
                             JOptionPane.showMessageDialog(null,
-                                "Error Occurred in SQL Connection",
-                                "New Customer Registration - ERROR!",
-                                JOptionPane.ERROR_MESSAGE);
+                                    "Error Occurred in SQL Connection",
+                                    "New Customer Registration - ERROR!",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
-            }
-            // Error handling. Checks for SQL related issues
+            } // Error handling. Checks for SQL related issues
             catch (SQLException SqlEx) {
                 System.out.println("Error found: " + SqlEx);
                 // Displaying message box showing error message
                 JOptionPane.showMessageDialog(null,
-                    "Error Occurred in SQL Connection",
-                    "New Customer Registration - ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
+                        "Error Occurred in SQL Connection",
+                        "New Customer Registration - ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
             }
 
             // Checking if there were any errors along the registration
@@ -4601,23 +4488,21 @@ public class Teller extends javax.swing.JFrame {
             if (customerRegistrationComplete == 1) {
                 // Displaying message box showing confirmation message
                 JOptionPane.showMessageDialog(null,
-                    "Account has been successfully created",
-                    "Adding New Customer - Confirmation",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if(customerRegistrationComplete >= 4 && customerRegistrationComplete <= 6){
+                        "Account has been successfully created",
+                        "Adding New Customer - Confirmation",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else if (customerRegistrationComplete >= 4 && customerRegistrationComplete <= 6) {
                 // Displaying message box showing confirmation message
                 JOptionPane.showMessageDialog(null,
-                    "Customer Account has been created",
-                    "Adding New Customer - Confirmation",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-            else if(customerRegistrationComplete == 0){
+                        "Customer Account has been created",
+                        "Adding New Customer - Confirmation",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else if (customerRegistrationComplete == 0) {
                 // Displaying message box showing error message
                 JOptionPane.showMessageDialog(null,
-                    "Error occurred while inserting customer details",
-                    "Adding New Customer - ERROR",
-                    JOptionPane.ERROR_MESSAGE);
+                        "Error occurred while inserting customer details",
+                        "Adding New Customer - ERROR",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -4626,18 +4511,16 @@ public class Teller extends javax.swing.JFrame {
     private void btnGenerateAccountNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAccountNumberActionPerformed
 
         // Generating account number for newly creating customer account
-
         // User selected account type will be assigned to this variable
         userSelectedAccountType = (String) listAccountType.getSelectedItem();
 
         // Checking if user didn't select an option and will show an error message
         if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
             JOptionPane.showMessageDialog(null,
-                "Please Select an Account Type !",
-                "Account Generation Halted!",
-                JOptionPane.WARNING_MESSAGE);
-        }
-        else if (userSelectedAccountType == "NORMAL SAVINGS") {
+                    "Please Select an Account Type !",
+                    "Account Generation Halted!",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (userSelectedAccountType == "NORMAL SAVINGS") {
 
             // Retrieving the previous generated Normal Savings account number from the database
             newAccountNumber = ang.retrievingPreviousAccountNumber("NSAccountNumber", "AccountNormalSavings");
@@ -4645,8 +4528,7 @@ public class Teller extends javax.swing.JFrame {
             // Assigning new account number to textbox
             txtAccountNumber.setText(String.valueOf(newAccountNumber));
 
-        }
-        else if (userSelectedAccountType == "BONUS SAVINGS") {
+        } else if (userSelectedAccountType == "BONUS SAVINGS") {
 
             // Retrieving the previous generated Bonus Savings account number from the database
             newAccountNumber = ang.retrievingPreviousAccountNumber("BSAccountNumber", "AccountBonusSavings");
@@ -4654,8 +4536,7 @@ public class Teller extends javax.swing.JFrame {
             // Assigning new account number to textbox
             txtAccountNumber.setText(String.valueOf(newAccountNumber));
 
-        }
-        else if (userSelectedAccountType == "PREMIER SAVINGS") {
+        } else if (userSelectedAccountType == "PREMIER SAVINGS") {
 
             // Retrieving the previous generated Premier Savings account number from the database
             newAccountNumber = ang.retrievingPreviousAccountNumber("PSAccountNumber", "AccountPremierSavings");
@@ -4674,21 +4555,18 @@ public class Teller extends javax.swing.JFrame {
         // Displaying appropriate text to 'lblInitialDeposit' upon selected option
         if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
             lblInitialDeposit.setText("Initial Deposit");
-        }
-        else if (userSelectedAccountType == "NORMAL SAVINGS") {
+        } else if (userSelectedAccountType == "NORMAL SAVINGS") {
             lblInitialDeposit.setText("Initial Deposit (£100)");
-        }
-        else if (userSelectedAccountType == "BONUS SAVINGS") {
+        } else if (userSelectedAccountType == "BONUS SAVINGS") {
             lblInitialDeposit.setText("Initial Deposit (£300)");
-        }
-        else if (userSelectedAccountType == "PREMIER SAVINGS") {
+        } else if (userSelectedAccountType == "PREMIER SAVINGS") {
             lblInitialDeposit.setText("Initial Deposit (£1000)");
         }
-        
+
         // Declaring variable to store the minimum amount of initial deposit validity
         float minimumInitialDeposit = 0.00f;
-        
-        switch(userSelectedAccountType){
+
+        switch (userSelectedAccountType) {
             case "NORMAL SAVINGS":
                 minimumInitialDeposit = 100.00f;
                 break;
@@ -4702,14 +4580,14 @@ public class Teller extends javax.swing.JFrame {
                 minimumInitialDeposit = 0.00f;
                 break;
         }
-        
+
         // Checking if the user entered value is lower to the minimum initial deposit amount
-        if( minimumInitialDeposit > (Float.parseFloat( txtInitialDeposit.getText())) ){
+        if (minimumInitialDeposit > (Float.parseFloat(txtInitialDeposit.getText()))) {
             lblInitialDepositValidator.setText("Invalid Value");
             lblInitialDepositValidator.setForeground(Color.red);
         }
-        
-        
+
+
     }//GEN-LAST:event_listAccountTypeActionPerformed
 
     private void txtMNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMNameKeyReleased
@@ -4718,16 +4596,15 @@ public class Teller extends javax.swing.JFrame {
         // This uses a static method to compare the text with the regex expression
         Boolean mNameValidation = Pattern.matches("[a-zA-Z ]*", txtMName.getText());
 
-        if(mNameValidation == false){
+        if (mNameValidation == false) {
             lblMNameValidator.setText("Invalid Value");
             lblMNameValidator.setForeground(Color.red);
 
-            if( (txtMName.getText()).length() == 0 ){
+            if ((txtMName.getText()).length() == 0) {
                 lblMNameValidator.setText("Enter Middle Name");
                 lblMNameValidator.setForeground(Color.white);
             }
-        }
-        else if(mNameValidation == true){
+        } else if (mNameValidation == true) {
             lblMNameValidator.setText("Valid Value");
             lblMNameValidator.setForeground(Color.green);
         }
@@ -4735,210 +4612,200 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMNameKeyReleased
 
     private void txtLNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLNameKeyReleased
-        
+
         // Validating the user entered last name while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean lNameValidation = Pattern.matches("[a-zA-Z ]+", txtLName.getText());
 
-        if(lNameValidation == false){
+        if (lNameValidation == false) {
             lblLNameValidator.setText("Invalid Value");
             lblLNameValidator.setForeground(Color.red);
 
-            if( (txtLName.getText()).length() == 0 ){
+            if ((txtLName.getText()).length() == 0) {
                 lblLNameValidator.setText("Enter Last Name");
                 lblLNameValidator.setForeground(Color.white);
             }
-        }
-        else if(lNameValidation == true){
+        } else if (lNameValidation == true) {
             lblLNameValidator.setText("Valid Value");
             lblLNameValidator.setForeground(Color.green);
         }
-        
-        
+
+
     }//GEN-LAST:event_txtLNameKeyReleased
 
     private void txtPassportNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassportNumberKeyReleased
-        
+
         // Validating the user entered passport number while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean pNumberValidation = Pattern.matches("[0-9]{9}+", txtPassportNumber.getText());
 
-        if(pNumberValidation == false){
+        if (pNumberValidation == false) {
             lblPassportNumberValidator.setText("Invalid Value");
             lblPassportNumberValidator.setForeground(Color.red);
 
-            if( (txtPassportNumber.getText()).length() == 0 ){
+            if ((txtPassportNumber.getText()).length() == 0) {
                 lblPassportNumberValidator.setText("Enter Passport Number");
                 lblPassportNumberValidator.setForeground(Color.white);
             }
-        }
-        else if(pNumberValidation == true){
+        } else if (pNumberValidation == true) {
             lblPassportNumberValidator.setText("Valid Value");
             lblPassportNumberValidator.setForeground(Color.green);
         }
-        
+
     }//GEN-LAST:event_txtPassportNumberKeyReleased
 
     private void txtEmailAddress1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAddress1KeyReleased
-        
+
         // Validating the user entered email address 1 while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean emailA1Validation = Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText());
 
-        if(emailA1Validation == false){
+        if (emailA1Validation == false) {
             lblEmailAddress1Validator.setText("Invalid Value");
             lblEmailAddress1Validator.setForeground(Color.red);
 
-            if( (txtEmailAddress1.getText()).length() == 0 ){
+            if ((txtEmailAddress1.getText()).length() == 0) {
                 lblEmailAddress1Validator.setText("Enter Email Address 1");
                 lblEmailAddress1Validator.setForeground(Color.white);
             }
-        }
-        else if(emailA1Validation == true){
+        } else if (emailA1Validation == true) {
             lblEmailAddress1Validator.setText("Valid Value");
             lblEmailAddress1Validator.setForeground(Color.green);
         }
-        
+
     }//GEN-LAST:event_txtEmailAddress1KeyReleased
 
     private void txtEmailAddress2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAddress2KeyReleased
-        
-        
+
         // Validating the user entered email address 2 while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean emailA2Validation = Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)?", txtEmailAddress2.getText());
 
-        if(emailA2Validation == false){
+        if (emailA2Validation == false) {
             lblEmailAddress2Validator.setText("Invalid Value");
             lblEmailAddress2Validator.setForeground(Color.red);
 
-            if( (txtEmailAddress2.getText()).length() == 0 ){
+            if ((txtEmailAddress2.getText()).length() == 0) {
                 lblEmailAddress2Validator.setText("Enter Email Address 2");
                 lblEmailAddress2Validator.setForeground(Color.white);
             }
-        }
-        else if(emailA2Validation == true){
+        } else if (emailA2Validation == true) {
             lblEmailAddress2Validator.setText("Valid Value");
             lblEmailAddress2Validator.setForeground(Color.green);
         }
-        
-        
+
+
     }//GEN-LAST:event_txtEmailAddress2KeyReleased
 
     private void txtPhoneNumber1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumber1KeyReleased
-        
+
         // Validating the user entered phone number 1 while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean pNumber1Validation = Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText());
 
-        if(pNumber1Validation == false){
+        if (pNumber1Validation == false) {
             lblPhoneNumber1Validator.setText("Invalid Value");
             lblPhoneNumber1Validator.setForeground(Color.red);
 
-            if( (txtPhoneNumber1.getText()).length() == 0 ){
+            if ((txtPhoneNumber1.getText()).length() == 0) {
                 lblPhoneNumber1Validator.setText("Enter Phone Number 1");
                 lblPhoneNumber1Validator.setForeground(Color.white);
             }
-        }
-        else if(pNumber1Validation == true){
+        } else if (pNumber1Validation == true) {
             lblPhoneNumber1Validator.setText("Valid Value");
             lblPhoneNumber1Validator.setForeground(Color.green);
         }
-        
+
     }//GEN-LAST:event_txtPhoneNumber1KeyReleased
 
     private void txtPhoneNumber2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumber2KeyReleased
-        
+
         // Validating the user entered phone number 2 while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean pNumber2Validation = Pattern.matches("([0-9]{10})?", txtPhoneNumber2.getText());
 
-        if(pNumber2Validation == false){
+        if (pNumber2Validation == false) {
             lblPhoneNumber2Validator.setText("Invalid Value");
             lblPhoneNumber2Validator.setForeground(Color.red);
 
-            if( (txtPhoneNumber2.getText()).length() == 0 ){
+            if ((txtPhoneNumber2.getText()).length() == 0) {
                 lblPhoneNumber2Validator.setText("Enter Phone Number 2");
                 lblPhoneNumber2Validator.setForeground(Color.white);
             }
-        }
-        else if(pNumber2Validation == true){
+        } else if (pNumber2Validation == true) {
             lblPhoneNumber2Validator.setText("Valid Value");
             lblPhoneNumber2Validator.setForeground(Color.green);
         }
-        
+
     }//GEN-LAST:event_txtPhoneNumber2KeyReleased
 
     private void txtLaneAddressKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLaneAddressKeyReleased
-        
+
         // Validating the user entered lane address while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean lAddressValidation = Pattern.matches("([\\w ]+[, ]*)+", txtLaneAddress.getText());
 
-        if(lAddressValidation == false){
+        if (lAddressValidation == false) {
             lblLaneAddressValidator.setText("Invalid Value");
             lblLaneAddressValidator.setForeground(Color.red);
 
-            if( (txtLaneAddress.getText()).length() == 0 ){
+            if ((txtLaneAddress.getText()).length() == 0) {
                 lblLaneAddressValidator.setText("Enter Lane Address");
                 lblLaneAddressValidator.setForeground(Color.white);
             }
-        }
-        else if(lAddressValidation == true){
+        } else if (lAddressValidation == true) {
             lblLaneAddressValidator.setText("Valid Value");
             lblLaneAddressValidator.setForeground(Color.green);
         }
-        
+
     }//GEN-LAST:event_txtLaneAddressKeyReleased
 
     private void txtCityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCityKeyReleased
-        
+
         // Validating the user entered city while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean cityValidation = Pattern.matches("[a-zA-Z]+", txtCity.getText());
 
-        if(cityValidation == false){
+        if (cityValidation == false) {
             lblCityValidator.setText("Invalid Value");
             lblCityValidator.setForeground(Color.red);
 
-            if( (txtCity.getText()).length() == 0 ){
+            if ((txtCity.getText()).length() == 0) {
                 lblCityValidator.setText("Enter City");
                 lblCityValidator.setForeground(Color.white);
             }
-        }
-        else if(cityValidation == true){
+        } else if (cityValidation == true) {
             lblCityValidator.setText("Valid Value");
             lblCityValidator.setForeground(Color.green);
         }
-        
+
     }//GEN-LAST:event_txtCityKeyReleased
 
     private void txtInitialDepositKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInitialDepositKeyReleased
-        
+
         // Validating the user entered initial deposit while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean initialDepositValidation = Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText());
 
-        if(initialDepositValidation == false){
+        if (initialDepositValidation == false) {
             lblInitialDepositValidator.setText("Invalid Value");
             lblInitialDepositValidator.setForeground(Color.red);
-            
-            if( (txtInitialDeposit.getText()).length() == 0 ){
+
+            if ((txtInitialDeposit.getText()).length() == 0) {
                 lblInitialDepositValidator.setText("Enter Initial Deposit");
                 lblInitialDepositValidator.setForeground(Color.white);
             }
-        }
-        else if(initialDepositValidation == true){
+        } else if (initialDepositValidation == true) {
             lblInitialDepositValidator.setText("Valid Value");
             lblInitialDepositValidator.setForeground(Color.green);
         }
-        
+
         String userSelectedAccountType = (String) listAccountType.getSelectedItem();
-        
+
         // Declaring variable to store the minimum amount of initial deposit validity
         float minimumInitialDeposit = 0.00f;
-        
-        switch(userSelectedAccountType){
+
+        switch (userSelectedAccountType) {
             case "NORMAL SAVINGS":
                 minimumInitialDeposit = 100.00f;
                 break;
@@ -4949,36 +4816,42 @@ public class Teller extends javax.swing.JFrame {
                 minimumInitialDeposit = 1000.00f;
                 break;
         }
-        
+
         // Checking if the user entered value is lower to the minimum initial deposit amount
-        if( minimumInitialDeposit > (Float.parseFloat( txtInitialDeposit.getText())) ){
+        if (minimumInitialDeposit > (Float.parseFloat(txtInitialDeposit.getText()))) {
             lblInitialDepositValidator.setText("Invalid Value");
             lblInitialDepositValidator.setForeground(Color.red);
         }
-                
+
     }//GEN-LAST:event_txtInitialDepositKeyReleased
 
     private void txtFNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFNameKeyReleased
-        
+
         // Validating the user entered first name while user is typing
         // This uses a static method to compare the text with the regex expression
         Boolean fNameValidation = Pattern.matches("[a-zA-Z ]+", txtFName.getText());
 
-        if(fNameValidation == false){
+        if (fNameValidation == false) {
             lblFNameValidator.setText("Invalid Value");
             lblFNameValidator.setForeground(Color.red);
 
-            if( (txtFName.getText()).length() == 0 ){
+            if ((txtFName.getText()).length() == 0) {
                 lblFNameValidator.setText("Enter First Name");
                 lblFNameValidator.setForeground(Color.white);
             }
-        }
-        else if(fNameValidation == true){
+        } else if (fNameValidation == true) {
             lblFNameValidator.setText("Valid Value");
             lblFNameValidator.setForeground(Color.green);
         }
-        
+
     }//GEN-LAST:event_txtFNameKeyReleased
+
+    private void cardrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardrequestActionPerformed
+        // Request Debit Card
+        String AccNo = txtAccountNumber.getText();
+
+        new DebitCard(AccNo).setVisible(true);
+    }//GEN-LAST:event_cardrequestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -5046,6 +4919,7 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JButton btn_monthlyGenerateReport;
     private javax.swing.JButton btn_monthlyRetrieveRecords;
     private javax.swing.JButton btn_retrieveRecords;
+    private javax.swing.JButton cardrequest;
     private java.awt.Choice cmbMonthlyReportMonth;
     private javax.swing.JTextField currentBalance_Txt;
     private javax.swing.JLabel dAccount;

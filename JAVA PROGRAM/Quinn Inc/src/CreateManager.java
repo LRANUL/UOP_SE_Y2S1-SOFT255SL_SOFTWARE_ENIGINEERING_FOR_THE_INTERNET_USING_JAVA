@@ -28,7 +28,7 @@ public class CreateManager extends javax.swing.JFrame {
     Connection conn=null;
     PreparedStatement ps=null; 
     DBConnection db;
-    ResultSet rs= null;
+    ResultSet rs = null;
     
     
     public CreateManager() {

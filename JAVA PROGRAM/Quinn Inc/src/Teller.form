@@ -1271,7 +1271,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel2" pref="661" max="32767" attributes="0"/>
+                                  <Component id="jPanel2" pref="673" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1606,7 +1606,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel8" pref="661" max="32767" attributes="0"/>
+                                  <Component id="jPanel8" pref="673" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1966,7 +1966,7 @@
                                                               <Component id="lblImportantAsterisk11" min="-2" pref="56" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
-                                                      <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" attributes="0">
                                                       <Component id="lblCity" min="-2" pref="52" max="-2" attributes="0"/>
@@ -1984,10 +1984,7 @@
                                                       <Component id="lblPhoneNumber2" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" attributes="0">
-                                                              <Component id="lblPhoneNumber2Validator" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace max="32767" attributes="0"/>
-                                                          </Group>
+                                                          <Component id="lblPhoneNumber2Validator" min="-2" max="-2" attributes="0"/>
                                                           <Component id="txtPhoneNumber2" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
@@ -2060,15 +2057,6 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblAccountNumber" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                              <Component id="txtAccountNumber" min="-2" pref="167" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="btnGenerateAccountNumber" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="lblImportantAsterisk8" min="-2" pref="56" max="-2" attributes="0"/>
-                                          </Group>
                                           <Group type="102" attributes="0">
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Group type="102" attributes="0">
@@ -2091,6 +2079,20 @@
                                                   <Component id="lblImportantAsterisk6" alignment="1" min="-2" pref="56" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="cardrequest" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="lblAccountNumber" min="-2" pref="159" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                                      <Component id="txtAccountNumber" min="-2" pref="167" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="btnGenerateAccountNumber" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="lblImportantAsterisk8" min="-2" pref="56" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -2101,6 +2103,7 @@
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="btnCreateAccount" min="-2" pref="159" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="FName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lblAccountStatus" min="-2" pref="127" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -2108,7 +2111,6 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="lblImportantAsterisk10" min="-2" pref="56" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="FName_Lbl" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
@@ -2200,7 +2202,7 @@
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -2227,53 +2229,6 @@
                                               <Component id="txtEmailAddress1" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblEmailAddress1Validator" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblEmailAddress2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtEmailAddress2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblEmailAddress2Validator" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="lblPhoneNumber1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txtPhoneNumber1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lblImportantAsterisk5" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblPhoneNumber1Validator" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblPhoneNumber2Validator" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="lblLaneAddress" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txtLaneAddress" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="lblImportantAsterisk11" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Component id="lblLaneAddressValidator" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -2286,6 +2241,53 @@
                                       </Group>
                                   </Group>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblEmailAddress1Validator" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblEmailAddress2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtEmailAddress2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cardrequest" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblEmailAddress2Validator" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblPhoneNumber1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtPhoneNumber1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblImportantAsterisk5" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="lblPhoneNumber1Validator" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblPhoneNumber2Validator" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblLaneAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtLaneAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="lblImportantAsterisk11" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="lblLaneAddressValidator" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
@@ -2305,7 +2307,7 @@
                                       <Component id="lblCityValidator" min="-2" pref="22" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="135" max="32767" attributes="0"/>
+                              <EmptySpace pref="134" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2875,6 +2877,17 @@
                       </Properties>
                       <Events>
                         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtFNameKeyReleased"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="cardrequest">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Yu Gothic UI" size="16" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Request Debit Card"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cardrequestActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
