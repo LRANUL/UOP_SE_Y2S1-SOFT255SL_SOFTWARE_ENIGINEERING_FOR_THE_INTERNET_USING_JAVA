@@ -8,6 +8,6 @@
  *
  * @author ranul
  */
-public class Taxes {
+public interface Taxes {
     
 }

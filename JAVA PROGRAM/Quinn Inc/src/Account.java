@@ -8,7 +8,7 @@
  *
  * @author ranul
  */
-public abstract class Account implements Interest {
+public abstract class Account implements Interest,Taxes {
 
     private String accountNo;
     private double balance;
