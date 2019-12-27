@@ -14,7 +14,6 @@ private double balance;
 private double bonus;
 private String status;
 
-
     public String getAccountNo() {
         return accountNo;
     }

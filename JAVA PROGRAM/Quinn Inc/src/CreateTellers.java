@@ -326,7 +326,7 @@ public class CreateTellers extends javax.swing.JFrame {
         
         try {
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            String sql="INSERT INTO dbo.SystemLogin (Username, Password, slpPositionID,saAdminID_CreatedBy) VALUES (?,?,?,?)";
+            String sql="INSERT INTO dbo.SystemLogin (Username, Password, slpPositionID,saAdminID) VALUES (?,?,?,?)";
             ps=conn.prepareStatement(sql);
             ps.setString(1, Uname_Txt.getText());
             ps.setString(2, Password.getText());
@@ -349,7 +349,7 @@ public class CreateTellers extends javax.swing.JFrame {
             
            
             
-            String sql2="INSERT INTO dbo.Teller (Branch,FirstName,MiddleName,LastName,LaneAddress,City,EmailAddress,slSystemLoginID,saAdminID_RegisteredBy) VALUES(?,?,?,?,?,?,?,?,?)";
+            String sql2="INSERT INTO dbo.Teller (Branch,FirstName,MiddleName,LastName,LaneAddress,City,EmailAddress,slSystemLoginID) VALUES(?,?,?,?,?,?,?,?)";
             ps=conn.prepareStatement(sql2);
             ps.setString(1,branch_Txt.getText());
             ps.setString(2, Fname_Txt.getText());
@@ -359,7 +359,6 @@ public class CreateTellers extends javax.swing.JFrame {
             ps.setString(6, city_Txt.getText());
             ps.setString(7, Email_Txt.getText());
             ps.setString(8, login_Txt.getText());
-            ps.setString(9, adminID_Txt.getText());
             ps.executeUpdate();
             
             

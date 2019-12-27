@@ -8,9 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.proteanit.sql.DbUtils;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -527,7 +526,7 @@ public class AdminPanel extends javax.swing.JFrame {
             // get the data from row 
             String value=TellerINFO.getModel().getValueAt(row, 0).toString();
             //sql select statement
-            String sql="Delete from dbo.Teller where TellerID='"+value+"'";
+            String sql="Delete from dbo.Teller where TellerID=" + value;
             ps=conn.prepareStatement(sql);
             //executes the update
             ps.executeUpdate();
@@ -600,7 +599,7 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_insertTeller_BtnActionPerformed
 
     private void removeManagers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeManagers_BtnActionPerformed
-        DefaultTableModel model = (DefaultTableModel) ManagersINFO.getModel();
+        
         try {
               // The database connection
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
@@ -609,10 +608,10 @@ public class AdminPanel extends javax.swing.JFrame {
             // get the data from row 
             String value=ManagersINFO.getModel().getValueAt(row,0).toString();
             //sql select statement
-            String sql="DELETE FROM dbo.Manager WHERE ManagerId='"+value+"'";
-            PreparedStatement delete =conn.prepareStatement(sql);
+            String sql="DELETE FROM dbo.Manager  WHERE ManagerId="+value;
+            ps=conn.prepareStatement(sql);
             //executes the update
-            delete.executeUpdate();
+            ps.executeUpdate();
             //Display the message 
             JOptionPane.showMessageDialog(null,"Delete Successful ");
             

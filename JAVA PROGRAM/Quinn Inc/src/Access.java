@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 import DatabaseConnection.DBConnection;
-import Encryption.sha256;
+import Encription.sha256;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -14,15 +14,27 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 /**
  *
  * @author ranul
  */
 public class Access extends javax.swing.JFrame {
 
+    // Declaring username global variable
+    String usernameGlobal = "";
+    
+    // Declaring password global variable
+    String passwordHashGlobal = "";
+    
+    // Declaring systemLoginID global variable
+    String systemLoginIDGlobal = "";
+    
     // Creating new object to retreive current date and time
     LocalTimeAndDate ltad;
     
+    // Creating new object to retrieve database connection url
+    DBConnection db;
     
     /**
      * Creates new form Access
@@ -40,6 +52,9 @@ public class Access extends javax.swing.JFrame {
         // Setting current date
         jlbl_localDate.setText(ltad.retrieveLocalDate());
         
+        
+        // Creating new object to retrieve database connection url
+        db = new DBConnection();
     }
 
     /**
@@ -319,98 +334,137 @@ public class Access extends javax.swing.JFrame {
     }//GEN-LAST:event_password_TxtActionPerformed
 
     private void login_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_BtnActionPerformed
-         //Opens the Relevant Frame for Authorised User
+        //Opens the Relevant Frame for Authorised User
         PreparedStatement st;
         ResultSet rs;
         JComboBox cmb = (role_DD);
+        
+        // Retrieving the user selected option and assigning it
         Object selected = cmb.getSelectedItem();
         
-        String userName = username_Txt.getText();
-       //String password = String.valueOf(password_Txt.getPassword());
-       String password = sha256.hash(String.valueOf(password_Txt.getPassword()));
-       
+        // Retrieving user entered username and assigning it to the variable
+        usernameGlobal = username_Txt.getText();
         
-       
+        //String password = String.valueOf(password_Txt.getPassword());
+        // Retrieving the user enter password and calling the hash function via send the user entered password within a parameter
+        // And assigning the returned hash value to a variable
+        passwordHashGlobal = sha256.hash(String.valueOf(password_Txt.getPassword()));
         
-        String Qr = "SELECT * FROM dbo.SystemLogin WHERE username = ? AND password = ? And slpPositionID = ?";
+        String systemLoginPositionID = "";
+        
+        // Checking which option the user selected in the position selection 
+        switch (selected.toString()) {
+            case "Bank Teller":
+                systemLoginPositionID = "PT000001";
+                break;
+            case "Bank Manager":
+                systemLoginPositionID = "PT000002";
+                break;
+            case "Bank Data Administrator":
+                systemLoginPositionID = "PT000003";
+                break;
+            default:
+                systemLoginPositionID = "";
+                break;
+        }
+        
+        /* Assigning systmloginID global variable */
+        // Retrieving the systemloginID from the database
+        try (Connection retrievingSystemLoginIDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement retrievingSystemLoginIDStmt = retrievingSystemLoginIDCon.createStatement();) {
+
+            // Assigning SQL query
+            String retrievingSystemLoginIDSqlQuery = "SELECT SystemLoginID FROM SystemLogin WHERE Username = '"+ usernameGlobal +"' AND "
+                    + "Password = '"+ passwordHashGlobal +"' AND slpPositionID = '"+ systemLoginPositionID +"'";
+
+            // Executing SQL query
+            ResultSet retrievingSystemLoginIDRs = retrievingSystemLoginIDStmt.executeQuery(retrievingSystemLoginIDSqlQuery);
+
+            if (retrievingSystemLoginIDRs.next()) {
+                systemLoginIDGlobal = retrievingSystemLoginIDRs.getString(1);
+            }
+        }
+        // Error handling. Checks for SQL related issues
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                "Error Occurred in SQL Connection",
+                "New Customer Account Number Generation - ERROR!",
+                JOptionPane.ERROR_MESSAGE);              
+        }
+        /* Assigning systmloginID global variable */
+
+       
+        String Qr = "SELECT * FROM SystemLogin WHERE username = ? AND password = ? And slpPositionID = ?";
         
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
-            st = con.prepareStatement(Qr);
-           
-            st.setString(1, userName);
-            st.setString(2, password);
-            
-            switch (selected.toString()) {
-                case "Bank Teller":
-                    st.setString(3, "PT000001");
-                    break;
-                case "Bank Manager":
-                    st.setString(3, "PT000002");
-                    break;
-                case "Bank Data Administrator":
-                    st.setString(3, "PT000003");
-                    break;
-                default:
-                    st.setString(3, "");
-                    break;
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                Connection con = DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
+                st = con.prepareStatement(Qr);
+
+                st.setString(1, usernameGlobal);
+                st.setString(2, passwordHashGlobal);
+                st.setString(3, systemLoginPositionID);
+
+                rs = st.executeQuery();
+
+
+                if (cmb.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null,
+                        "Please Select your role position to continue.",
+                        "WARNING !",
+                        JOptionPane.WARNING_MESSAGE);
             }
-            
-         
-            rs = st.executeQuery();
-            
-            
-            
-            if (cmb.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null,
-                    "Please Select your role position to continue.",
-                    "WARNING !",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-            else if (String.valueOf(password_Txt.getPassword()).isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "Please Enter Your Credentials.",
-                    "ERROR !",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-            
-            
+                else if (String.valueOf(password_Txt.getPassword()).isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "Please Enter Your Credentials.",
+                        "ERROR !",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+
             else if (username_Txt.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "Please Enter Your Credentials.",
                     "ERROR !",
                     JOptionPane.ERROR_MESSAGE);
-        }  else if (selected.toString().equals("Bank Teller") && rs.next()) {
-            
-            Teller t1 = new Teller();
-            t1.setVisible(true);
-            //closes the login form prevent unnecessary tab creation
-            this.setVisible(false);
-        } else if (selected.toString().equals("Bank Manager") && rs.next()) {
-            Manager m1 = new Manager();
-            m1.setVisible(true);
-            //closes the login form prevent unnecessary tab creation
-            this.setVisible(false);
-        } else if (selected.toString().equals("Bank Data Administrator") && rs.next()) {
-            AdminPanel a1 = new AdminPanel();
-            a1.setVisible(true);
-            //closes the login form prevent unnecessary tab creation
-            this.setVisible(false);
-        }else {
-            JOptionPane.showMessageDialog(null,
-                    "Please Check Your Credentials .",
-                    "WARNING !",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-            
-        } catch (SQLException | ClassNotFoundException ex) {
+            }  
+            else if (selected.toString().equals("Bank Teller") && rs.next()) {
+                
+                // Passing the systemLoginID within the parameterized constructor while creating the new object
+                Teller t1 = new Teller(systemLoginIDGlobal); 
+                t1.setVisible(true);
+                //closes the login form prevent unnecessary tab creation
+                this.setVisible(false);
+            } 
+            else if (selected.toString().equals("Bank Manager") && rs.next()) {
+                Manager m1 = new Manager();
+                m1.setVisible(true);
+                //closes the login form prevent unnecessary tab creation
+                this.setVisible(false);
+            } 
+            else if (selected.toString().equals("Bank Data Administrator") && rs.next()) {
+                AdminPanel a1 = new AdminPanel();
+                a1.setVisible(true);
+                //closes the login form prevent unnecessary tab creation
+                this.setVisible(false);
+            }
+            else {
+                JOptionPane.showMessageDialog(null,
+                        "Please Check Your Credentials .",
+                        "WARNING !",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } 
+        catch (SQLException | ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(null,
                     "Please Check your Program Files",
                     "ERROR !",
                     JOptionPane.ERROR_MESSAGE);
-            
         }
+        
+        
 //      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019
         
 //      MORE AUTHETICATION FUNCTIONS WILL BE ADDED WITH DB IMPLEMENTATION 27/10/2019

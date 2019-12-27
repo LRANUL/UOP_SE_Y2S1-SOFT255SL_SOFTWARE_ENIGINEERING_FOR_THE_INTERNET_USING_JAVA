@@ -30,11 +30,13 @@ import com.itextpdf.text.pdf.*;
 import javax.swing.table.DefaultTableModel;
 
 import DatabaseConnection.DBConnection;
+import DatabaseConnection.NewAccountCreation;
+import DatabaseConnection.NewAccountNumberGeneration;
 import LocalTimeAndDate.LocalTimeAndDate;
 import ReportGeneration.ReportGeneration;
 import ReceiptGeneration.CustomerReceiptGeneration;
-import java.sql.PreparedStatement;
-import net.proteanit.sql.DbUtils;
+
+import java.util.regex.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -46,10 +48,22 @@ import net.proteanit.sql.DbUtils;
  * @author ranul
  */
 public class Teller extends javax.swing.JFrame {
-
-    static int basic = 25000000;
-    static int bonus = 45000000;
-    static int premier = 75000000;
+    
+    // Creating new object to insert account details
+    NewAccountCreation anc;
+    
+    // Declaring variable to retrieve user selected account type from the list
+    String userSelectedAccountType = "";
+    
+    // Declaring global variable to assign value in the parameterized constructor
+    String systemLoginIDGlobal = "";
+    
+    // Variable declaraton for assigning the new account number. 
+    // Variable declared here because now it is accessaible within the whole code block
+    int newAccountNumber = 0;
+    
+    // Creating a new object to call retrievingPreviousAccountNumber method
+    NewAccountNumberGeneration ang;
     
     // Creating new table model for customer transaction records table in daily reports tab
     DefaultTableModel customerTransactionRecordsTableModel;
@@ -72,21 +86,24 @@ public class Teller extends javax.swing.JFrame {
     // Creating new object to call procedure, receipt generating
     CustomerReceiptGeneration crg;
     
-     Connection conn = null;
-    PreparedStatement ps=null;
-    ResultSet rs=null;
-    
-    //creating a new object to get database connection class
-   
     /**
      * Creates new form Teller
      */
-    public Teller() {
+    public Teller() { // Default constructor
         initComponents();
         date.setText(java.time.LocalDate.now().toString());
         
+        // Making the account number textfield in 'NEW Customer' panel not editable by the user
+        txtAccountNumber.setEditable(false);
+        
         // Creating new object to retrieve current date and time
         ltad = new LocalTimeAndDate();
+        
+        // Creating new object to insert account details
+        anc = new NewAccountCreation();
+        
+        // Creating a new object to call retrievingPreviousAccountNumber method
+        ang = new NewAccountNumberGeneration();
         
         // Creating new object to retrieve database connection url
         db = new DBConnection();
@@ -150,8 +167,7 @@ public class Teller extends javax.swing.JFrame {
         customerTransactionRecordsTableModel.addColumn("Account Type");
         customerTransactionRecordsTableModel.addColumn("Amount");
         customerTransactionRecordsTableModel.addColumn("Date Time");
-          
-        
+ 
         // Automatic daily customer transaction report generation
         // Retrieving current date
         String localDate = ltad.retrieveLocalDate();
@@ -1052,6 +1068,12 @@ public class Teller extends javax.swing.JFrame {
             }
         }
     }
+    
+    
+    public Teller(String systemLoginIDTeller){ // Parameterized constructor, used to pass variable values among classes
+        this(); // This statement allows for the default constructor to run
+        systemLoginIDGlobal = systemLoginIDTeller;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1066,6 +1088,8 @@ public class Teller extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         logout = new javax.swing.JMenuItem();
         jDialog1 = new javax.swing.JDialog();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         NewUser = new javax.swing.JTabbedPane();
         savingsAcc_pnl = new javax.swing.JTabbedPane();
@@ -1158,25 +1182,61 @@ public class Teller extends javax.swing.JFrame {
         jtb_transactionDetailsRecords = new javax.swing.JTable();
         jPanel16 = new javax.swing.JPanel();
         nCustomer_pnl = new javax.swing.JPanel();
-        ACCTType_Lbl = new javax.swing.JLabel();
+        lblAccountType = new javax.swing.JLabel();
         FName_Lbl = new javax.swing.JLabel();
-        ACCTNumber_Lbl = new javax.swing.JLabel();
-        PhoneNum_Lbl = new javax.swing.JLabel();
-        IDeposit_Lbl = new javax.swing.JLabel();
-        Mail_Lbl = new javax.swing.JLabel();
-        NewFName_Txt = new javax.swing.JTextField();
-        LName_Lbl = new javax.swing.JLabel();
-        NewLName_Txt = new javax.swing.JTextField();
-        listOfAccountTypes = new javax.swing.JComboBox<>();
-        NewMail_Txt = new javax.swing.JTextField();
-        IDepositAMT_Txt = new javax.swing.JTextField();
-        GeneratedAccountNo_Txt = new javax.swing.JTextField();
-        NewPhoneNum_Txt = new javax.swing.JTextField();
-        accNoGen_btn = new javax.swing.JButton();
-        accNoGen1 = new javax.swing.JButton();
-        PNumber_Lbl = new javax.swing.JLabel();
-        Nationals_Lbl = new javax.swing.JTextField();
-        reqcard = new javax.swing.JToggleButton();
+        lblAccountNumber = new javax.swing.JLabel();
+        lblPhoneNumber1 = new javax.swing.JLabel();
+        lblInitialDeposit = new javax.swing.JLabel();
+        lblEmailAddress1 = new javax.swing.JLabel();
+        txtMName = new javax.swing.JTextField();
+        lblLName = new javax.swing.JLabel();
+        txtLName = new javax.swing.JTextField();
+        listAccountType = new javax.swing.JComboBox<>();
+        txtEmailAddress1 = new javax.swing.JTextField();
+        txtInitialDeposit = new javax.swing.JTextField();
+        txtAccountNumber = new javax.swing.JTextField();
+        txtPhoneNumber1 = new javax.swing.JTextField();
+        btnGenerateAccountNumber = new javax.swing.JButton();
+        btnCreateAccount = new javax.swing.JButton();
+        lblPassportNumber = new javax.swing.JLabel();
+        txtPassportNumber = new javax.swing.JTextField();
+        lblMName = new javax.swing.JLabel();
+        lblFName = new javax.swing.JLabel();
+        FName_Lbl3 = new javax.swing.JLabel();
+        lblEmailAddress2 = new javax.swing.JLabel();
+        txtEmailAddress2 = new javax.swing.JTextField();
+        lblPhoneNumber2 = new javax.swing.JLabel();
+        txtPhoneNumber2 = new javax.swing.JTextField();
+        lblImportantAsterisk1 = new javax.swing.JLabel();
+        lblImportantAsterisk2 = new javax.swing.JLabel();
+        lblImportantAsterisk3 = new javax.swing.JLabel();
+        lblImportantAsterisk4 = new javax.swing.JLabel();
+        lblImportantAsterisk5 = new javax.swing.JLabel();
+        lblImportantAsterisk6 = new javax.swing.JLabel();
+        lblImportantAsterisk7 = new javax.swing.JLabel();
+        lblImportantAsterisk8 = new javax.swing.JLabel();
+        btnReset = new javax.swing.JButton();
+        lblLaneAddress = new javax.swing.JLabel();
+        lblCity = new javax.swing.JLabel();
+        txtCity = new javax.swing.JTextField();
+        lblImportantAsterisk9 = new javax.swing.JLabel();
+        txtLaneAddress = new javax.swing.JTextField();
+        lblImportantAsterisk11 = new javax.swing.JLabel();
+        lblAccountStatus = new javax.swing.JLabel();
+        listAccountStatus = new javax.swing.JComboBox<>();
+        lblImportantAsterisk10 = new javax.swing.JLabel();
+        lblFNameValidator = new javax.swing.JLabel();
+        lblMNameValidator = new javax.swing.JLabel();
+        lblLNameValidator = new javax.swing.JLabel();
+        lblPassportNumberValidator = new javax.swing.JLabel();
+        lblEmailAddress1Validator = new javax.swing.JLabel();
+        lblEmailAddress2Validator = new javax.swing.JLabel();
+        lblPhoneNumber1Validator = new javax.swing.JLabel();
+        lblPhoneNumber2Validator = new javax.swing.JLabel();
+        lblLaneAddressValidator = new javax.swing.JLabel();
+        lblCityValidator = new javax.swing.JLabel();
+        lblInitialDepositValidator = new javax.swing.JLabel();
+        txtFName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -1215,6 +1275,19 @@ public class Teller extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jTable1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setSize(new java.awt.Dimension(1200, 800));
@@ -1222,10 +1295,8 @@ public class Teller extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(18, 63, 72));
 
         NewUser.setBackground(new java.awt.Color(255, 204, 255));
-        NewUser.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         savingsAcc_pnl.setBackground(new java.awt.Color(255, 255, 204));
-        savingsAcc_pnl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         dOption_pnl.setBackground(new java.awt.Color(0, 123, 146));
 
@@ -1277,7 +1348,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(ClearSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 496, Short.MAX_VALUE)
                 .addComponent(SubmitSA, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1383,7 +1454,6 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
-        jcb_autoPreviewReceipt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jcb_autoPreviewReceipt.setForeground(new java.awt.Color(255, 255, 255));
         jcb_autoPreviewReceipt.setText("Auto Preview Receipt");
 
@@ -1480,14 +1550,14 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(Deposit_pnlLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         Deposit_pnlLayout.setVerticalGroup(
             Deposit_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Deposit_pnlLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -1550,7 +1620,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(ClearSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 435, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 496, Short.MAX_VALUE)
                 .addComponent(btnWithdrawalSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1608,7 +1678,6 @@ public class Teller extends javax.swing.JFrame {
         WDRL_Lbl.setForeground(new java.awt.Color(255, 255, 255));
         WDRL_Lbl.setText("Withdraw Amount:");
 
-        jcb_autoPreviewReceiptWithdrawal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jcb_autoPreviewReceiptWithdrawal.setForeground(new java.awt.Color(255, 255, 255));
         jcb_autoPreviewReceiptWithdrawal.setText("Auto Preview Receipt");
 
@@ -1671,7 +1740,7 @@ public class Teller extends javax.swing.JFrame {
         withdrawal_pnlLayout.setHorizontalGroup(
             withdrawal_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, withdrawal_pnlLayout.createSequentialGroup()
-                .addContainerGap(89, Short.MAX_VALUE)
+                .addContainerGap(99, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
         );
@@ -1680,7 +1749,7 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(withdrawal_pnlLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
 
         jSplitPane5.setRightComponent(withdrawal_pnl);
@@ -1690,7 +1759,6 @@ public class Teller extends javax.swing.JFrame {
         NewUser.addTab("Savings Account", savingsAcc_pnl);
 
         mInterest_pnl.setBackground(new java.awt.Color(255, 204, 255));
-        mInterest_pnl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         jPanel6.setBackground(new java.awt.Color(0, 123, 146));
 
@@ -1746,7 +1814,7 @@ public class Teller extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(323, Short.MAX_VALUE)
+                .addContainerGap(328, Short.MAX_VALUE)
                 .addComponent(processInterest_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(315, 315, 315))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1768,7 +1836,7 @@ public class Teller extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(238, Short.MAX_VALUE)
+                .addContainerGap(241, Short.MAX_VALUE)
                 .addComponent(FetchAcc_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(88, 88, 88)
                 .addComponent(processInterest_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1791,12 +1859,12 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
+                .addContainerGap(162, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
         );
@@ -1806,7 +1874,6 @@ public class Teller extends javax.swing.JFrame {
         NewUser.addTab("Monthly Interests", mInterest_pnl);
 
         reports_pnl.setBackground(new java.awt.Color(204, 204, 255));
-        reports_pnl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
         rOptions_jbl.setBackground(new java.awt.Color(0, 123, 146));
 
@@ -1858,7 +1925,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(btn_retrieveRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110)
                 .addComponent(btn_generateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
                 .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1872,11 +1939,9 @@ public class Teller extends javax.swing.JFrame {
         jPanel2.setMaximumSize(new java.awt.Dimension(3270, 3210));
         jPanel2.setPreferredSize(new java.awt.Dimension(1100, 535));
 
-        lbl_autoStatus.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbl_autoStatus.setForeground(new java.awt.Color(255, 255, 255));
         lbl_autoStatus.setText("Automatic Report Generation Status: ");
 
-        jcb_autoPreviewReport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jcb_autoPreviewReport.setForeground(new java.awt.Color(255, 255, 255));
         jcb_autoPreviewReport.setText("Auto Preview Report");
 
@@ -1903,7 +1968,7 @@ public class Teller extends javax.swing.JFrame {
         lbl_manualDailyCT1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_manualDailyCT1.setText("Manual Daily Customer Transaction Report");
 
-        lbl_selectDate1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbl_selectDate1.setFont(new java.awt.Font("Yu Gothic UI", 0, 11)); // NOI18N
         lbl_selectDate1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_selectDate1.setText("Select a Date:");
 
@@ -1989,13 +2054,13 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(dReport_pnlLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         dReport_pnlLayout.setVerticalGroup(
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2053,7 +2118,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(btn_monthlyRetrieveRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110)
                 .addComponent(btn_monthlyGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
                 .addComponent(btn_monthlyClear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -2067,11 +2132,9 @@ public class Teller extends javax.swing.JFrame {
         jPanel8.setMaximumSize(new java.awt.Dimension(3270, 3210));
         jPanel8.setPreferredSize(new java.awt.Dimension(1100, 535));
 
-        lbl_mautoStatus1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbl_mautoStatus1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_mautoStatus1.setText("Automatic Report Generation Status: ");
 
-        jcb_monthlyAutoPreviewReport.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jcb_monthlyAutoPreviewReport.setForeground(new java.awt.Color(255, 255, 255));
         jcb_monthlyAutoPreviewReport.setText("Auto Preview Report");
 
@@ -2098,7 +2161,7 @@ public class Teller extends javax.swing.JFrame {
         lbl_mmanualDailyCT2.setForeground(new java.awt.Color(255, 255, 255));
         lbl_mmanualDailyCT2.setText("Manual Monthly Customer Transaction Report");
 
-        lbl_selectMonth.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lbl_selectMonth.setFont(new java.awt.Font("Yu Gothic UI", 0, 11)); // NOI18N
         lbl_selectMonth.setForeground(new java.awt.Color(255, 255, 255));
         lbl_selectMonth.setText("Select a Month:");
 
@@ -2214,7 +2277,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnl1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2228,94 +2291,254 @@ public class Teller extends javax.swing.JFrame {
 
         nCustomer_pnl.setBackground(new java.awt.Color(18, 63, 72));
 
-        ACCTType_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        ACCTType_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        ACCTType_Lbl.setText("Account Type");
+        lblAccountType.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblAccountType.setForeground(new java.awt.Color(255, 255, 255));
+        lblAccountType.setText("Account Type");
 
-        FName_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        FName_Lbl.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         FName_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        FName_Lbl.setText("First Name");
+        FName_Lbl.setText("Account Details ");
 
-        ACCTNumber_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        ACCTNumber_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        ACCTNumber_Lbl.setText("Account Number");
+        lblAccountNumber.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblAccountNumber.setForeground(new java.awt.Color(255, 255, 255));
+        lblAccountNumber.setText("Account Number");
 
-        PhoneNum_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        PhoneNum_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        PhoneNum_Lbl.setText("Phone                    +44");
+        lblPhoneNumber1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblPhoneNumber1.setForeground(new java.awt.Color(255, 255, 255));
+        lblPhoneNumber1.setText("Phone Number 1     +44");
 
-        IDeposit_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        IDeposit_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        IDeposit_Lbl.setText("Initial Deposit");
+        lblInitialDeposit.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblInitialDeposit.setForeground(new java.awt.Color(255, 255, 255));
+        lblInitialDeposit.setText("Initial Deposit");
 
-        Mail_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        Mail_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        Mail_Lbl.setText("Email");
+        lblEmailAddress1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblEmailAddress1.setForeground(new java.awt.Color(255, 255, 255));
+        lblEmailAddress1.setText("Email Address 1");
 
-        NewFName_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        NewFName_Txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NewFName_TxtActionPerformed(evt);
+        txtMName.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtMName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMNameKeyReleased(evt);
             }
         });
 
-        LName_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        LName_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        LName_Lbl.setText("Last Name");
+        lblLName.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblLName.setForeground(new java.awt.Color(255, 255, 255));
+        lblLName.setText("Last Name");
 
-        NewLName_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-
-        listOfAccountTypes.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        listOfAccountTypes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ACCOUNT TYPE--", "NORMAL SAVINGS", "BONUS SAVINGS", "PRIMIER SAVINGS" }));
-        listOfAccountTypes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listOfAccountTypesActionPerformed(evt);
+        txtLName.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtLName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtLNameKeyReleased(evt);
             }
         });
 
-        NewMail_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-
-        IDepositAMT_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        IDepositAMT_Txt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        IDepositAMT_Txt.setText("0.00");
-
-        GeneratedAccountNo_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        GeneratedAccountNo_Txt.addActionListener(new java.awt.event.ActionListener() {
+        listAccountType.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        listAccountType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ACCOUNT TYPE--", "NORMAL SAVINGS", "BONUS SAVINGS", "PREMIER SAVINGS" }));
+        listAccountType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GeneratedAccountNo_TxtActionPerformed(evt);
+                listAccountTypeActionPerformed(evt);
             }
         });
 
-        NewPhoneNum_Txt.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-
-        accNoGen_btn.setBackground(new java.awt.Color(102, 255, 102));
-        accNoGen_btn.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        accNoGen_btn.setText("Generate");
-        accNoGen_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accNoGen_btnActionPerformed(evt);
+        txtEmailAddress1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtEmailAddress1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailAddress1KeyReleased(evt);
             }
         });
 
-        accNoGen1.setBackground(new java.awt.Color(102, 255, 102));
-        accNoGen1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        accNoGen1.setText("Create Account");
-        accNoGen1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accNoGen1ActionPerformed(evt);
+        txtInitialDeposit.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtInitialDeposit.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtInitialDeposit.setText("0.00");
+        txtInitialDeposit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtInitialDepositKeyReleased(evt);
             }
         });
 
-        PNumber_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        PNumber_Lbl.setForeground(new java.awt.Color(255, 255, 255));
-        PNumber_Lbl.setText("Passport Number / ID Number (Foreign Nationals)");
+        txtAccountNumber.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
 
-        Nationals_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtPhoneNumber1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtPhoneNumber1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneNumber1KeyReleased(evt);
+            }
+        });
 
-        reqcard.setText("REQUEST CARD");
-        reqcard.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerateAccountNumber.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        btnGenerateAccountNumber.setText("Generate");
+        btnGenerateAccountNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reqcardActionPerformed(evt);
+                btnGenerateAccountNumberActionPerformed(evt);
+            }
+        });
+
+        btnCreateAccount.setText("Create Account");
+        btnCreateAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateAccountActionPerformed(evt);
+            }
+        });
+
+        lblPassportNumber.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblPassportNumber.setForeground(new java.awt.Color(255, 255, 255));
+        lblPassportNumber.setText("Passport Number");
+
+        txtPassportNumber.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtPassportNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPassportNumberKeyReleased(evt);
+            }
+        });
+
+        lblMName.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblMName.setForeground(new java.awt.Color(255, 255, 255));
+        lblMName.setText("Middle Name");
+
+        lblFName.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblFName.setForeground(new java.awt.Color(255, 255, 255));
+        lblFName.setText("First Name");
+
+        FName_Lbl3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        FName_Lbl3.setForeground(new java.awt.Color(255, 255, 255));
+        FName_Lbl3.setText("Customer Details ");
+
+        lblEmailAddress2.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblEmailAddress2.setForeground(new java.awt.Color(255, 255, 255));
+        lblEmailAddress2.setText("Email Address 2");
+
+        txtEmailAddress2.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtEmailAddress2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailAddress2KeyReleased(evt);
+            }
+        });
+
+        lblPhoneNumber2.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblPhoneNumber2.setForeground(new java.awt.Color(255, 255, 255));
+        lblPhoneNumber2.setText("Phone Number 2     +44");
+
+        txtPhoneNumber2.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtPhoneNumber2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPhoneNumber2KeyReleased(evt);
+            }
+        });
+
+        lblImportantAsterisk1.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk1.setText("*");
+
+        lblImportantAsterisk2.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk2.setText("*");
+
+        lblImportantAsterisk3.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk3.setText("*");
+
+        lblImportantAsterisk4.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk4.setText("*");
+
+        lblImportantAsterisk5.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk5.setText("*");
+
+        lblImportantAsterisk6.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk6.setText("*");
+
+        lblImportantAsterisk7.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk7.setText("*");
+
+        lblImportantAsterisk8.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk8.setText("*");
+
+        btnReset.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        btnReset.setForeground(new java.awt.Color(255, 255, 255));
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
+        lblLaneAddress.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblLaneAddress.setForeground(new java.awt.Color(255, 255, 255));
+        lblLaneAddress.setText("Lane Address");
+
+        lblCity.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblCity.setForeground(new java.awt.Color(255, 255, 255));
+        lblCity.setText("City");
+
+        txtCity.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtCity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCityKeyReleased(evt);
+            }
+        });
+
+        lblImportantAsterisk9.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk9.setText("*");
+
+        txtLaneAddress.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtLaneAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtLaneAddressKeyReleased(evt);
+            }
+        });
+
+        lblImportantAsterisk11.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk11.setText("*");
+
+        lblAccountStatus.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblAccountStatus.setForeground(new java.awt.Color(255, 255, 255));
+        lblAccountStatus.setText("Account Status");
+
+        listAccountStatus.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        listAccountStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ACCOUNT STATUS--", "ACTIVE", "ONHOLD", "DISABLED" }));
+        listAccountStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listAccountStatusActionPerformed(evt);
+            }
+        });
+
+        lblImportantAsterisk10.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk10.setText("*");
+
+        lblFNameValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblFNameValidator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblMNameValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblMNameValidator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblLNameValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblLNameValidator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblPassportNumberValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblPassportNumberValidator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblEmailAddress1Validator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblEmailAddress1Validator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblEmailAddress2Validator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblEmailAddress2Validator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblPhoneNumber1Validator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblPhoneNumber1Validator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblPhoneNumber2Validator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblPhoneNumber2Validator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblLaneAddressValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblLaneAddressValidator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblCityValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblCityValidator.setForeground(new java.awt.Color(255, 255, 255));
+        lblCityValidator.setText("Enter City");
+
+        lblInitialDepositValidator.setForeground(new java.awt.Color(255, 255, 255));
+
+        txtFName.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtFName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFNameKeyReleased(evt);
             }
         });
 
@@ -2324,97 +2547,288 @@ public class Teller extends javax.swing.JFrame {
         nCustomer_pnlLayout.setHorizontalGroup(
             nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ACCTType_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Mail_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(PhoneNum_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(IDeposit_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ACCTNumber_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(NewMail_Txt, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(NewPhoneNum_Txt, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(IDepositAMT_Txt, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(GeneratedAccountNo_Txt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31)
-                                .addComponent(accNoGen_btn))
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(listOfAccountTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(136, 136, 136)
+                        .addComponent(FName_Lbl3))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(87, 87, 87)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LName_Lbl)
-                            .addComponent(FName_Lbl))
-                        .addGap(106, 106, 106)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(NewLName_Txt)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                .addComponent(lblMName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(305, 305, 305))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addComponent(lblPhoneNumber1)
+                                .addGap(18, 18, 18)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblPhoneNumber1Validator)
+                                        .addGap(213, 213, 213))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(txtPhoneNumber1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblImportantAsterisk5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(115, 115, 115))))
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addComponent(NewFName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addComponent(PNumber_Lbl)
-                        .addGap(18, 18, 18)
-                        .addComponent(Nationals_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(482, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblLaneAddressValidator)
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(lblImportantAsterisk11, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 1, Short.MAX_VALUE))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(76, 76, 76)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(txtCity)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(lblImportantAsterisk9, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(lblCityValidator)))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblPhoneNumber2)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(lblPhoneNumber2Validator)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(txtPhoneNumber2))))
+                                .addGap(160, 160, 160))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblLName)
+                                            .addComponent(lblFName, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(27, 27, 27)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblLNameValidator)
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(lblFNameValidator)
+                                                        .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtMName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(lblMNameValidator)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblImportantAsterisk2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lblImportantAsterisk1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblEmailAddress2Validator)
+                                            .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblPassportNumber))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblPassportNumberValidator)
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(txtPassportNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblImportantAsterisk3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(lblEmailAddress1Validator)
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblImportantAsterisk4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                        .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                        .addComponent(reqcard)
-                        .addGap(27, 27, 27))))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGenerateAccountNumber)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblImportantAsterisk8, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblAccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(listAccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblInitialDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblInitialDepositValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtInitialDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblImportantAsterisk7, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblImportantAsterisk6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addComponent(btnReset)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addComponent(lblAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblImportantAsterisk10, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(FName_Lbl))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         nCustomer_pnlLayout.setVerticalGroup(
             nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(reqcard)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addComponent(FName_Lbl)
-                        .addGap(20, 20, 20)
-                        .addComponent(LName_Lbl))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                        .addComponent(NewFName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19)
-                        .addComponent(NewLName_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ACCTType_Lbl)
-                    .addComponent(listOfAccountTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Nationals_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PNumber_Lbl))
-                .addGap(18, 18, 18)
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Mail_Lbl)
-                    .addComponent(NewMail_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PhoneNum_Lbl)
-                    .addComponent(NewPhoneNum_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(IDeposit_Lbl)
-                    .addComponent(IDepositAMT_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ACCTNumber_Lbl)
-                    .addComponent(GeneratedAccountNo_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accNoGen_btn))
-                .addGap(30, 30, 30)
-                .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGap(158, 158, 158)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblImportantAsterisk6)
+                            .addComponent(txtInitialDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblInitialDeposit))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblInitialDepositValidator))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(FName_Lbl3)
+                            .addComponent(FName_Lbl))
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(listAccountType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblAccountType)
+                                    .addComponent(lblImportantAsterisk7))
+                                .addGap(25, 25, 25))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblImportantAsterisk1)
+                                    .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblFName))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblFNameValidator)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMName)
+                            .addComponent(txtMName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMNameValidator)))
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAccountNumber)
+                            .addComponent(btnGenerateAccountNumber)
+                            .addComponent(lblImportantAsterisk8)))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                .addComponent(lblImportantAsterisk2)
+                                .addGap(14, 14, 14))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addGap(7, 7, 7)
+                                        .addComponent(lblLName))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(1, 1, 1)))
+                        .addComponent(lblLNameValidator)))
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtPassportNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblPassportNumber))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPassportNumberValidator))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(lblImportantAsterisk3)))
+                        .addGap(7, 7, 7)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(lblImportantAsterisk4))
+                            .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblEmailAddress1)
+                                .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEmailAddress1Validator)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEmailAddress2)
+                            .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEmailAddress2Validator)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblPhoneNumber1)
+                                    .addComponent(txtPhoneNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblImportantAsterisk5)
+                                .addGap(14, 14, 14)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPhoneNumber1Validator)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPhoneNumber2)
+                            .addComponent(txtPhoneNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPhoneNumber2Validator)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblLaneAddress)
+                                    .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                .addComponent(lblImportantAsterisk11)
+                                .addGap(19, 19, 19)))
+                        .addComponent(lblLaneAddressValidator))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblImportantAsterisk10)
+                            .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblAccountStatus)))))
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnReset)))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblImportantAsterisk9)
+                            .addComponent(lblCity))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCityValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -2422,16 +2836,16 @@ public class Teller extends javax.swing.JFrame {
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(nCustomer_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         NewUser.addTab("NEW Customer", jPanel16);
@@ -2472,8 +2886,7 @@ public class Teller extends javax.swing.JFrame {
                     .addComponent(jlbl_localTime, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(20, 20, 20))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(NewUser, javax.swing.GroupLayout.PREFERRED_SIZE, 1156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -2491,12 +2904,10 @@ public class Teller extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jlbl_localDate)))
                 .addGap(18, 18, 18)
-                .addComponent(NewUser)
-                .addContainerGap())
+                .addComponent(NewUser))
         );
 
         jMenuBar2.setBackground(new java.awt.Color(18, 63, 72));
-        jMenuBar2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jMenu2.setText("File");
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
@@ -2506,7 +2917,6 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem1.setText("Manager Access");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2515,7 +2925,6 @@ public class Teller extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
-        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem2.setText("Logout");
         jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -2541,59 +2950,12 @@ public class Teller extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void NewFName_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewFName_TxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NewFName_TxtActionPerformed
-
-    private void accNoGen_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNoGen_btnActionPerformed
-        // Token Generator to Generate New Account Numbers
-        String AccountType = (String) listOfAccountTypes.getSelectedItem();
-        if (AccountType == "--SELECT ACCOUNT TYPE--") {
-            JOptionPane.showMessageDialog(null,
-                    "Please An Account Type !",
-                    "Account Generation Halted!",
-                    JOptionPane.WARNING_MESSAGE);
-        } else if (AccountType == "NORMAL SAVINGS") {
-            
-            try {
-            //connection to the databbase
-            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            //The select statement
-            String sql="SELECT TOP 1 * FROM AccountBonusSavings ORDER BY BSAccountNumber DESC";
-            ps=conn.prepareStatement(sql);
-            //executes the query
-            rs=ps.executeQuery();
-            String account  = rs.getString("BSAccountNumber");
-            GeneratedAccountNo_Txt.setText(account);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-            
-        } else if (AccountType == "BONUS SAVINGS") {
-            int generatedAccount = bonus;
-            bonus += 1;
-
-            GeneratedAccountNo_Txt.setText(String.valueOf(generatedAccount));
-        } else if (AccountType == "PRIMIER SAVINGS") {
-            int generatedAccount = premier;
-            premier += 1;
-
-            GeneratedAccountNo_Txt.setText(String.valueOf(generatedAccount));
-        }
-    }//GEN-LAST:event_accNoGen_btnActionPerformed
-
-    private void GeneratedAccountNo_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GeneratedAccountNo_TxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GeneratedAccountNo_TxtActionPerformed
 
     private void WHolder_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WHolder_TxtActionPerformed
         // TODO add your handling code here:
@@ -2718,20 +3080,6 @@ public class Teller extends javax.swing.JFrame {
         DEPAmount_Txt.setText("0.00");
         FinalDeposit_Txt.setText("");
     }//GEN-LAST:event_ClearSA_BtnActionPerformed
-
-    private void listOfAccountTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfAccountTypesActionPerformed
-        String AccountType = (String) listOfAccountTypes.getSelectedItem();
-        if (AccountType == "--SELECT ACCOUNT TYPE--") {
-            IDeposit_Lbl.setText("Initial Deposit");
-
-        } else if (AccountType == "NORMAL SAVINGS") {
-            IDeposit_Lbl.setText("Initial Deposit (£100)");
-        } else if (AccountType == "BONUS SAVINGS") {
-            IDeposit_Lbl.setText("Initial Deposit (£300)");
-        } else if (AccountType == "PRIMIER SAVINGS") {
-            IDeposit_Lbl.setText("Initial Deposit (£1000)");
-        }
-    }//GEN-LAST:event_listOfAccountTypesActionPerformed
 
     private void jMenu2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseEntered
         // TODO add your handling code here:
@@ -3757,16 +4105,880 @@ public class Teller extends javax.swing.JFrame {
           
     }//GEN-LAST:event_btnWithdrawalSubmitActionPerformed
 
-    private void accNoGen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNoGen1ActionPerformed
+    private void listAccountStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAccountStatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_accNoGen1ActionPerformed
+    }//GEN-LAST:event_listAccountStatusActionPerformed
 
-    private void reqcardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqcardActionPerformed
-        //request card for customer
-        String AccNo = GeneratedAccountNo_Txt.getText();
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+
+        // Clearing all the user entered values from the textboxes and clearing the validation labels
+        txtFName.setText("");
+        lblFNameValidator.setText("");
         
-        new DebitCard(AccNo).setVisible(true);
-    }//GEN-LAST:event_reqcardActionPerformed
+        txtMName.setText("");
+        lblMNameValidator.setText("");
+        
+        txtLName.setText("");
+        lblLNameValidator.setText("");
+        
+        txtPassportNumber.setText("");
+        lblPassportNumberValidator.setText("");
+        
+        txtEmailAddress1.setText("");
+        lblEmailAddress1Validator.setText("");
+        
+        txtEmailAddress2.setText("");
+        lblEmailAddress2Validator.setText("");
+        
+        txtPhoneNumber1.setText("");
+        lblPhoneNumber1Validator.setText("");
+        
+        txtPhoneNumber2.setText("");
+        lblPhoneNumber2Validator.setText("");
+        
+        txtLaneAddress.setText("");
+        lblLaneAddressValidator.setText("");
+        
+        txtCity.setText("");
+        lblCityValidator.setText("");
+        
+        listAccountType.setSelectedIndex(0);
+        
+        txtInitialDeposit.setText("0.00");
+        lblInitialDepositValidator.setText("");
+        
+        txtAccountNumber.setText("");
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
+
+        // Value Example: Henry
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("[a-zA-Z]+", txtMName.getText())));
+
+        // Value Example: Jacksone
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("[a-zA-Z]+", txtLName.getText())));
+
+        // Value Example: 330022102
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("[0-9]{9}+", txtPassportNumber.getText())));
+
+        // Value Example: sample@sample.sample
+        // Value insertion is mandatory
+        // Must use '\' bacnkslash to add a backslash in quoatation since it is a speacial character used for instances like '\n'
+        // '\w' is the short form of '[a-zA-Z0-9]'
+        System.out.println((Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText())));
+
+        // Value Example: 2587419635
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText())));
+
+        // Value Example: A43, Beach Lane
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("([\\w]+)+", txtLaneAddress.getText())));
+
+        // Value Example: Liverpool
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("[\\w]+", txtCity.getText())));
+
+        // Checking if the user has selected a account type
+        // Value insertion is mandatory
+        System.out.println(((listAccountType.getSelectedItem()).toString() != "--SELECT ACCOUNT TYPE--"));
+
+        // Value Example: 150.00
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText())));
+        System.out.println(txtInitialDeposit.getText());
+        // Value Example: 45000002
+        // Value insertion is mandatory
+        System.out.println((Pattern.matches("([0-9]{8})+", txtAccountNumber.getText())));
+
+        // Checking if the user has selected a account status
+        // Value insertion is mandatory
+        System.out.println((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--");
+
+        // Checking if valid is inserted all the required fields
+        // This uses a static method to compare the text with the regex expression
+        if(
+            // Value Example: Henry
+            // Value insertion is mandatory
+            (Pattern.matches("[a-zA-Z ]+", txtMName.getText()) == true) &&
+
+            // Value Example: Jacksone
+            // Value insertion is mandatory
+            (Pattern.matches("[a-zA-Z ]+", txtLName.getText()) == true) &&
+
+            // Value Example: 330022102
+            // Value insertion is mandatory
+            (Pattern.matches("[0-9]{9}+", txtPassportNumber.getText()) == true) &&
+
+            // Value Example: sample@sample.sample
+            // Value insertion is mandatory
+            // Must use '\' bacnkslash to add a backslash in quoatation since it is a speacial character used for instances like '\n'
+            // '\w' is the short form of '[a-zA-Z0-9]'
+            (Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText()) == true) &&
+
+            // Value Example: 2587419635
+            // Value insertion is mandatory
+            (Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText()) == true) &&
+
+            // Value Example: A43, Beach Lane
+            // Value insertion is mandatory
+            (Pattern.matches("([\\w]+)+", txtLaneAddress.getText()) == true) &&
+
+            // Value Example: Liverpool
+            // Value insertion is mandatory
+            (Pattern.matches("[\\w]+", txtCity.getText()) == true) &&
+
+            // Checking if the user has selected a account type
+            // Value insertion is mandatory
+            ((listAccountType.getSelectedItem()).toString() != "--SELECT ACCOUNT TYPE--") &&
+
+            // Value Example: 150.00
+            // Value insertion is mandatory
+            (Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText()) == true) &&
+
+            // Value Example: 45000002
+            // Value insertion is mandatory
+            (Pattern.matches("([0-9]{8})+", txtAccountNumber.getText()) == true) &&
+
+            // Checking if the user has selected a account status
+            // Value insertion is mandatory
+            ((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--")
+        )
+        {
+            System.out.println("efef");}
+
+        // Declaring variable to store the tellerID that is retrieved from the database
+        String tellerIDDB = "";
+
+        // Declaring variable to count the number of successful SQL execution for entering customer details and show the appropriate message
+        int customerRegistrationComplete = 0;
+
+        // Retrieving the tellerID from the database using the systemLoginID value
+        try (Connection retrievingtellerIDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+            Statement retrievingtellerIDStmt = retrievingtellerIDCon.createStatement();) {
+
+            // Assigning SQL query
+            String retrievingtellerIDSqlQuery = "SELECT TellerID FROM Teller WHERE slSystemLoginID = '"+ systemLoginIDGlobal +"'";
+
+            // Executing SQL query
+            ResultSet retrievingtellerIDRs = retrievingtellerIDStmt.executeQuery(retrievingtellerIDSqlQuery);
+
+            if (retrievingtellerIDRs.next()) {
+                tellerIDDB = retrievingtellerIDRs.getString(1);
+            }
+        }
+        // Error handling. Checks for SQL related issues
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                "Error Occurred in SQL Connection",
+                "New Customer Registration - ERROR!",
+                JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Declaring variable to store the user selected account status
+        String userSelectedAccountStatus = (String) listAccountStatus.getSelectedItem();
+
+        // Declaring variable to store the user selected status ID
+        String userSelectedAccountStatusID = "";
+
+        // Switch statement to assign the appropriate accountstatusID with the selected account status
+        switch(userSelectedAccountStatus.toString()){
+            case "ACTIVE":
+            userSelectedAccountStatusID = "PT000001";
+            break;
+            case "ONHOLD":
+            userSelectedAccountStatusID = "PT000002";
+            break;
+            case "DISABLED":
+            userSelectedAccountStatusID = "PT000003";
+            break;
+            default:
+            userSelectedAccountStatusID = "";
+            break;
+        }
+
+        // Displaying an error message if the user did not select an account status
+        if(userSelectedAccountStatusID == ""){
+            JOptionPane.showMessageDialog(null,
+                "Please Select an Account Status",
+                "New Customer Registration - ERROR",
+                JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            // Checking if this customer is already registered or not
+            try (Connection checkingCustomerExistanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement checkingCustomerExistanceStmt = checkingCustomerExistanceCon.createStatement();) {
+
+                // Assigning SQL query
+                String checkingCustomerExistanceSqlQuery = "SELECT * FROM Customer WHERE PassportNumber = '"+ txtPassportNumber.getText() +"'";
+
+                // Executing SQL query
+                ResultSet checkingCustomerExistanceRs = checkingCustomerExistanceStmt.executeQuery(checkingCustomerExistanceSqlQuery);
+
+                if (checkingCustomerExistanceRs.next()) {
+
+                    // Declaring variable to store each individual SQL statement at a given moment
+                    String newAccountSQLQuery = "";
+
+                    // Declaring variable to stote the return value of the SQL execution, insertingNewAccountDetails() method
+                    Boolean newAccountCreationSuccess = false;
+
+                    // Checking if user didn't select an option and will show an error message
+                    if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
+                        JOptionPane.showMessageDialog(null,
+                            "Please Select an Account Type !",
+                            "Account Generation Halted!",
+                            JOptionPane.WARNING_MESSAGE);
+                    }
+                    else if (userSelectedAccountType == "NORMAL SAVINGS") {
+
+                        newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountNumber, NSAccountBalance, asAccountStatusID, "
+                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
+                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+
+                        // Calling method to insert account details
+                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        if(newAccountCreationSuccess == false){
+                            customerRegistrationComplete += 1;
+                        }
+
+                    }
+                    else if (userSelectedAccountType == "BONUS SAVINGS") {
+
+                        newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountNumber, BSAccountBalance, asAccountStatusID, "
+                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
+                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+
+                        // Calling method to insert account details
+                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        if(newAccountCreationSuccess == false){
+                            customerRegistrationComplete += 1;
+                        }
+
+                    }
+                    else if (userSelectedAccountType == "PREMIER SAVINGS") {
+
+                        newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountNumber, PSAccountBalance, asAccountStatusID, "
+                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
+                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+
+                        // Calling method to insert account details
+                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        if(newAccountCreationSuccess == false){
+                            customerRegistrationComplete += 1;
+                        }
+
+                    }
+                }
+                else{ // If the customer has not registered
+
+                    // Inserting customer details to the database, Customer relation
+                    try (Connection InsertingCustomerCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        Statement InsertingCustomerStmt = InsertingCustomerCon.createStatement();) {
+
+                        // Assigning SQL query
+                        String InsertingCustomerSqlQuery = "INSERT INTO Customer (PassportNumber, FirstName, MiddleName, LastName, LaneAddress, City, tTellerID_RegisteredBy) "
+                        + "VALUES ('"+ txtPassportNumber.getText() +"', '"+ txtMName.getText() +"', '"+ txtMName.getText() +"', '"+ txtLName.getText() +"', "
+                        + "'"+ txtLaneAddress.getText() +"', '"+ txtCity.getText() +"', '"+ tellerIDDB +"')";
+
+                        // Executing SQL query
+                        Boolean InsertingCustomerNumberRs = InsertingCustomerStmt.execute(InsertingCustomerSqlQuery);
+
+                        // Checking if the SQL execution returned false
+                        // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                        if (InsertingCustomerNumberRs == false) {
+                            customerRegistrationComplete += 1;
+                        }
+
+                    }
+                    // Error handling. Checks for SQL related issues
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                            "Error Occurred in SQL Connection",
+                            "New Customer Registration - ERROR!",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    // Declaring variable to store each individual SQL statement at a given moment
+                    String newAccountSQLQuery = "";
+
+                    // Declaring variable to stote the return value of the SQL execution, insertingNewAccountDetails() method
+                    Boolean newAccountCreationSuccess = false;
+
+                    // Checking if user didn't select an option and will show an error message
+                    if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
+                        JOptionPane.showMessageDialog(null,
+                            "Please Select an Account Type !",
+                            "Account Generation Halted!",
+                            JOptionPane.WARNING_MESSAGE);
+                    }
+                    else if (userSelectedAccountType == "NORMAL SAVINGS") {
+
+                        newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountNumber, NSAccountBalance, asAccountStatusID, "
+                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
+                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+
+                        // Calling method to insert account details
+                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        if(newAccountCreationSuccess == false){
+                            customerRegistrationComplete += 0;
+                        }
+
+                    }
+                    else if (userSelectedAccountType == "BONUS SAVINGS") {
+
+                        newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountNumber, BSAccountBalance, asAccountStatusID, "
+                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
+                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+
+                        // Calling method to insert account details
+                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        if(newAccountCreationSuccess == false){
+                            customerRegistrationComplete += 0;
+                        }
+
+                    }
+                    else if (userSelectedAccountType == "PREMIER SAVINGS") {
+
+                        newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountNumber, PSAccountBalance, asAccountStatusID, "
+                        + "cPassportNumber, tTellerID_RegisterBy) VALUES ('"+ newAccountNumber +"', '"+ txtInitialDeposit.getText() +"', "
+                        + "'"+ userSelectedAccountStatusID +"', '"+ txtPassportNumber.getText() +"', '"+ tellerIDDB +"')";
+
+                        // Calling method to insert account details
+                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        if(newAccountCreationSuccess == false){
+                            customerRegistrationComplete += 0;
+                        }
+
+                    }
+
+                    // Checking if the user has entered one or two email addresses
+                    // Inserting customer email address to the database, CustomerEmailAddress relation
+                    if(( txtEmailAddress2.getText()).length() == 0 ){
+
+                        try (Connection insertingEmailOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement insertingEmailOneStmt = insertingEmailOneCon.createStatement();) {
+
+                            // Assigning SQL query
+                            String insertingEmailOneSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
+                            + "('"+ txtPassportNumber.getText() +"', '"+ txtEmailAddress1.getText() +"')";
+
+                            // Executing SQL query
+                            Boolean insertingEmailOneRs = insertingEmailOneStmt.execute(insertingEmailOneSqlQuery);
+
+                            // Checking if the SQL execution returned false
+                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                            if (insertingEmailOneRs == false) {
+                                customerRegistrationComplete += 1;
+                            }
+                        }
+                        // Error handling. Checks for SQL related issues
+                        catch (SQLException SqlEx) {
+                            System.out.println("Error found: " + SqlEx);
+                            // Displaying message box showing error message
+                            JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Connection",
+                                "New Customer Registration - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    else if ( (txtEmailAddress1.getText()).length() != 0 && (txtEmailAddress2.getText()).length() != 0 )
+                    {
+                        try (Connection insertingEmailTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement insertingEmailTwoStmt = insertingEmailTwoCon.createStatement();) {
+
+                            // Assigning SQL query
+                            String insertingEmailTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
+                            + "('"+ txtPassportNumber.getText() +"', '"+ txtEmailAddress1.getText() +"'), "
+                            + "('"+ txtPassportNumber.getText() +"', '"+ txtEmailAddress2.getText() +"')";
+
+                            // Executing SQL query
+                            Boolean insertingEmailTwoRs = insertingEmailTwoStmt.execute(insertingEmailTwoSqlQuery);
+
+                            // Checking if the SQL execution returned false
+                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                            if (insertingEmailTwoRs == false) {
+                                customerRegistrationComplete += 1;
+                            }
+                        }
+                        // Error handling. Checks for SQL related issues
+                        catch (SQLException SqlEx) {
+                            System.out.println("Error found: " + SqlEx);
+                            // Displaying message box showing error message
+                            JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Connection",
+                                "New Customer Registration - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
+                    // Checking if the user has entered one or two phone numbers
+                    // Inserting customer phone number to the database, CustomerPhoneNumber srelation
+                    if(( txtPhoneNumber2.getText()).length() == 0 ){
+
+                        try (Connection insertingPhoneOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement insertingPhoneOneStmt = insertingPhoneOneCon.createStatement();) {
+
+                            // Assigning SQL query
+                            String insertingPhoneOneSqlQuery = "INSERT INTO CustomerPhoneNumber VALUES "
+                            + "('"+ txtPassportNumber.getText() +"', '"+ txtPhoneNumber1.getText() +"')";
+
+                            // Executing SQL query
+                            Boolean insertingPhoneOneRs = insertingPhoneOneStmt.execute(insertingPhoneOneSqlQuery);
+
+                            // Checking if the SQL execution returned false
+                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                            if (insertingPhoneOneRs == false) {
+                                customerRegistrationComplete += 1;
+                            }
+                        }
+                        // Error handling. Checks for SQL related issues
+                        catch (SQLException SqlEx) {
+                            System.out.println("Error found: " + SqlEx);
+                            // Displaying message box showing error message
+                            JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Connection",
+                                "New Customer Registration - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                    else if ( (txtPhoneNumber1.getText()).length() != 0 && (txtPhoneNumber2.getText()).length() != 0 )
+                    {
+                        try (Connection insertingPhoneTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement insertingPhoneTwoStmt = insertingPhoneTwoCon.createStatement();) {
+
+                            // Assigning SQL query
+                            String insertingPhoneTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
+                            + "('"+ txtPassportNumber.getText() +"', '"+ txtPhoneNumber1.getText() +"'), "
+                            + "('"+ txtPassportNumber.getText() +"', '"+ txtPhoneNumber2.getText() +"')";
+
+                            // Executing SQL query
+                            Boolean insertingPhoneTwoRs = insertingPhoneTwoStmt.execute(insertingPhoneTwoSqlQuery);
+
+                            // Checking if the SQL execution returned false
+                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                            if (insertingPhoneTwoRs == false) {
+                                customerRegistrationComplete += 1;
+                            }
+                        }
+                        // Error handling. Checks for SQL related issues
+                        catch (SQLException SqlEx) {
+                            System.out.println("Error found: " + SqlEx);
+                            // Displaying message box showing error message
+                            JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Connection",
+                                "New Customer Registration - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            }
+            // Error handling. Checks for SQL related issues
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                    "Error Occurred in SQL Connection",
+                    "New Customer Registration - ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+
+            // Checking if there were any errors along the registration
+            // Displaying the appropriate message to the user according to the number of successful and failed executions
+            if (customerRegistrationComplete == 1) {
+                // Displaying message box showing confirmation message
+                JOptionPane.showMessageDialog(null,
+                    "Account has been successfully created",
+                    "Adding New Customer - Confirmation",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if(customerRegistrationComplete >= 4 && customerRegistrationComplete <= 6){
+                // Displaying message box showing confirmation message
+                JOptionPane.showMessageDialog(null,
+                    "Customer Account has been created",
+                    "Adding New Customer - Confirmation",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if(customerRegistrationComplete == 0){
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                    "Error occurred while inserting customer details",
+                    "Adding New Customer - ERROR",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_btnCreateAccountActionPerformed
+
+    private void btnGenerateAccountNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAccountNumberActionPerformed
+
+        // Generating account number for newly creating customer account
+
+        // User selected account type will be assigned to this variable
+        userSelectedAccountType = (String) listAccountType.getSelectedItem();
+
+        // Checking if user didn't select an option and will show an error message
+        if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
+            JOptionPane.showMessageDialog(null,
+                "Please Select an Account Type !",
+                "Account Generation Halted!",
+                JOptionPane.WARNING_MESSAGE);
+        }
+        else if (userSelectedAccountType == "NORMAL SAVINGS") {
+
+            // Retrieving the previous generated Normal Savings account number from the database
+            newAccountNumber = ang.retrievingPreviousAccountNumber("NSAccountNumber", "AccountNormalSavings");
+
+            // Assigning new account number to textbox
+            txtAccountNumber.setText(String.valueOf(newAccountNumber));
+
+        }
+        else if (userSelectedAccountType == "BONUS SAVINGS") {
+
+            // Retrieving the previous generated Bonus Savings account number from the database
+            newAccountNumber = ang.retrievingPreviousAccountNumber("BSAccountNumber", "AccountBonusSavings");
+
+            // Assigning new account number to textbox
+            txtAccountNumber.setText(String.valueOf(newAccountNumber));
+
+        }
+        else if (userSelectedAccountType == "PREMIER SAVINGS") {
+
+            // Retrieving the previous generated Premier Savings account number from the database
+            newAccountNumber = ang.retrievingPreviousAccountNumber("PSAccountNumber", "AccountPremierSavings");
+
+            // Assigning new account number to textbox
+            txtAccountNumber.setText(String.valueOf(newAccountNumber));
+
+        }
+    }//GEN-LAST:event_btnGenerateAccountNumberActionPerformed
+
+    private void listAccountTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAccountTypeActionPerformed
+
+        // Retrieving selected option
+        String userSelectedAccountType = (String) listAccountType.getSelectedItem();
+
+        // Displaying appropriate text to 'lblInitialDeposit' upon selected option
+        if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
+            lblInitialDeposit.setText("Initial Deposit");
+        }
+        else if (userSelectedAccountType == "NORMAL SAVINGS") {
+            lblInitialDeposit.setText("Initial Deposit (£100)");
+        }
+        else if (userSelectedAccountType == "BONUS SAVINGS") {
+            lblInitialDeposit.setText("Initial Deposit (£300)");
+        }
+        else if (userSelectedAccountType == "PREMIER SAVINGS") {
+            lblInitialDeposit.setText("Initial Deposit (£1000)");
+        }
+        
+        // Declaring variable to store the minimum amount of initial deposit validity
+        float minimumInitialDeposit = 0.00f;
+        
+        switch(userSelectedAccountType){
+            case "NORMAL SAVINGS":
+                minimumInitialDeposit = 100.00f;
+                break;
+            case "BONUS SAVINGS":
+                minimumInitialDeposit = 300.00f;
+                break;
+            case "PREMIER SAVINGS":
+                minimumInitialDeposit = 1000.00f;
+                break;
+            case "SELECT ACCOUNT TYPE":
+                minimumInitialDeposit = 0.00f;
+                break;
+        }
+        
+        // Checking if the user entered value is lower to the minimum initial deposit amount
+        if( minimumInitialDeposit > (Float.parseFloat( txtInitialDeposit.getText())) ){
+            lblInitialDepositValidator.setText("Invalid Value");
+            lblInitialDepositValidator.setForeground(Color.red);
+        }
+        
+        
+    }//GEN-LAST:event_listAccountTypeActionPerformed
+
+    private void txtMNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMNameKeyReleased
+
+        // Validating the user entered first name while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean mNameValidation = Pattern.matches("[a-zA-Z ]*", txtMName.getText());
+
+        if(mNameValidation == false){
+            lblMNameValidator.setText("Invalid Value");
+            lblMNameValidator.setForeground(Color.red);
+
+            if( (txtMName.getText()).length() == 0 ){
+                lblMNameValidator.setText("Enter Middle Name");
+                lblMNameValidator.setForeground(Color.white);
+            }
+        }
+        else if(mNameValidation == true){
+            lblMNameValidator.setText("Valid Value");
+            lblMNameValidator.setForeground(Color.green);
+        }
+
+    }//GEN-LAST:event_txtMNameKeyReleased
+
+    private void txtLNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLNameKeyReleased
+        
+        // Validating the user entered last name while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean lNameValidation = Pattern.matches("[a-zA-Z ]+", txtLName.getText());
+
+        if(lNameValidation == false){
+            lblLNameValidator.setText("Invalid Value");
+            lblLNameValidator.setForeground(Color.red);
+
+            if( (txtLName.getText()).length() == 0 ){
+                lblLNameValidator.setText("Enter Last Name");
+                lblLNameValidator.setForeground(Color.white);
+            }
+        }
+        else if(lNameValidation == true){
+            lblLNameValidator.setText("Valid Value");
+            lblLNameValidator.setForeground(Color.green);
+        }
+        
+        
+    }//GEN-LAST:event_txtLNameKeyReleased
+
+    private void txtPassportNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassportNumberKeyReleased
+        
+        // Validating the user entered passport number while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean pNumberValidation = Pattern.matches("[0-9]{9}+", txtPassportNumber.getText());
+
+        if(pNumberValidation == false){
+            lblPassportNumberValidator.setText("Invalid Value");
+            lblPassportNumberValidator.setForeground(Color.red);
+
+            if( (txtPassportNumber.getText()).length() == 0 ){
+                lblPassportNumberValidator.setText("Enter Passport Number");
+                lblPassportNumberValidator.setForeground(Color.white);
+            }
+        }
+        else if(pNumberValidation == true){
+            lblPassportNumberValidator.setText("Valid Value");
+            lblPassportNumberValidator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtPassportNumberKeyReleased
+
+    private void txtEmailAddress1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAddress1KeyReleased
+        
+        // Validating the user entered email address 1 while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean emailA1Validation = Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText());
+
+        if(emailA1Validation == false){
+            lblEmailAddress1Validator.setText("Invalid Value");
+            lblEmailAddress1Validator.setForeground(Color.red);
+
+            if( (txtEmailAddress1.getText()).length() == 0 ){
+                lblEmailAddress1Validator.setText("Enter Email Address 1");
+                lblEmailAddress1Validator.setForeground(Color.white);
+            }
+        }
+        else if(emailA1Validation == true){
+            lblEmailAddress1Validator.setText("Valid Value");
+            lblEmailAddress1Validator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtEmailAddress1KeyReleased
+
+    private void txtEmailAddress2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAddress2KeyReleased
+        
+        
+        // Validating the user entered email address 2 while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean emailA2Validation = Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)?", txtEmailAddress2.getText());
+
+        if(emailA2Validation == false){
+            lblEmailAddress2Validator.setText("Invalid Value");
+            lblEmailAddress2Validator.setForeground(Color.red);
+
+            if( (txtEmailAddress2.getText()).length() == 0 ){
+                lblEmailAddress2Validator.setText("Enter Email Address 2");
+                lblEmailAddress2Validator.setForeground(Color.white);
+            }
+        }
+        else if(emailA2Validation == true){
+            lblEmailAddress2Validator.setText("Valid Value");
+            lblEmailAddress2Validator.setForeground(Color.green);
+        }
+        
+        
+    }//GEN-LAST:event_txtEmailAddress2KeyReleased
+
+    private void txtPhoneNumber1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumber1KeyReleased
+        
+        // Validating the user entered phone number 1 while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean pNumber1Validation = Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText());
+
+        if(pNumber1Validation == false){
+            lblPhoneNumber1Validator.setText("Invalid Value");
+            lblPhoneNumber1Validator.setForeground(Color.red);
+
+            if( (txtPhoneNumber1.getText()).length() == 0 ){
+                lblPhoneNumber1Validator.setText("Enter Phone Number 1");
+                lblPhoneNumber1Validator.setForeground(Color.white);
+            }
+        }
+        else if(pNumber1Validation == true){
+            lblPhoneNumber1Validator.setText("Valid Value");
+            lblPhoneNumber1Validator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtPhoneNumber1KeyReleased
+
+    private void txtPhoneNumber2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumber2KeyReleased
+        
+        // Validating the user entered phone number 2 while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean pNumber2Validation = Pattern.matches("([0-9]{10})?", txtPhoneNumber2.getText());
+
+        if(pNumber2Validation == false){
+            lblPhoneNumber2Validator.setText("Invalid Value");
+            lblPhoneNumber2Validator.setForeground(Color.red);
+
+            if( (txtPhoneNumber2.getText()).length() == 0 ){
+                lblPhoneNumber2Validator.setText("Enter Phone Number 2");
+                lblPhoneNumber2Validator.setForeground(Color.white);
+            }
+        }
+        else if(pNumber2Validation == true){
+            lblPhoneNumber2Validator.setText("Valid Value");
+            lblPhoneNumber2Validator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtPhoneNumber2KeyReleased
+
+    private void txtLaneAddressKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLaneAddressKeyReleased
+        
+        // Validating the user entered lane address while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean lAddressValidation = Pattern.matches("([\\w ]+[, ]*)+", txtLaneAddress.getText());
+
+        if(lAddressValidation == false){
+            lblLaneAddressValidator.setText("Invalid Value");
+            lblLaneAddressValidator.setForeground(Color.red);
+
+            if( (txtLaneAddress.getText()).length() == 0 ){
+                lblLaneAddressValidator.setText("Enter Lane Address");
+                lblLaneAddressValidator.setForeground(Color.white);
+            }
+        }
+        else if(lAddressValidation == true){
+            lblLaneAddressValidator.setText("Valid Value");
+            lblLaneAddressValidator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtLaneAddressKeyReleased
+
+    private void txtCityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCityKeyReleased
+        
+        // Validating the user entered city while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean cityValidation = Pattern.matches("[a-zA-Z]+", txtCity.getText());
+
+        if(cityValidation == false){
+            lblCityValidator.setText("Invalid Value");
+            lblCityValidator.setForeground(Color.red);
+
+            if( (txtCity.getText()).length() == 0 ){
+                lblCityValidator.setText("Enter City");
+                lblCityValidator.setForeground(Color.white);
+            }
+        }
+        else if(cityValidation == true){
+            lblCityValidator.setText("Valid Value");
+            lblCityValidator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtCityKeyReleased
+
+    private void txtInitialDepositKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInitialDepositKeyReleased
+        
+        // Validating the user entered initial deposit while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean initialDepositValidation = Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText());
+
+        if(initialDepositValidation == false){
+            lblInitialDepositValidator.setText("Invalid Value");
+            lblInitialDepositValidator.setForeground(Color.red);
+            
+            if( (txtInitialDeposit.getText()).length() == 0 ){
+                lblInitialDepositValidator.setText("Enter Initial Deposit");
+                lblInitialDepositValidator.setForeground(Color.white);
+            }
+        }
+        else if(initialDepositValidation == true){
+            lblInitialDepositValidator.setText("Valid Value");
+            lblInitialDepositValidator.setForeground(Color.green);
+        }
+        
+        String userSelectedAccountType = (String) listAccountType.getSelectedItem();
+        
+        // Declaring variable to store the minimum amount of initial deposit validity
+        float minimumInitialDeposit = 0.00f;
+        
+        switch(userSelectedAccountType){
+            case "NORMAL SAVINGS":
+                minimumInitialDeposit = 100.00f;
+                break;
+            case "BONUS SAVINGS":
+                minimumInitialDeposit = 300.00f;
+                break;
+            case "PREMIER SAVINGS":
+                minimumInitialDeposit = 1000.00f;
+                break;
+        }
+        
+        // Checking if the user entered value is lower to the minimum initial deposit amount
+        if( minimumInitialDeposit > (Float.parseFloat( txtInitialDeposit.getText())) ){
+            lblInitialDepositValidator.setText("Invalid Value");
+            lblInitialDepositValidator.setForeground(Color.red);
+        }
+                
+    }//GEN-LAST:event_txtInitialDepositKeyReleased
+
+    private void txtFNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFNameKeyReleased
+        
+        // Validating the user entered first name while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean fNameValidation = Pattern.matches("[a-zA-Z ]+", txtFName.getText());
+
+        if(fNameValidation == false){
+            lblFNameValidator.setText("Invalid Value");
+            lblFNameValidator.setForeground(Color.red);
+
+            if( (txtFName.getText()).length() == 0 ){
+                lblFNameValidator.setText("Enter First Name");
+                lblFNameValidator.setForeground(Color.white);
+            }
+        }
+        else if(fNameValidation == true){
+            lblFNameValidator.setText("Valid Value");
+            lblFNameValidator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtFNameKeyReleased
 
     /**
      * @param args the command line arguments
@@ -3804,8 +5016,6 @@ public class Teller extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ACCTNumber_Lbl;
-    private javax.swing.JLabel ACCTType_Lbl;
     private javax.swing.JTextField ACCType_Txt;
     private javax.swing.JButton CheckSA1;
     private javax.swing.JButton CheckSA_Btn;
@@ -3818,27 +5028,17 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JPanel Deposit_pnl;
     private javax.swing.JTextField Dwithdraw_Txt;
     private javax.swing.JLabel FName_Lbl;
+    private javax.swing.JLabel FName_Lbl3;
     private javax.swing.JButton FetchAcc_Btn;
     private javax.swing.JTextField FinalDeposit_Txt;
-    private javax.swing.JTextField GeneratedAccountNo_Txt;
-    private javax.swing.JTextField IDepositAMT_Txt;
-    private javax.swing.JLabel IDeposit_Lbl;
-    private javax.swing.JLabel LName_Lbl;
-    private javax.swing.JLabel Mail_Lbl;
-    private javax.swing.JTextField Nationals_Lbl;
-    private javax.swing.JTextField NewFName_Txt;
-    private javax.swing.JTextField NewLName_Txt;
-    private javax.swing.JTextField NewMail_Txt;
-    private javax.swing.JTextField NewPhoneNum_Txt;
     private javax.swing.JTabbedPane NewUser;
-    private javax.swing.JLabel PNumber_Lbl;
-    private javax.swing.JLabel PhoneNum_Lbl;
     private javax.swing.JButton SubmitSA;
     private javax.swing.JLabel WDRL_Lbl;
     private javax.swing.JTextField WHolder_Txt;
-    private javax.swing.JButton accNoGen1;
-    private javax.swing.JButton accNoGen_btn;
     private javax.swing.JTextArea bonusINFO_tarea;
+    private javax.swing.JButton btnCreateAccount;
+    private javax.swing.JButton btnGenerateAccountNumber;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnWithdrawalSubmit;
     private javax.swing.JButton btn_clear;
     private javax.swing.JButton btn_generateReport;
@@ -3885,8 +5085,10 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane5;
+    private javax.swing.JTable jTable1;
     private javax.swing.JCheckBox jcb_autoPreviewReceipt;
     private javax.swing.JCheckBox jcb_autoPreviewReceiptWithdrawal;
     private javax.swing.JCheckBox jcb_autoPreviewReport;
@@ -3897,6 +5099,42 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JTable jtb_customerDetailsRecord;
     private javax.swing.JTable jtb_customerTransactionRecords;
     private javax.swing.JTable jtb_transactionDetailsRecords;
+    private javax.swing.JLabel lblAccountNumber;
+    private javax.swing.JLabel lblAccountStatus;
+    private javax.swing.JLabel lblAccountType;
+    private javax.swing.JLabel lblCity;
+    private javax.swing.JLabel lblCityValidator;
+    private javax.swing.JLabel lblEmailAddress1;
+    private javax.swing.JLabel lblEmailAddress1Validator;
+    private javax.swing.JLabel lblEmailAddress2;
+    private javax.swing.JLabel lblEmailAddress2Validator;
+    private javax.swing.JLabel lblFName;
+    private javax.swing.JLabel lblFNameValidator;
+    private javax.swing.JLabel lblImportantAsterisk1;
+    private javax.swing.JLabel lblImportantAsterisk10;
+    private javax.swing.JLabel lblImportantAsterisk11;
+    private javax.swing.JLabel lblImportantAsterisk2;
+    private javax.swing.JLabel lblImportantAsterisk3;
+    private javax.swing.JLabel lblImportantAsterisk4;
+    private javax.swing.JLabel lblImportantAsterisk5;
+    private javax.swing.JLabel lblImportantAsterisk6;
+    private javax.swing.JLabel lblImportantAsterisk7;
+    private javax.swing.JLabel lblImportantAsterisk8;
+    private javax.swing.JLabel lblImportantAsterisk9;
+    private javax.swing.JLabel lblInitialDeposit;
+    private javax.swing.JLabel lblInitialDepositValidator;
+    private javax.swing.JLabel lblLName;
+    private javax.swing.JLabel lblLNameValidator;
+    private javax.swing.JLabel lblLaneAddress;
+    private javax.swing.JLabel lblLaneAddressValidator;
+    private javax.swing.JLabel lblMName;
+    private javax.swing.JLabel lblMNameValidator;
+    private javax.swing.JLabel lblPassportNumber;
+    private javax.swing.JLabel lblPassportNumberValidator;
+    private javax.swing.JLabel lblPhoneNumber1;
+    private javax.swing.JLabel lblPhoneNumber1Validator;
+    private javax.swing.JLabel lblPhoneNumber2;
+    private javax.swing.JLabel lblPhoneNumber2Validator;
     private javax.swing.JLabel lbl_autoStatus;
     private javax.swing.JLabel lbl_automaticlDailyCT;
     private javax.swing.JLabel lbl_customerTransactionRecords;
@@ -3910,7 +5148,8 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_selectDate1;
     private javax.swing.JLabel lbl_selectMonth;
     private javax.swing.JLabel lbl_status;
-    private javax.swing.JComboBox<String> listOfAccountTypes;
+    private javax.swing.JComboBox<String> listAccountStatus;
+    private javax.swing.JComboBox<String> listAccountType;
     private javax.swing.JMenuItem logout;
     private javax.swing.JTabbedPane mInterest_pnl;
     private javax.swing.JSplitPane monthlyReport_jsp;
@@ -3919,9 +5158,20 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JPanel rOptions_jbl;
     private javax.swing.JPanel rOptions_jbl1;
     private javax.swing.JTabbedPane reports_pnl;
-    private javax.swing.JToggleButton reqcard;
     private javax.swing.JTabbedPane savingsAcc_pnl;
     private javax.swing.JLabel total_Lbl;
+    private javax.swing.JTextField txtAccountNumber;
+    private javax.swing.JTextField txtCity;
+    private javax.swing.JTextField txtEmailAddress1;
+    private javax.swing.JTextField txtEmailAddress2;
+    private javax.swing.JTextField txtFName;
+    private javax.swing.JTextField txtInitialDeposit;
+    private javax.swing.JTextField txtLName;
+    private javax.swing.JTextField txtLaneAddress;
+    private javax.swing.JTextField txtMName;
+    private javax.swing.JTextField txtPassportNumber;
+    private javax.swing.JTextField txtPhoneNumber1;
+    private javax.swing.JTextField txtPhoneNumber2;
     private javax.swing.JTextField txtWithdrawalAccountNo;
     private javax.swing.JLabel wACCT;
     private javax.swing.JLabel wBalance_Lbl;
