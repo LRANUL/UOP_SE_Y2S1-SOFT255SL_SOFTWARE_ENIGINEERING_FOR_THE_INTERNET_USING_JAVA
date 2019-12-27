@@ -33,6 +33,8 @@ import DatabaseConnection.DBConnection;
 import LocalTimeAndDate.LocalTimeAndDate;
 import ReportGeneration.ReportGeneration;
 import ReceiptGeneration.CustomerReceiptGeneration;
+import java.sql.PreparedStatement;
+import net.proteanit.sql.DbUtils;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -45,9 +47,9 @@ import ReceiptGeneration.CustomerReceiptGeneration;
  */
 public class Teller extends javax.swing.JFrame {
 
-    static int basic = 250000000;
-    static int bonus = 450000000;
-    static int premier = 750000000;
+    static int basic = 25000000;
+    static int bonus = 45000000;
+    static int premier = 75000000;
     
     // Creating new table model for customer transaction records table in daily reports tab
     DefaultTableModel customerTransactionRecordsTableModel;
@@ -70,6 +72,12 @@ public class Teller extends javax.swing.JFrame {
     // Creating new object to call procedure, receipt generating
     CustomerReceiptGeneration crg;
     
+     Connection conn = null;
+    PreparedStatement ps=null;
+    ResultSet rs=null;
+    
+    //creating a new object to get database connection class
+   
     /**
      * Creates new form Teller
      */
@@ -1168,6 +1176,7 @@ public class Teller extends javax.swing.JFrame {
         accNoGen1 = new javax.swing.JButton();
         PNumber_Lbl = new javax.swing.JLabel();
         Nationals_Lbl = new javax.swing.JTextField();
+        reqcard = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -2205,7 +2214,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnl1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2291,6 +2300,11 @@ public class Teller extends javax.swing.JFrame {
         accNoGen1.setBackground(new java.awt.Color(102, 255, 102));
         accNoGen1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         accNoGen1.setText("Create Account");
+        accNoGen1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                accNoGen1ActionPerformed(evt);
+            }
+        });
 
         PNumber_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         PNumber_Lbl.setForeground(new java.awt.Color(255, 255, 255));
@@ -2298,14 +2312,17 @@ public class Teller extends javax.swing.JFrame {
 
         Nationals_Lbl.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
+        reqcard.setText("REQUEST CARD");
+        reqcard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reqcardActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout nCustomer_pnlLayout = new javax.swing.GroupLayout(nCustomer_pnl);
         nCustomer_pnl.setLayout(nCustomer_pnlLayout);
         nCustomer_pnlLayout.setHorizontalGroup(
             nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2345,11 +2362,22 @@ public class Teller extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(Nationals_Lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(482, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                        .addComponent(accNoGen1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                        .addComponent(reqcard)
+                        .addGap(27, 27, 27))))
         );
         nCustomer_pnlLayout.setVerticalGroup(
             nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(reqcard)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addComponent(FName_Lbl)
@@ -2396,7 +2424,7 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2533,10 +2561,23 @@ public class Teller extends javax.swing.JFrame {
                     "Account Generation Halted!",
                     JOptionPane.WARNING_MESSAGE);
         } else if (AccountType == "NORMAL SAVINGS") {
-            int generatedAccount = basic;
-            basic += 1;
+            
+            try {
+            //connection to the databbase
+            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
+            //The select statement
+            String sql="SELECT TOP 1 * FROM AccountBonusSavings ORDER BY BSAccountNumber DESC";
+            ps=conn.prepareStatement(sql);
+            //executes the query
+            rs=ps.executeQuery();
+            String account  = rs.getString("BSAccountNumber");
+            GeneratedAccountNo_Txt.setText(account);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-            GeneratedAccountNo_Txt.setText(String.valueOf(generatedAccount));
+            
         } else if (AccountType == "BONUS SAVINGS") {
             int generatedAccount = bonus;
             bonus += 1;
@@ -3716,6 +3757,17 @@ public class Teller extends javax.swing.JFrame {
           
     }//GEN-LAST:event_btnWithdrawalSubmitActionPerformed
 
+    private void accNoGen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNoGen1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_accNoGen1ActionPerformed
+
+    private void reqcardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqcardActionPerformed
+        //request card for customer
+        String AccNo = GeneratedAccountNo_Txt.getText();
+        
+        new DebitCard(AccNo).setVisible(true);
+    }//GEN-LAST:event_reqcardActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3867,6 +3919,7 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JPanel rOptions_jbl;
     private javax.swing.JPanel rOptions_jbl1;
     private javax.swing.JTabbedPane reports_pnl;
+    private javax.swing.JToggleButton reqcard;
     private javax.swing.JTabbedPane savingsAcc_pnl;
     private javax.swing.JLabel total_Lbl;
     private javax.swing.JTextField txtWithdrawalAccountNo;
