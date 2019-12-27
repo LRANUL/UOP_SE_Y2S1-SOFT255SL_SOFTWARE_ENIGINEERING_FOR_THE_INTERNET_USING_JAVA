@@ -1011,7 +1011,7 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace pref="328" max="32767" attributes="0"/>
+                                  <EmptySpace pref="331" max="32767" attributes="0"/>
                                   <Component id="processInterest_Btn" min="-2" pref="329" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="315" max="-2" attributes="0"/>
                               </Group>
@@ -1040,7 +1040,7 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace pref="241" max="32767" attributes="0"/>
+                                  <EmptySpace pref="244" max="32767" attributes="0"/>
                                   <Component id="FetchAcc_Btn" min="-2" pref="49" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                                   <Component id="processInterest_Btn" min="-2" pref="46" max="-2" attributes="0"/>
@@ -1271,7 +1271,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel2" pref="673" max="32767" attributes="0"/>
+                                  <Component id="jPanel2" pref="729" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1606,7 +1606,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel8" pref="673" max="32767" attributes="0"/>
+                                  <Component id="jPanel8" pref="729" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1884,6 +1884,9 @@
                   <Color blue="92" green="7b" red="0" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="jPanel16ComponentShown"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="NEW Customer">
@@ -1966,7 +1969,7 @@
                                                               <Component id="lblImportantAsterisk11" min="-2" pref="56" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
-                                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                                      <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" attributes="0">
                                                       <Component id="lblCity" min="-2" pref="52" max="-2" attributes="0"/>
@@ -2107,7 +2110,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lblAccountStatus" min="-2" pref="127" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="listAccountStatus" min="-2" pref="236" max="-2" attributes="0"/>
+                                              <Component id="listAccountStatus" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="lblImportantAsterisk10" min="-2" pref="56" max="-2" attributes="0"/>
                                           </Group>
@@ -2859,7 +2862,6 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Enter City"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lblInitialDepositValidator">

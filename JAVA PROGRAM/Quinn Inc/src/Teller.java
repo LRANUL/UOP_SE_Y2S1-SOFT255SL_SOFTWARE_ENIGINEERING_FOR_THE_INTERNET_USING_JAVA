@@ -48,7 +48,7 @@ import java.util.regex.*;
  * @author ranul
  */
 public class Teller extends javax.swing.JFrame {
-
+    
     // Creating new object to insert account details
     NewAccountCreation anc;
 
@@ -1777,7 +1777,7 @@ public class Teller extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(328, Short.MAX_VALUE)
+                .addContainerGap(331, Short.MAX_VALUE)
                 .addComponent(processInterest_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(315, 315, 315))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -1799,7 +1799,7 @@ public class Teller extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(241, Short.MAX_VALUE)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(FetchAcc_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(88, 88, 88)
                 .addComponent(processInterest_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2023,7 +2023,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2240,7 +2240,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnl1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2251,6 +2251,11 @@ public class Teller extends javax.swing.JFrame {
         NewUser.addTab("Customer Transaction Reports", reports_pnl);
 
         jPanel16.setBackground(new java.awt.Color(0, 123, 146));
+        jPanel16.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel16ComponentShown(evt);
+            }
+        });
 
         nCustomer_pnl.setBackground(new java.awt.Color(18, 63, 72));
 
@@ -2494,7 +2499,6 @@ public class Teller extends javax.swing.JFrame {
 
         lblCityValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         lblCityValidator.setForeground(new java.awt.Color(255, 255, 255));
-        lblCityValidator.setText("Enter City");
 
         lblInitialDepositValidator.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -2552,7 +2556,7 @@ public class Teller extends javax.swing.JFrame {
                                                 .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(lblImportantAsterisk11, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGap(0, 1, Short.MAX_VALUE))
                                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                         .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(76, 76, 76)
@@ -2654,7 +2658,7 @@ public class Teller extends javax.swing.JFrame {
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addComponent(lblAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblImportantAsterisk10, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -4072,11 +4076,11 @@ public class Teller extends javax.swing.JFrame {
 
         // Value Example: Henry
         // Value insertion is mandatory
-        System.out.println((Pattern.matches("[a-zA-Z]+", txtMName.getText())));
+        System.out.println((Pattern.matches("[a-zA-Z ]+", txtFName.getText())));
 
         // Value Example: Jacksone
         // Value insertion is mandatory
-        System.out.println((Pattern.matches("[a-zA-Z]+", txtLName.getText())));
+        System.out.println((Pattern.matches("[a-zA-Z ]+", txtLName.getText())));
 
         // Value Example: 330022102
         // Value insertion is mandatory
@@ -4116,362 +4120,92 @@ public class Teller extends javax.swing.JFrame {
         // Value insertion is mandatory
         System.out.println((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--");
 
-        // Checking if valid is inserted all the required fields
-        // This uses a static method to compare the text with the regex expression
-        if ( // Value Example: Henry
-                // Value insertion is mandatory
-                (Pattern.matches("[a-zA-Z ]+", txtMName.getText()) == true)
-                && // Value Example: Jacksone
-                // Value insertion is mandatory
-                (Pattern.matches("[a-zA-Z ]+", txtLName.getText()) == true)
-                && // Value Example: 330022102
-                // Value insertion is mandatory
-                (Pattern.matches("[0-9]{9}+", txtPassportNumber.getText()) == true)
-                && // Value Example: sample@sample.sample
-                // Value insertion is mandatory
-                // Must use '\' bacnkslash to add a backslash in quoatation since it is a speacial character used for instances like '\n'
-                // '\w' is the short form of '[a-zA-Z0-9]'
-                (Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText()) == true)
-                && // Value Example: 2587419635
-                // Value insertion is mandatory
-                (Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText()) == true)
-                && // Value Example: A43, Beach Lane
-                // Value insertion is mandatory
-                (Pattern.matches("([\\w]+)+", txtLaneAddress.getText()) == true)
-                && // Value Example: Liverpool
-                // Value insertion is mandatory
-                (Pattern.matches("[\\w]+", txtCity.getText()) == true)
-                && // Checking if the user has selected a account type
-                // Value insertion is mandatory
-                ((listAccountType.getSelectedItem()).toString() != "--SELECT ACCOUNT TYPE--")
-                && // Value Example: 150.00
-                // Value insertion is mandatory
-                (Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText()) == true)
-                && // Value Example: 45000002
-                // Value insertion is mandatory
-                (Pattern.matches("([0-9]{8})+", txtAccountNumber.getText()) == true)
-                && // Checking if the user has selected a account status
-                // Value insertion is mandatory
-                ((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--")) {
-            System.out.println("efef");
-        }
-
+        
+        
         // Declaring variable to store the tellerID that is retrieved from the database
         String tellerIDDB = "";
+        
+        // Checking if valid is inserted all the required fields
+        // This uses a static method to compare the text with the regex expression
+        if (    
+            // Value Example: Henry
+            // Value insertion is mandatory
+            (Pattern.matches("[a-zA-Z ]+", txtFName.getText()) == true) && 
 
-        // Declaring variable to count the number of successful SQL execution for entering customer details and show the appropriate message
-        int customerRegistrationComplete = 0;
+            // Value Example: Jacksone
+            // Value insertion is mandatory
+            (Pattern.matches("[a-zA-Z ]+", txtLName.getText()) == true) && 
 
-        // Retrieving the tellerID from the database using the systemLoginID value
-        try (Connection retrievingtellerIDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                Statement retrievingtellerIDStmt = retrievingtellerIDCon.createStatement();) {
+            // Value Example: 330022102
+            // Value insertion is mandatory
+            (Pattern.matches("[0-9]{9}+", txtPassportNumber.getText()) == true) && 
 
-            // Assigning SQL query
-            String retrievingtellerIDSqlQuery = "SELECT TellerID FROM Teller WHERE slSystemLoginID = '" + systemLoginIDGlobal + "'";
+            // Value Example: sample@sample.sample
+            // Value insertion is mandatory
+            // Must use '\' bacnkslash to add a backslash in quoatation since it is a speacial character used for instances like '\n'
+            // '\w' is the short form of '[a-zA-Z0-9]'
+            (Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)+", txtEmailAddress1.getText()) == true) &&
 
-            // Executing SQL query
-            ResultSet retrievingtellerIDRs = retrievingtellerIDStmt.executeQuery(retrievingtellerIDSqlQuery);
+            // Value Example: 2587419635
+            // Value insertion is mandatory
+            (Pattern.matches("([0-9]{10})+", txtPhoneNumber1.getText()) == true) &&
 
-            if (retrievingtellerIDRs.next()) {
-                tellerIDDB = retrievingtellerIDRs.getString(1);
-            }
-        } // Error handling. Checks for SQL related issues
-        catch (SQLException SqlEx) {
-            System.out.println("Error found: " + SqlEx);
-            // Displaying message box showing error message
-            JOptionPane.showMessageDialog(null,
-                    "Error Occurred in SQL Connection",
-                    "New Customer Registration - ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+            // Value Example: A43, Beach Lane
+            // Value insertion is mandatory
+            (Pattern.matches("([\\w]+)+", txtLaneAddress.getText()) == true) && 
 
-        // Declaring variable to store the user selected account status
-        String userSelectedAccountStatus = (String) listAccountStatus.getSelectedItem();
+            // Value Example: Liverpool
+            // Value insertion is mandatory
+            (Pattern.matches("[\\w]+", txtCity.getText()) == true) && 
 
-        // Declaring variable to store the user selected status ID
-        String userSelectedAccountStatusID = "";
+            // Checking if the user has selected a account type
+            // Value insertion is mandatory
+            ((listAccountType.getSelectedItem()).toString() != "--SELECT ACCOUNT TYPE--") && 
 
-        // Switch statement to assign the appropriate accountstatusID with the selected account status
-        switch (userSelectedAccountStatus.toString()) {
-            case "ACTIVE":
-                userSelectedAccountStatusID = "PT000001";
-                break;
-            case "ONHOLD":
-                userSelectedAccountStatusID = "PT000002";
-                break;
-            case "DISABLED":
-                userSelectedAccountStatusID = "PT000003";
-                break;
-            default:
-                userSelectedAccountStatusID = "";
-                break;
-        }
+            // Value Example: 150.00
+            // Value insertion is mandatory
+            (Pattern.matches("([0-9]+[\\.]?[0-9]{2}+)", txtInitialDeposit.getText()) == true) && 
 
-        // Displaying an error message if the user did not select an account status
-        if (userSelectedAccountStatusID == "") {
-            JOptionPane.showMessageDialog(null,
-                    "Please Select an Account Status",
-                    "New Customer Registration - ERROR",
-                    JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Checking if this customer is already registered or not
-            try (Connection checkingCustomerExistanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                    Statement checkingCustomerExistanceStmt = checkingCustomerExistanceCon.createStatement();) {
+            // Value Example: 45000002
+            // Value insertion is mandatory
+            (Pattern.matches("([0-9]{8})+", txtAccountNumber.getText()) == true) && 
+            // Checking if the user has selected a account status
+            // Value insertion is mandatory
+            ((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--")  ||
+
+            // Value Example: Adman Andy
+            // Value insertion is optional
+            (Pattern.matches("[a-zA-Z ]*", txtMName.getText()) == true) ||  
+
+            // Value Example: sample@sample.sample
+            // Value insertion is mandatory
+            // Must use '\' bacnkslash to add a backslash in quoatation since it is a speacial character used for instances like '\n'
+            // '\w' is the short form of '[a-zA-Z0-9]'
+            (Pattern.matches("([\\w]+[@][a-zA-Z]+([\\.]?[a-zA-Z]?)+)*", txtEmailAddress2.getText()) == true) ||
+
+            // Value Example: 2587419635
+            // Value insertion is mandatory
+            (Pattern.matches("([0-9]{10})*", txtPhoneNumber2.getText()) == true)  
+   
+        ) 
+        {
+
+
+            // Declaring variable to count the number of successful SQL execution for entering customer details and show the appropriate message
+            int customerRegistrationComplete = 0;
+
+            // Retrieving the tellerID from the database using the systemLoginID value
+            try (Connection retrievingtellerIDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement retrievingtellerIDStmt = retrievingtellerIDCon.createStatement();) {
 
                 // Assigning SQL query
-                String checkingCustomerExistanceSqlQuery = "SELECT * FROM Customer WHERE PassportNumber = '" + txtPassportNumber.getText() + "'";
+                String retrievingtellerIDSqlQuery = "SELECT TellerID FROM Teller WHERE slSystemLoginID = '" + systemLoginIDGlobal + "'";
 
                 // Executing SQL query
-                ResultSet checkingCustomerExistanceRs = checkingCustomerExistanceStmt.executeQuery(checkingCustomerExistanceSqlQuery);
+                ResultSet retrievingtellerIDRs = retrievingtellerIDStmt.executeQuery(retrievingtellerIDSqlQuery);
 
-                if (checkingCustomerExistanceRs.next()) {
-
-                    // Declaring variable to store each individual SQL statement at a given moment
-                    String newAccountSQLQuery = "";
-
-                    // Declaring variable to stote the return value of the SQL execution, insertingNewAccountDetails() method
-                    Boolean newAccountCreationSuccess = false;
-
-                    // Checking if user didn't select an option and will show an error message
-                    if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
-                        JOptionPane.showMessageDialog(null,
-                                "Please Select an Account Type !",
-                                "Account Generation Halted!",
-                                JOptionPane.WARNING_MESSAGE);
-                    } else if (userSelectedAccountType == "NORMAL SAVINGS") {
-
-                        newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountNumber, NSAccountBalance, asAccountStatusID, "
-                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
-                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
-
-                        // Calling method to insert account details
-                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
-
-                        if (newAccountCreationSuccess == false) {
-                            customerRegistrationComplete += 1;
-                        }
-
-                    } else if (userSelectedAccountType == "BONUS SAVINGS") {
-
-                        newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountNumber, BSAccountBalance, asAccountStatusID, "
-                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
-                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
-
-                        // Calling method to insert account details
-                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
-
-                        if (newAccountCreationSuccess == false) {
-                            customerRegistrationComplete += 1;
-                        }
-
-                    } else if (userSelectedAccountType == "PREMIER SAVINGS") {
-
-                        newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountNumber, PSAccountBalance, asAccountStatusID, "
-                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
-                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
-
-                        // Calling method to insert account details
-                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
-
-                        if (newAccountCreationSuccess == false) {
-                            customerRegistrationComplete += 1;
-                        }
-
-                    }
-                } else { // If the customer has not registered
-
-                    // Inserting customer details to the database, Customer relation
-                    try (Connection InsertingCustomerCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                            Statement InsertingCustomerStmt = InsertingCustomerCon.createStatement();) {
-
-                        // Assigning SQL query
-                        String InsertingCustomerSqlQuery = "INSERT INTO Customer (PassportNumber, FirstName, MiddleName, LastName, LaneAddress, City, tTellerID_RegisteredBy) "
-                                + "VALUES ('" + txtPassportNumber.getText() + "', '" + txtMName.getText() + "', '" + txtMName.getText() + "', '" + txtLName.getText() + "', "
-                                + "'" + txtLaneAddress.getText() + "', '" + txtCity.getText() + "', '" + tellerIDDB + "')";
-
-                        // Executing SQL query
-                        Boolean InsertingCustomerNumberRs = InsertingCustomerStmt.execute(InsertingCustomerSqlQuery);
-
-                        // Checking if the SQL execution returned false
-                        // If it was false the records has been added and customerRegistrationComplete would be incremented by one
-                        if (InsertingCustomerNumberRs == false) {
-                            customerRegistrationComplete += 1;
-                        }
-
-                    } // Error handling. Checks for SQL related issues
-                    catch (SQLException SqlEx) {
-                        System.out.println("Error found: " + SqlEx);
-                        // Displaying message box showing error message
-                        JOptionPane.showMessageDialog(null,
-                                "Error Occurred in SQL Connection",
-                                "New Customer Registration - ERROR!",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-
-                    // Declaring variable to store each individual SQL statement at a given moment
-                    String newAccountSQLQuery = "";
-
-                    // Declaring variable to stote the return value of the SQL execution, insertingNewAccountDetails() method
-                    Boolean newAccountCreationSuccess = false;
-
-                    // Checking if user didn't select an option and will show an error message
-                    if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
-                        JOptionPane.showMessageDialog(null,
-                                "Please Select an Account Type !",
-                                "Account Generation Halted!",
-                                JOptionPane.WARNING_MESSAGE);
-                    } else if (userSelectedAccountType == "NORMAL SAVINGS") {
-
-                        newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountNumber, NSAccountBalance, asAccountStatusID, "
-                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
-                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
-
-                        // Calling method to insert account details
-                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
-
-                        if (newAccountCreationSuccess == false) {
-                            customerRegistrationComplete += 0;
-                        }
-
-                    } else if (userSelectedAccountType == "BONUS SAVINGS") {
-
-                        newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountNumber, BSAccountBalance, asAccountStatusID, "
-                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
-                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
-
-                        // Calling method to insert account details
-                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
-
-                        if (newAccountCreationSuccess == false) {
-                            customerRegistrationComplete += 0;
-                        }
-
-                    } else if (userSelectedAccountType == "PREMIER SAVINGS") {
-
-                        newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountNumber, PSAccountBalance, asAccountStatusID, "
-                                + "cPassportNumber, tTellerID_RegisterBy) VALUES ('" + newAccountNumber + "', '" + txtInitialDeposit.getText() + "', "
-                                + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
-
-                        // Calling method to insert account details
-                        newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
-
-                        if (newAccountCreationSuccess == false) {
-                            customerRegistrationComplete += 0;
-                        }
-
-                    }
-
-                    // Checking if the user has entered one or two email addresses
-                    // Inserting customer email address to the database, CustomerEmailAddress relation
-                    if ((txtEmailAddress2.getText()).length() == 0) {
-
-                        try (Connection insertingEmailOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                                Statement insertingEmailOneStmt = insertingEmailOneCon.createStatement();) {
-
-                            // Assigning SQL query
-                            String insertingEmailOneSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
-                                    + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress1.getText() + "')";
-
-                            // Executing SQL query
-                            Boolean insertingEmailOneRs = insertingEmailOneStmt.execute(insertingEmailOneSqlQuery);
-
-                            // Checking if the SQL execution returned false
-                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
-                            if (insertingEmailOneRs == false) {
-                                customerRegistrationComplete += 1;
-                            }
-                        } // Error handling. Checks for SQL related issues
-                        catch (SQLException SqlEx) {
-                            System.out.println("Error found: " + SqlEx);
-                            // Displaying message box showing error message
-                            JOptionPane.showMessageDialog(null,
-                                    "Error Occurred in SQL Connection",
-                                    "New Customer Registration - ERROR!",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else if ((txtEmailAddress1.getText()).length() != 0 && (txtEmailAddress2.getText()).length() != 0) {
-                        try (Connection insertingEmailTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                                Statement insertingEmailTwoStmt = insertingEmailTwoCon.createStatement();) {
-
-                            // Assigning SQL query
-                            String insertingEmailTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
-                                    + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress1.getText() + "'), "
-                                    + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress2.getText() + "')";
-
-                            // Executing SQL query
-                            Boolean insertingEmailTwoRs = insertingEmailTwoStmt.execute(insertingEmailTwoSqlQuery);
-
-                            // Checking if the SQL execution returned false
-                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
-                            if (insertingEmailTwoRs == false) {
-                                customerRegistrationComplete += 1;
-                            }
-                        } // Error handling. Checks for SQL related issues
-                        catch (SQLException SqlEx) {
-                            System.out.println("Error found: " + SqlEx);
-                            // Displaying message box showing error message
-                            JOptionPane.showMessageDialog(null,
-                                    "Error Occurred in SQL Connection",
-                                    "New Customer Registration - ERROR!",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-
-                    // Checking if the user has entered one or two phone numbers
-                    // Inserting customer phone number to the database, CustomerPhoneNumber srelation
-                    if ((txtPhoneNumber2.getText()).length() == 0) {
-
-                        try (Connection insertingPhoneOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                                Statement insertingPhoneOneStmt = insertingPhoneOneCon.createStatement();) {
-
-                            // Assigning SQL query
-                            String insertingPhoneOneSqlQuery = "INSERT INTO CustomerPhoneNumber VALUES "
-                                    + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber1.getText() + "')";
-
-                            // Executing SQL query
-                            Boolean insertingPhoneOneRs = insertingPhoneOneStmt.execute(insertingPhoneOneSqlQuery);
-
-                            // Checking if the SQL execution returned false
-                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
-                            if (insertingPhoneOneRs == false) {
-                                customerRegistrationComplete += 1;
-                            }
-                        } // Error handling. Checks for SQL related issues
-                        catch (SQLException SqlEx) {
-                            System.out.println("Error found: " + SqlEx);
-                            // Displaying message box showing error message
-                            JOptionPane.showMessageDialog(null,
-                                    "Error Occurred in SQL Connection",
-                                    "New Customer Registration - ERROR!",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else if ((txtPhoneNumber1.getText()).length() != 0 && (txtPhoneNumber2.getText()).length() != 0) {
-                        try (Connection insertingPhoneTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                                Statement insertingPhoneTwoStmt = insertingPhoneTwoCon.createStatement();) {
-
-                            // Assigning SQL query
-                            String insertingPhoneTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
-                                    + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber1.getText() + "'), "
-                                    + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber2.getText() + "')";
-
-                            // Executing SQL query
-                            Boolean insertingPhoneTwoRs = insertingPhoneTwoStmt.execute(insertingPhoneTwoSqlQuery);
-
-                            // Checking if the SQL execution returned false
-                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
-                            if (insertingPhoneTwoRs == false) {
-                                customerRegistrationComplete += 1;
-                            }
-                        } // Error handling. Checks for SQL related issues
-                        catch (SQLException SqlEx) {
-                            System.out.println("Error found: " + SqlEx);
-                            // Displaying message box showing error message
-                            JOptionPane.showMessageDialog(null,
-                                    "Error Occurred in SQL Connection",
-                                    "New Customer Registration - ERROR!",
-                                    JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
+                if (retrievingtellerIDRs.next()) {
+                    tellerIDDB = retrievingtellerIDRs.getString(1);
                 }
             } // Error handling. Checks for SQL related issues
             catch (SQLException SqlEx) {
@@ -4482,30 +4216,336 @@ public class Teller extends javax.swing.JFrame {
                         "New Customer Registration - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
             }
+            System.out.println(tellerIDDB);
+            // Declaring variable to store the user selected account status
+            String userSelectedAccountStatus = (String) listAccountStatus.getSelectedItem();
 
-            // Checking if there were any errors along the registration
-            // Displaying the appropriate message to the user according to the number of successful and failed executions
-            if (customerRegistrationComplete == 1) {
-                // Displaying message box showing confirmation message
+            // Declaring variable to store the user selected status ID
+            String userSelectedAccountStatusID = "";
+
+            // Switch statement to assign the appropriate accountstatusID with the selected account status
+            switch (userSelectedAccountStatus.toString()) {
+                case "ACTIVE":
+                    userSelectedAccountStatusID = "AS000001";
+                    break;
+                case "ONHOLD":
+                    userSelectedAccountStatusID = "AS000002";
+                    break;
+                case "DISABLED":
+                    userSelectedAccountStatusID = "AS000003";
+                    break;
+                default:
+                    userSelectedAccountStatusID = "";
+                    break;
+            }
+
+            // Displaying an error message if the user did not select an account status
+            if (userSelectedAccountStatusID == "") {
                 JOptionPane.showMessageDialog(null,
-                        "Account has been successfully created",
-                        "Adding New Customer - Confirmation",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } else if (customerRegistrationComplete >= 4 && customerRegistrationComplete <= 6) {
-                // Displaying message box showing confirmation message
-                JOptionPane.showMessageDialog(null,
-                        "Customer Account has been created",
-                        "Adding New Customer - Confirmation",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } else if (customerRegistrationComplete == 0) {
-                // Displaying message box showing error message
-                JOptionPane.showMessageDialog(null,
-                        "Error occurred while inserting customer details",
-                        "Adding New Customer - ERROR",
+                        "Please Select an Account Status",
+                        "New Customer Registration - ERROR",
                         JOptionPane.ERROR_MESSAGE);
+            } 
+            else {
+                // Checking if this customer is already registered or not
+                try (Connection checkingCustomerExistanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        Statement checkingCustomerExistanceStmt = checkingCustomerExistanceCon.createStatement();) {
+
+                    // Assigning SQL query
+                    String checkingCustomerExistanceSqlQuery = "SELECT * FROM Customer WHERE PassportNumber = '" + txtPassportNumber.getText() + "'";
+
+                    // Executing SQL query
+                    ResultSet checkingCustomerExistanceRs = checkingCustomerExistanceStmt.executeQuery(checkingCustomerExistanceSqlQuery);
+
+                    if (checkingCustomerExistanceRs.next() == true) {
+
+                        // Declaring variable to store each individual SQL statement at a given moment
+                        String newAccountSQLQuery = "";
+
+                        // Declaring variable to stote the return value of the SQL execution, insertingNewAccountDetails() method
+                        Boolean newAccountCreationSuccess = false;
+
+                        // Checking if user didn't select an option and will show an error message
+                        if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
+                            JOptionPane.showMessageDialog(null,
+                                    "Please Select an Account Type !",
+                                    "Account Generation Halted!",
+                                    JOptionPane.WARNING_MESSAGE);
+                        } 
+                        else if (userSelectedAccountType == "NORMAL SAVINGS") {
+                            /* There is no need to insert the newly generate account number as this column in the relation is automatically incremented 
+                            by one upon record insertion*/
+                            newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountBalance, asAccountStatusID, "
+                                    + "cPassportNumber, tTellerID_RegisteredBy) VALUES ('" + txtInitialDeposit.getText() + "', "
+                                    + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
+
+                            // Calling method to insert account details
+                            newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                            if (newAccountCreationSuccess == false) {
+                                customerRegistrationComplete += 1;
+                            }
+
+                        } 
+                        else if (userSelectedAccountType == "BONUS SAVINGS") {
+                            
+                            /* There is no need to insert the newly generate account number as this column in the relation is automatically incremented 
+                            by one upon record insertion*/
+                            newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountBalance, asAccountStatusID, "
+                                    + "cPassportNumber, tTellerID_RegisteredBy) VALUES ('" + txtInitialDeposit.getText() + "', "
+                                    + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
+
+                            // Calling method to insert account details
+                            newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        } 
+                        else if (userSelectedAccountType == "PREMIER SAVINGS") {
+                            /* There is no need to insert the newly generate account number as this column in the relation is automatically incremented 
+                            by one upon record insertion*/
+                            newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountBalance, asAccountStatusID, "
+                                    + "cPassportNumber, tTellerID_RegisteredBy) VALUES ('" + txtInitialDeposit.getText() + "', "
+                                    + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
+
+                            // Calling method to insert account details
+                            newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+                        }
+                        
+                        // Displaying message box showing confirmation message
+                        JOptionPane.showMessageDialog(null,
+                            "New Customer Account has been created",
+                            "Adding New Customer - Confirmation",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    } 
+                    else if (checkingCustomerExistanceRs.next() == false) { // If the customer has not registered
+
+                        // Inserting customer details to the database, Customer relation
+                        try (Connection InsertingCustomerCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                Statement InsertingCustomerStmt = InsertingCustomerCon.createStatement();) {
+
+                            // Assigning SQL query
+                            String InsertingCustomerSqlQuery = "INSERT INTO Customer (PassportNumber, FirstName, MiddleName, LastName, "
+                                    + "LaneAddress, City, tTellerID_RegisteredBy) VALUES ('" + txtPassportNumber.getText() + "', "
+                                    + "'" + txtMName.getText() + "', '" + txtMName.getText() + "', '" + txtLName.getText() + "', "
+                                    + "'" + txtLaneAddress.getText() + "', '" + txtCity.getText() + "', '" + tellerIDDB + "')";
+
+                            // Executing SQL query
+                            Boolean InsertingCustomerNumberRs = InsertingCustomerStmt.execute(InsertingCustomerSqlQuery);
+
+                            // Checking if the SQL execution returned false
+                            // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                            if (InsertingCustomerNumberRs == false) {
+                                customerRegistrationComplete += 1;
+                            }
+
+                        } // Error handling. Checks for SQL related issues
+                        catch (SQLException SqlEx) {
+                            System.out.println("Error found: " + SqlEx);
+                            // Displaying message box showing error message
+                            JOptionPane.showMessageDialog(null,
+                                    "Error Occurred in SQL Connection",
+                                    "New Customer Registration - ERROR!",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        // Declaring variable to store each individual SQL statement at a given moment
+                        String newAccountSQLQuery = "";
+
+                        // Declaring variable to stote the return value of the SQL execution, insertingNewAccountDetails() method
+                        Boolean newAccountCreationSuccess = false;
+
+                        // Checking if user didn't select an option and will show an error message
+                        if (userSelectedAccountType == "--SELECT ACCOUNT TYPE--") {
+                            JOptionPane.showMessageDialog(null,
+                                    "Please Select an Account Type !",
+                                    "Account Generation Halted!",
+                                    JOptionPane.WARNING_MESSAGE);
+                        } 
+                        else if (userSelectedAccountType == "NORMAL SAVINGS") {
+                            /* There is no need to insert the newly generate account number as this column in the relation is automatically incremented 
+                            by one upon record insertion*/
+                            newAccountSQLQuery = "INSERT INTO AccountNormalSavings (NSAccountBalance, asAccountStatusID, "
+                                    + "cPassportNumber, tTellerID_RegisteredBy) VALUES ('" + txtInitialDeposit.getText() + "', "
+                                    + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
+
+                            // Calling method to insert account details
+                            newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        } 
+                        else if (userSelectedAccountType == "BONUS SAVINGS") {
+                            /* There is no need to insert the newly generate account number as this column in the relation is automatically incremented 
+                            by one upon record insertion*/
+                            newAccountSQLQuery = "INSERT INTO AccountBonusSavings (BSAccountBalance, asAccountStatusID, "
+                                    + "cPassportNumber, tTellerID_RegisteredBy) VALUES ('" + txtInitialDeposit.getText() + "', "
+                                    + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
+
+                            // Calling method to insert account details
+                            newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+
+                        } 
+                        else if (userSelectedAccountType == "PREMIER SAVINGS") {
+                            /* There is no need to insert the newly generate account number as this column in the relation is automatically incremented 
+                            by one upon record insertion*/
+                            newAccountSQLQuery = "INSERT INTO AccountPremierSavings (PSAccountBalance, asAccountStatusID, "
+                                    + "cPassportNumber, tTellerID_RegisteredBy) VALUES ('" + txtInitialDeposit.getText() + "', "
+                                    + "'" + userSelectedAccountStatusID + "', '" + txtPassportNumber.getText() + "', '" + tellerIDDB + "')";
+
+                            // Calling method to insert account details
+                            newAccountCreationSuccess = anc.insertingNewAccountDetails(newAccountSQLQuery);
+                        }
+                        
+                        // Displaying message box showing confirmation message
+                        JOptionPane.showMessageDialog(null,
+                            "New Savings Account has been created",
+                            "Adding New Customer - Confirmation",
+                            JOptionPane.INFORMATION_MESSAGE);
+                        
+
+                        // Checking if the user has entered one or two email addresses
+                        // Inserting customer email address to the database, CustomerEmailAddress relation
+                        if ( (txtEmailAddress1.getText()).length() != 0 && (txtEmailAddress2.getText()).length() == 0 ){
+
+                            try (Connection insertingEmailOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    Statement insertingEmailOneStmt = insertingEmailOneCon.createStatement();) {
+
+                                // Assigning SQL query
+                                String insertingEmailOneSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
+                                        + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress1.getText() + "')";
+
+                                // Executing SQL query
+                                Boolean insertingEmailOneRs = insertingEmailOneStmt.execute(insertingEmailOneSqlQuery);
+
+                                // Checking if the SQL execution returned false
+                                // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                                if (insertingEmailOneRs == false) {
+                                    customerRegistrationComplete += 1;
+                                }
+                            } // Error handling. Checks for SQL related issues
+                            catch (SQLException SqlEx) {
+                                System.out.println("Error found: " + SqlEx);
+                                // Displaying message box showing error message
+                                JOptionPane.showMessageDialog(null,
+                                        "Error Occurred in SQL Connection",
+                                        "New Customer Registration - ERROR!",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                        } 
+                        else if ((txtEmailAddress1.getText()).length() != 0 && (txtEmailAddress2.getText()).length() != 0) {
+                            try (Connection insertingEmailTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    Statement insertingEmailTwoStmt = insertingEmailTwoCon.createStatement();) {
+
+                                // Assigning SQL query
+                                String insertingEmailTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
+                                        + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress1.getText() + "'), "
+                                        + "('" + txtPassportNumber.getText() + "', '" + txtEmailAddress2.getText() + "')";
+
+                                // Executing SQL query
+                                Boolean insertingEmailTwoRs = insertingEmailTwoStmt.execute(insertingEmailTwoSqlQuery);
+
+                                // Checking if the SQL execution returned false
+                                // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                                if (insertingEmailTwoRs == false) {
+                                    customerRegistrationComplete += 1;
+                                }
+                            } // Error handling. Checks for SQL related issues
+                            catch (SQLException SqlEx) {
+                                System.out.println("Error found: " + SqlEx);
+                                // Displaying message box showing error message
+                                JOptionPane.showMessageDialog(null,
+                                        "Error Occurred in SQL Connection",
+                                        "New Customer Registration - ERROR!",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        
+                        // Checking if the user has entered one or two phone numbers
+                        // Inserting customer phone number to the database, CustomerPhoneNumber srelation
+                        if ( (txtPhoneNumber1.getText()).length() != 0 && (txtPhoneNumber2.getText()).length() == 0 ) {
+
+                            try (Connection insertingPhoneOneCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    Statement insertingPhoneOneStmt = insertingPhoneOneCon.createStatement();) {
+
+                                // Assigning SQL query
+                                String insertingPhoneOneSqlQuery = "INSERT INTO CustomerPhoneNumber VALUES "
+                                        + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber1.getText()+ "')";
+
+                                // Executing SQL query
+                                Boolean insertingPhoneOneRs = insertingPhoneOneStmt.execute(insertingPhoneOneSqlQuery);
+
+                                // Checking if the SQL execution returned false
+                                // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                                if (insertingPhoneOneRs == false) {
+                                    customerRegistrationComplete += 1;
+                                }
+                            } // Error handling. Checks for SQL related issues
+                            catch (SQLException SqlEx) {
+                                System.out.println("Error found: " + SqlEx);
+                                // Displaying message box showing error message
+                                JOptionPane.showMessageDialog(null,
+                                        "Error Occurred in SQL Connection",
+                                        "New Customer Registration - ERROR!",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        else if ( (txtPhoneNumber1.getText()).length() != 0 && (txtPhoneNumber2.getText()).length() != 0 ) {
+                            try (Connection insertingPhoneTwoCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    Statement insertingPhoneTwoStmt = insertingPhoneTwoCon.createStatement();) {
+
+                                // Assigning SQL query
+                                String insertingPhoneTwoSqlQuery = "INSERT INTO CustomerEmailAddress VALUES "
+                                        + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber1.getText() + "'), "
+                                        + "('" + txtPassportNumber.getText() + "', '" + txtPhoneNumber2.getText() + "')";
+
+                                // Executing SQL query
+                                Boolean insertingPhoneTwoRs = insertingPhoneTwoStmt.execute(insertingPhoneTwoSqlQuery);
+
+                                // Checking if the SQL execution returned false
+                                // If it was false the records has been added and customerRegistrationComplete would be incremented by one
+                                if (insertingPhoneTwoRs == false) {
+                                    customerRegistrationComplete += 1;
+                                }
+                            } // Error handling. Checks for SQL related issues
+                            catch (SQLException SqlEx) {
+                                System.out.println("Error found: " + SqlEx);
+                                // Displaying message box showing error message
+                                JOptionPane.showMessageDialog(null,
+                                        "Error Occurred in SQL Connection",
+                                        "New Customer Registration - ERROR!",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        
+                        // Displaying message box showing confirmation message
+                        JOptionPane.showMessageDialog(null,
+                            "New Customer has been registered",
+                            "Adding New Customer - Confirmation",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                            "Error occurred while creating new customer account",
+                            "Adding New Customer - ERROR",
+                            JOptionPane.ERROR_MESSAGE);
+                    }
+                } 
+                // Error handling. Checks for SQL related issues
+                catch (SQLException SqlEx) {
+                    System.out.println("Error found: " + SqlEx);
+                    // Displaying message box showing error message
+                    JOptionPane.showMessageDialog(null,
+                            "Error Occurred in SQL Connection",
+                            "New Customer Registration - ERROR!",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
-
+        else{
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                "Check if all the Mandatory fields are Filled (*) with Accurate Values",
+                "New Customer Registration - ERROR!",
+                JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnCreateAccountActionPerformed
 
     private void btnGenerateAccountNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAccountNumberActionPerformed
@@ -4816,6 +4856,7 @@ public class Teller extends javax.swing.JFrame {
                 minimumInitialDeposit = 1000.00f;
                 break;
         }
+        
 
         // Checking if the user entered value is lower to the minimum initial deposit amount
         if (minimumInitialDeposit > (Float.parseFloat(txtInitialDeposit.getText()))) {
@@ -4852,6 +4893,14 @@ public class Teller extends javax.swing.JFrame {
 
         new DebitCard(AccNo).setVisible(true);
     }//GEN-LAST:event_cardrequestActionPerformed
+
+    private void jPanel16ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel16ComponentShown
+        // Displaying message box showing to show mandatory fields message (*)
+        JOptionPane.showMessageDialog(null,
+            "Please Fill all the fields that has a red Asterisk(*) next to it",
+            "New Customer Registration",
+            JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jPanel16ComponentShown
 
     /**
      * @param args the command line arguments
