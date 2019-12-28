@@ -60,7 +60,7 @@ public class CreateManager extends javax.swing.JFrame {
         mUName_Txt = new javax.swing.JTextField();
         password_Txt = new javax.swing.JTextField();
         slPosition_Lbl = new javax.swing.JLabel();
-        saposition_Lbl = new javax.swing.JLabel();
+        saAdmin_Lbl = new javax.swing.JLabel();
         Lname_Lbl = new javax.swing.JLabel();
         Mname_Lbl = new javax.swing.JLabel();
         city_Lbl = new javax.swing.JLabel();
@@ -76,7 +76,7 @@ public class CreateManager extends javax.swing.JFrame {
         Mname_Txt = new javax.swing.JTextField();
         mail_Lbl = new javax.swing.JLabel();
         email_Txt = new javax.swing.JTextField();
-        position_Txt = new javax.swing.JTextField();
+        adminID_Txt = new javax.swing.JTextField();
         login_Lbl = new javax.swing.JLabel();
         login_Txt = new javax.swing.JTextField();
 
@@ -105,9 +105,9 @@ public class CreateManager extends javax.swing.JFrame {
         slPosition_Lbl.setForeground(new java.awt.Color(240, 240, 240));
         slPosition_Lbl.setText("slPosition ID");
 
-        saposition_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        saposition_Lbl.setForeground(new java.awt.Color(240, 240, 240));
-        saposition_Lbl.setText("saPosition ID");
+        saAdmin_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        saAdmin_Lbl.setForeground(new java.awt.Color(240, 240, 240));
+        saAdmin_Lbl.setText("saAdmin ID");
 
         Lname_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Lname_Lbl.setForeground(new java.awt.Color(240, 240, 240));
@@ -156,7 +156,7 @@ public class CreateManager extends javax.swing.JFrame {
                             .addComponent(mail_Lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(slPosition_Lbl)
                             .addComponent(mPassword_Lbl)
-                            .addComponent(saposition_Lbl)
+                            .addComponent(saAdmin_Lbl)
                             .addComponent(branch_Lbl)
                             .addComponent(Fname_Lbl)
                             .addComponent(Mname_Lbl)
@@ -178,7 +178,7 @@ public class CreateManager extends javax.swing.JFrame {
                                 .addComponent(city_Txt)
                                 .addComponent(Mname_Txt)
                                 .addComponent(email_Txt)
-                                .addComponent(position_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))))
+                                .addComponent(adminID_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(319, 319, 319)
                         .addComponent(mButton1)))
@@ -202,8 +202,8 @@ public class CreateManager extends javax.swing.JFrame {
                     .addComponent(slPosition_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saposition_Lbl)
-                    .addComponent(position_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saAdmin_Lbl)
+                    .addComponent(adminID_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(branch_Lbl)
@@ -276,12 +276,12 @@ public class CreateManager extends javax.swing.JFrame {
 
         try {
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            String sql="INSERT INTO dbo.SystemLogin(UserName, Password,slpPositionId ,saAdminID) VALUES (?,?,?,?)";
+            String sql="INSERT INTO dbo.SystemLogin(UserName, Password,slpPositionId ,saAdminID_CreatedBy) VALUES (?,?,?,?)";
             ps=conn.prepareStatement(sql);
             ps.setString(1,mUName_Txt.getText());
             ps.setString(2,password_Txt.getText());
             ps.setString(3,slPosition_Txt.getText());
-            ps.setString(4,position_Txt.getText());
+            ps.setString(4,adminID_Txt.getText());
             ps.executeUpdate();
             
             String sql2="SELECT TOP 1 SystemLoginID from dbo.SystemLogin ORDER BY SystemLoginID DESC";
@@ -294,7 +294,7 @@ public class CreateManager extends javax.swing.JFrame {
             }
             
             
-            String sql3="INSERT INTO dbo.Manager(Branch,FirstName,MiddleName,LastName,LaneAddress,City,EmailAddress,slSystemLoginID) VALUES (?,?,?,?,?,?,?,?)";
+            String sql3="INSERT INTO dbo.Manager(Branch,FirstName,MiddleName,LastName,LaneAddress,City,EmailAddress,slSystemLoginID,saAdminID_RegisteredBy) VALUES (?,?,?,?,?,?,?,?,?)";
             ps=conn.prepareStatement(sql3);
             ps.setString(1, branch_Txt.getText());
             ps.setString(2, Fname_Txt.getText());
@@ -304,6 +304,7 @@ public class CreateManager extends javax.swing.JFrame {
             ps.setString(6, city_Txt.getText());
             ps.setString(7, email_Txt.getText());
             ps.setString(8, login_Txt.getText());
+            ps.setString(9, adminID_Txt.getText());
             ps.executeUpdate();
             
             
@@ -362,6 +363,7 @@ public class CreateManager extends javax.swing.JFrame {
     private javax.swing.JTextField Lname_Txt;
     private javax.swing.JLabel Mname_Lbl;
     private javax.swing.JTextField Mname_Txt;
+    private javax.swing.JTextField adminID_Txt;
     private javax.swing.JLabel branch_Lbl;
     private javax.swing.JTextField branch_Txt;
     private javax.swing.JLabel city_Lbl;
@@ -377,8 +379,7 @@ public class CreateManager extends javax.swing.JFrame {
     private javax.swing.JTextField mUName_Txt;
     private javax.swing.JLabel mail_Lbl;
     private javax.swing.JTextField password_Txt;
-    private javax.swing.JTextField position_Txt;
-    private javax.swing.JLabel saposition_Lbl;
+    private javax.swing.JLabel saAdmin_Lbl;
     private javax.swing.JLabel slPosition_Lbl;
     private javax.swing.JTextField slPosition_Txt;
     // End of variables declaration//GEN-END:variables

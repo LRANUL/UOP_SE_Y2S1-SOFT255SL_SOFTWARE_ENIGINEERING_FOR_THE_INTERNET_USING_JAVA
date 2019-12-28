@@ -166,41 +166,41 @@ public class AdminPanel extends javax.swing.JFrame {
         TellerINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         TellerINFO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Teller ID", "Branch", "First Name", "Last Name", "Lane Address", "City", "E-Mail", "Login Id"
+                "TRecordID", "Teller ID", "Branch", "First Name", "Last Name", "Lane Address", "City", "E-Mail", "Login Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, false, false, true, true
+                true, false, true, true, true, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -257,41 +257,41 @@ public class AdminPanel extends javax.swing.JFrame {
         ManagersINFO.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         ManagersINFO.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Manager ID", "Branch", "First Name", "Last Name", "Lane Address", "City", "E-Mail Address", "Login Id"
+                "MRecordID", "Manager ID", "Branch", "First Name", "Last Name", "Lane Address", "City", "E-Mail Address", "Login Id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true
+                true, false, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -499,7 +499,7 @@ public class AdminPanel extends javax.swing.JFrame {
             //connection to the databbase
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
             //The select statement
-            String sql="SELECT TellerID,Branch,FirstName,LastName,LaneAddress, City, EmailAddress,slSystemLoginID FROM dbo.Teller";
+            String sql="SELECT TRecordID,TellerID,Branch,FirstName,LastName,LaneAddress, City, EmailAddress,slSystemLoginID FROM dbo.Teller";
             ps=conn.prepareStatement(sql);
             //executes the query
             rs=ps.executeQuery();
@@ -526,7 +526,7 @@ public class AdminPanel extends javax.swing.JFrame {
             // get the data from row 
             String value=TellerINFO.getModel().getValueAt(row, 0).toString();
             //sql select statement
-            String sql="Delete from dbo.Teller where TellerID=" + value;
+            String sql="Delete from dbo.Teller where TRecordID=" + value;
             ps=conn.prepareStatement(sql);
             //executes the update
             ps.executeUpdate();
@@ -547,7 +547,7 @@ public class AdminPanel extends javax.swing.JFrame {
         
          try {
             conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            String sql="SELECT ManagerId,Branch,FirstName,LastName,LaneAddress, City, EmailAddress,slSystemLoginID FROM dbo.Manager";
+            String sql="SELECT MRecordID,ManagerId,Branch,FirstName,LastName,LaneAddress, City, EmailAddress,slSystemLoginID FROM dbo.Manager";
             ps=conn.prepareStatement(sql);
             rs=ps.executeQuery();
             
@@ -608,7 +608,7 @@ public class AdminPanel extends javax.swing.JFrame {
             // get the data from row 
             String value=ManagersINFO.getModel().getValueAt(row,0).toString();
             //sql select statement
-            String sql="DELETE FROM dbo.Manager  WHERE ManagerId="+value;
+            String sql="DELETE FROM dbo.Manager  WHERE MRecordID="+value;
             ps=conn.prepareStatement(sql);
             //executes the update
             ps.executeUpdate();
