@@ -37,6 +37,7 @@ import ReportGeneration.ReportGeneration;
 import ReceiptGeneration.CustomerReceiptGeneration;
 
 import java.util.regex.*;
+import javax.swing.SwingConstants;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -92,6 +93,13 @@ public class Teller extends javax.swing.JFrame {
     public Teller() { // Default constructor
         initComponents();
         date.setText(java.time.LocalDate.now().toString());
+        
+        // Setting text field to right text alignment
+        txtMonthlyIncomeRate.setHorizontalAlignment(SwingConstants.RIGHT);
+        
+        // Assigning a default value to the text field
+        txtMonthlyIncomeRate.setText("0.00");
+        
 
         // Making the account number textfield in 'NEW Customer' panel not editable by the user
         txtAccountNumber.setEditable(false);
@@ -1052,6 +1060,7 @@ public class Teller extends javax.swing.JFrame {
         jDialog1 = new javax.swing.JDialog();
         jScrollPane6 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jSpinner1 = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         NewUser = new javax.swing.JTabbedPane();
         savingsAcc_pnl = new javax.swing.JTabbedPane();
@@ -1200,6 +1209,10 @@ public class Teller extends javax.swing.JFrame {
         lblInitialDepositValidator = new javax.swing.JLabel();
         txtFName = new javax.swing.JTextField();
         cardrequest = new javax.swing.JButton();
+        txtMonthlyIncomeRate = new javax.swing.JTextField();
+        lblMonthlyInvoiceRate = new javax.swing.JLabel();
+        lblImportantAsterisk12 = new javax.swing.JLabel();
+        lblMonthlyIncomeRateValidator = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -1311,7 +1324,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(ClearSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 463, Short.MAX_VALUE)
                 .addComponent(SubmitSA, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1520,7 +1533,7 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(Deposit_pnlLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -1583,7 +1596,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(ClearSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(CheckSA1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 433, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 463, Short.MAX_VALUE)
                 .addComponent(btnWithdrawalSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1712,7 +1725,7 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(withdrawal_pnlLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         jSplitPane5.setRightComponent(withdrawal_pnl);
@@ -1829,7 +1842,7 @@ public class Teller extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         mInterest_pnl.addTab("HOME", jPanel6);
@@ -1888,7 +1901,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(btn_retrieveRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110)
                 .addComponent(btn_generateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE)
                 .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -2023,7 +2036,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2081,7 +2094,7 @@ public class Teller extends javax.swing.JFrame {
                 .addComponent(btn_monthlyRetrieveRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110)
                 .addComponent(btn_monthlyGenerateReport, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE)
                 .addComponent(btn_monthlyClear, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -2240,7 +2253,7 @@ public class Teller extends javax.swing.JFrame {
             dReport_pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dReport_pnl1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2519,6 +2532,23 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
+        txtMonthlyIncomeRate.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        txtMonthlyIncomeRate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMonthlyIncomeRateKeyReleased(evt);
+            }
+        });
+
+        lblMonthlyInvoiceRate.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        lblMonthlyInvoiceRate.setForeground(new java.awt.Color(255, 255, 255));
+        lblMonthlyInvoiceRate.setText("Monthly Income Rate");
+
+        lblImportantAsterisk12.setForeground(new java.awt.Color(255, 0, 51));
+        lblImportantAsterisk12.setText("*");
+
+        lblMonthlyIncomeRateValidator.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
+        lblMonthlyIncomeRateValidator.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout nCustomer_pnlLayout = new javax.swing.GroupLayout(nCustomer_pnl);
         nCustomer_pnl.setLayout(nCustomer_pnlLayout);
         nCustomer_pnlLayout.setHorizontalGroup(
@@ -2527,98 +2557,119 @@ public class Teller extends javax.swing.JFrame {
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(136, 136, 136)
-                        .addComponent(FName_Lbl3))
+                        .addComponent(FName_Lbl3)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                                .addComponent(lblMName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(305, 305, 305))
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addComponent(lblPhoneNumber1)
-                                .addGap(18, 18, 18)
-                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addComponent(lblPhoneNumber1Validator)
-                                        .addGap(213, 213, 213))
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addComponent(txtPhoneNumber1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblImportantAsterisk5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(115, 115, 115))))
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addGap(1, 1, 1)
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addComponent(lblLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblLaneAddressValidator)
-                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                                .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(lblImportantAsterisk11, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(76, 76, 76)
-                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                                .addComponent(txtCity)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(lblImportantAsterisk9, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(lblCityValidator)))
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                         .addComponent(lblPhoneNumber2)
                                         .addGap(18, 18, 18)
+                                        .addComponent(txtPhoneNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(lblPhoneNumber2Validator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(6, 6, 6))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
                                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblPhoneNumber2Validator)
-                                            .addComponent(txtPhoneNumber2))))
-                                .addGap(163, 163, 163))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(lblLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblImportantAsterisk11, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(lblCity, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(76, 76, 76)
+                                                .addComponent(txtCity)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblImportantAsterisk9, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(8, 8, 8)))
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(lblCityValidator, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                                            .addComponent(lblLaneAddressValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(32, 32, 32))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblMonthlyInvoiceRate)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtMonthlyIncomeRate, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblImportantAsterisk12, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblMonthlyIncomeRateValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblMName, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(39, 39, 39)
+                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtMName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                        .addComponent(lblLName)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblLName)
-                                            .addComponent(lblFName, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(27, 27, 27)
-                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblLNameValidator)
-                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(lblFNameValidator)
-                                                        .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(txtMName, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(lblMNameValidator)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblImportantAsterisk2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(lblImportantAsterisk1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addComponent(lblEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblEmailAddress2Validator)
-                                            .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(lblImportantAsterisk2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(lblLNameValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(lblImportantAsterisk1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblMNameValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(lblFNameValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblPassportNumber))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblPassportNumberValidator)
+                                            .addComponent(lblFName, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                                .addComponent(txtPassportNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblImportantAsterisk3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(lblEmailAddress1Validator)
+                                                .addGap(2, 2, 2)
+                                                .addComponent(lblEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(2, 2, 2)
+                                                .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                                .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lblPassportNumber))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(lblImportantAsterisk4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                        .addComponent(txtPassportNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(lblImportantAsterisk3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(lblPassportNumberValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                        .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(lblImportantAsterisk4, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(lblEmailAddress1Validator, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                                                            .addComponent(lblEmailAddress2Validator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                                .addComponent(lblPhoneNumber1)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtPhoneNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblImportantAsterisk5, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblPhoneNumber1Validator, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2669,9 +2720,9 @@ public class Teller extends javax.swing.JFrame {
         nCustomer_pnlLayout.setVerticalGroup(
             nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(43, 43, 43)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGap(158, 158, 158)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblImportantAsterisk6)
                             .addComponent(txtInitialDeposit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2679,32 +2730,33 @@ public class Teller extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblInitialDepositValidator))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(FName_Lbl3)
                             .addComponent(FName_Lbl))
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(listAccountType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblAccountType)
-                                    .addComponent(lblImportantAsterisk7))
-                                .addGap(25, 25, 25))
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblImportantAsterisk1)
-                                    .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFName))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblFNameValidator)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                    .addComponent(lblImportantAsterisk7)))
+                            .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, nCustomer_pnlLayout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
+                                    .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblFName)))
+                                .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblImportantAsterisk1)
+                                        .addComponent(lblFNameValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(18, 18, 18)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtMName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMName)
-                            .addComponent(txtMName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblMNameValidator)))
+                            .addComponent(lblMNameValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)))
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
@@ -2714,101 +2766,98 @@ public class Teller extends javax.swing.JFrame {
                             .addComponent(btnGenerateAccountNumber)
                             .addComponent(lblImportantAsterisk8)))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                                .addComponent(lblImportantAsterisk2)
-                                .addGap(14, 14, 14))
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addGap(7, 7, 7)
-                                        .addComponent(lblLName))
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtLName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(1, 1, 1)))
-                        .addComponent(lblLNameValidator)))
+                        .addGap(1, 1, 1)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblLName)
+                            .addComponent(txtLName)
+                            .addComponent(lblImportantAsterisk2)
+                            .addComponent(lblLNameValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, nCustomer_pnlLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtPassportNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblPassportNumber))
+                                    .addComponent(lblPassportNumber)))
+                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPassportNumberValidator))
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblImportantAsterisk3)
+                                    .addComponent(lblPassportNumberValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(lblImportantAsterisk3)))
-                        .addGap(7, 7, 7)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(22, 22, 22)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblEmailAddress1)
+                                    .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(lblImportantAsterisk4))
-                            .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblEmailAddress1)
-                                .addComponent(txtEmailAddress1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(21, 21, 21)
+                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblEmailAddress1Validator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblImportantAsterisk4)))))
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblImportantAsterisk10)
                             .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblAccountStatus)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblEmailAddress1Validator)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmailAddress2)
-                    .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cardrequest))
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblEmailAddress2Validator)
+                        .addGap(29, 29, 29)
+                        .addComponent(cardrequest))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEmailAddress2)
+                            .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEmailAddress2Validator, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
+                        .addGap(7, 7, 7)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGap(7, 7, 7)
+                            .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblPhoneNumber1Validator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblPhoneNumber1)
                                     .addComponent(txtPhoneNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblImportantAsterisk5)
-                                .addGap(14, 14, 14)))
-                        .addComponent(lblPhoneNumber1Validator)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(lblImportantAsterisk5))
+                        .addGap(18, 18, 18)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPhoneNumber2)
-                            .addComponent(txtPhoneNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPhoneNumber2Validator)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtPhoneNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPhoneNumber2Validator, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLaneAddress)
+                            .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblLaneAddressValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtLaneAddress)
+                                .addComponent(lblImportantAsterisk11, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGap(18, 18, 18)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblLaneAddress)
-                                    .addComponent(txtLaneAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                                .addComponent(lblImportantAsterisk11)
-                                .addGap(19, 19, 19)))
-                        .addComponent(lblLaneAddressValidator)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblImportantAsterisk9)
-                            .addComponent(lblCity))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCityValidator, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(77, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnReset))
-                        .addGap(59, 59, 59))))
+                                    .addComponent(txtCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblCity))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
+                            .addComponent(lblCityValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReset)
+                        .addComponent(lblImportantAsterisk9)))
+                .addGap(18, 18, 18)
+                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblImportantAsterisk12)
+                    .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblMonthlyInvoiceRate)
+                        .addComponent(txtMonthlyIncomeRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMonthlyIncomeRateValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -2817,7 +2866,7 @@ public class Teller extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nCustomer_pnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, 1133, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -4067,6 +4116,9 @@ public class Teller extends javax.swing.JFrame {
 
         txtCity.setText("");
         lblCityValidator.setText("");
+        
+        txtMonthlyIncomeRate.setText("");
+        lblMonthlyIncomeRateValidator.setText("");
 
         listAccountType.setSelectedIndex(0);
 
@@ -4161,6 +4213,10 @@ public class Teller extends javax.swing.JFrame {
             // Value Example: Liverpool
             // Value insertion is mandatory
             (Pattern.matches("[\\w]+", txtCity.getText()) == true) && 
+                
+            // Value Example: 25000.00
+            // Value insertion is mandatory
+            (Pattern.matches("^[0-9]+[.]+[0-9]+$", txtMonthlyIncomeRate.getText()) == true) && 
 
             // Checking if the user has selected a account type
             // Value insertion is mandatory
@@ -4901,10 +4957,32 @@ public class Teller extends javax.swing.JFrame {
     private void jPanel16ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel16ComponentShown
         // Displaying message box showing to show mandatory fields message (*)
         JOptionPane.showMessageDialog(null,
-            "Please Fill all the fields that has a red Asterisk(*) next to it",
+            "To register a new customer or to create a new account to an exisiting customer, \n"
+                    + "Please Fill all the fields that has a red Asterisk(*) next to it",
             "New Customer Registration",
             JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jPanel16ComponentShown
+
+    private void txtMonthlyIncomeRateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMonthlyIncomeRateKeyReleased
+        
+        // Validating the user entered monthly income rate while user is typing
+        // This uses a static method to compare the text with the regex expression
+        Boolean monthlyIncomeRateValidation = Pattern.matches("([0-9]+[.]*[0-9]*)+", txtMonthlyIncomeRate.getText());
+
+        if (monthlyIncomeRateValidation == false) {
+            lblMonthlyIncomeRateValidator.setText("Invalid Value");
+            lblMonthlyIncomeRateValidator.setForeground(Color.red);
+
+            if ((txtMonthlyIncomeRate.getText()).length() == 0) {
+                lblMonthlyIncomeRateValidator.setText("Enter Monthly Income Rate");
+                lblMonthlyIncomeRateValidator.setForeground(Color.white);
+            }
+        } else if (monthlyIncomeRateValidation == true) {
+            lblMonthlyIncomeRateValidator.setText("Valid Value");
+            lblMonthlyIncomeRateValidator.setForeground(Color.green);
+        }
+        
+    }//GEN-LAST:event_txtMonthlyIncomeRateKeyReleased
 
     /**
      * @param args the command line arguments
@@ -5013,6 +5091,7 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane5;
     private javax.swing.JTable jTable1;
@@ -5040,6 +5119,7 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JLabel lblImportantAsterisk1;
     private javax.swing.JLabel lblImportantAsterisk10;
     private javax.swing.JLabel lblImportantAsterisk11;
+    private javax.swing.JLabel lblImportantAsterisk12;
     private javax.swing.JLabel lblImportantAsterisk2;
     private javax.swing.JLabel lblImportantAsterisk3;
     private javax.swing.JLabel lblImportantAsterisk4;
@@ -5056,6 +5136,8 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JLabel lblLaneAddressValidator;
     private javax.swing.JLabel lblMName;
     private javax.swing.JLabel lblMNameValidator;
+    private javax.swing.JLabel lblMonthlyIncomeRateValidator;
+    private javax.swing.JLabel lblMonthlyInvoiceRate;
     private javax.swing.JLabel lblPassportNumber;
     private javax.swing.JLabel lblPassportNumberValidator;
     private javax.swing.JLabel lblPhoneNumber1;
@@ -5096,6 +5178,7 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JTextField txtLName;
     private javax.swing.JTextField txtLaneAddress;
     private javax.swing.JTextField txtMName;
+    private javax.swing.JTextField txtMonthlyIncomeRate;
     private javax.swing.JTextField txtPassportNumber;
     private javax.swing.JTextField txtPhoneNumber1;
     private javax.swing.JTextField txtPhoneNumber2;
