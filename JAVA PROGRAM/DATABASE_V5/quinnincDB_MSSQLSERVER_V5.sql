@@ -667,8 +667,8 @@ CREATE TABLE CustomerTransactionDeposit(
   CONSTRAINT FK_CTD_TellerID FOREIGN KEY (tTellerID_ProcessedBy)
   REFERENCES Teller(TellerID) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT CHK_CTD_TransactionStatusID_Length CHECK (LEN(tsTransactionStatusID) = 8),
-  CONSTRAINT CHK_CTD_TransactionAmount_Amount CHECK (TransactionAmount > 0.00 ),
   CONSTRAINT CHK_CTD_TransactionDescriptionID_Length CHECK (LEN(tdTransactionDescriptionID) = 8),
+  CONSTRAINT CHK_CTD_TransactionAmount_Amount CHECK (TransactionAmount > 0.00 ),
   CONSTRAINT CHK_CTD_NSAccountNumber_BSAccountNumber_PSAccountNumber_Length CHECK
   ( (LEN(ansNSAccountNumber) = 8) OR (LEN(absBSAccountNumber) = 8) OR (LEN(apsPSAccountNumber) = 8) ),
   CONSTRAINT CHK_CTD_NSAccountNumber_BSAccountNumber_PSAccountNumber_NotNullVerification CHECK
@@ -825,8 +825,8 @@ CREATE TABLE CustomerTransactionWithdrawal(
   CONSTRAINT FK_CTW_TellerID FOREIGN KEY (tTellerID_ProcessedBy)
   REFERENCES Teller(TellerID) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT CHK_CTW_TransactionStatusID_Length CHECK (LEN(ctTransactionStatusID) = 8),
+  CONSTRAINT CHK_CTW_TransactionDescriptionID_Length CHECK (LEN(tdTransactionDescriptionID) = 8),
   CONSTRAINT CHK_CTW_TransactionAmount_Amount CHECK (TransactionAmount > 0.00 ),
-  CONSTRAINT CHK_CTW_TransactionDescriptionID_Length CHECK ( LEN(tdTransactionDescriptionID) = 8 ),
   CONSTRAINT CHK_CTW_NSAccountNumber_BSAccountNumber_PSAccountNumber_Length CHECK
   ( (LEN(ansNSAccountNumber) = 8) OR (LEN(absBSAccountNumber) = 8) OR (LEN(apsPSAccountNumber) = 8) ),
   CONSTRAINT CHK_CTW_NSAccountNumber_BSAccountNumber_PSAccountNumber_NotNullVerification CHECK
