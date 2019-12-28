@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
  *
  * @author ranul
  */
-public abstract class Charges extends Account{
+public abstract class Charges extends Account {
 
     Connection conn = null;
     PreparedStatement ps = null;
@@ -41,9 +42,13 @@ public abstract class Charges extends Account{
                     try {
                         conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         String sql = "UPDATE dbo.AccountNormalSavings SET NSAccountBalance = NSAccountBalance - 5 WHERE NSAccountNumber = ?";
-                        ps = conn.prepareStatement(sql);
-                        ps.setString(1, AccNo);
-                        ps.executeUpdate();
+                        String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,ansNSAccountNumber)"
+                                    + "VALUES ('5','TS000001','TD000010'," + AccNo + ")";
+                            ps = conn.prepareStatement(sql);
+                            ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
+                            ps.executeUpdate();
 
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, ex);
@@ -55,9 +60,13 @@ public abstract class Charges extends Account{
                     try {
                         conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         String sql = "UPDATE dbo.AccountBonusSavings SET BSAccountBalance = BSAccountBalance - 5 WHERE BSAccountNumber = ?";
-                        ps = conn.prepareStatement(sql);
-                        ps.setString(1, AccNo);
-                        ps.executeUpdate();
+                        String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,absBSAccountNumber)"
+                                    + "VALUES ('5','TS000001','TD000010'," + AccNo + ")";
+                            ps = conn.prepareStatement(sql);
+                            ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
+                            ps.executeUpdate();
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, ex);
                     } finally {
@@ -68,9 +77,13 @@ public abstract class Charges extends Account{
                     try {
                         conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         String sql = "UPDATE dbo.AccountPremierSavings SET PSAccountBalance = PSAccountBalance - 5 WHERE PSAccountNumber = ?";
-                        ps = conn.prepareStatement(sql);
-                        ps.setString(1, AccNo);
-                        ps.executeUpdate();
+                        String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,apsPSAccountNumber)"
+                                    + "VALUES ('5','TS000001','TD000010'," + AccNo + ")";
+                            ps = conn.prepareStatement(sql);
+                            ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
+                            ps.executeUpdate();
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, ex);
                     } finally {
@@ -97,9 +110,13 @@ public abstract class Charges extends Account{
                     try {
                         conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         String sql = "UPDATE dbo.AccountNormalSavings SET NSAccountBalance = NSAccountBalance - 7 WHERE NSAccountNumber = ?";
-                        ps = conn.prepareStatement(sql);
-                        ps.setString(1, AccNo);
-                        ps.executeUpdate();
+                        String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,ansNSAccountNumber)"
+                                    + "VALUES ('7','TS000001','TD000010'," + AccNo + ")";
+                            ps = conn.prepareStatement(sql);
+                            ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
+                            ps.executeUpdate();
 
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, ex);
@@ -111,9 +128,13 @@ public abstract class Charges extends Account{
                     try {
                         conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         String sql = "UPDATE dbo.AccountBonusSavings SET BSAccountBalance = BSAccountBalance - 7 WHERE BSAccountNumber = ?";
-                        ps = conn.prepareStatement(sql);
-                        ps.setString(1, AccNo);
-                        ps.executeUpdate();
+                        String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,absBSAccountNumber)"
+                                    + "VALUES ('7','TS000001','TD000010'," + AccNo + ")";
+                            ps = conn.prepareStatement(sql);
+                            ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
+                            ps.executeUpdate();
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, ex);
                     } finally {
@@ -124,9 +145,13 @@ public abstract class Charges extends Account{
                     try {
                         conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                         String sql = "UPDATE dbo.AccountPremierSavings SET PSAccountBalance = PSAccountBalance - 7 WHERE PSAccountNumber = ?";
-                        ps = conn.prepareStatement(sql);
-                        ps.setString(1, AccNo);
-                        ps.executeUpdate();
+                        String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,apsPSAccountNumber)"
+                                    + "VALUES ('7','TS000001','TD000010'," + AccNo + ")";
+                            ps = conn.prepareStatement(sql);
+                            ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
+                            ps.executeUpdate();
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(null, ex);
                     } finally {
@@ -152,8 +177,12 @@ public abstract class Charges extends Account{
                         try {
                             conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                             String sql = "UPDATE dbo.AccountNormalSavings SET NSAccountBalance = NSAccountBalance - 10 WHERE NSAccountNumber = ?";
+                            String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,ansNSAccountNumber)"
+                                    + "VALUES ('10','TS000001','TD000010'," + AccNo + ")";
                             ps = conn.prepareStatement(sql);
                             ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
                             ps.executeUpdate();
 
                         } catch (SQLException ex) {
@@ -166,8 +195,12 @@ public abstract class Charges extends Account{
                         try {
                             conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                             String sql = "UPDATE dbo.AccountBonusSavings SET BSAccountBalance = BSAccountBalance - 10 WHERE BSAccountNumber = ?";
+                           String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,absBSAccountNumber)"
+                                    + "VALUES ('10','TS000001','TD000010'," + AccNo + ")";
                             ps = conn.prepareStatement(sql);
                             ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
                             ps.executeUpdate();
                         } catch (SQLException ex) {
                             JOptionPane.showMessageDialog(null, ex);
@@ -179,8 +212,12 @@ public abstract class Charges extends Account{
                         try {
                             conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                             String sql = "UPDATE dbo.AccountPremierSavings SET PSAccountBalance = PSAccountBalance - 10 WHERE PSAccountNumber = ?";
+                            String sql1 = "INSERT INTO dbo.CustomerTransactionWithdrawal (TransactionAmount,ctTransactionStatusID,tdTransactionDescriptionID,apsPSAccountNumber)"
+                                    + "VALUES ('10','TS000001','TD000010'," + AccNo + ")";
                             ps = conn.prepareStatement(sql);
                             ps.setString(1, AccNo);
+                            ps.executeUpdate();
+                            ps = conn.prepareStatement(sql1);
                             ps.executeUpdate();
                         } catch (SQLException ex) {
                             JOptionPane.showMessageDialog(null, ex);
