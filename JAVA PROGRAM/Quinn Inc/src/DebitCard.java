@@ -67,14 +67,15 @@ public class DebitCard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        jPanel1.setBackground(new java.awt.Color(0, 123, 146));
+        jPanel1.setBackground(new java.awt.Color(18, 63, 72));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 123, 146), 5, true));
 
         image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/international-debit-card-388996_1280.jpg"))); // NOI18N
 
         text.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         text.setForeground(new java.awt.Color(255, 255, 255));
         text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        text.setText("YOUR ONE CARD FOR ALL YOUR NEEDS");
+        text.setText("THE ONE CARD FOR ALL YOUR NEEDS");
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("REQUEST EXTRA CARD FOR NEW CUSTOMER FAMILY MEMBER - £7");
@@ -171,7 +172,7 @@ public class DebitCard extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jToggleButton1)
                     .addComponent(image))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +190,7 @@ public class DebitCard extends javax.swing.JFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(accfetch, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(req))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
