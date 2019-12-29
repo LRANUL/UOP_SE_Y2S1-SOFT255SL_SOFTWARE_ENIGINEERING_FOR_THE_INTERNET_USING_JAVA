@@ -10,4 +10,7 @@
  */
 public interface Taxes {
     
+    public Boolean taxcheck();
+    public double CalcTax(double income,double balance);
+    public void updateDbTaxes_Balance();
 }
