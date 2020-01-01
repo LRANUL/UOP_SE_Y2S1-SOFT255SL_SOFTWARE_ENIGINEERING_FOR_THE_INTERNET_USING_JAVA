@@ -1273,7 +1273,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel2" pref="628" max="32767" attributes="0"/>
+                                  <Component id="jPanel2" pref="633" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1608,7 +1608,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel8" pref="628" max="32767" attributes="0"/>
+                                  <Component id="jPanel8" pref="633" max="32767" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2192,10 +2192,12 @@
                                           </Group>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="txtMName" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblMName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblMNameValidator" alignment="1" min="-2" pref="28" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="txtMName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblMName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                                   </Group>
@@ -2298,10 +2300,12 @@
                                           <Component id="lblImportantAsterisk5" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="lblPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblPhoneNumber2Validator" alignment="0" pref="35" max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="lblPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txtPhoneNumber2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
