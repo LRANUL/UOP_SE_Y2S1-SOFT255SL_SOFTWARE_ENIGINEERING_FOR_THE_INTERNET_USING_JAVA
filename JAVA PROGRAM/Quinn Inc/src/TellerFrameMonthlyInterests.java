@@ -27,6 +27,12 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
      * Creates new form TellerFrameMonthlyInterests
      */
     
+    // Declaring variable to be accessible within the whole code block
+    String tellerIDGlobal = "";
+    
+    // Creating a new object to execute the monthly interest functionality
+    Account monthlyInterest;
+    
     // Creating new object to retrieve current month from localhost 
     LocalTimeAndDate ltad;
     
@@ -38,6 +44,9 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
     
     public TellerFrameMonthlyInterests() {
         initComponents();
+        
+        // Creating a new object to execute the monthly interest functionality
+        monthlyInterest = new Account();
         
         // Creating new object to retrieve current month from localhost 
         ltad = new LocalTimeAndDate();
@@ -58,6 +67,12 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
         customerAccountsRecordsModel.addColumn("Balance");
         customerAccountsRecordsModel.addColumn("Account Status");
     }
+    
+    public TellerFrameMonthlyInterests(String tellerID) { // Parameterized constructor, used to pass variable values among classes
+        this(); // This statement allows for the default constructor to run
+        // Retrieving the systemLoginID from the 'access' frame and assigning it to thie new variable
+        tellerIDGlobal = tellerID;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,10 +90,13 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         customerAccountsJTable = new javax.swing.JTable();
         btnProcessInterest = new javax.swing.JButton();
+        btnOnlyActiveAccounts = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TellerPanelMonthlyInterest");
         setBackground(new java.awt.Color(255, 255, 255));
+        setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -114,6 +132,7 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
             }
         ));
         customerAccountsJTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        customerAccountsJTable.setEnabled(false);
         jScrollPane1.setViewportView(customerAccountsJTable);
 
         btnProcessInterest.setBackground(new java.awt.Color(153, 0, 0));
@@ -134,37 +153,52 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
             }
         });
 
+        btnOnlyActiveAccounts.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        btnOnlyActiveAccounts.setText("Retrieve Only ACTIVE Accounts");
+        btnOnlyActiveAccounts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOnlyActiveAccountsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(313, 313, 313)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(466, 466, 466)
                 .addComponent(closeMonthlyInyerest)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 742, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOnlyActiveAccounts))
+                .addGap(0, 28, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(397, 397, 397)
                 .addComponent(btnProcessInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(225, 225, 225))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(closeMonthlyInyerest))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(closeMonthlyInyerest))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel1)))
+                .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOnlyActiveAccounts, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(btnProcessInterest, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -172,9 +206,9 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(28, 28, 28)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,10 +266,10 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                     + "FROM Customer c INNER JOIN AccountNormalSavings anss ON c.PassportNumber = anss.cPassportNumber INNER JOIN "
                     + "AccountStatus acs ON anss.asAccountStatusID = acs.AccountStatusID)";
 
-            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
+            // Executing SQL query
             ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
 
-            // Assigning returned values to transaction details table cells
+            // Assigning returned values to customer account table cells
             while (retrieveCustomerAccountsRecordsRs.next()) {
                 customerAccountsRecordsModel.insertRow(customerAccountsRecordsModel.getRowCount(), new Object[]{retrieveCustomerAccountsRecordsRs.getString(1),
                     retrieveCustomerAccountsRecordsRs.getString(2), retrieveCustomerAccountsRecordsRs.getString(3), retrieveCustomerAccountsRecordsRs.getString(4), 
@@ -262,14 +296,14 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
             
             String retrieveCustomerAccountsRecordsSqlQuery = 
                     "(SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', "
-                    + "abss.BSAccountNumber AS 'Account Number', 'Normal Savings' AS 'Account Type', abss.BSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "abss.BSAccountNumber AS 'Account Number', 'Bonus Savings' AS 'Account Type', abss.BSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
                     + "FROM Customer c INNER JOIN AccountBonusSavings abss ON c.PassportNumber = abss.cPassportNumber INNER JOIN "
                     + "AccountStatus acs ON abss.asAccountStatusID = acs.AccountStatusID)";
 
-            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
+            // Executing SQL query
             ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
 
-            // Assigning returned values to transaction details table cells
+            // Assigning returned values to customer account table cells
             while (retrieveCustomerAccountsRecordsRs.next()) {
                 customerAccountsRecordsModel.insertRow(customerAccountsRecordsModel.getRowCount(), new Object[]{retrieveCustomerAccountsRecordsRs.getString(1),
                     retrieveCustomerAccountsRecordsRs.getString(2), retrieveCustomerAccountsRecordsRs.getString(3), retrieveCustomerAccountsRecordsRs.getString(4), 
@@ -301,10 +335,660 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                     + "AccountPremierSavings apss ON c.PassportNumber = apss.cPassportNumber INNER JOIN "
                     + "AccountStatus acs ON apss.asAccountStatusID = acs.AccountStatusID";
 
-            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
+            // Executing SQL query
             ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
 
-            // Assigning returned values to transaction details table cells
+            // Assigning returned values to customer account table cells
+            while (retrieveCustomerAccountsRecordsRs.next()) {
+                customerAccountsRecordsModel.insertRow(customerAccountsRecordsModel.getRowCount(), new Object[]{retrieveCustomerAccountsRecordsRs.getString(1),
+                    retrieveCustomerAccountsRecordsRs.getString(2), retrieveCustomerAccountsRecordsRs.getString(3), retrieveCustomerAccountsRecordsRs.getString(4), 
+                    retrieveCustomerAccountsRecordsRs.getString(5), retrieveCustomerAccountsRecordsRs.getString(6), retrieveCustomerAccountsRecordsRs.getString(7)});      
+            }
+
+        } 
+        // Error handling. Handles any SQL related errors.
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                    "Error Occurred in SQL Database Connection",
+                    "Monthly Interest - ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_formComponentShown
+
+    private void btnProcessInterestMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProcessInterestMouseEntered
+        // TODO add your handling code here:
+        btnProcessInterest.setToolTipText("Click Approve Bank Systems to Process Interest to Accounts");
+    }//GEN-LAST:event_btnProcessInterestMouseEntered
+
+    private void btnProcessInterestMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProcessInterestMousePressed
+      
+        // NOTIFIES AGENT ABOUT INTEREST PROCESS AND BLOCKS MULTIPLE CALCULATIONS
+        // COLOUR CHANGES AND BUTTON DISABLED WHEN CLICKED
+        btnProcessInterest.setBackground(Color.GREEN);
+        btnProcessInterest.setForeground(Color.BLACK);
+       // btnProcessInterest.setEnabled(false);
+        btnProcessInterest.setText("Done");
+      //  btnProcessInterest.setEnabled(true);
+        
+    }//GEN-LAST:event_btnProcessInterestMousePressed
+
+    private void btnProcessInterestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessInterestActionPerformed
+        
+        
+        // Retrieving 
+        /*
+        try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+            
+            String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', "
+                    + "apss.PSAccountNumber AS 'Account Number', 'Premier Savings' AS 'Account Type', apss.PSAccountBalance AS 'Balance', "
+                    + "acs.AccountStatus AS 'Account Status' FROM Customer c INNER JOIN "
+                    + "AccountPremierSavings apss ON c.PassportNumber = apss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON apss.asAccountStatusID = acs.AccountStatusID";
+
+            // Executing SQL query
+            ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+            // Assigning returned values to customer account table cells
+            while (retrieveCustomerAccountsRecordsRs.next()) {
+                customerAccountsRecordsModel.insertRow(customerAccountsRecordsModel.getRowCount(), new Object[]{retrieveCustomerAccountsRecordsRs.getString(1),
+                    retrieveCustomerAccountsRecordsRs.getString(2), retrieveCustomerAccountsRecordsRs.getString(3), retrieveCustomerAccountsRecordsRs.getString(4), 
+                    retrieveCustomerAccountsRecordsRs.getString(5), retrieveCustomerAccountsRecordsRs.getString(6), retrieveCustomerAccountsRecordsRs.getString(7)});      
+            }
+
+        } 
+        // Error handling. Handles any SQL related errors.
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                    "Error Occurred in SQL Database Connection",
+                    "Monthly Interest - ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        */
+        
+       
+        // Declaring a variable and storing the current month
+        // The current month will be retrieved and converted to integer data type
+        int currentMonth = Integer.parseInt(ltad.retrieveLocalMonth());
+        
+        // Checking if the current month is december (12).
+        // Because in december the interest rate doubles.
+        if(currentMonth == 12){
+
+            // Retrieveing customer account records and incrementing them with the monthly interest 
+              // This will retrieve only the customer account records that has the account status of 'Active'.
+              //  Retrieving Normal Savings Accounts
+            try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+
+                String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', anss.NSAccountNumber AS 'Account Number', "
+                    + "'Normal Savings' AS 'Account Type', anss.NSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountNormalSavings anss ON c.PassportNumber = anss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON anss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+                // Executing SQL query
+                ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+                // Executing monthly interest implementation
+                while (retrieveCustomerAccountsRecordsRs.next()) {
+
+                    Double accountBalance = Double.parseDouble(retrieveCustomerAccountsRecordsRs.getString(6));
+
+                    Float accountBalanceWithMonthlyInterest = (float)monthlyInterest.interestDecember(accountBalance, "Normal Savings");
+
+                    System.out.println("New Account Balance (With Monthly Interest): " + accountBalanceWithMonthlyInterest);
+                    
+                    Float interestAmountForAccount = (float)(accountBalanceWithMonthlyInterest - accountBalance);
+
+                    // Executing a deposit transaction to include the interest amount into the customer's account
+                    try (Connection updatingAccountBalanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement updatingAccountBalanceStmt = updatingAccountBalanceCon.createStatement();) {       
+
+                        String updatingAccountBalanceSqlQuery = 
+                            "INSERT INTO CustomerTransactionDeposit (TransactionAmount, ansNSAccountNumber, tTellerID_ProcessedBy) "
+                            + "VALUES ('"+ interestAmountForAccount +"', '"+ retrieveCustomerAccountsRecordsRs.getString(4) +"', " + tellerIDGlobal;
+
+                        // Executing SQL query
+                        Boolean updatingAccountBalanceRs = updatingAccountBalanceStmt.execute(updatingAccountBalanceSqlQuery);
+
+                        if(updatingAccountBalanceRs == true) {
+                            System.out.println("Customer account balance were successfully updated");
+                        }
+                    } 
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Database Connection",
+                                "Monthly Interest - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                    // Updating the account balance with the monthly interest added to it
+                    try (Connection updatingAccountBalanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement updatingAccountBalanceStmt = updatingAccountBalanceCon.createStatement();) {       
+
+                        String updatingAccountBalanceSqlQuery = 
+                            "UPDATE AccountNormalSavings SET NSAccountBalance = '"+ accountBalanceWithMonthlyInterest +"' "
+                                + "WHERE NSAccountNumber = '"+ retrieveCustomerAccountsRecordsRs.getString(4) +"'";
+
+                        // Executing SQL query
+                        Boolean updatingAccountBalanceRs = updatingAccountBalanceStmt.execute(updatingAccountBalanceSqlQuery);
+
+                        if(updatingAccountBalanceRs == true) {
+                            System.out.println("Customer account balance were successfully updated");
+                            
+                            // Declaring variable to sore the transaction number
+                            String transactionNumber = "";
+                            
+                            try (Connection retrievingTransactionNumberCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    Statement retrievingTransactionNumberStmt = retrievingTransactionNumberCon.createStatement();) {
+
+                                // Assigning SQL query
+                                String retrievingTransactionNumberSqlQuery = "SELECT TOP DTransactionNumber FROM CustomerDepositTransaction "
+                                        + "WHERE ansNSAccountNumber = '" + retrieveCustomerAccountsRecordsRs.getString(4) + "'";
+
+                                // Executing SQL query
+                                ResultSet retrievingTransactionNumberRs = retrievingTransactionNumberStmt.executeQuery(retrievingTransactionNumberSqlQuery);
+
+                                if (retrievingTransactionNumberRs.next()) {
+                                    transactionNumber = retrievingTransactionNumberRs.getString(1);
+                                }
+                            } 
+                            // Error handling. Checks for SQL related issues
+                            catch (SQLException SqlEx) {
+                                System.out.println("Error found: " + SqlEx);
+                                // Displaying message box showing error message
+                                JOptionPane.showMessageDialog(null,
+                                        "Error Occurred in SQL Database Connection",
+                                        "New Customer Registration - ERROR!",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                            
+                            // Updating transaction status as successful
+                            try (Connection updatingTransactionStatusCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            Statement updatingTransactionStatusStmt = updatingTransactionStatusCon.createStatement();) {       
+
+                                String updatingTransactionStatusSqlQuery = 
+                                    "UPDATE CustomerTransactionDeposit SET tsTransactionStatusID = 'TS000001' "
+                                        + "WHERE DTransactionNumber = '"+ transactionNumber +"'";
+
+                                // Executing SQL query
+                                Boolean updatingTransactionStatusRs = updatingTransactionStatusStmt.execute(updatingTransactionStatusSqlQuery);
+
+                                if(updatingTransactionStatusRs == true) {
+                                    System.out.println("Transaction status were successfully updated");
+                                }
+                            } 
+                            // Error handling. Handles any SQL related errors.
+                            catch (SQLException SqlEx) {
+                                System.out.println("Error found: " + SqlEx);
+                                // Displaying message box showing error message
+                                JOptionPane.showMessageDialog(null,
+                                        "Error Occurred in SQL Database Connection",
+                                        "Monthly Interest - ERROR!",
+                                        JOptionPane.ERROR_MESSAGE);
+                            }
+                            
+                            
+                            
+                        }
+                    } 
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Database Connection",
+                                "Monthly Interest - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                    
+                    
+                }
+
+            } 
+            // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                        "Error Occurred in SQL Database Connection",
+                        "Monthly Interest - ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+
+            // Retrieveing customer account records and incrementing them with the monthly interest 
+              // This will retrieve only the customer account records that has the account status of 'Active'.
+              //  Retrieving Bonus Savings Accounts
+            try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+
+                String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', abss.BSAccountNumber AS 'Account Number', "
+                    + "'Bonus Savings' AS 'Account Type', abss.BSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountBonusSavings abss ON c.PassportNumber = abss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON abss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+                // Executing SQL query
+                ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+                // Executing monthly interest implementation
+                while (retrieveCustomerAccountsRecordsRs.next()) {
+                    
+                    Double accountBalance = Double.parseDouble(retrieveCustomerAccountsRecordsRs.getString(6));
+
+                    Float accountBalanceWithMonthlyInterest = (float)monthlyInterest.interestDecember(accountBalance, "Bonus Savings");
+
+                    System.out.println("New Account Balance (With Monthly Interest): " + accountBalanceWithMonthlyInterest);
+
+                    // Updating the account balance with the monthly interest added to it
+                    try (Connection updatingAccountBalanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement updatingAccountBalanceStmt = updatingAccountBalanceCon.createStatement();) {       
+
+                        String updatingAccountBalanceSqlQuery = 
+                            "UPDATE AccountBonusSavings SET BSAccountBalance = '"+ accountBalanceWithMonthlyInterest +"' "
+                                + "WHERE BSAccountNumber = '"+ retrieveCustomerAccountsRecordsRs.getString(4) +"'";
+
+                        // Executing SQL query
+                        Boolean updatingAccountBalanceRs = updatingAccountBalanceStmt.execute(updatingAccountBalanceSqlQuery);
+
+                        if(updatingAccountBalanceRs == true) {
+                            System.out.println("Customer account balance were successfully updated");
+                        }
+                    } 
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Database Connection",
+                                "Monthly Interest - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                }
+
+            } // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                        "Error Occurred in SQL Database Connection",
+                        "Monthly Interest - ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+
+            // Retrieveing customer account records and incrementing them with the monthly interest 
+              // This will retrieve only the customer account records that has the account status of 'Active'.
+              //  Retrieving Premier Savings Accounts
+            try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+
+                String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', apss.PSAccountNumber AS 'Account Number', "
+                    + "'Premier Savings' AS 'Account Type', apss.PSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountPremierSavings apss ON c.PassportNumber = apss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON apss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+                // Executing SQL query
+                ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+                // Executing monthly interest implementation
+                while (retrieveCustomerAccountsRecordsRs.next()) {
+
+                    Double accountBalance = Double.parseDouble(retrieveCustomerAccountsRecordsRs.getString(6));
+
+                    Float accountBalanceWithMonthlyInterest = (float)monthlyInterest.interestDecember(accountBalance, "Premier Savings");
+
+                    System.out.println("New Account Balance (With Monthly Interest): " + accountBalanceWithMonthlyInterest);
+
+                     // Updating the account balance with the monthly interest added to it
+                    try (Connection updatingAccountBalanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement updatingAccountBalanceStmt = updatingAccountBalanceCon.createStatement();) {       
+
+                        String updatingAccountBalanceSqlQuery = 
+                            "UPDATE AccountPremierSavings SET PSAccountBalance = '"+ accountBalanceWithMonthlyInterest +"' "
+                                + "WHERE PSAccountNumber = '"+ retrieveCustomerAccountsRecordsRs.getString(4) +"'";
+
+                        // Executing SQL query
+                        Boolean updatingAccountBalanceRs = updatingAccountBalanceStmt.execute(updatingAccountBalanceSqlQuery);
+
+                        if(updatingAccountBalanceRs == true) {
+                            System.out.println("Customer account balance were successfully updated");
+                        }
+                    } 
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Database Connection",
+                                "Monthly Interest - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                }
+
+            } // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                        "Error Occurred in SQL Database Connection",
+                        "Monthly Interest - ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+ 
+            // Displaying message box showing confirmation message
+            JOptionPane.showMessageDialog(null,
+                "Monthly Interest Processed to all ACTIVE Customer Accounts",
+                "Monthly Interest",
+                JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+        else{ // This will be executed in every month otherthan december
+        
+            // Retrieveing customer account records and incrementing them with the monthly interest 
+              // This will retrieve only the customer account records that has the account status of 'Active'.
+              //  Retrieving Normal Savings Accounts
+            try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+
+                String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', anss.NSAccountNumber AS 'Account Number', "
+                    + "'Normal Savings' AS 'Account Type', anss.NSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountNormalSavings anss ON c.PassportNumber = anss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON anss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+                // Executing SQL query
+                ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+                // Executing monthly interest implementation
+                while (retrieveCustomerAccountsRecordsRs.next()) {
+
+                    Double accountBalance = Double.parseDouble(retrieveCustomerAccountsRecordsRs.getString(6));
+
+                    Float accountBalanceWithMonthlyInterest = (float)monthlyInterest.interestMonthly(accountBalance, "Normal Savings");
+
+                    System.out.println("New Account Balance (With Monthly Interest): " + accountBalanceWithMonthlyInterest);
+
+                     // Updating the account balance with the monthly interest added to it
+                    try (Connection updatingAccountBalanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement updatingAccountBalanceStmt = updatingAccountBalanceCon.createStatement();) {       
+
+                        String updatingAccountBalanceSqlQuery = 
+                            "UPDATE AccountNormalSavings SET NSAccountBalance = '"+ accountBalanceWithMonthlyInterest +"' "
+                                + "WHERE NSAccountNumber = '"+ retrieveCustomerAccountsRecordsRs.getString(4) +"'";
+
+                        // Executing SQL query
+                        Boolean updatingAccountBalanceRs = updatingAccountBalanceStmt.execute(updatingAccountBalanceSqlQuery);
+
+                        if(updatingAccountBalanceRs == true) {
+                            System.out.println("Customer account balance were successfully updated");
+                        }
+                    } 
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Database Connection",
+                                "Monthly Interest - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                }
+
+            } 
+            // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                        "Error Occurred in SQL Database Connection",
+                        "Monthly Interest - ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+
+            // Retrieveing customer account records and incrementing them with the monthly interest 
+              // This will retrieve only the customer account records that has the account status of 'Active'.
+              //  Retrieving Bonus Savings Accounts
+            try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+
+                String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', abss.BSAccountNumber AS 'Account Number', "
+                    + "'Bonus Savings' AS 'Account Type', abss.BSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountBonusSavings abss ON c.PassportNumber = abss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON abss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+                // Executing SQL query
+                ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+                // Executing monthly interest implementation
+                while (retrieveCustomerAccountsRecordsRs.next()) {
+                    
+                    Double accountBalance = Double.parseDouble(retrieveCustomerAccountsRecordsRs.getString(6));
+
+                    Float accountBalanceWithMonthlyInterest = (float)monthlyInterest.interestMonthly(accountBalance, "Bonus Savings");
+
+                    System.out.println("New Account Balance (With Monthly Interest): " + accountBalanceWithMonthlyInterest);
+
+                     // Updating the account balance with the monthly interest added to it
+                    try (Connection updatingAccountBalanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement updatingAccountBalanceStmt = updatingAccountBalanceCon.createStatement();) {       
+
+                        String updatingAccountBalanceSqlQuery = 
+                            "UPDATE AccountBonusSavings SET BSAccountBalance = '"+ accountBalanceWithMonthlyInterest +"' "
+                                + "WHERE BSAccountNumber = '"+ retrieveCustomerAccountsRecordsRs.getString(4) +"'";
+
+                        // Executing SQL query
+                        Boolean updatingAccountBalanceRs = updatingAccountBalanceStmt.execute(updatingAccountBalanceSqlQuery);
+
+                        if(updatingAccountBalanceRs == true) {
+                            System.out.println("Customer account balance were successfully updated");
+                        }
+                    } 
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Database Connection",
+                                "Monthly Interest - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                }
+
+            } // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                        "Error Occurred in SQL Database Connection",
+                        "Monthly Interest - ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+
+            // Retrieveing customer account records and incrementing them with the monthly interest 
+              // This will retrieve only the customer account records that has the account status of 'Active'.
+              //  Retrieving Premier Savings Accounts
+            try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+
+                String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', apss.PSAccountNumber AS 'Account Number', "
+                    + "'Premier Savings' AS 'Account Type', apss.PSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountPremierSavings apss ON c.PassportNumber = apss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON apss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+                // Executing SQL query
+                ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+                // Executing monthly interest implementation
+                while (retrieveCustomerAccountsRecordsRs.next()) {
+
+                    Double accountBalance = Double.parseDouble(retrieveCustomerAccountsRecordsRs.getString(6));
+
+                    Float accountBalanceWithMonthlyInterest = (float)monthlyInterest.interestMonthly(accountBalance, "Premier Savings");
+
+                    System.out.println("New Account Balance (With Monthly Interest): " + accountBalanceWithMonthlyInterest);
+
+                     // Updating the account balance with the monthly interest added to it
+                    try (Connection updatingAccountBalanceCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    Statement updatingAccountBalanceStmt = updatingAccountBalanceCon.createStatement();) {       
+
+                        String updatingAccountBalanceSqlQuery = 
+                            "UPDATE AccountPremierSavings SET PSAccountBalance = '"+ accountBalanceWithMonthlyInterest +"' "
+                                + "WHERE PSAccountNumber = '"+ retrieveCustomerAccountsRecordsRs.getString(4) +"'";
+
+                        // Executing SQL query
+                        Boolean updatingAccountBalanceRs = updatingAccountBalanceStmt.execute(updatingAccountBalanceSqlQuery);
+
+                        if(updatingAccountBalanceRs == true) {
+                            System.out.println("Customer account balance were successfully updated");
+                        }
+                    } 
+                    // Error handling. Handles any SQL related errors.
+                    catch (SQLException SqlEx) {
+                        System.out.println("Error found: " + SqlEx);
+                        // Displaying message box showing error message
+                        JOptionPane.showMessageDialog(null,
+                                "Error Occurred in SQL Database Connection",
+                                "Monthly Interest - ERROR!",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                }
+
+            } // Error handling. Handles any SQL related errors.
+            catch (SQLException SqlEx) {
+                System.out.println("Error found: " + SqlEx);
+                // Displaying message box showing error message
+                JOptionPane.showMessageDialog(null,
+                        "Error Occurred in SQL Database Connection",
+                        "Monthly Interest - ERROR!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+      
+            // Displaying message box showing confirmation message
+            JOptionPane.showMessageDialog(null,
+                "Monthly Interest Processed to all ACTIVE Customer Accounts",
+                "Monthly Interest",
+                JOptionPane.INFORMATION_MESSAGE);
+            
+        }
+              
+    }//GEN-LAST:event_btnProcessInterestActionPerformed
+
+    private void btnOnlyActiveAccountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOnlyActiveAccountsActionPerformed
+        
+        // Removing all the exiting records in the customer accounts table
+        int recordCountRemove = customerAccountsJTable.getRowCount();
+        for (int i = recordCountRemove - 1; i >= 0; i--) {
+            customerAccountsRecordsModel.removeRow(i);
+        }
+        
+        
+        // Retrieveing customer account record data from the database and assigning to customer account table cells.
+          // This will retrieve all the customer account records no matter what the account status is.
+          //  Retrieving Normal Savings Accounts
+        try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+            
+            String retrieveCustomerAccountsRecordsSqlQuery = 
+                 "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', anss.NSAccountNumber AS 'Account Number', "
+                        + "'Normal Savings' AS 'Account Type', anss.NSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                        + "FROM Customer c INNER JOIN AccountNormalSavings anss ON c.PassportNumber = anss.cPassportNumber INNER JOIN "
+                        + "AccountStatus acs ON anss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+            // Executing SQL query
+            ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+            // Assigning returned values to customer account table cells
+            while (retrieveCustomerAccountsRecordsRs.next()) {
+                customerAccountsRecordsModel.insertRow(customerAccountsRecordsModel.getRowCount(), new Object[]{retrieveCustomerAccountsRecordsRs.getString(1),
+                    retrieveCustomerAccountsRecordsRs.getString(2), retrieveCustomerAccountsRecordsRs.getString(3), retrieveCustomerAccountsRecordsRs.getString(4), 
+                    retrieveCustomerAccountsRecordsRs.getString(5), retrieveCustomerAccountsRecordsRs.getString(6), retrieveCustomerAccountsRecordsRs.getString(7)});      
+            }
+
+        } 
+        // Error handling. Handles any SQL related errors.
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                    "Error Occurred in SQL Database Connection",
+                    "Monthly Interest - ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        // Retriveing customer account record data from the database and assigning to customer account table cells.
+          // This will retrieve all the customer account records no matter what the account status is.
+          //  Retrieving Bonus Savings Accounts
+        try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+            
+            String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', abss.BSAccountNumber AS 'Account Number', "
+                    + "'Bonus Savings' AS 'Account Type', abss.BSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountBonusSavings abss ON c.PassportNumber = abss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON abss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+            // Executing SQL query
+            ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+            // Assigning returned values to customer account table cells
+            while (retrieveCustomerAccountsRecordsRs.next()) {
+                customerAccountsRecordsModel.insertRow(customerAccountsRecordsModel.getRowCount(), new Object[]{retrieveCustomerAccountsRecordsRs.getString(1),
+                    retrieveCustomerAccountsRecordsRs.getString(2), retrieveCustomerAccountsRecordsRs.getString(3), retrieveCustomerAccountsRecordsRs.getString(4), 
+                    retrieveCustomerAccountsRecordsRs.getString(5), retrieveCustomerAccountsRecordsRs.getString(6), retrieveCustomerAccountsRecordsRs.getString(7)});      
+            }
+
+        } 
+        // Error handling. Handles any SQL related errors.
+        catch (SQLException SqlEx) {
+            System.out.println("Error found: " + SqlEx);
+            // Displaying message box showing error message
+            JOptionPane.showMessageDialog(null,
+                    "Error Occurred in SQL Database Connection",
+                    "Monthly Interest - ERROR!",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        // Retriveing customer account record data from the database and assigning to customer account table cells
+          // This will retrieve all the customer account records no matter what the account status is.
+          //  Retrieving Premier Savings Accounts
+        try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
+            
+            String retrieveCustomerAccountsRecordsSqlQuery = 
+                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', apss.PSAccountNumber AS 'Account Number', "
+                    + "'Premier Savings' AS 'Account Type', apss.PSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
+                    + "FROM Customer c INNER JOIN AccountPremierSavings apss ON c.PassportNumber = apss.cPassportNumber INNER JOIN "
+                    + "AccountStatus acs ON apss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
+
+            // Executing SQL query
+            ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
+
+            // Assigning returned values to customer account table cells
             while (retrieveCustomerAccountsRecordsRs.next()) {
                 customerAccountsRecordsModel.insertRow(customerAccountsRecordsModel.getRowCount(), new Object[]{retrieveCustomerAccountsRecordsRs.getString(1),
                     retrieveCustomerAccountsRecordsRs.getString(2), retrieveCustomerAccountsRecordsRs.getString(3), retrieveCustomerAccountsRecordsRs.getString(4), 
@@ -325,167 +1009,7 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
         
         
         
-        
-    }//GEN-LAST:event_formComponentShown
-
-    private void btnProcessInterestMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProcessInterestMouseEntered
-        // TODO add your handling code here:
-        btnProcessInterest.setToolTipText("Click Approve Bank Systems to Process Interest to Accounts");
-    }//GEN-LAST:event_btnProcessInterestMouseEntered
-
-    private void btnProcessInterestMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProcessInterestMousePressed
-      
-        // NOTIFIES AGENT ABOUT INTEREST PROCESS AND BLOCKS MULTIPLE CALCULATIONS
-        // COLOUR CHANGES AND BUTTON DISABLED WHEN CLICKED
-        btnProcessInterest.setBackground(Color.GREEN);
-        btnProcessInterest.setForeground(Color.BLACK);
-       // btnProcessInterest.setEnabled(false);
-        btnProcessInterest.setText("Done");
-        btnProcessInterest.setEnabled(true);
-        
-    }//GEN-LAST:event_btnProcessInterestMousePressed
-
-    private void btnProcessInterestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessInterestActionPerformed
-        
-        // Displaying message box showing confirmation message
-        JOptionPane.showMessageDialog(null,
-                "Monthly Interest Processed to all ACTIVE Customer Accounts",
-                "Monthly Interest",
-                JOptionPane.INFORMATION_MESSAGE);
-        
-        // Declaring a varialbe and storing the current month
-        String currentMonth = ltad.retrieveLocalMonth();
-        
-        if(currentMonth == "11"){
-        
-  
-        // Retrieveing customer account records and incrementing them with the monthly interest 
-          // This will retrieve only the customer account records that has the account status of 'Active'.
-          //  Retrieving Normal Savings Accounts
-        try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
-            
-            String retrieveCustomerAccountsRecordsSqlQuery = 
-                 "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', anss.NSAccountNumber AS 'Account Number', "
-                    + "'Normal Savings' AS 'Account Type', anss.NSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
-                    + "FROM Customer c INNER JOIN AccountNormalSavings anss ON c.PassportNumber = anss.cPassportNumber INNER JOIN "
-                    + "AccountStatus acs ON anss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
-
-            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
-            ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
-
-            // Assigning returned values to transaction details table cells
-            while (retrieveCustomerAccountsRecordsRs.next()) {
-                
-            }
-
-        } // Error handling. Handles any SQL related errors.
-        catch (SQLException SqlEx) {
-            System.out.println("Error found: " + SqlEx);
-            // Displaying message box showing error message
-            JOptionPane.showMessageDialog(null,
-                    "Error Occurred in SQL Database Connection",
-                    "Monthly Interest - ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
-        // Retrieveing customer account records and incrementing them with the monthly interest 
-          // This will retrieve only the customer account records that has the account status of 'Active'.
-          //  Retrieving Bonus Savings Accounts
-        try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
-            
-            String retrieveCustomerAccountsRecordsSqlQuery = 
-                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', abss.BSAccountNumber AS 'Account Number', "
-                    + "'Bonus Savings' AS 'Account Type', abss.BSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
-                    + "FROM Customer c INNER JOIN AccountBonusSavings abss ON c.PassportNumber = abss.cPassportNumber INNER JOIN "
-                    + "AccountStatus acs ON abss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
-
-            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
-            ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
-
-            // Assigning returned values to transaction details table cells
-            while (retrieveCustomerAccountsRecordsRs.next()) {
-                
-            }
-
-        } // Error handling. Handles any SQL related errors.
-        catch (SQLException SqlEx) {
-            System.out.println("Error found: " + SqlEx);
-            // Displaying message box showing error message
-            JOptionPane.showMessageDialog(null,
-                    "Error Occurred in SQL Database Connection",
-                    "Monthly Interest - ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
-        // Retrieveing customer account records and incrementing them with the monthly interest 
-          // This will retrieve only the customer account records that has the account status of 'Active'.
-          //  Retrieving Premier Savings Accounts
-        try (Connection retrieveCustomerAccountsRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
-                Statement retrieveCustomerAccountsRecordsStmt = retrieveCustomerAccountsRecordsCon.createStatement();) {       
-            
-            String retrieveCustomerAccountsRecordsSqlQuery = 
-                    "SELECT c.PassportNumber AS 'Passport Number', c.FirstName AS 'First Name', c.LastName AS 'Last Name', apss.PSAccountNumber AS 'Account Number', "
-                    + "'Premier Savings' AS 'Account Type', apss.PSAccountBalance AS 'Balance', acs.AccountStatus AS 'Account Status' "
-                    + "FROM Customer c INNER JOIN AccountPremierSavings apss ON c.PassportNumber = apss.cPassportNumber INNER JOIN "
-                    + "AccountStatus acs ON apss.asAccountStatusID = acs.AccountStatusID WHERE acs.AccountStatusID = 'AS000001'";
-
-            // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
-            ResultSet retrieveCustomerAccountsRecordsRs = retrieveCustomerAccountsRecordsStmt.executeQuery(retrieveCustomerAccountsRecordsSqlQuery);
-
-            // Assigning returned values to transaction details table cells
-            while (retrieveCustomerAccountsRecordsRs.next()) {
-                
-            }
-
-        } // Error handling. Handles any SQL related errors.
-        catch (SQLException SqlEx) {
-            System.out.println("Error found: " + SqlEx);
-            // Displaying message box showing error message
-            JOptionPane.showMessageDialog(null,
-                    "Error Occurred in SQL Database Connection",
-                    "Monthly Interest - ERROR!",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        }
-        else{
-        
-        
-        
-        
-        
-        
-        }
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_btnProcessInterestActionPerformed
+    }//GEN-LAST:event_btnOnlyActiveAccountsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -523,6 +1047,7 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnOnlyActiveAccounts;
     private javax.swing.JButton btnProcessInterest;
     private javax.swing.JButton closeMonthlyInyerest;
     private javax.swing.JTable customerAccountsJTable;

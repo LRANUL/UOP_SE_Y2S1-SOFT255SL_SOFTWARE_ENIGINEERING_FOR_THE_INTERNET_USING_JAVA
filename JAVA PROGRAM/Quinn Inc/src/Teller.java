@@ -63,6 +63,9 @@ public class Teller extends javax.swing.JFrame {
 
     // Declaring global variable to assign value in the parameterized constructor
     String systemLoginIDGlobal = "";
+    
+    // Declaring variable to store the tellerID that is retrieved from the database
+    String tellerIDDB = "";
 
     // Variable declaraton for assigning the new account number. 
     // Variable declared here because now it is accessaible within the whole code block
@@ -3066,7 +3069,12 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_datePropertyChange
 
     private void FetchAcc_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FetchAcc_BtnActionPerformed
-
+        
+        // Passing the tellerID within the parameterized constructor while creating the new object
+        TellerFrameMonthlyInterests frameMonthlyInterest = new TellerFrameMonthlyInterests(tellerIDDB); 
+        frameMonthlyInterest.setVisible(true);
+        // Closes the 'teller' frame
+        this.setVisible(false);
         
         
         
@@ -4146,10 +4154,6 @@ public class Teller extends javax.swing.JFrame {
         System.out.println((listAccountStatus.getSelectedItem()).toString() != "--SELECT ACCOUNT STATUS--");
 
         
-        
-        // Declaring variable to store the tellerID that is retrieved from the database
-        String tellerIDDB = "";
-        
         // Checking if valid is inserted all the required fields
         // This uses a static method to compare the text with the regex expression
         if (    
@@ -4245,7 +4249,8 @@ public class Teller extends javax.swing.JFrame {
                     if (retrievingtellerIDRs.next()) {
                         tellerIDDB = retrievingtellerIDRs.getString(1);
                     }
-                } // Error handling. Checks for SQL related issues
+                } 
+                // Error handling. Checks for SQL related issues
                 catch (SQLException SqlEx) {
                     System.out.println("Error found: " + SqlEx);
                     // Displaying message box showing error message
