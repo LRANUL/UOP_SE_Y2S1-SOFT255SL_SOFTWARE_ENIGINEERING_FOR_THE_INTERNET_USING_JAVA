@@ -263,9 +263,9 @@ public abstract class Account implements Interest,Taxes {
             double income =0;
             double taxVal =0;
             double newBalance = 0;
-            Account Acc1 = new BonusSavings();
-            Account Acc2 = new BasicSavings();
-            Account Acc3 = new PremierSavings();
+            Account Acc1 = new Account() {};  // NormalSavings
+            Account Acc2 = new Account() {};  // BasicSavings
+            Account Acc3 = new Account() {};  // PremierSavings
 
             for(String acc:AccountNo)
             {
@@ -380,14 +380,6 @@ public abstract class Account implements Interest,Taxes {
     public void setStatus(String Status) {
         this.status = Status;
     }
-
-    public abstract void debit();
-
-    public abstract void credit();
-
-    public void depositeInterest(){};
-    
-    
     
     @Override
     public double interestMonthly(double amount, String accountType) {
