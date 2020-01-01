@@ -421,6 +421,12 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
         // Because in december the interest rate doubles.
         if(currentMonth == 12){
 
+            /* There are three executions here */
+            
+            /**
+             *  Execution One
+             */
+            
             // Retrieveing customer account records and incrementing them with the monthly interest 
               // This will retrieve only the customer account records that has the account status of 'Active'.
               //  Retrieving Normal Savings Accounts
@@ -566,7 +572,11 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                         "Monthly Interest - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
             }
+            
 
+            /**
+             *  Execution Two
+             */
 
             // Retrieveing customer account records and incrementing them with the monthly interest 
               // This will retrieve only the customer account records that has the account status of 'Active'.
@@ -629,6 +639,10 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE);
             }
 
+            
+            /**
+             *  Execution Three
+             */
 
             // Retrieveing customer account records and incrementing them with the monthly interest 
               // This will retrieve only the customer account records that has the account status of 'Active'.
@@ -698,7 +712,13 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE);
             
         }
-        else{ // This will be executed in every month otherthan december
+        else{ 
+            // This will be executed in every month otherthan december
+            // There are three execution here
+            
+            /**
+             *  Execution One
+             */
         
             // Retrieveing customer account records and incrementing them with the monthly interest 
               // This will retrieve only the customer account records that has the account status of 'Active'.
@@ -761,7 +781,11 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                         "Monthly Interest - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
             }
-
+            
+            
+            /**
+             *  Execution Two
+             */
 
             // Retrieveing customer account records and incrementing them with the monthly interest 
               // This will retrieve only the customer account records that has the account status of 'Active'.
@@ -814,7 +838,8 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                     
                 }
 
-            } // Error handling. Handles any SQL related errors.
+            } 
+            // Error handling. Handles any SQL related errors.
             catch (SQLException SqlEx) {
                 System.out.println("Error found: " + SqlEx);
                 // Displaying message box showing error message
@@ -823,7 +848,11 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
                         "Monthly Interest - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
             }
+            
 
+            /**
+             *  Execution Three
+             */
 
             // Retrieveing customer account records and incrementing them with the monthly interest 
               // This will retrieve only the customer account records that has the account status of 'Active'.
