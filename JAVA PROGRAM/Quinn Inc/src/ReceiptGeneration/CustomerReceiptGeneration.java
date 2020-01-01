@@ -227,7 +227,7 @@ public class CustomerReceiptGeneration {
                     System.out.println("Error found: " + SqlEx);
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "Error Occurred in SQL Connection",
+                        "Error Occurred in SQL Database Connection",
                         "Customer Receipt - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
                 }                       
@@ -257,7 +257,7 @@ public class CustomerReceiptGeneration {
                     System.out.println("Error found: " + SqlEx);
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "Error Occurred in SQL Connection",
+                        "Error Occurred in SQL Database Connection",
                         "Customer Receipt - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
                 }                       
@@ -302,7 +302,7 @@ public class CustomerReceiptGeneration {
 
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "Error Occurred in SQL Connection",
+                        "Error Occurred in SQL Database Connection",
                         "Customer Receipt - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
                 }     
@@ -332,7 +332,7 @@ public class CustomerReceiptGeneration {
                     System.out.println("Error found: " + SqlEx);
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "Error Occurred in SQL Connection",
+                        "Error Occurred in SQL Database Connection",
                         "Customer Receipt - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
                 }     
@@ -362,7 +362,7 @@ public class CustomerReceiptGeneration {
                     System.out.println("Error found: " + SqlEx);
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                        "Error Occurred in SQL Connection",
+                        "Error Occurred in SQL Database Connection",
                         "Customer Receipt - ERROR!",
                         JOptionPane.ERROR_MESSAGE);
                 }     
@@ -396,7 +396,7 @@ public class CustomerReceiptGeneration {
                 System.out.println("Error found: " + SqlEx);
                 // Displaying message box showing error message
                 JOptionPane.showMessageDialog(null,
-                    "Error Occurred in SQL Connection",
+                    "Error Occurred in SQL Database Connection",
                     "Customer Receipt - ERROR!",
                     JOptionPane.ERROR_MESSAGE);
             }       
@@ -478,8 +478,6 @@ public class CustomerReceiptGeneration {
                 JOptionPane.ERROR_MESSAGE);
         } 
         finally {
-            
-            
             // Closing the document
             customerReceipt.close();
             

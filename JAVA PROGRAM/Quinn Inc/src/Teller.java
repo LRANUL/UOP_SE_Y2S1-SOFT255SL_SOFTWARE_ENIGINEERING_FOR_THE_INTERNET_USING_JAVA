@@ -17,6 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
+/**
+ * When the asterisk '*' is included, it retrieves all the classes from the package
+ */
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -133,7 +137,7 @@ public class Teller extends javax.swing.JFrame {
         // Setting current date
         jlbl_localDate.setText(ltad.retrieveLocalDate());
 
-        // Invloving monthly report tab
+        // Involving 'Monthly Report' panel in 'Customer Transaction Reports' panel
         // Assigning values to month chioce  
         cmbMonthlyReportMonth.add("");
         cmbMonthlyReportMonth.add("January");
@@ -1117,7 +1121,6 @@ public class Teller extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         interestINFO_tarea = new javax.swing.JTextArea();
         FetchAcc_Btn = new javax.swing.JButton();
-        processInterest_Btn = new javax.swing.JButton();
         reports_pnl = new javax.swing.JTabbedPane();
         dailyReport_jsp = new javax.swing.JSplitPane();
         rOptions_jbl = new javax.swing.JPanel();
@@ -1761,7 +1764,7 @@ public class Teller extends javax.swing.JFrame {
         interestINFO_tarea.setColumns(20);
         interestINFO_tarea.setFont(new java.awt.Font("MS Gothic", 1, 18)); // NOI18N
         interestINFO_tarea.setRows(5);
-        interestINFO_tarea.setText("BUILDING ECONOMY TOGETHER, EMPOWERING LIVES - QUINN BANK (MANUAL INTEREST PROCESSING SYSTEM)\n\n\nDate: 22th every month (Double Interst on December Season)\n\n*Finance department verifies all interests and finals them by 28th.");
+        interestINFO_tarea.setText("BUILDING ECONOMY TOGETHER, EMPOWERING LIVES - QUINN BANK (MANUAL INTEREST PROCESSING SYSTEM)\n\nInterest Rates: \tNormal Savings Account  - 1.25%\n\t\t\tBonus Savings Account   - 3.25%\n\t\t\tPremier Savings Account - 12.97%\n\nDate: 22th every month (Double Interst on December Season)\n\n*Finance department verifies all interests and finals them by 28th.");
         jScrollPane2.setViewportView(interestINFO_tarea);
 
         FetchAcc_Btn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -1777,31 +1780,14 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
-        processInterest_Btn.setBackground(new java.awt.Color(153, 0, 0));
-        processInterest_Btn.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        processInterest_Btn.setForeground(new java.awt.Color(255, 255, 255));
-        processInterest_Btn.setText("PROCESS INTEREST");
-        processInterest_Btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                processInterest_BtnMouseEntered(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                processInterest_BtnMousePressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(331, Short.MAX_VALUE)
-                .addComponent(processInterest_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(315, 315, 315))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(350, 350, 350)
+                .addGap(358, 358, 358)
                 .addComponent(FetchAcc_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(362, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(9, 9, 9)
@@ -1817,11 +1803,9 @@ public class Teller extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(244, Short.MAX_VALUE)
+                .addContainerGap(345, Short.MAX_VALUE)
                 .addComponent(FetchAcc_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(88, 88, 88)
-                .addComponent(processInterest_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addGap(163, 163, 163))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
@@ -1829,25 +1813,25 @@ public class Teller extends javax.swing.JFrame {
                         .addComponent(day_Lbl)
                         .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(20, 20, 20)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(241, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(298, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addGap(70, 70, 70)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         mInterest_pnl.addTab("HOME", jPanel6);
@@ -3056,17 +3040,6 @@ public class Teller extends javax.swing.JFrame {
 
     }//GEN-LAST:event_DepositBonusActionPerformed
 
-    private void processInterest_BtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processInterest_BtnMousePressed
-        // NOTIFIES AGENT ABOUT INTEREST PROCESS AND BLOCKS MULTIPLE CALCULATIONS
-        // COLOUR CHANGES AND BUTTON DISABLED WHEN CLICKED
-        processInterest_Btn.setBackground(Color.GREEN);
-        processInterest_Btn.setForeground(Color.BLACK);
-        processInterest_Btn.setEnabled(false);
-        processInterest_Btn.setText("Done");
-        DepositBonus.setEnabled(true);
-
-    }//GEN-LAST:event_processInterest_BtnMousePressed
-
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
 
     }//GEN-LAST:event_logoutActionPerformed
@@ -3093,18 +3066,12 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_datePropertyChange
 
     private void FetchAcc_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FetchAcc_BtnActionPerformed
-//        try {
-        // TODO add your handling code here:
-//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//            String url = "jdbc:sqlserver//localhost:1433:databaseName=quinnbank;user=admin;password=SOFT255sl";
-//            Connection connect = DriverManager.getConnection(url);
-//            String sql = "SELECT * FROM CUSTOMER";
-//            PreparedStatement statement = connect.prepareStatement(sql);
-//            statement.setString()
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Teller.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
+        
+        
+        
+        
+        
     }//GEN-LAST:event_FetchAcc_BtnActionPerformed
 
     private void ClearSA_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearSA_BtnActionPerformed
@@ -3161,11 +3128,6 @@ public class Teller extends javax.swing.JFrame {
         // TODO add your handling code here:
         FetchAcc_Btn.setToolTipText("Prepare All customer accounts for Interest Addition Process.");
     }//GEN-LAST:event_FetchAcc_BtnMouseEntered
-
-    private void processInterest_BtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processInterest_BtnMouseEntered
-        // TODO add your handling code here:
-        processInterest_Btn.setToolTipText("Click Approve Bank Systems to Process Interest to Accounts");
-    }//GEN-LAST:event_processInterest_BtnMouseEntered
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
 
@@ -4288,7 +4250,7 @@ public class Teller extends javax.swing.JFrame {
                     System.out.println("Error found: " + SqlEx);
                     // Displaying message box showing error message
                     JOptionPane.showMessageDialog(null,
-                            "Error Occurred in SQL Connection",
+                            "Error Occurred in SQL Database Connection",
                             "New Customer Registration - ERROR!",
                             JOptionPane.ERROR_MESSAGE);
                 }
@@ -4418,7 +4380,7 @@ public class Teller extends javax.swing.JFrame {
                                 System.out.println("Error found: " + SqlEx);
                                 // Displaying message box showing error message
                                 JOptionPane.showMessageDialog(null,
-                                        "Error Occurred in SQL Connection",
+                                        "Error Occurred in SQL Database Connection",
                                         "New Customer Registration - ERROR!",
                                         JOptionPane.ERROR_MESSAGE);
                             }
@@ -4500,7 +4462,7 @@ public class Teller extends javax.swing.JFrame {
                                     System.out.println("Error found: " + SqlEx);
                                     // Displaying message box showing error message
                                     JOptionPane.showMessageDialog(null,
-                                            "Error Occurred in SQL Connection",
+                                            "Error Occurred in SQL Database Connection",
                                             "New Customer Registration - ERROR!",
                                             JOptionPane.ERROR_MESSAGE);
                                 }
@@ -4527,7 +4489,7 @@ public class Teller extends javax.swing.JFrame {
                                     System.out.println("Error found: " + SqlEx);
                                     // Displaying message box showing error message
                                     JOptionPane.showMessageDialog(null,
-                                            "Error Occurred in SQL Connection",
+                                            "Error Occurred in SQL Database Connection",
                                             "New Customer Registration - ERROR!",
                                             JOptionPane.ERROR_MESSAGE);
                                 }
@@ -4557,7 +4519,7 @@ public class Teller extends javax.swing.JFrame {
                                     System.out.println("Error found: " + SqlEx);
                                     // Displaying message box showing error message
                                     JOptionPane.showMessageDialog(null,
-                                            "Error Occurred in SQL Connection",
+                                            "Error Occurred in SQL Database Connection",
                                             "New Customer Registration - ERROR!",
                                             JOptionPane.ERROR_MESSAGE);
                                 }
@@ -4584,7 +4546,7 @@ public class Teller extends javax.swing.JFrame {
                                     System.out.println("Error found: " + SqlEx);
                                     // Displaying message box showing error message
                                     JOptionPane.showMessageDialog(null,
-                                            "Error Occurred in SQL Connection",
+                                            "Error Occurred in SQL Database Connection",
                                             "New Customer Registration - ERROR!",
                                             JOptionPane.ERROR_MESSAGE);
                                 }
@@ -4609,7 +4571,7 @@ public class Teller extends javax.swing.JFrame {
                         System.out.println("Error found: " + SqlEx);
                         // Displaying message box showing error message
                         JOptionPane.showMessageDialog(null,
-                                "Error Occurred in SQL Connection",
+                                "Error Occurred in SQL Database Connection",
                                 "New Customer Registration - ERROR!",
                                 JOptionPane.ERROR_MESSAGE);
                     }
@@ -5189,7 +5151,6 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JTabbedPane mInterest_pnl;
     private javax.swing.JSplitPane monthlyReport_jsp;
     private javax.swing.JPanel nCustomer_pnl;
-    private javax.swing.JButton processInterest_Btn;
     private javax.swing.JPanel rOptions_jbl;
     private javax.swing.JPanel rOptions_jbl1;
     private javax.swing.JTabbedPane reports_pnl;

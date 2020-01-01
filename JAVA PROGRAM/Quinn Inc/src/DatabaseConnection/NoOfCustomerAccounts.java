@@ -54,7 +54,7 @@ public class NoOfCustomerAccounts {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
+                "Error Occurred in SQL Database Connection",
                 "Number of Customer Accounts Identification - ERROR!",
                 JOptionPane.ERROR_MESSAGE);    
         }
@@ -83,7 +83,7 @@ public class NoOfCustomerAccounts {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
+                "Error Occurred in SQL Database Connection",
                 "Number of Customer Accounts Identification - ERROR!",
                 JOptionPane.ERROR_MESSAGE);
         }
@@ -112,7 +112,7 @@ public class NoOfCustomerAccounts {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
+                "Error Occurred in SQL Database Connection",
                 "Number of Customer Accounts Identification - ERROR!",
                 JOptionPane.ERROR_MESSAGE);
         }

@@ -39,7 +39,7 @@ public class NewAccountCreation {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
+                "Error Occurred in SQL Database Connection",
                 "New Customer Registration - ERROR!",
                 JOptionPane.ERROR_MESSAGE);              
         }

@@ -10,6 +10,9 @@
  */
 public interface Interest {
 
-    public double interestMonth(double amount);
-    public double interestDec(double amount);
+    
+    public double interestMonthly(double amount, String accountType);
+    
+    public double interestDecember(double amount, String accountType);
+    
 }

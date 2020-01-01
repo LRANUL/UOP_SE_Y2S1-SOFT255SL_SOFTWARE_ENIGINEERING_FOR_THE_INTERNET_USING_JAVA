@@ -48,7 +48,7 @@ public class NewAccountNumberGeneration {
             System.out.println("Error found: " + SqlEx);
             // Displaying message box showing error message
             JOptionPane.showMessageDialog(null,
-                "Error Occurred in SQL Connection",
+                "Error Occurred in SQL Database Connection",
                 "New Customer Account Number Generation - ERROR!",
                 JOptionPane.ERROR_MESSAGE);              
         }
