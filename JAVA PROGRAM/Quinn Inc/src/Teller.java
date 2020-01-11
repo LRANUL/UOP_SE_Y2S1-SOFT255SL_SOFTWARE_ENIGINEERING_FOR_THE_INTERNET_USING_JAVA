@@ -42,6 +42,7 @@ import DatabaseConnection.*;
 import LocalTimeAndDate.LocalTimeAndDate;
 import ReportGeneration.ReportGeneration;
 import ReceiptGeneration.CustomerReceiptGeneration;
+import java.sql.PreparedStatement;
 
 import java.util.regex.*;
 import javax.swing.SwingConstants;
@@ -1307,6 +1308,11 @@ public class Teller extends javax.swing.JFrame {
         CheckSA_Btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 CheckSA_BtnMouseEntered(evt);
+            }
+        });
+        CheckSA_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckSA_BtnActionPerformed(evt);
             }
         });
 
@@ -2862,7 +2868,7 @@ public class Teller extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, 1133, Short.MAX_VALUE)
+                .addComponent(nCustomer_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, 1134, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -3775,7 +3781,7 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_monthlyClearActionPerformed
 
     private void SubmitSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAActionPerformed
-
+        
         // Firstly the transaction must be successful and it should have been inserted into the database
         /**
          * Receipt generation code block must be includes inside the same IF
@@ -5027,6 +5033,104 @@ public class Teller extends javax.swing.JFrame {
     private void DAccno_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DAccno_TxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DAccno_TxtActionPerformed
+
+    private void CheckSA_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSA_BtnActionPerformed
+        // TODO add your handling code here:
+        String accountNo = DAccno_Txt.getText();
+        Connection conn;
+        String Name ="";
+        double Balance = 0;
+        String AccountName = "";
+        PreparedStatement ps;
+        ResultSet resultSet;
+        
+        if(DAccno_Txt!=null){
+                switch((accountNo.substring(0,2))){
+                     case "25":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountNormalSavings.NSAccountBalance FROM Customer INNER JOIN AccountNormalSavings ON Customer.PassportNumber = AccountNormalSavings.cPassportNumber Where AccountNormalSavings.NSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Normal Account";
+
+                 break;
+                 
+                 
+                 
+                 case "45":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountBonusSavings.BSAccountBalance FROM Customer INNER JOIN AccountBonusSavings ON Customer.PassportNumber = AccountBonusSavings.cPassportNumber Where AccountBonusSavings.BSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Bonus Account";
+
+                 break;
+                 
+                 
+                 
+                 
+                 case "75":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountPremierSavings.PSAccountBalance FROM Customer INNER JOIN AccountPremierSavings ON Customer.PassportNumber = AccountPremierSavings.cPassportNumber Where AccountPremierSavings.PSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Premier Account";
+
+                 break;
+                 
+                } // end of switch
+                String BalanceSt = String.valueOf(Balance);
+              currentBalance_Txt.setText(BalanceSt);
+                holderName_Txt.setText(Name); 
+                ACCType_Txt.setText(AccountName);
+                
+        }//end of if
+    }//GEN-LAST:event_CheckSA_BtnActionPerformed
 
     /**
      * @param args the command line arguments
