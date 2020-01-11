@@ -4328,9 +4328,9 @@ public class Teller extends javax.swing.JFrame {
 
                                 // Assigning SQL query
                                 String InsertingCustomerSqlQuery = "INSERT INTO Customer (PassportNumber, FirstName, MiddleName, LastName, "
-                                        + "LaneAddress, City, tTellerID_RegisteredBy) VALUES ('" + txtPassportNumber.getText() + "', "
-                                        + "'" + txtMName.getText() + "', '" + txtMName.getText() + "', '" + txtLName.getText() + "', "
-                                        + "'" + txtLaneAddress.getText() + "', '" + txtCity.getText() + "', '" + tellerIDDB + "')";
+                                        + "LaneAddress, City, MonthlyIncomeRate, tTellerID_RegisteredBy) VALUES ('" + txtPassportNumber.getText() + "', "
+                                        + "'" + txtMName.getText() + "', '" + txtMName.getText() + "', '" + txtLName.getText() + "', '" + txtLaneAddress.getText() + "',"
+                                        + " '" + txtCity.getText() + "', '"+ txtMonthlyIncomeRate.getText() +"', '" + tellerIDDB + "')";
 
                                 // Executing SQL query
                                 Boolean InsertingCustomerNumberRs = InsertingCustomerStmt.execute(InsertingCustomerSqlQuery);
