@@ -48,8 +48,8 @@ import javax.swing.SwingConstants;
 
 /**
  * This form carries out the highest number of tasks, such as withdrawal and deposits
- * done by W.A.D.N.N and M.I.C.B, Monthly Interest done by R.P.L and H.V.L.H, Report Generation
- * and Customer Creation done by H.V.L.H, Debit Card Charges done by R.P.L
+ * done by W.A.D.N.N and M.I.C.B, Monthly Interest done by R.P.L and H.V.L.H, Receipt Generation, Report Generation
+ * and Customer Account Creation done by H.V.L.H, Debit Card Charges done by R.P.L
  * @author ranul
  */
 public class Teller extends javax.swing.JFrame {
