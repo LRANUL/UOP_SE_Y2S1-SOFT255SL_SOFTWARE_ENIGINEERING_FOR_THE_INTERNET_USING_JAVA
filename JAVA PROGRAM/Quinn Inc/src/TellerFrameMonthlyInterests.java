@@ -246,7 +246,7 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
     private void closeMonthlyInyerestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMonthlyInyerestActionPerformed
         
         // This will close the monthlyInterest panel
-        System.exit(0);
+        this.setVisible(false);
         
     }//GEN-LAST:event_closeMonthlyInyerestActionPerformed
 

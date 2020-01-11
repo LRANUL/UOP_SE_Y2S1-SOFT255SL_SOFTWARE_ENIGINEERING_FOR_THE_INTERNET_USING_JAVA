@@ -46,9 +46,5 @@ public class NewAccountCreation {
         }
         
         return insertingAccountDetailsRs;
-    
-    }
-    
-    
-    
+    } 
 }

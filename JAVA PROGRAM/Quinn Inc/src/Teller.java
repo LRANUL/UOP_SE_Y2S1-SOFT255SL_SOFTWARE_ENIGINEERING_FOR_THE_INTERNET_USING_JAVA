@@ -3024,12 +3024,6 @@ public class Teller extends javax.swing.JFrame {
         // Passing the tellerID within the parameterized constructor while creating the new object
         TellerFrameMonthlyInterests frameMonthlyInterest = new TellerFrameMonthlyInterests(tellerIDDB); 
         frameMonthlyInterest.setVisible(true);
-        // Closes the 'teller' frame
-        this.setVisible(false);
-        
-        
-        
-        
         
     }//GEN-LAST:event_FetchAcc_BtnActionPerformed
 
