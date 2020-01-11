@@ -21,7 +21,8 @@ import LocalTimeAndDate.LocalTimeAndDate;
 
 /**
  * This form allows the bank manager to view generated reports, current transactions
- * Design and Data Management done by R.P.L and K.M.A.R.P.C.
+ * Design, Data Management, Logic Implementation done by R.P.L and K.M.A.R.P.C, 
+ * Debit Card Charges done by R.P.L
  * @author ranul
  */
 public class Manager extends javax.swing.JFrame {
@@ -68,6 +69,7 @@ public class Manager extends javax.swing.JFrame {
         withdrawalbtn = new javax.swing.JButton();
         dailyReports = new javax.swing.JButton();
         monthlyReports = new javax.swing.JButton();
+        cardrequest = new javax.swing.JButton();
         jFileChooser1 = new javax.swing.JFileChooser();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -175,6 +177,15 @@ public class Manager extends javax.swing.JFrame {
             }
         });
 
+        cardrequest.setBackground(new java.awt.Color(255, 255, 204));
+        cardrequest.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        cardrequest.setText("Request Debit Card");
+        cardrequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cardrequestActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout AccInfo_pnlLayout = new javax.swing.GroupLayout(AccInfo_pnl);
         AccInfo_pnl.setLayout(AccInfo_pnlLayout);
         AccInfo_pnlLayout.setHorizontalGroup(
@@ -188,7 +199,9 @@ public class Manager extends javax.swing.JFrame {
             .addGroup(AccInfo_pnlLayout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addGroup(AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(AccInfo_pnlLayout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(27, Short.MAX_VALUE))
                     .addGroup(AccInfo_pnlLayout.createSequentialGroup()
                         .addComponent(depositbtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -196,8 +209,10 @@ public class Manager extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(monthlyReports)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dailyReports)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(dailyReports)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cardrequest)
+                        .addGap(43, 43, 43))))
         );
         AccInfo_pnlLayout.setVerticalGroup(
             AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,13 +221,14 @@ public class Manager extends javax.swing.JFrame {
                 .addGroup(AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlbl_localTime, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlbl_localDate))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addGroup(AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(depositbtn)
                     .addComponent(withdrawalbtn)
                     .addComponent(dailyReports)
-                    .addComponent(monthlyReports))
-                .addGap(38, 38, 38)
+                    .addComponent(monthlyReports)
+                    .addComponent(cardrequest))
+                .addGap(36, 36, 36)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86))
         );
@@ -333,6 +349,12 @@ public class Manager extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_depositbtnActionPerformed
 
+    private void cardrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardrequestActionPerformed
+        // Request Debit Card
+     
+        new DebitCard().setVisible(true);
+    }//GEN-LAST:event_cardrequestActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -371,6 +393,7 @@ public class Manager extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AccInfo_pnl;
     private javax.swing.JTable AccountINFO;
+    private javax.swing.JButton cardrequest;
     private javax.swing.JButton dailyReports;
     private javax.swing.JButton depositbtn;
     private javax.swing.JFileChooser jFileChooser1;

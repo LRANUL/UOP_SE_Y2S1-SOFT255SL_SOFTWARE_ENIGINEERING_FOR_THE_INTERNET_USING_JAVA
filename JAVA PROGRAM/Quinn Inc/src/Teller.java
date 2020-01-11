@@ -50,7 +50,7 @@ import javax.swing.SwingConstants;
 /**
  * This form carries out the highest number of tasks, such as withdrawal and deposits
  * done by W.A.D.N.N and M.I.C.B, Monthly Interest done by R.P.L and H.V.L.H, Receipt Generation, Report Generation
- * and Customer Account Creation done by H.V.L.H, Debit Card Charges done by R.P.L
+ * and Customer Account Creation done by H.V.L.H
  * @author ranul
  */
 public class Teller extends javax.swing.JFrame {
@@ -1222,7 +1222,6 @@ public class Teller extends javax.swing.JFrame {
         lblCityValidator = new javax.swing.JLabel();
         lblInitialDepositValidator = new javax.swing.JLabel();
         txtFName = new javax.swing.JTextField();
-        cardrequest = new javax.swing.JButton();
         txtMonthlyIncomeRate = new javax.swing.JTextField();
         lblMonthlyInvoiceRate = new javax.swing.JLabel();
         lblImportantAsterisk12 = new javax.swing.JLabel();
@@ -2524,14 +2523,6 @@ public class Teller extends javax.swing.JFrame {
             }
         });
 
-        cardrequest.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
-        cardrequest.setText("Request Debit Card");
-        cardrequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cardrequestActionPerformed(evt);
-            }
-        });
-
         txtMonthlyIncomeRate.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         txtMonthlyIncomeRate.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -2690,14 +2681,11 @@ public class Teller extends javax.swing.JFrame {
                                     .addComponent(lblImportantAsterisk7, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblImportantAsterisk6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cardrequest)
-                                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                                        .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(26, 26, 26)
-                                        .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnGenerateAccountNumber)))
+                                .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(txtAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGenerateAccountNumber)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblImportantAsterisk8, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -2806,9 +2794,6 @@ public class Teller extends javax.swing.JFrame {
                                 .addComponent(lblAccountStatus)))))
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(cardrequest))
-                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEmailAddress2)
@@ -2816,7 +2801,7 @@ public class Teller extends javax.swing.JFrame {
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(lblEmailAddress2Validator, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6)
+                .addGap(20, 20, 20)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
@@ -3045,12 +3030,6 @@ public class Teller extends javax.swing.JFrame {
         // Passing the tellerID within the parameterized constructor while creating the new object
         TellerFrameMonthlyInterests frameMonthlyInterest = new TellerFrameMonthlyInterests(tellerIDDB); 
         frameMonthlyInterest.setVisible(true);
-        // Closes the 'teller' frame
-        this.setVisible(false);
-        
-        
-        
-        
         
     }//GEN-LAST:event_FetchAcc_BtnActionPerformed
 
@@ -4907,13 +4886,6 @@ public class Teller extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtFNameKeyReleased
 
-    private void cardrequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardrequestActionPerformed
-        // Request Debit Card
-        String AccNo = txtAccountNumber.getText();
-
-        new DebitCard(AccNo).setVisible(true);
-    }//GEN-LAST:event_cardrequestActionPerformed
-
     private void jPanel16ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel16ComponentShown
         // Displaying message box showing to show mandatory fields message (*)
         JOptionPane.showMessageDialog(null,
@@ -5198,7 +5170,6 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JButton btn_monthlyGenerateReport;
     private javax.swing.JButton btn_monthlyRetrieveRecords;
     private javax.swing.JButton btn_retrieveRecords;
-    private javax.swing.JButton cardrequest;
     private java.awt.Choice cmbMonthlyReportMonth;
     private javax.swing.JTextField currentBalance_Txt;
     private javax.swing.JLabel dAccount;

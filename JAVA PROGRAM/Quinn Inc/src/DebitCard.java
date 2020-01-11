@@ -35,10 +35,7 @@ public class DebitCard extends javax.swing.JFrame {
 
     public DebitCard(String AccNo) {
         initComponents();
-        accfetch.setText(AccNo);
-        accfetch1.setText(AccNo);
-
-        Acc = accfetch.getText();
+      
     }
 
     /**
@@ -60,12 +57,12 @@ public class DebitCard extends javax.swing.JFrame {
         req = new javax.swing.JButton();
         famreq = new javax.swing.JButton();
         lostreq = new javax.swing.JButton();
-        accno = new javax.swing.JTextField();
-        accfetch = new javax.swing.JLabel();
+        familycard = new javax.swing.JTextField();
         jToggleButton1 = new javax.swing.JToggleButton();
-        accfetch1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lostcard = new javax.swing.JTextField();
+        newcard = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -90,9 +87,11 @@ public class DebitCard extends javax.swing.JFrame {
         text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         text.setText("THE ONE CARD FOR ALL YOUR NEEDS");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("REQUEST EXTRA CARD FOR NEW CUSTOMER FAMILY MEMBER - £7");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("REQUEST CARD FOR NEW CUSTOMER - £5");
 
@@ -125,8 +124,11 @@ public class DebitCard extends javax.swing.JFrame {
             }
         });
 
-        accfetch.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        accfetch.setForeground(new java.awt.Color(255, 255, 255));
+        familycard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                familycardActionPerformed(evt);
+            }
+        });
 
         jToggleButton1.setBackground(new java.awt.Color(204, 0, 51));
         jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,54 +139,65 @@ public class DebitCard extends javax.swing.JFrame {
             }
         });
 
-        accfetch1.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
-        accfetch1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Enter Account No");
 
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Account No");
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Enter Account No");
 
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Account No");
+        lostcard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lostcardActionPerformed(evt);
+            }
+        });
+
+        newcard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newcardActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(text))
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(48, 48, 48)
-                                .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lostreq))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(accfetch1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(famreq))
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(accfetch, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(req))
-                            .addComponent(jLabel1))))
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lostcard, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(559, 559, 559))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(text)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jToggleButton1)
-                    .addComponent(image))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jToggleButton1)
+                        .addComponent(image))
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(34, 34, 34)
+                        .addComponent(newcard, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(req))
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(33, 33, 33)
+                        .addComponent(familycard, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(famreq)
+                            .addComponent(lostreq))))
                 .addGap(0, 1, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,27 +211,25 @@ public class DebitCard extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(accfetch, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(newcard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(req))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(accfetch1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(famreq))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(famreq)
+                    .addComponent(jLabel7)
+                    .addComponent(familycard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(lostreq)
-                    .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(77, 77, 77))
+                    .addComponent(lostcard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -236,32 +247,6 @@ public class DebitCard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void reqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqActionPerformed
-        // Charge fee from customer
-        Charges Customer = new Charges() {};
-        Customer.ChargesCustomer(Acc);
-    }//GEN-LAST:event_reqActionPerformed
-
-    private void famreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_famreqActionPerformed
-        // 2nd card Request
-        Charges FamilyCard = new Charges() {};
-        FamilyCard.ChargesFamily(Acc);
-    }//GEN-LAST:event_famreqActionPerformed
-
-    private void lostreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lostreqActionPerformed
-        // lost card request
-        String AccNo = accno.getText();
-        Charges Lost = new Charges() {};
-        Lost.LostCard(AccNo);
-
-    }//GEN-LAST:event_lostreqActionPerformed
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // CLOSING
-        this.setVisible(false);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-    static int xcord,ycord;
-
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         xcord = evt.getX();
         ycord = evt.getY();
@@ -272,6 +257,45 @@ public class DebitCard extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xcord, y - ycord);
     }//GEN-LAST:event_jPanel1MouseDragged
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // CLOSING
+        this.setVisible(false);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void lostreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lostreqActionPerformed
+        // lost card request
+        String AccNo = lostcard.getText();
+        Charges Lost = new Charges() {};
+        Lost.LostCard(AccNo);
+    }//GEN-LAST:event_lostreqActionPerformed
+
+    private void famreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_famreqActionPerformed
+        // 2nd card Request
+                String AccNo = familycard.getText();
+        Charges FamilyCard = new Charges() {};
+        FamilyCard.ChargesFamily(AccNo);
+    }//GEN-LAST:event_famreqActionPerformed
+
+    private void reqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqActionPerformed
+        // Charge fee from customer
+                String AccNo = newcard.getText();
+        Charges Customer = new Charges() {};
+        Customer.ChargesCustomer(AccNo);
+    }//GEN-LAST:event_reqActionPerformed
+
+    private void familycardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_familycardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_familycardActionPerformed
+
+    private void lostcardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lostcardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lostcardActionPerformed
+
+    private void newcardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newcardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newcardActionPerformed
+    static int xcord,ycord;
 
     /**
      * @param args the command line arguments
@@ -309,20 +333,20 @@ public class DebitCard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel accfetch;
-    private javax.swing.JLabel accfetch1;
-    private javax.swing.JTextField accno;
+    private javax.swing.JTextField familycard;
     private javax.swing.JButton famreq;
     private javax.swing.JLabel image;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextField lostcard;
     private javax.swing.JButton lostreq;
+    private javax.swing.JTextField newcard;
     private javax.swing.JButton req;
     private javax.swing.JLabel text;
     // End of variables declaration//GEN-END:variables
