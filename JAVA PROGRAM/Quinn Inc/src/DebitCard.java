@@ -1,16 +1,19 @@
-
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
+ */
 import DatabaseConnection.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JFrame;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 /**
- *
+ * This form is used to provide car request services to new and existing customers,
+ * the forms works with Charges Class extended from Account Class
+ * Design and Form Data Management done by R.P.L
  * @author ranul
  */
 public class DebitCard extends javax.swing.JFrame {
@@ -69,6 +72,16 @@ public class DebitCard extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(18, 63, 72));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 123, 146), 5, true));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/international-debit-card-388996_1280.jpg"))); // NOI18N
 
@@ -247,6 +260,18 @@ public class DebitCard extends javax.swing.JFrame {
         // CLOSING
         this.setVisible(false);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+    static int xcord,ycord;
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        xcord = evt.getX();
+        ycord = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xcord, y - ycord);
+    }//GEN-LAST:event_jPanel1MouseDragged
 
     /**
      * @param args the command line arguments

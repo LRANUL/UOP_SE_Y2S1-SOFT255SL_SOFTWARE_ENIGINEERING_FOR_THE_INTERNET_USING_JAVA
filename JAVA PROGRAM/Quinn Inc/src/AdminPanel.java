@@ -1,4 +1,9 @@
-
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
+ */
 import DatabaseConnection.DBConnection;
 import LocalTimeAndDate.LocalTimeAndDate;
 import java.sql.Connection;
@@ -10,14 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
- *
+ * This form provides administrative access to data within the application,
+ * Design done by R.P.L, Form Data Management done by W.A.D.N.N.
  * @author ranul
  */
 public class AdminPanel extends javax.swing.JFrame {

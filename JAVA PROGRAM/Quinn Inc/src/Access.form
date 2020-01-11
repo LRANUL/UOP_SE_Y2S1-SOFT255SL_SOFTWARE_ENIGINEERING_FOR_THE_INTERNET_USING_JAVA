@@ -65,6 +65,10 @@
           <Dimension value="[1200, 800]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="AccessPanelMouseDragged"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AccessPanelMousePressed"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -280,12 +284,11 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
+                  <StringArray count="4">
                     <StringItem index="0" value="--SELECT ROLE--"/>
                     <StringItem index="1" value="Bank Teller"/>
                     <StringItem index="2" value="Bank Manager"/>
                     <StringItem index="3" value="Bank Data Administrator"/>
-                    <StringItem index="4" value=" "/>
                   </StringArray>
                 </Property>
               </Properties>

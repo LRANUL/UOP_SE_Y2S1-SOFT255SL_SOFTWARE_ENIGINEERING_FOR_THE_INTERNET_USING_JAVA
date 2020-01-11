@@ -1,11 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
  */
 
 /**
- *
+ * This is interface providing functionality for taxes calculation
+ * by allowing multiple inheritance with the Account class
+ * Interest Calculation done by M.I.C.B.
  * @author ranul
  */
 public interface Taxes {

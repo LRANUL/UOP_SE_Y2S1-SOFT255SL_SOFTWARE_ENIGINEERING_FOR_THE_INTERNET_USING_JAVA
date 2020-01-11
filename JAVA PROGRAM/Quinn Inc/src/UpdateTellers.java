@@ -1,4 +1,9 @@
-
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
+ */
 import DatabaseConnection.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,14 +14,10 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- *
+ * This form is used to Update New Tellers
+ * Design done by R.P.L and Form Data Management done by W.A.D.N.N.
  * @author Hp-Pc
  */
 public class UpdateTellers extends javax.swing.JFrame {
@@ -74,6 +75,16 @@ public class UpdateTellers extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 123, 146));
 
         jPanel1.setBackground(new java.awt.Color(18, 63, 72));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         tellerId_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tellerId_Lbl.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,11 +155,11 @@ public class UpdateTellers extends javax.swing.JFrame {
                             .addComponent(email_Txt))
                         .addGap(84, 84, 84)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Username_Txt)
+                            .addComponent(Username_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                             .addComponent(Branch_Txt)
                             .addComponent(Password_Txt)
                             .addComponent(TellerId_Txt)
-                            .addComponent(lAddress_Txt, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                            .addComponent(lAddress_Txt)
                             .addComponent(cCity_Txt)
                             .addComponent(Email_Txt))))
                 .addGap(105, 105, 105))
@@ -199,15 +210,12 @@ public class UpdateTellers extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -263,6 +271,18 @@ public class UpdateTellers extends javax.swing.JFrame {
         //Closes the Updatinf Form
         this.setVisible(false);
     }//GEN-LAST:event_closeActionPerformed
+    static int xcord,ycord;
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+      xcord = evt.getX();
+        ycord = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+             int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xcord, y - ycord);
+    }//GEN-LAST:event_jPanel1MouseDragged
 
     /**
      * @param args the command line arguments

@@ -1,5 +1,9 @@
-
-
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
+ */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,14 +16,12 @@ import java.util.logging.Logger;
 
 import DatabaseConnection.DBConnection;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- *
+ * This Parent class implements interfaces from Taxes and Interest this
+ * class is used to calculate charges taken by bank for accounts done by R.P.L, and
+ * to calculate Interest for accounts done by H.V.L.H and to calculate Taxes for accounts
+ * done by M.I.C.B, class uses other minor methods to facilitate functions required.
  * @author ranul
  */
 public class Account implements Interest,Taxes {

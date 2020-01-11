@@ -48,19 +48,15 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
+              <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel1" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -72,6 +68,10 @@
               <Color blue="48" green="3f" red="12" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="jPanel1MouseDragged"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel1MousePressed"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -97,11 +97,11 @@
                               </Group>
                               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Username_Txt" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="Username_Txt" alignment="0" pref="228" max="32767" attributes="0"/>
                                   <Component id="Branch_Txt" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Password_Txt" alignment="0" max="32767" attributes="0"/>
                                   <Component id="TellerId_Txt" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lAddress_Txt" alignment="0" pref="355" max="32767" attributes="0"/>
+                                  <Component id="lAddress_Txt" alignment="0" max="32767" attributes="0"/>
                                   <Component id="cCity_Txt" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Email_Txt" max="32767" attributes="0"/>
                               </Group>

@@ -1,4 +1,9 @@
-
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
+ */
 import DatabaseConnection.DBConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,14 +15,10 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- *
+ * This form is used to create new managers
+ * Design and Form Data Management done by W.A.D.N.N.
  * @author Hp-Pc
  */
 public class CreateManager extends javax.swing.JFrame {
@@ -79,12 +80,35 @@ public class CreateManager extends javax.swing.JFrame {
         adminID_Txt = new javax.swing.JTextField();
         login_Lbl = new javax.swing.JLabel();
         login_Txt = new javax.swing.JTextField();
+        Tclose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(0, 123, 146));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(18, 63, 72));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         mUName_Lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         mUName_Lbl.setForeground(new java.awt.Color(240, 240, 240));
@@ -143,6 +167,15 @@ public class CreateManager extends javax.swing.JFrame {
 
         login_Txt.setEditable(false);
 
+        Tclose.setBackground(new java.awt.Color(0, 123, 146));
+        Tclose.setForeground(new java.awt.Color(255, 255, 255));
+        Tclose.setText("X");
+        Tclose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TcloseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -183,11 +216,15 @@ public class CreateManager extends javax.swing.JFrame {
                         .addGap(319, 319, 319)
                         .addComponent(mButton1)))
                 .addContainerGap(128, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(Tclose))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addComponent(Tclose)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -246,7 +283,7 @@ public class CreateManager extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(17, 17, 17)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -270,6 +307,7 @@ public class CreateManager extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mButton1ActionPerformed
@@ -319,6 +357,31 @@ public class CreateManager extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mButton1ActionPerformed
 
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void TcloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TcloseActionPerformed
+        //Closes the Updatinf Form
+        this.setVisible(false);
+    }//GEN-LAST:event_TcloseActionPerformed
+    static int xcord,ycord;
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+       xcord = evt.getX();
+        ycord = evt.getY();
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+         int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xcord, y - ycord);
+    }//GEN-LAST:event_jPanel1MouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -363,6 +426,7 @@ public class CreateManager extends javax.swing.JFrame {
     private javax.swing.JTextField Lname_Txt;
     private javax.swing.JLabel Mname_Lbl;
     private javax.swing.JTextField Mname_Txt;
+    private javax.swing.JButton Tclose;
     private javax.swing.JTextField adminID_Txt;
     private javax.swing.JLabel branch_Lbl;
     private javax.swing.JTextField branch_Txt;

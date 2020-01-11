@@ -1,10 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
  */
 import DatabaseConnection.DBConnection;
-import Encription.sha256;
+import Encryption.sha256;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -16,8 +17,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 /**
- *
- * @author ranul
+ *  This form provides main access to the other forms within the application,
+ *  Design and Validations done by R.P.L, Encryption done by M.I.C.B, Database connections moderated by H.V.L.H.
+ * 
+ *  @author ranul
  */
 public class Access extends javax.swing.JFrame {
 
@@ -103,6 +106,16 @@ public class Access extends javax.swing.JFrame {
         AccessPanel.setMinimumSize(new java.awt.Dimension(1200, 800));
         AccessPanel.setName("Quinn Bank Access"); // NOI18N
         AccessPanel.setPreferredSize(new java.awt.Dimension(1200, 800));
+        AccessPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                AccessPanelMouseDragged(evt);
+            }
+        });
+        AccessPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                AccessPanelMousePressed(evt);
+            }
+        });
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/QUINN_LOGO.gif"))); // NOI18N
         logo.setText("jLabel2");
@@ -159,7 +172,7 @@ public class Access extends javax.swing.JFrame {
         Services_Lbl.setText("QUINN BANKING SERVICES");
 
         role_DD.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        role_DD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ROLE--", "Bank Teller", "Bank Manager", "Bank Data Administrator", " " }));
+        role_DD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--SELECT ROLE--", "Bank Teller", "Bank Manager", "Bank Data Administrator" }));
 
         javax.swing.GroupLayout qService_pnlLayout = new javax.swing.GroupLayout(qService_pnl);
         qService_pnl.setLayout(qService_pnlLayout);
@@ -504,6 +517,23 @@ public class Access extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
     }//GEN-LAST:event_closeActionPerformed
+    /**
+     * Allows movement to customized Frame - R.P.L
+     */
+    
+    static int xcord,ycord;
+    private void AccessPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccessPanelMousePressed
+        
+        xcord = evt.getX();
+        ycord = evt.getY();
+    }//GEN-LAST:event_AccessPanelMousePressed
+
+    private void AccessPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccessPanelMouseDragged
+        
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xcord, y - ycord);
+    }//GEN-LAST:event_AccessPanelMouseDragged
 
     /**
      * @param args the command line arguments

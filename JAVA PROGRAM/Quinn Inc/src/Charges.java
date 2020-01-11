@@ -1,4 +1,9 @@
-
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
+ */
 import DatabaseConnection.DBConnection;
 import static java.lang.Integer.parseInt;
 import java.sql.Connection;
@@ -19,7 +24,7 @@ import javax.swing.JOptionPane;
  *
  * @author ranul
  */
-public abstract class Charges extends Account {
+public abstract class Charges extends Account{
 
     Connection conn = null;
     PreparedStatement ps = null;

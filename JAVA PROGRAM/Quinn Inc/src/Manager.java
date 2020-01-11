@@ -1,4 +1,9 @@
-
+/**
+* SOFT255SL COURSEWORK C1 T1
+* Team No:1 
+* Team Name: TEAM QUINN 
+* Project: Bank Management System.
+ */
 import java.awt.Desktop;
 import java.io.File;
 import DatabaseConnection.DBConnection;
@@ -14,13 +19,9 @@ import javax.swing.JOptionPane;
 
 import LocalTimeAndDate.LocalTimeAndDate;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
- *
+ * This form allows the bank manager to view generated reports, current transactions
+ * Design and Data Management done by R.P.L and K.M.A.R.P.C.
  * @author ranul
  */
 public class Manager extends javax.swing.JFrame {
