@@ -4911,8 +4911,35 @@ public class Teller extends javax.swing.JFrame {
     private void jPanel16ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel16ComponentShown
         // Displaying message box showing to show mandatory fields message (*)
         JOptionPane.showMessageDialog(null,
-            "To register a new customer or to create a new account to an exisiting customer, \n"
-                    + "Please Fill all the fields that has a red Asterisk(*) next to it",
+            "Do the following to register a new customer: \n"
+                    + "    Enter First Name\n"
+                    + "    Enter Last Name\n"
+                    + "    Enter Passport Number\n"
+                    + "    Enter Email Address\n"
+                    + "    Enter Phone Number\n"
+                    + "    Enter Lane Address\n"
+                    + "    Enter City\n"
+                    + "    Enter Monthly Income Rate\n"
+                    + "    Select Account Type\n"
+                    + "    Enter Initial Deposit\n"
+                    + "    Click on Account Number Generate\n"
+                    + "    Select Account Status",
+            "New Customer Registration",
+            JOptionPane.INFORMATION_MESSAGE);
+        
+        JOptionPane.showMessageDialog(null,
+            "Do the following to create a new account: \n"
+                    + "    Enter Passport Number\n"
+                    + "    Select Account Type\n"
+                    + "    Enter Initial Deposit\n"
+                    + "    Click on Account Number Generate\n"
+                    + "    Select Account Status",
+            "New Account Creation",
+            JOptionPane.INFORMATION_MESSAGE);
+        
+        JOptionPane.showMessageDialog(null,
+                    "To register a new customer, \n"
+                    + "Please Fill all the fields that has a red Asterisk(*) next to it.",
             "New Customer Registration",
             JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jPanel16ComponentShown
