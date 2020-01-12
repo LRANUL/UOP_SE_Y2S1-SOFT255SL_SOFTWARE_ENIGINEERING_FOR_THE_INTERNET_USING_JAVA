@@ -233,8 +233,8 @@ public class Teller extends javax.swing.JFrame {
                                 Statement checkingDataStmt = checkingDataCon.createStatement();) {
 
                             // Assigning SQL query
-                            String checkingDataSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction WHERE "
-                                    + "convert(nvarchar(50), date_time,126) LIKE '" + localDateSqlQuery + "%' ";
+                            String checkingDataSqlQuery = "SELECT DTransactionNumber FROM CustomerTrnsactionDeposit WHERE "
+                                    + "convert(nvarchar(50), TransactionDateTime,126) LIKE '" + localDateSqlQuery + "%' ";
 
                             // Executing SQL query
                             ResultSet checkingDataRs = checkingDataStmt.executeQuery(checkingDataSqlQuery);
