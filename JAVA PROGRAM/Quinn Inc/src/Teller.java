@@ -3787,6 +3787,95 @@ public class Teller extends javax.swing.JFrame {
     private void SubmitSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAActionPerformed
         
         // Firstly the transaction must be successful and it should have been inserted into the database
+        String dAmmount=DEPAmount_Txt.getText();
+        String fAmmount=FinalDeposit_Txt.getText();
+        String accountNo=DAccno_Txt.getText();
+        String balance=currentBalance_Txt.getText();        
+        Connection conn;
+        PreparedStatement ps;
+         DecimalFormat decimalCorrection = new DecimalFormat("#.00");
+        
+        if(DEPAmount_Txt!=null && DAccno_Txt!=null){
+                switch((accountNo.substring(0,2))){
+                     case "25":
+                         try {
+                              conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountNormalSavings set NSAccountBalance=? where NSAccountNumber=?";
+                                 String Formulae = decimalCorrection.format(Double.valueOf(currentBalance_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formulae);
+                                 ps.setString(2,DAccno_Txt.getText());
+                                 ps.executeUpdate(); 
+        
+                              
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+  
+
+                 break;
+                 
+                 
+                 
+                 case "45":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountBonusSavings set BSAccountBalance=? where BSAccountNumber=?";
+                                 String Result = decimalCorrection.format(Double.valueOf(currentBalance_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Result);
+                                 ps.setString(2,DAccno_Txt.getText());
+                                  ps.executeUpdate(); 
+                                  
+                                   
+                         }
+                          
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+                 break;
+                 
+                 
+                 
+                 
+                 case "75":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountPremierSavings set PSAccountBalance=? where PSAccountNumber=?";
+                                 String Formula = decimalCorrection.format(Double.valueOf(currentBalance_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formula);
+                                 ps.setString(2,DAccno_Txt.getText());
+                                 ps.executeUpdate(); 
+                                 
+                                
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+
+                 break;
+                 
+                } // end of switch
+                
+         DAccno_Txt.setText("");
+         holderName_Txt.setText("");
+         currentBalance_Txt.setText("");
+         ACCType_Txt.setText("");
+         DEPAmount_Txt.setText("0.00");
+         FinalDeposit_Txt.setText("");
+                   
+        
+        }
         /**
          * Receipt generation code block must be includes inside the same IF
          * block, right after the successful insertion of the transaction record
@@ -3911,6 +4000,96 @@ public class Teller extends javax.swing.JFrame {
     private void btnWithdrawalSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawalSubmitActionPerformed
 
         // Firstly the transaction must be successful and it should have been inserted into the database
+        
+        String dAmmount=Dwithdraw_Txt.getText();
+        String accountNo=txtWithdrawalAccountNo.getText();
+        DecimalFormat decimalCorrection = new DecimalFormat("#.00");
+        
+                
+        Connection conn;
+        PreparedStatement ps;
+        ResultSet resultSet;
+        
+        
+        if(DEPAmount_Txt!=null && DAccno_Txt!=null){
+                switch((accountNo.substring(0,2))){
+                     case "25":
+                         try {
+                              conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountNormalSavings set NSAccountBalance=? where NSAccountNumber=?";
+                                 String Formulae1 = decimalCorrection.format(Double.valueOf(DCurrentBalance_Txt.getText()) - Double.valueOf(Dwithdraw_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formulae1);
+                                 ps.setString(2,txtWithdrawalAccountNo.getText());
+                                 ps.executeUpdate(); 
+        
+                              
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+  
+
+                 break;
+                 
+                 
+                 
+                 case "45":
+                         try {
+                                 conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountBonusSavings set BSAccountBalance=? where BSAccountNumber=?";
+                                 String Formulae2 = decimalCorrection.format(Double.valueOf(DCurrentBalance_Txt.getText()) - Double.valueOf(Dwithdraw_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formulae2);
+                                 ps.setString(2,txtWithdrawalAccountNo.getText());
+                                 ps.executeUpdate(); 
+        
+                         }
+                          
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+                 break;
+                 
+                 
+                 
+                 
+                 case "75":
+                         try {
+                                 conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountPremierSavings set PSAccountBalance=? where PSAccountNumber=?";
+                                 String Formulae3 = decimalCorrection.format(Double.valueOf(DCurrentBalance_Txt.getText()) - Double.valueOf(Dwithdraw_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formulae3);
+                                 ps.setString(2,txtWithdrawalAccountNo.getText());
+                                 ps.executeUpdate(); 
+        
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+                 break;
+                 
+                } // end of switch
+                
+                
+         
+         WHolder_Txt.setText("");
+         DCurrentBalance_Txt.setText("0.00");
+         Dwithdraw_Txt.setText("");
+        txtWithdrawalAccountNo.setText("");
+        ACCType_Txt1.setText("");      
+        }
+    
+        
         /**
          * Receipt generation code block must be includes inside the same IF
          * block, right after the successful insertion of the transaction record
@@ -5062,7 +5241,7 @@ public class Teller extends javax.swing.JFrame {
         
                                 while(resultSet.next()){
                                 Balance = resultSet.getDouble(3);
-                                Name = resultSet.getString(1); 
+                                Name = resultSet.getString(1);
                                 }   
                          }
                          
