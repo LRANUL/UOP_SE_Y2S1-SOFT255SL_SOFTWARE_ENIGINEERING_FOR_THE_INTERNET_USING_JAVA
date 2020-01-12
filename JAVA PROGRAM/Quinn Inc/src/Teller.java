@@ -5038,7 +5038,11 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_DAccno_TxtActionPerformed
 
     private void CheckSA_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSA_BtnActionPerformed
+<<<<<<< HEAD
         // Code Logic by M.I.C.B
+=======
+        // TODO add your handling code here:
+>>>>>>> e7b5d1f6f9b4b6ecb64211b1743ed009e8539559
         String accountNo = DAccno_Txt.getText();
         Connection conn;
         String Name ="";
@@ -5135,6 +5139,7 @@ public class Teller extends javax.swing.JFrame {
         }//end of if
     }//GEN-LAST:event_CheckSA_BtnActionPerformed
 
+<<<<<<< HEAD
     private void CheckSA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSA1ActionPerformed
         // Added by R.P.L, logic by M.I.C.B
         // Checks for Account details
@@ -5236,6 +5241,8 @@ public class Teller extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ACCType_Txt1ActionPerformed
 
+=======
+>>>>>>> e7b5d1f6f9b4b6ecb64211b1743ed009e8539559
     /**
      * @param args the command line arguments
      */

@@ -400,9 +400,13 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
             ResultSet checkMonthlyInterestRs = checkMonthlyInterestStmt.executeQuery(checkMonthlyInterestSqlQuery);
 
             while(checkMonthlyInterestRs.next()) {
+<<<<<<< HEAD
                 String em = checkMonthlyInterestRs.getString("TransactionDescriptionID");
                 transactionDescriptionIDDB = em.replace("\n", ",");
                 System.out.println(transactionDescriptionIDDB);
+=======
+                transactionDescriptionIDDB = checkMonthlyInterestRs.getString(0);
+>>>>>>> e7b5d1f6f9b4b6ecb64211b1743ed009e8539559
             }
         }
         // Error handling. Handles any SQL related errors.
@@ -421,6 +425,7 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
             Connection checkMonthlyInterestAddedCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
             
             String checkMonthlyInterestAddedSqlQuery = "SELECT DTransactionNumber FROM CustomerTransactionDeposit WHERE "
+<<<<<<< HEAD
                     + "tdTransactionDescriptionID = ? AND CONVERT(VARCHAR(25),TransactionDateTime,120) "
                     + "LIKE ?";
             
@@ -429,6 +434,15 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
             
             checkMonthlyInterestAddedStmt.setString(1, transactionDescriptionIDDB);
             checkMonthlyInterestAddedStmt.setString(2, String.valueOf(currentMonth));
+=======
+                    + "tdTransactionDescriptionID = '?' AND CONVERT(VARCHAR(25),TransactionDateTime,120) "
+                    + "LIKE '_____?%'";
+            
+            PreparedStatement checkMonthlyInterestAddedStmt = checkMonthlyInterestAddedCon.prepareStatement(checkMonthlyInterestAddedSqlQuery);  
+            
+            checkMonthlyInterestAddedStmt.setString(1, transactionDescriptionIDDB);
+            checkMonthlyInterestAddedStmt.setInt(2, currentMonth);
+>>>>>>> e7b5d1f6f9b4b6ecb64211b1743ed009e8539559
             
             // Executing SQL query
             ResultSet checkMonthlyInterestAddedRs = checkMonthlyInterestAddedStmt.executeQuery();  
