@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *  This form provides main access to the other forms within the application,
  *  Design and Validations done by R.P.L, Encryption done by M.I.C.B, Database connections moderated by H.V.L.H.
@@ -345,8 +347,10 @@ public class Access extends javax.swing.JFrame {
     private void password_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_password_TxtActionPerformed
 
     }//GEN-LAST:event_password_TxtActionPerformed
-
+String systemLoginPositionID = "";
     private void login_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_BtnActionPerformed
+       
+       
         //Opens the Relevant Frame for Authorised User
         PreparedStatement st;
         ResultSet rs;
@@ -361,10 +365,17 @@ public class Access extends javax.swing.JFrame {
         //String password = String.valueOf(password_Txt.getPassword());
         // Retrieving the user enter password and calling the hash function via send the user entered password within a parameter
         // And assigning the returned hash value to a variable
+        Thread hash = new Thread(new Runnable(){
+           @Override
+           public void run (){
         passwordHashGlobal = sha256.hash(String.valueOf(password_Txt.getPassword()));
+           }});
         
-        String systemLoginPositionID = "";
-        
+        Thread checkRole = new Thread(new Runnable(){
+           @Override
+           public void run (){
+           
+           
         // Checking which option the user selected in the position selection 
         switch (selected.toString()) {
             case "Bank Teller":
@@ -380,7 +391,19 @@ public class Access extends javax.swing.JFrame {
                 systemLoginPositionID = "";
                 break;
         }
+           }});
         
+        
+        //running Threads
+        hash.start();
+        checkRole.start();
+        
+        // make sure hash thread is finished before going to the sql part below.
+        try {
+            hash.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Access.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /* Assigning systmloginID global variable */
         // Retrieving the systemloginID from the database
         try (Connection retrievingSystemLoginIDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
@@ -407,8 +430,11 @@ public class Access extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);              
         }
         /* Assigning systmloginID global variable */
-
-       
+        try {
+            checkRole.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Access.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String Qr = "SELECT * FROM SystemLogin WHERE username = ? AND password = ? And slpPositionID = ?";
         
         try {

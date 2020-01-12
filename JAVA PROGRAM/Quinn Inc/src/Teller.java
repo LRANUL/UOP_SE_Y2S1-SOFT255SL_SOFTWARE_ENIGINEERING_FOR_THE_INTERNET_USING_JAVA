@@ -4998,7 +4998,7 @@ public class Teller extends javax.swing.JFrame {
                     FinalDeposit_Txt.setText(Formulae);
                     break;
                 }
-            case "Primier Account":
+            case "Premier Account":
                 {
                     String Formulae = decimalCorrection.format((Double.valueOf(DEPAmount_Txt.getText()) * 1.07));
                     FinalDeposit_Txt.setText(Formulae);
@@ -5149,7 +5149,7 @@ public class Teller extends javax.swing.JFrame {
         PreparedStatement ps;
         ResultSet resultSet;
         
-        if(txtWithdrawalAccountNo!=null){
+        if(accountNo!=null){
                 switch((accountNo.substring(0,2))){
                      case "25":
                          try {
@@ -5158,6 +5158,15 @@ public class Teller extends javax.swing.JFrame {
                                 ps=conn.prepareStatement(sql);
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
+                               
+                               if(!resultSet.next()){
+                               
+                                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     break;
+                               }
         
                                 while(resultSet.next()){
                                 Balance = resultSet.getDouble(3);
@@ -5184,6 +5193,16 @@ public class Teller extends javax.swing.JFrame {
                                 ps=conn.prepareStatement(sql);
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
+                               
+                               
+                               if(!resultSet.next()){
+                               
+                                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     break;
+                               }
         
                                 while(resultSet.next()){
                                 Balance = resultSet.getDouble(3);
@@ -5211,6 +5230,15 @@ public class Teller extends javax.swing.JFrame {
                                 ps=conn.prepareStatement(sql);
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
+                               
+                               if(!resultSet.next()){
+                               
+                                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     break;
+                               }
         
                                 while(resultSet.next()){
                                 Balance = resultSet.getDouble(3);
@@ -5234,7 +5262,17 @@ public class Teller extends javax.swing.JFrame {
                 WHolder_Txt.setText(Name); 
                 ACCType_Txt1.setText(AccountName);
     }//GEN-LAST:event_CheckSA1ActionPerformed
+        else{ 
+                               
+                                     JOptionPane.showMessageDialog(null,
+                                     "Please Enter your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                                    
+                               
+        }
     }
+    
     private void ACCType_Txt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ACCType_Txt1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ACCType_Txt1ActionPerformed
