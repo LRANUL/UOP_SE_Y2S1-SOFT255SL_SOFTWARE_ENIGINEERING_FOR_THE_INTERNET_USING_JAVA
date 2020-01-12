@@ -59,14 +59,14 @@ public class Account implements Interest,Taxes {
         PreparedStatement ps;
         ResultSet rs;
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM"); // getting the date of april 1st
             LocalDateTime datenow = LocalDateTime.now();
             LocalDateTime taxdate = LocalDateTime.of(0, 4, 1, 0, 0);
     
-        if (dateFormat.format(datenow).equals(dateFormat.format(taxdate))) {
+        if (dateFormat.format(datenow).equals(dateFormat.format(taxdate))) { //check if today is april 1st (tax is calculated on April 1st)
             try {
                 conn=DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
-                //The select statement
+                //The select statement to check if the taxes are added or not
                 String sql5="SELECT ansNSAccountNumber FROM dbo.CustomerTransactionWithdrawal  WHERE ansNSAccountNumber IS "
                         + "NOT NULL AND tdTransactionDescriptionID <>'TD000001' AND TransactionDateTime BETWEEN '2019-04-01' AND '2020-04-01' ;";
                 ps=conn.prepareStatement(sql5);
@@ -88,7 +88,7 @@ public class Account implements Interest,Taxes {
     }
     
     
-    public double getAccountBalance(String accountNo)//get account balance from database;
+    public double getAccountBalance(String accountNo)//get account balance from database; used in updateDbTaxes_Balance() function
     {       
         Connection conn;
         ResultSet rs;
@@ -142,7 +142,7 @@ public class Account implements Interest,Taxes {
         return -1;
     }
 
-    public double calcIncome(String accNo)
+    public double calcIncome(String accNo) //calculate the income for the year used in updateDbTaxes_Balance() function;
     {               
         Connection conn;
         PreparedStatement ps;
@@ -153,7 +153,7 @@ public class Account implements Interest,Taxes {
             switch((accountNo.substring(0,2))){ 
                 case "25":
                     conn=DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
-                    //The select statement
+                    //The select statement to get the income / interest for the whole year 
                     String sql1="SELECT TransactionAmount FROM dbo.CustomerTransactionDeposit WHERE tdTransactionDescriptionID = 'TD000002' "
                             + "AND ansNSAccountNumber IS NOT NULL AND ansNSAccountNumber = '?' AND TransactionDateTime BETWEEN '2018-04-01' AND '2019-04-01'";
                     ps=conn.prepareStatement(sql1);
@@ -163,7 +163,7 @@ public class Account implements Interest,Taxes {
                 break;
                 case "45":
                     conn=DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
-                    //The select statement
+                    //The select statement to get the income / interest for the whole year 
                     String sql2="SELECT TransactionAmount FROM dbo.CustomerTransactionDeposit WHERE tdTransactionDescriptionID = 'TD000002' "
                             + "AND absBSAccountNumber IS NOT NULL AND absBSAccountNumber = '?' AND TransactionDateTime BETWEEN '2018-04-01' AND '2019-04-01'";
                     ps=conn.prepareStatement(sql2);
@@ -173,7 +173,7 @@ public class Account implements Interest,Taxes {
                 break;
                 case "75":
                     conn=DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
-                    //The select statement
+                    //The select statement to get the income / interest for the whole year 
                     String sql3="SELECT TransactionAmount FROM dbo.CustomerTransactionDeposit WHERE tdTransactionDescriptionID = 'TD000002' "
                             + "AND apsPSAccountNumber IS NOT NULL AND apsPSAccountNumber = '?' AND TransactionDateTime BETWEEN '2018-04-01' AND '2019-04-01'";
                     ps=conn.prepareStatement(sql3);
@@ -200,7 +200,7 @@ public class Account implements Interest,Taxes {
     
     
     @Override
-    public void updateDbTaxes_Balance()
+    public void updateDbTaxes_Balance() // enter taxes for all the accounts 
     {   
         try {
             Connection conn;
@@ -211,24 +211,24 @@ public class Account implements Interest,Taxes {
 
             conn=DriverManager.getConnection(DBConnection.DatabaseConnectionUrlStc());
             //The select statement
-            String sql1="SELECT BSAccountNumber FROM dbo.AccountBonusSavings";
-            String sql2="SELECT NSAccountNumber FROM dbo.AccountNormalSavings";
-            String sql3="SELECT PSAccountNumber FROM dbo.AccountPremierSavings";
-            String sqlCount = "select(select COUNT(BSAccountNumber) FROM dbo.AccountBonusSavings)+"
+            String sql1="SELECT BSAccountNumber FROM dbo.AccountBonusSavings"; //get all bonus Savings account numbers
+            String sql2="SELECT NSAccountNumber FROM dbo.AccountNormalSavings";//get all bonus Normal account numbers
+            String sql3="SELECT PSAccountNumber FROM dbo.AccountPremierSavings";//get all premier Savings account numbers
+            String sqlCount = "select(select COUNT(BSAccountNumber) FROM dbo.AccountBonusSavings)+" //get the Count of accounts in the databse
                             + "(select COUNT(NSAccountNumber) FROM dbo.AccountNormalSavings)+"
                             + "(select COUNT(PSAccountNumber) FROM dbo.AccountPremierSavings)";
             ps=conn.prepareStatement(sqlCount);
             rsCount=ps.executeQuery();
                 
-            while(rsCount.next()){i =rsCount.getInt(1);}
+            while(rsCount.next()){i =rsCount.getInt(1);}  // saving the account count in variable i;
 
-            String[] AccountNo = new String[i];
+            String[] AccountNo = new String[i]; //creating an array with the length of i to store all accounts
 
             i=0;
 
             ps=conn.prepareStatement(sql1);
             rs1=ps.executeQuery();
-            while (rs1.next()) 
+            while (rs1.next()) // inserting all the Bonus Savings account numbers to the array
             {
                 String em = rs1.getString("BSAccountNumber");
                 AccountNo[i] = em;
@@ -237,7 +237,7 @@ public class Account implements Interest,Taxes {
             
             ps=conn.prepareStatement(sql2);
             rs2=ps.executeQuery();
-            while (rs2.next()) {
+            while (rs2.next()) {// inserting all the Normal Savings account numbers to the array
                 String em = rs2.getString("NSAccountNumber");
                 AccountNo[i] = em;
                 i++;
@@ -245,7 +245,7 @@ public class Account implements Interest,Taxes {
             
             ps=conn.prepareStatement(sql3);
             rs3=ps.executeQuery();
-            while (rs3.next()) {
+            while (rs3.next()) {// inserting all the Premier Savings account numbers to the array
                 String em = rs3.getString("PSAccountNumber");
                 AccountNo[i] = em;
                 i++;
@@ -269,12 +269,12 @@ public class Account implements Interest,Taxes {
             Account Acc2 = new Account() {};  // BasicSavings
             Account Acc3 = new Account() {};  // PremierSavings
 
-            for(String acc:AccountNo)
+            for(String acc:AccountNo)  // to access every account in the array
             {
                 switch(acc.substring(0,2))
                 {
-                    case "45":
-                        String sql4="UPDATE dbo.AccountBonusSavings SET BSAccountBalance=? where BSAccountNumber=?";
+                    case "45": // updating the account balance of BS accounts
+                        String sql4="UPDATE dbo.AccountBonusSavings SET BSAccountBalance=? where BSAccountNumber=?";  
                         ps=conn.prepareStatement(sql4);
 
                         Balance=Acc1.getAccountBalance(acc);
@@ -285,7 +285,7 @@ public class Account implements Interest,Taxes {
                         ps.setDouble(1,newBalance);
                         ps.setString(2,acc);
                         ps.executeQuery();
-
+                                    //inserting the tax reduction trasaction for the transaction withdrawal table
                         String sql5="INSERT INTO dbo.CustomerTransactionWithdrawal(TransactionAmount,tdTransactionDescriptionID,"
                                 + "ansNSAccountNumber,absBSAccountNumber,apsPSAccountNumber)values('?','TD000001','?','?','?')";
                         ps.setDouble(1,newBalance);
@@ -295,7 +295,7 @@ public class Account implements Interest,Taxes {
                         ps=conn.prepareStatement(sql5);
                         ps.executeQuery();
                     break;
-                    case "25":
+                    case "25":      // updating the account balance of NS accounts
                         String sql6="UPDATE dbo.AccountNormalSavings SET NSAccountBalance=? where NSAccountNumber=?";
                         ps=conn.prepareStatement(sql6);
 
@@ -307,7 +307,7 @@ public class Account implements Interest,Taxes {
                         ps.setDouble(1,newBalance);
                         ps.setString(2,acc);
                         ps.executeQuery();
-
+                                //inserting the tax reduction trasaction for the transaction withdrawal table
                         String sql7="INSERT INTO dbo.CustomerTransactionWithdrawal(TransactionAmount,tdTransactionDescriptionID,"
                                 + "ansNSAccountNumber,absBSAccountNumber,apsPSAccountNumber)"
                                 + "values('?','TD000001','?','?','?')";
@@ -319,7 +319,7 @@ public class Account implements Interest,Taxes {
                         ps=conn.prepareStatement(sql7);
                         ps.executeQuery();
                     break;
-                    case "75":
+                    case "75": // updating the account balance of PS accounts
                         String sql8="UPDATE dbo.AccountNormalSaving SET NSAccountBalance=? where NSAccountNumber=?";
                         ps=conn.prepareStatement(sql8);
                         Balance=Acc3.getAccountBalance(acc);
@@ -330,7 +330,7 @@ public class Account implements Interest,Taxes {
                         ps.setDouble(1,newBalance);
                         ps.setString(2,acc);
                         ps.executeQuery();
-
+                                    //inserting the tax reduction trasaction for the transaction withdrawal table
                         String sql9="INSERT INTO dbo.CustomerTransactionWithdrawal(TransactionAmount,tdTransactionDescriptionID,"
                                 + "ansNSAccountNumber,absBSAccountNumber,apsPSAccountNumber)values('?','TD000001','?','?','?')";
                         ps=conn.prepareStatement(sql9);

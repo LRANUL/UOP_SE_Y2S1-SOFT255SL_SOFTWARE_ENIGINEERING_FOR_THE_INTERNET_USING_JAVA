@@ -3785,7 +3785,85 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_monthlyClearActionPerformed
 
     private void SubmitSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAActionPerformed
-        
+        String dAmmount=DEPAmount_Txt.getText();
+      String fAmmount=FinalDeposit_Txt.getText();
+      String accountNo=DAccno_Txt.getText();
+      String balance=currentBalance_Txt.getText();
+      Connection conn;
+      PreparedStatement ps;
+       DecimalFormat decimalCorrection = new DecimalFormat("#.00");
+
+      if(dAmmount!=null && accountNo!=null){
+              switch((accountNo.substring(0,2))){
+                   case "25":
+                       try {
+                            conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                               String sql="UPDATE dbo.AccountNormalSavings set NSAccountBalance=? where NSAccountNumber=?";
+                               String Formulae = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
+                               ps=conn.prepareStatement(sql);
+                               ps.setString(1,Formulae);
+                               ps.setString(2,DAccno_Txt.getText());
+                               ps.executeUpdate();
+
+
+                       }
+                       
+                       catch (SQLException ex)
+      {
+          Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+
+
+               break;
+
+
+
+               case "45":
+                       try {
+                              conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                               String sql="UPDATE dbo.AccountBonusSavings set BSAccountBalance=? where BSAccountNumber=?";
+                               String Result = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
+                               ps=conn.prepareStatement(sql);
+                               ps.setString(1,Result);
+                               ps.setString(2,DAccno_Txt.getText());
+                                ps.executeUpdate();
+
+
+                       }
+
+                       catch (SQLException ex)
+      {
+          Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+               break;
+
+
+
+
+               case "75":
+                       try {
+                              conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                               String sql="UPDATE dbo.AccountPremierSavings set PSAccountBalance=? where PSAccountNumber=?";
+                               String Formula = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
+                               ps=conn.prepareStatement(sql);
+                               ps.setString(1,Formula);
+                               ps.setString(2,DAccno_Txt.getText());
+                               ps.executeUpdate();
+
+
+                       }
+
+                       catch (SQLException ex)
+      {
+          Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+
+               break;
+
+              }} // end of switch
         // Firstly the transaction must be successful and it should have been inserted into the database
         /**
          * Receipt generation code block must be includes inside the same IF
@@ -3909,7 +3987,91 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btnWithdrawalSubmitMouseEntered
 
     private void btnWithdrawalSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawalSubmitActionPerformed
+        String dAmmount=Dwithdraw_Txt.getText();
+        String accountNo=txtWithdrawalAccountNo.getText();
+        DecimalFormat decimalCorrection = new DecimalFormat("#.00");
+        
+                
+        Connection conn;
+        PreparedStatement ps;
+        ResultSet resultSet;
+        
+        
+        if(DEPAmount_Txt!=null && DAccno_Txt!=null){
+                switch((accountNo.substring(0,2))){
+                     case "25":
+                         try {
+                              conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountNormalSavings set NSAccountBalance=? where NSAccountNumber=?";
+                                 String Formulae1 = decimalCorrection.format(Double.valueOf(DCurrentBalance_Txt.getText()) - Double.valueOf(Dwithdraw_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formulae1);
+                                 ps.setString(2,txtWithdrawalAccountNo.getText());
+                                 ps.executeUpdate(); 
+        
+                              
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+  
 
+                 break;
+                 
+                 
+                 
+                 case "45":
+                         try {
+                                 conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountBonusSavings set BSAccountBalance=? where BSAccountNumber=?";
+                                 String Formulae2 = decimalCorrection.format(Double.valueOf(DCurrentBalance_Txt.getText()) - Double.valueOf(Dwithdraw_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formulae2);
+                                 ps.setString(2,txtWithdrawalAccountNo.getText());
+                                 ps.executeUpdate(); 
+        
+                         }
+                          
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+                 break;
+                 
+                 
+                 
+                 
+                 case "75":
+                         try {
+                                 conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                 String sql="UPDATE dbo.AccountPremierSavings set PSAccountBalance=? where PSAccountNumber=?";
+                                 String Formulae3 = decimalCorrection.format(Double.valueOf(DCurrentBalance_Txt.getText()) - Double.valueOf(Dwithdraw_Txt.getText()));
+                                 ps=conn.prepareStatement(sql);
+                                 ps.setString(1,Formulae3);
+                                 ps.setString(2,txtWithdrawalAccountNo.getText());
+                                 ps.executeUpdate(); 
+        
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+                 break;
+                 
+                } // end of switch
+                
+                
+                String Cbalance=DCurrentBalance_Txt.getText();
+                DCurrentBalance_Txt.setText(Cbalance);
+                
+                
+        }
         // Firstly the transaction must be successful and it should have been inserted into the database
         /**
          * Receipt generation code block must be includes inside the same IF
@@ -5050,7 +5212,8 @@ public class Teller extends javax.swing.JFrame {
         PreparedStatement ps;
         ResultSet resultSet;
         
-        if(DAccno_Txt!=null){
+        if(!DAccno_Txt.getText().equals("")){ //checking if the user enterd a account number
+            
                 switch((accountNo.substring(0,2))){
                      case "25":
                          try {
@@ -5059,11 +5222,22 @@ public class Teller extends javax.swing.JFrame {
                                 ps=conn.prepareStatement(sql);
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
+                               
+                               
         
-                                while(resultSet.next()){
+                                while(resultSet.next()){    //getting 
                                 Balance = resultSet.getDouble(3);
                                 Name = resultSet.getString(1); 
-                                }   
+                                } 
+                                
+                                if(Name.equals("")){ //check if the user enterd the correct account number
+                               
+                                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     break;
+                               }
                          }
                          
                          catch (SQLException ex) 
@@ -5085,11 +5259,23 @@ public class Teller extends javax.swing.JFrame {
                                 ps=conn.prepareStatement(sql);
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
-        
+                              
+                               
+                               
+               
                                 while(resultSet.next()){
                                 Balance = resultSet.getDouble(3);
                                 Name = resultSet.getString(1); 
-                                }   
+                                } 
+                                
+                                if(Name.equals("")){
+                               
+                                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     break;
+                               }
                          }
                          
                          catch (SQLException ex) 
@@ -5112,11 +5298,21 @@ public class Teller extends javax.swing.JFrame {
                                 ps=conn.prepareStatement(sql);
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
+                               
+                               
         
                                 while(resultSet.next()){
                                 Balance = resultSet.getDouble(3);
                                 Name = resultSet.getString(1); 
-                                }   
+                                } 
+                                if(Name.equals("")){
+                               
+                                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                                     break;
+                               }
                          }
                          
                          catch (SQLException ex) 
@@ -5129,13 +5325,31 @@ public class Teller extends javax.swing.JFrame {
 
                  break;
                  
+                 default:
+                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                        break;
+                 
                 } // end of switch
                 String BalanceSt = String.valueOf(Balance);
+                
               currentBalance_Txt.setText(BalanceSt);
+              
                 holderName_Txt.setText(Name); 
                 ACCType_Txt.setText(AccountName);
                 
         }//end of if
+        else{
+                   
+            JOptionPane.showMessageDialog(null,
+             "Please Check your Account Number.",
+             "ERROR !",
+             JOptionPane.ERROR_MESSAGE);
+                                     
+                               
+        }
     }//GEN-LAST:event_CheckSA_BtnActionPerformed
 
     private void CheckSA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSA1ActionPerformed
@@ -5159,7 +5373,14 @@ public class Teller extends javax.swing.JFrame {
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
                                
-                               if(!resultSet.next()){
+                               
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                                
+                                if(Name.equals("")){
                                
                                      JOptionPane.showMessageDialog(null,
                                      "Please Check your Account Number.",
@@ -5167,11 +5388,6 @@ public class Teller extends javax.swing.JFrame {
                                      JOptionPane.ERROR_MESSAGE);
                                      break;
                                }
-        
-                                while(resultSet.next()){
-                                Balance = resultSet.getDouble(3);
-                                Name = resultSet.getString(1); 
-                                }   
                          }
                          
                          catch (SQLException ex) 
@@ -5195,7 +5411,13 @@ public class Teller extends javax.swing.JFrame {
                                resultSet =  ps.executeQuery();
                                
                                
-                               if(!resultSet.next()){
+                              
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                } 
+                                
+                                if(Name.equals("")){
                                
                                      JOptionPane.showMessageDialog(null,
                                      "Please Check your Account Number.",
@@ -5203,11 +5425,6 @@ public class Teller extends javax.swing.JFrame {
                                      JOptionPane.ERROR_MESSAGE);
                                      break;
                                }
-        
-                                while(resultSet.next()){
-                                Balance = resultSet.getDouble(3);
-                                Name = resultSet.getString(1); 
-                                }   
                          }
                          
                          catch (SQLException ex) 
@@ -5231,7 +5448,14 @@ public class Teller extends javax.swing.JFrame {
                                 ps.setString(1,accountNo);
                                resultSet =  ps.executeQuery();
                                
-                               if(!resultSet.next()){
+                              
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                } 
+                                
+                                if(Name.equals("")){
                                
                                      JOptionPane.showMessageDialog(null,
                                      "Please Check your Account Number.",
@@ -5239,11 +5463,6 @@ public class Teller extends javax.swing.JFrame {
                                      JOptionPane.ERROR_MESSAGE);
                                      break;
                                }
-        
-                                while(resultSet.next()){
-                                Balance = resultSet.getDouble(3);
-                                Name = resultSet.getString(1); 
-                                }   
                          }
                          
                          catch (SQLException ex) 
@@ -5256,6 +5475,16 @@ public class Teller extends javax.swing.JFrame {
 
                  break;
                  
+                 
+                 
+                 default:
+                     JOptionPane.showMessageDialog(null,
+                                     "Please Check your Account Number.",
+                                     "ERROR !",
+                                     JOptionPane.ERROR_MESSAGE);
+                        break;
+                     
+                 
                 } // end of switch
                 String BalanceSt = String.valueOf(Balance);
                 DCurrentBalance_Txt.setText(BalanceSt);
@@ -5264,10 +5493,10 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_CheckSA1ActionPerformed
         else{ 
                                
-                                     JOptionPane.showMessageDialog(null,
-                                     "Please Enter your Account Number.",
-                                     "ERROR !",
-                                     JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+            "Please Enter your Account Number.",
+            "ERROR !",
+            JOptionPane.ERROR_MESSAGE);
                                     
                                
         }

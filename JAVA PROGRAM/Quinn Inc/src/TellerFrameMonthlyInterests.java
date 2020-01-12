@@ -381,6 +381,11 @@ public class TellerFrameMonthlyInterests extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProcessInterestMousePressed
 
     private void btnProcessInterestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessInterestActionPerformed
+        Account taxcheck = new Account();
+        if(taxcheck.taxcheck()){
+        taxcheck.updateDbTaxes_Balance();
+        
+        }
         
         // Declaring a variable and storing the current month
         // The current month will be retrieved and converted to integer data type
