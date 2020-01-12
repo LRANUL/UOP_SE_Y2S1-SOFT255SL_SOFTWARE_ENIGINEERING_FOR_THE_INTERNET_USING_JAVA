@@ -115,6 +115,10 @@
               <Color blue="48" green="3f" red="12" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="AccInfo_pnlMouseDragged"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AccInfo_pnlMousePressed"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">

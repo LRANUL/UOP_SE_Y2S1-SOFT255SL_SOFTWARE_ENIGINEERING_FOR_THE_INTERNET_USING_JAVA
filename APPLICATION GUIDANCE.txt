@@ -1,0 +1,13 @@
+PROGRAM USES T-SQL FORMAT QUERIES, In order for the Java application to run The Database and Its Logins should be 
+initiated inside the System the JVM is running.
+
+Step 1
+# Navigate to 'DATABASE_V5' Folder, and execute the 'quinnincDB_MSSQLSERVER_V5.sql' file to create the database
+
+Step 2 
+# NAVIGATE TO 'JAVA DISTRIBUTION' Folder, and run the 'Quinn_Inc.jar' File to open the program.
+# Use the Credentials provided on the 'README.txt' file inside the folder to unlock the application.
+
+
+ERRORS AND TESTING
+# If any error occurs other than business logic based errors, please navigate back and go to 'JAVA WORKSPACE' and open the the Netbeans workspace from the 'Quinn Inc' Folder and run the program from the IDE, Most of implemented features provide GUI based feedback as well console feedback which will visible if the program is run through the IDE.

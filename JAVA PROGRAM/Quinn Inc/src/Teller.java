@@ -42,6 +42,7 @@ import DatabaseConnection.*;
 import LocalTimeAndDate.LocalTimeAndDate;
 import ReportGeneration.ReportGeneration;
 import ReceiptGeneration.CustomerReceiptGeneration;
+import java.sql.PreparedStatement;
 
 import java.util.regex.*;
 import javax.swing.SwingConstants;
@@ -1118,6 +1119,8 @@ public class Teller extends javax.swing.JFrame {
         Dwithdraw_Txt = new javax.swing.JTextField();
         WDRL_Lbl = new javax.swing.JLabel();
         jcb_autoPreviewReceiptWithdrawal = new javax.swing.JCheckBox();
+        dType_Lbl1 = new javax.swing.JLabel();
+        ACCType_Txt1 = new javax.swing.JTextField();
         mInterest_pnl = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -1308,6 +1311,11 @@ public class Teller extends javax.swing.JFrame {
                 CheckSA_BtnMouseEntered(evt);
             }
         });
+        CheckSA_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckSA_BtnActionPerformed(evt);
+            }
+        });
 
         SubmitSA.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         SubmitSA.setText("Submit");
@@ -1384,7 +1392,6 @@ public class Teller extends javax.swing.JFrame {
         ACCType_Txt.setEditable(false);
         ACCType_Txt.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
         ACCType_Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ACCType_Txt.setText("BONUS SAVINGS");
         ACCType_Txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ACCType_TxtActionPerformed(evt);
@@ -1580,6 +1587,11 @@ public class Teller extends javax.swing.JFrame {
                 CheckSA1MouseEntered(evt);
             }
         });
+        CheckSA1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CheckSA1ActionPerformed(evt);
+            }
+        });
 
         btnWithdrawalSubmit.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         btnWithdrawalSubmit.setText("Submit");
@@ -1669,6 +1681,19 @@ public class Teller extends javax.swing.JFrame {
         jcb_autoPreviewReceiptWithdrawal.setForeground(new java.awt.Color(255, 255, 255));
         jcb_autoPreviewReceiptWithdrawal.setText("Auto Preview Receipt");
 
+        dType_Lbl1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        dType_Lbl1.setForeground(new java.awt.Color(255, 255, 255));
+        dType_Lbl1.setText("Account Type");
+
+        ACCType_Txt1.setEditable(false);
+        ACCType_Txt1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        ACCType_Txt1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        ACCType_Txt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ACCType_Txt1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -1682,7 +1707,12 @@ public class Teller extends javax.swing.JFrame {
                             .addComponent(wName_Lbl))
                         .addGap(48, 48, 48)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtWithdrawalAccountNo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(txtWithdrawalAccountNo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(dType_Lbl1)
+                                .addGap(24, 24, 24)
+                                .addComponent(ACCType_Txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(WHolder_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(wBalance_Lbl)
@@ -1693,7 +1723,7 @@ public class Teller extends javax.swing.JFrame {
                         .addComponent(WDRL_Lbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Dwithdraw_Txt, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(517, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jcb_autoPreviewReceiptWithdrawal, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1705,7 +1735,10 @@ public class Teller extends javax.swing.JFrame {
                 .addGap(127, 127, 127)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(wACCT)
-                    .addComponent(txtWithdrawalAccountNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtWithdrawalAccountNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dType_Lbl1)
+                        .addComponent(ACCType_Txt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(wName_Lbl)
@@ -2786,15 +2819,12 @@ public class Teller extends javax.swing.JFrame {
                             .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(listAccountStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblAccountStatus)))))
+                .addGap(18, 18, 18)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEmailAddress2)
-                            .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(nCustomer_pnlLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblEmailAddress2Validator, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblEmailAddress2)
+                        .addComponent(txtEmailAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEmailAddress2Validator, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nCustomer_pnlLayout.createSequentialGroup()
@@ -3024,12 +3054,6 @@ public class Teller extends javax.swing.JFrame {
         // Passing the tellerID within the parameterized constructor while creating the new object
         TellerFrameMonthlyInterests frameMonthlyInterest = new TellerFrameMonthlyInterests(tellerIDDB); 
         frameMonthlyInterest.setVisible(true);
-        // Closes the 'teller' frame
-        this.setVisible(false);
-        
-        
-        
-        
         
     }//GEN-LAST:event_FetchAcc_BtnActionPerformed
 
@@ -3760,7 +3784,7 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_monthlyClearActionPerformed
 
     private void SubmitSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAActionPerformed
-
+        
         // Firstly the transaction must be successful and it should have been inserted into the database
         /**
          * Receipt generation code block must be includes inside the same IF
@@ -4956,24 +4980,31 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuBar2MouseDragged
 
     private void DepositBonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositBonusActionPerformed
-        // TODO add your handling code here:
+       // Fetching deposit amount to calculate bonus
         String Type = ACCType_Txt.getText();
         DecimalFormat decimalCorrection = new DecimalFormat("#.00");
-        if (Type.equals("NORMAL SAVINGS")) {
-
-            String Formulae = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) * 1.00125);
-            FinalDeposit_Txt.setText(Formulae);
-
-        } else if (Type.equals("BONUS SAVINGS")) {
-
-            String Formulae = decimalCorrection.format((Double.valueOf(DEPAmount_Txt.getText()) * 1.03));
-            FinalDeposit_Txt.setText(Formulae);
-
-        } else if (Type.equals("PRIMIER SAVINGS")) {
-
-            String Formulae = decimalCorrection.format((Double.valueOf(DEPAmount_Txt.getText()) * 1.07));
-            FinalDeposit_Txt.setText(Formulae);
-
+        switch (Type) {
+            case "Normal Account":
+                {
+                    String Formulae = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) * 1.00125);
+                    FinalDeposit_Txt.setText(Formulae);
+                    System.out.println(Formulae);
+                    break;
+                }
+            case "Bonus Account":
+                {
+                    String Formulae = decimalCorrection.format((Double.valueOf(DEPAmount_Txt.getText()) * 1.03));
+                    FinalDeposit_Txt.setText(Formulae);
+                    break;
+                }
+            case "Primier Account":
+                {
+                    String Formulae = decimalCorrection.format((Double.valueOf(DEPAmount_Txt.getText()) * 1.07));
+                    FinalDeposit_Txt.setText(Formulae);
+                    break;
+                }
+            default:
+                break;
         }
     }//GEN-LAST:event_DepositBonusActionPerformed
 
@@ -5005,6 +5036,205 @@ public class Teller extends javax.swing.JFrame {
     private void DAccno_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DAccno_TxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DAccno_TxtActionPerformed
+
+    private void CheckSA_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSA_BtnActionPerformed
+        // Code Logic by M.I.C.B
+        String accountNo = DAccno_Txt.getText();
+        Connection conn;
+        String Name ="";
+        double Balance = 0;
+        String AccountName = "";
+        PreparedStatement ps;
+        ResultSet resultSet;
+        
+        if(DAccno_Txt!=null){
+                switch((accountNo.substring(0,2))){
+                     case "25":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountNormalSavings.NSAccountBalance FROM Customer INNER JOIN AccountNormalSavings ON Customer.PassportNumber = AccountNormalSavings.cPassportNumber Where AccountNormalSavings.NSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Normal Account";
+
+                 break;
+                 
+                 
+                 
+                 case "45":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountBonusSavings.BSAccountBalance FROM Customer INNER JOIN AccountBonusSavings ON Customer.PassportNumber = AccountBonusSavings.cPassportNumber Where AccountBonusSavings.BSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Bonus Account";
+
+                 break;
+                 
+                 
+                 
+                 
+                 case "75":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountPremierSavings.PSAccountBalance FROM Customer INNER JOIN AccountPremierSavings ON Customer.PassportNumber = AccountPremierSavings.cPassportNumber Where AccountPremierSavings.PSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Premier Account";
+
+                 break;
+                 
+                } // end of switch
+                String BalanceSt = String.valueOf(Balance);
+              currentBalance_Txt.setText(BalanceSt);
+                holderName_Txt.setText(Name); 
+                ACCType_Txt.setText(AccountName);
+                
+        }//end of if
+    }//GEN-LAST:event_CheckSA_BtnActionPerformed
+
+    private void CheckSA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckSA1ActionPerformed
+        // Added by R.P.L, logic by M.I.C.B
+        // Checks for Account details
+        String accountNo = txtWithdrawalAccountNo.getText();
+        Connection conn;
+        String Name ="";
+        double Balance = 0;
+        String AccountName = "";
+        PreparedStatement ps;
+        ResultSet resultSet;
+        
+        if(txtWithdrawalAccountNo!=null){
+                switch((accountNo.substring(0,2))){
+                     case "25":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountNormalSavings.NSAccountBalance FROM Customer INNER JOIN AccountNormalSavings ON Customer.PassportNumber = AccountNormalSavings.cPassportNumber Where AccountNormalSavings.NSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Normal Account";
+
+                 break;
+                 
+                 
+                 
+                 case "45":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountBonusSavings.BSAccountBalance FROM Customer INNER JOIN AccountBonusSavings ON Customer.PassportNumber = AccountBonusSavings.cPassportNumber Where AccountBonusSavings.BSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Bonus Account";
+
+                 break;
+                 
+                 
+                 
+                 
+                 case "75":
+                         try {
+                                conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                String sql="SELECT Customer.FirstName, Customer.LastName, AccountPremierSavings.PSAccountBalance FROM Customer INNER JOIN AccountPremierSavings ON Customer.PassportNumber = AccountPremierSavings.cPassportNumber Where AccountPremierSavings.PSAccountNumber = ? ";
+                                ps=conn.prepareStatement(sql);
+                                ps.setString(1,accountNo);
+                               resultSet =  ps.executeQuery();
+        
+                                while(resultSet.next()){
+                                Balance = resultSet.getDouble(3);
+                                Name = resultSet.getString(1); 
+                                }   
+                         }
+                         
+                         catch (SQLException ex) 
+        {
+            Logger.getLogger(Account.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    
+                    AccountName = "Premier Account";
+
+                 break;
+                 
+                } // end of switch
+                String BalanceSt = String.valueOf(Balance);
+                DCurrentBalance_Txt.setText(BalanceSt);
+                WHolder_Txt.setText(Name); 
+                ACCType_Txt1.setText(AccountName);
+    }//GEN-LAST:event_CheckSA1ActionPerformed
+    }
+    private void ACCType_Txt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ACCType_Txt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ACCType_Txt1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -5043,6 +5273,7 @@ public class Teller extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ACCType_Txt;
+    private javax.swing.JTextField ACCType_Txt1;
     private javax.swing.JButton CheckSA1;
     private javax.swing.JButton CheckSA_Btn;
     private javax.swing.JButton ClearSA1;
@@ -5082,6 +5313,7 @@ public class Teller extends javax.swing.JFrame {
     private javax.swing.JPanel dReport_pnl;
     private javax.swing.JPanel dReport_pnl1;
     private javax.swing.JLabel dType_Lbl;
+    private javax.swing.JLabel dType_Lbl1;
     private javax.swing.JSplitPane dailyReport_jsp;
     private javax.swing.JLabel date;
     private javax.swing.JLabel day_Lbl;

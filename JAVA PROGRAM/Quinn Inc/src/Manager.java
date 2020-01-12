@@ -87,6 +87,16 @@ public class Manager extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(18, 63, 72));
 
         AccInfo_pnl.setBackground(new java.awt.Color(18, 63, 72));
+        AccInfo_pnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                AccInfo_pnlMouseDragged(evt);
+            }
+        });
+        AccInfo_pnl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                AccInfo_pnlMousePressed(evt);
+            }
+        });
 
         AccountINFO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         AccountINFO.setModel(new javax.swing.table.DefaultTableModel(
@@ -354,6 +364,17 @@ public class Manager extends javax.swing.JFrame {
      
         new DebitCard().setVisible(true);
     }//GEN-LAST:event_cardrequestActionPerformed
+ static int xcord,ycord;
+    private void AccInfo_pnlMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccInfo_pnlMousePressed
+         xcord = evt.getX();
+        ycord = evt.getY();
+    }//GEN-LAST:event_AccInfo_pnlMousePressed
+
+    private void AccInfo_pnlMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AccInfo_pnlMouseDragged
+       int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xcord, y - ycord);
+    }//GEN-LAST:event_AccInfo_pnlMouseDragged
 
     /**
      * @param args the command line arguments
