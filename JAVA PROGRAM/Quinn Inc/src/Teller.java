@@ -2254,7 +2254,7 @@ public class Teller extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(lbl_mstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel8Layout.createSequentialGroup()
                     .addGap(32, 32, 32)
@@ -2839,7 +2839,7 @@ public class Teller extends javax.swing.JFrame {
                             .addComponent(lblImportantAsterisk5))
                         .addGap(18, 18, 18)
                         .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPhoneNumber2Validator, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                            .addComponent(lblPhoneNumber2Validator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(nCustomer_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblPhoneNumber2)
                                 .addComponent(txtPhoneNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -2869,7 +2869,7 @@ public class Teller extends javax.swing.JFrame {
                         .addComponent(lblMonthlyInvoiceRate)
                         .addComponent(txtMonthlyIncomeRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblMonthlyIncomeRateValidator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -3785,6 +3785,7 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_monthlyClearActionPerformed
 
     private void SubmitSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitSAActionPerformed
+      //Done by wijesuriya
         String dAmmount=DEPAmount_Txt.getText();
       String fAmmount=FinalDeposit_Txt.getText();
       String accountNo=DAccno_Txt.getText();
@@ -3797,6 +3798,7 @@ public class Teller extends javax.swing.JFrame {
               switch((accountNo.substring(0,2))){
                    case "25":
                        try {
+                           //to get the deposit ammount and submit to database if account is normal savings Account
                             conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                                String sql="UPDATE dbo.AccountNormalSavings set NSAccountBalance=? where NSAccountNumber=?";
                                String Formulae = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
@@ -3804,6 +3806,13 @@ public class Teller extends javax.swing.JFrame {
                                ps.setString(1,Formulae);
                                ps.setString(2,DAccno_Txt.getText());
                                ps.executeUpdate();
+                               
+                              // to enter the transaction value to transaction table     
+                               String sql2="Insert into CustomerTransactionDeposit(TransactionAmount,tsTransactionStatusID, tdTransactionDescriptionID,ansNSAccountNumber) VALUES(?,'TS000001','TD000006',?);";
+                               ps=conn.prepareStatement(sql2);
+                               ps.setString(1,FinalDeposit_Txt.getText());
+                               ps.setString(2,DAccno_Txt.getText());
+                               ps.executeQuery();
 
 
                        }
@@ -3821,6 +3830,7 @@ public class Teller extends javax.swing.JFrame {
 
                case "45":
                        try {
+                           //to get the deposit ammount and submit to database if account is bonus savings Account
                               conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                                String sql="UPDATE dbo.AccountBonusSavings set BSAccountBalance=? where BSAccountNumber=?";
                                String Result = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
@@ -3828,6 +3838,12 @@ public class Teller extends javax.swing.JFrame {
                                ps.setString(1,Result);
                                ps.setString(2,DAccno_Txt.getText());
                                 ps.executeUpdate();
+                                
+                               String sql2="Insert into CustomerTransactionDeposit(TransactionAmount,tsTransactionStatusID, tdTransactionDescriptionID,absBSAccountNumber) VALUES(?,'TS000001','TD000006',?)";
+                               ps=conn.prepareStatement(sql2);
+                               ps.setString(1,FinalDeposit_Txt.getText());
+                               ps.setString(2,DAccno_Txt.getText());
+                               ps.executeQuery();
 
 
                        }
@@ -3844,6 +3860,7 @@ public class Teller extends javax.swing.JFrame {
 
                case "75":
                        try {
+                           //to get the deposit ammount and submit to database if account is Premier savings Account
                               conn = DriverManager.getConnection(db.DatabaseConnectionUrl());
                                String sql="UPDATE dbo.AccountPremierSavings set PSAccountBalance=? where PSAccountNumber=?";
                                String Formula = decimalCorrection.format(Double.valueOf(DEPAmount_Txt.getText()) + Double.valueOf(FinalDeposit_Txt.getText()));
@@ -3851,6 +3868,12 @@ public class Teller extends javax.swing.JFrame {
                                ps.setString(1,Formula);
                                ps.setString(2,DAccno_Txt.getText());
                                ps.executeUpdate();
+                               
+                               String sql3="Insert into CustomerTransactionDeposit(TransactionAmount,tsTransactionStatusID, tdTransactionDescriptionID,apsPSAccountNumber) VALUES(?,'TS000001','TD000006',?)";
+                               ps=conn.prepareStatement(sql3);
+                               ps.setString(1,FinalDeposit_Txt.getText());
+                               ps.setString(2,DAccno_Txt.getText());
+                               ps.executeQuery();
 
 
                        }
@@ -3987,6 +4010,8 @@ public class Teller extends javax.swing.JFrame {
     }//GEN-LAST:event_btnWithdrawalSubmitMouseEntered
 
     private void btnWithdrawalSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWithdrawalSubmitActionPerformed
+       //Done by Wijesuriya
+        
         String dAmmount=Dwithdraw_Txt.getText();
         String accountNo=txtWithdrawalAccountNo.getText();
         DecimalFormat decimalCorrection = new DecimalFormat("#.00");
@@ -4008,6 +4033,13 @@ public class Teller extends javax.swing.JFrame {
                                  ps.setString(1,Formulae1);
                                  ps.setString(2,txtWithdrawalAccountNo.getText());
                                  ps.executeUpdate(); 
+                                 
+                                String sql1="Insert into CustomerTransactionWithdrawal(TransactionAmount,ctTransactionStatusID, tdTransactionDescriptionID,ansNSAccountNumber) VALUES(?,'TS000001','TD000006',?);";
+                               ps=conn.prepareStatement(sql1);
+                               ps.setString(1,Dwithdraw_Txt.getText());
+                               ps.setString(2,txtWithdrawalAccountNo.getText());
+                               ps.executeQuery();
+
         
                               
                          }
@@ -4032,6 +4064,13 @@ public class Teller extends javax.swing.JFrame {
                                  ps.setString(1,Formulae2);
                                  ps.setString(2,txtWithdrawalAccountNo.getText());
                                  ps.executeUpdate(); 
+                                 
+                               String sql2="Insert into CustomerTransactionWithdrawal(TransactionAmount,ctTransactionStatusID, tdTransactionDescriptionID,absBSAccountNumber) VALUES(?,'TS000001','TD000006',?);";
+                               ps=conn.prepareStatement(sql2);
+                               ps.setString(1,Dwithdraw_Txt.getText());
+                               ps.setString(2,txtWithdrawalAccountNo.getText());
+                               ps.executeQuery();
+
         
                          }
                           
@@ -4054,6 +4093,13 @@ public class Teller extends javax.swing.JFrame {
                                  ps.setString(1,Formulae3);
                                  ps.setString(2,txtWithdrawalAccountNo.getText());
                                  ps.executeUpdate(); 
+                                 
+                                 String sql3="Insert into CustomerTransactionWithdrawal(TransactionAmount,ctTransactionStatusID, tdTransactionDescriptionID,apsPSAccountNumber) VALUES(?,'TS000001','TD000006',?);";
+                               ps=conn.prepareStatement(sql3);
+                               ps.setString(1,Dwithdraw_Txt.getText());
+                               ps.setString(2,txtWithdrawalAccountNo.getText());
+                               ps.executeQuery();
+
         
                          }
                          
@@ -4067,8 +4113,13 @@ public class Teller extends javax.swing.JFrame {
                 } // end of switch
                 
                 
-                String Cbalance=DCurrentBalance_Txt.getText();
-                DCurrentBalance_Txt.setText(Cbalance);
+                
+                DCurrentBalance_Txt.setText("");
+                txtWithdrawalAccountNo.setText("");
+                ACCType_Txt1.setText("");
+                WHolder_Txt.setText("");
+                Dwithdraw_Txt.setText("");
+                
                 
                 
         }
