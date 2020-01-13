@@ -266,36 +266,21 @@ public class DebitCard extends javax.swing.JFrame {
     private void lostreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lostreqActionPerformed
         // lost card request
         String AccNo = lostcard.getText();
-        Charges Lost = new Charges() {
-            @Override
-            public void run() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        };
+        Charges Lost = new Charges() {};
         Lost.LostCard(AccNo);
     }//GEN-LAST:event_lostreqActionPerformed
 
     private void famreqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_famreqActionPerformed
         // 2nd card Request
                 String AccNo = familycard.getText();
-        Charges FamilyCard = new Charges() {
-                    @Override
-                    public void run() {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
-                };
+        Charges FamilyCard = new Charges() {};
         FamilyCard.ChargesFamily(AccNo);
     }//GEN-LAST:event_famreqActionPerformed
 
     private void reqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqActionPerformed
         // Charge fee from customer
                 String AccNo = newcard.getText();
-        Charges Customer = new Charges() {
-                    @Override
-                    public void run() {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
-                };
+        Charges Customer = new Charges() {};
         Customer.ChargesCustomer(AccNo);
     }//GEN-LAST:event_reqActionPerformed
 
