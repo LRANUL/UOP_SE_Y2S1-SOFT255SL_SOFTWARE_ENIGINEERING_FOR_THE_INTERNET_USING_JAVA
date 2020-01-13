@@ -3,3 +3,4 @@
 *.class
 # ignore all properties
 *.properties
+/JAVA PROGRAM/Quinn Inc/nbproject/private/

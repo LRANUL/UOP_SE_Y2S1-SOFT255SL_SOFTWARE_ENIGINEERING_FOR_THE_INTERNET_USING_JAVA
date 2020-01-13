@@ -71,7 +71,6 @@ public class AdminPanel extends javax.swing.JFrame {
         jlbl_localDate = new javax.swing.JLabel();
         jlbl_localTime = new javax.swing.JLabel();
         showTellers_Btn = new javax.swing.JButton();
-        removeTellers_Btn = new javax.swing.JButton();
         updateCred1_Btn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TellerINFO = new javax.swing.JTable();
@@ -141,16 +140,6 @@ public class AdminPanel extends javax.swing.JFrame {
         showTellers_Btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showTellers_BtnActionPerformed(evt);
-            }
-        });
-
-        removeTellers_Btn.setBackground(new java.awt.Color(51, 51, 51));
-        removeTellers_Btn.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
-        removeTellers_Btn.setForeground(new java.awt.Color(255, 255, 255));
-        removeTellers_Btn.setText("Remove Teller");
-        removeTellers_Btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeTellers_BtnActionPerformed(evt);
             }
         });
 
@@ -392,11 +381,9 @@ public class AdminPanel extends javax.swing.JFrame {
                             .addComponent(jScrollPane1)
                             .addGroup(admin_pnlLayout.createSequentialGroup()
                                 .addComponent(showTellers_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(63, 63, 63)
-                                .addComponent(removeTellers_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(72, 72, 72)
-                                .addComponent(updateCred1_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(updateCred1_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(178, 178, 178)
                                 .addComponent(insertTeller_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,9 +405,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
-                        .addGroup(admin_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(showTellers_Btn)
-                            .addComponent(removeTellers_Btn))
+                        .addComponent(showTellers_Btn)
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, admin_pnlLayout.createSequentialGroup()
@@ -429,8 +414,8 @@ public class AdminPanel extends javax.swing.JFrame {
                             .addComponent(updateCred2_Btn)
                             .addComponent(insertManager_Btn)
                             .addComponent(insertTeller_Btn)
-                            .addComponent(updateCred1_Btn)
-                            .addComponent(showManagers_Btn))
+                            .addComponent(showManagers_Btn)
+                            .addComponent(updateCred1_Btn))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -516,34 +501,6 @@ public class AdminPanel extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_showTellers_BtnActionPerformed
-
-    private void removeTellers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTellers_BtnActionPerformed
-        
-          try {
-              
-              // The database connection
-            conn=DriverManager.getConnection(db.DatabaseConnectionUrl());
-            //get and store selected row
-            int row=TellerINFO.getSelectedRow();
-            // get the data from row 
-            String value=TellerINFO.getModel().getValueAt(row, 0).toString();
-            //sql select statement
-            String sql="Delete from dbo.Teller where TRecordID=" + value;
-            ps=conn.prepareStatement(sql);
-            //executes the update
-            ps.executeUpdate();
-            //Display the message 
-            JOptionPane.showMessageDialog(null,"Delete Successfull");
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-        
-    }//GEN-LAST:event_removeTellers_BtnActionPerformed
 
     private void showManagers_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showManagers_BtnActionPerformed
         
@@ -695,7 +652,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JMenuItem logout;
     private javax.swing.JLabel panel_Lbl;
     private javax.swing.JButton removeManagers_Btn;
-    private javax.swing.JButton removeTellers_Btn;
     private javax.swing.JButton showManagers_Btn;
     private javax.swing.JButton showTellers_Btn;
     private javax.swing.JButton transaction_Btn;

@@ -15,13 +15,13 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 /**
- *
+ * This class process request made from Manager panel, to charge customers for requesting a new 
+ * credit or debit card, depending on the account type and request a query is executed, to archive this
+ * classes where inherited and condition was set, having this class allows more features to be implemented later
+ * such as CEFTS transaction charges, Online Banking charges, overdraft chargers, printed statement charges.
+ * Coded written by  R.P.L
  * @author ranul
  */
 public abstract class Charges extends Account{
