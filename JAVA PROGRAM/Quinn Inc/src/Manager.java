@@ -43,8 +43,17 @@ public class Manager extends javax.swing.JFrame {
      */
     public Manager() {
         initComponents();
+        
+        // Creating new object to retrieve current date and time
+        ltad = new LocalTimeAndDate();
+        
         db = new DBConnection();
+        
+        // Setting current time
+        jlbl_localTime.setText(ltad.retrieveLocalTimeWith12HourClock());
 
+        // Setting current date
+        jlbl_localDate.setText(ltad.retrieveLocalDate());
     }
 
     /**
@@ -201,17 +210,8 @@ public class Manager extends javax.swing.JFrame {
         AccInfo_pnlLayout.setHorizontalGroup(
             AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AccInfo_pnlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlbl_localTime)
-                .addGap(27, 27, 27)
-                .addComponent(jlbl_localDate)
-                .addContainerGap())
-            .addGroup(AccInfo_pnlLayout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addGroup(AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AccInfo_pnlLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(27, Short.MAX_VALUE))
                     .addGroup(AccInfo_pnlLayout.createSequentialGroup()
                         .addComponent(depositbtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -222,7 +222,15 @@ public class Manager extends javax.swing.JFrame {
                         .addComponent(dailyReports)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cardrequest)
-                        .addGap(43, 43, 43))))
+                        .addGap(43, 43, 43))
+                    .addGroup(AccInfo_pnlLayout.createSequentialGroup()
+                        .addGroup(AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(AccInfo_pnlLayout.createSequentialGroup()
+                                .addComponent(jlbl_localTime)
+                                .addGap(30, 30, 30)
+                                .addComponent(jlbl_localDate))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(30, Short.MAX_VALUE))))
         );
         AccInfo_pnlLayout.setVerticalGroup(
             AccInfo_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,9 +265,7 @@ public class Manager extends javax.swing.JFrame {
         );
 
         jMenu1.setText("File");
-        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem2.setText("Logout");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

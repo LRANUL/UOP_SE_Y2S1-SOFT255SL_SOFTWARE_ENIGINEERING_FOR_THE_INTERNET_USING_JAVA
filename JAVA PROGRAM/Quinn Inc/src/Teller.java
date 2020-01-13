@@ -229,12 +229,12 @@ public class Teller extends javax.swing.JFrame {
 
                     try {
                         // Checking if any records are available in the database for this month
-                        try (Connection checkingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        try (Connection checkingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                 Statement checkingDataStmt = checkingDataCon.createStatement();) {
 
                             // Assigning SQL query
-                            String checkingDataSqlQuery = "SELECT DTransactionNumber FROM CustomerTrnsactionDeposit WHERE "
-                                    + "convert(nvarchar(50), TransactionDateTime,126) LIKE '" + localDateSqlQuery + "%' ";
+                            String checkingDataSqlQuery = "SELECT account_number FROM customer_transaction WHERE "
+                                    + "convert(nvarchar(50), date_time,126) LIKE '" + localDateSqlQuery + "%' ";
 
                             // Executing SQL query
                             ResultSet checkingDataRs = checkingDataStmt.executeQuery(checkingDataSqlQuery);
@@ -366,7 +366,7 @@ public class Teller extends javax.swing.JFrame {
                                 PdfPCell autoCTTableCell;
 
                                 // Retriving record data from database
-                                try (Connection retrievingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                try (Connection retrievingDataCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                         Statement retrievingDataStmt = retrievingDataCon.createStatement();) {
 
                                     // Executing SQL query, uses the same SQL query as used in checkingDataSqlQuery
@@ -526,7 +526,7 @@ public class Teller extends javax.swing.JFrame {
                     Boolean newDepositRecordAvailability = false;
 
                     // Checking if any deposit records are available in the database for this month
-                    try (Connection checkingDTransactionsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    try (Connection checkingDTransactionsCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                             Statement checkingDTransactionStmt = checkingDTransactionsCon.createStatement();) {
 
                         // Assigning SQL query
@@ -563,7 +563,7 @@ public class Teller extends javax.swing.JFrame {
                     Boolean newWithdrawalRecordAvailability = false;
 
                     // Checking if any deposit records are available in the database for this month
-                    try (Connection checkingWTransactionsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    try (Connection checkingWTransactionsCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                             Statement checkingWTransactionStmt = checkingWTransactionsCon.createStatement();) {
 
                         // Assigning SQL query
@@ -792,7 +792,7 @@ public class Teller extends javax.swing.JFrame {
                             monthlyCustomerTransactionReport.add(quinnIncMHeader);
 
                             // Retrieving customer account number from the database
-                            try (Connection retrievingCNCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                            try (Connection retrievingCNCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                     Statement retrievingCNStmt = retrievingCNCon.createStatement();) {
 
                                 // Assigning SQL query
@@ -849,7 +849,7 @@ public class Teller extends javax.swing.JFrame {
 
                                     // Customer details record data
                                     // Retriving customer names from customer relation in the database
-                                    try (Connection customerNamesCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    try (Connection customerNamesCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                             Statement customerNamesStmt = customerNamesCon.createStatement();) {
 
                                         // Assigning SQL query
@@ -884,7 +884,7 @@ public class Teller extends javax.swing.JFrame {
 
                                     // Customer details record data
                                     // Retriving customer type from customer relation in the database
-                                    try (Connection customerTypeCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    try (Connection customerTypeCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                             Statement customerTypeStmt = customerTypeCon.createStatement();) {
 
                                         // Assigning SQL query
@@ -949,7 +949,7 @@ public class Teller extends javax.swing.JFrame {
 
                                     // Transaction details record data
                                     // Retriving transaction details from customer_transaction relation in the database
-                                    try (Connection transactionDetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                                    try (Connection transactionDetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                             Statement transactionDetailsStmt = transactionDetailsCon.createStatement();) {
 
                                         // Assigning SQL query
@@ -3145,7 +3145,7 @@ public class Teller extends javax.swing.JFrame {
             System.out.println("Selected Date: " + selectedDateSql);
 
             // Checking if any any records are available in the database from the selected date
-            try (Connection verificationCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+            try (Connection verificationCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                     Statement verificationStmt = verificationCon.createStatement();) {
 
                 // Assigning SQL query
@@ -3176,7 +3176,7 @@ public class Teller extends javax.swing.JFrame {
                         System.out.println("Selected Date: " + selectedDate);
 
                         // Retrieving records from the database for the selected date
-                        try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                 Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
 
                             // Executing SQL query
@@ -3300,7 +3300,7 @@ public class Teller extends javax.swing.JFrame {
                 System.out.println("Selected Date: " + selectedDate);
 
                 //checking if there are any recrds in the database for the selected date
-                try (Connection checkingCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                try (Connection checkingCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                         Statement checkingCTRstmt = checkingCTRCon.createStatement();) {
 
                     // SQL query to retrieve relavent record data
@@ -3322,7 +3322,7 @@ public class Teller extends javax.swing.JFrame {
                     } // If values were returned
                     else {
                         // Retriving record data from the database for the selected date and inserting into table
-                        try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        try (Connection retrieveCTRCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                 Statement retrieveCTRstmt = retrieveCTRCon.createStatement();) {
 
                             // Executing SQL query
@@ -3439,7 +3439,7 @@ public class Teller extends javax.swing.JFrame {
                 System.out.println("Use Selected Month SQL Comparison Compatible: " + selectedMonthSqlCompatible);
 
                 //checking if there are any transaction records available in the database for the selected month
-                try (Connection verifyTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                try (Connection verifyTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                         Statement verifyTransactionRecordsStmt = verifyTransactionRecordsCon.createStatement();) {
 
                     // Assinging SQL query
@@ -3464,7 +3464,7 @@ public class Teller extends javax.swing.JFrame {
                     } // If any values are returned
                     else {
                         // Retriveing customer record data from the database and assigning to customer details table cells
-                        try (Connection retrieveCustomerRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        try (Connection retrieveCustomerRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                 Statement retrieveCustomerRecordsStmt = retrieveCustomerRecordsCon.createStatement();) {
 
                             String retrieveCustomerRecordsSqlQuery = "SELECT DISTINCT c.account_number, c.first_name, c.middle_name, c.last_name, c.acc_type FROM customer c INNER JOIN"
@@ -3485,7 +3485,7 @@ public class Teller extends javax.swing.JFrame {
                         }
 
                         // Retriveing transaction record data from the database and assigning to transaction details table cells
-                        try (Connection retrieveTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        try (Connection retrieveTransactionRecordsCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                 Statement retrieveTransactionRecordsStmt = retrieveTransactionRecordsCon.createStatement();) {
 
                             // Executing SQL query, uses the same SQL query as verifyTransactionRecordsSqlQuery
@@ -3591,7 +3591,7 @@ public class Teller extends javax.swing.JFrame {
         } // If the user selects a month
         else {
             // Checking if any records are avialbe in the database for this month
-            try (Connection checkingTransactionRecordCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+            try (Connection checkingTransactionRecordCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                     Statement checkingTransactionRecordStmt = checkingTransactionRecordCon.createStatement();) {
 
                 // Assigning SQL query
@@ -3625,7 +3625,7 @@ public class Teller extends javax.swing.JFrame {
                         }
 
                         // Retriving customer details from the database for the selected month
-                        try (Connection retrieveCDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        try (Connection retrieveCDCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                 Statement retrieveCDStmt = retrieveCDCon.createStatement();) {
 
                             String retrieveCDSqlQuery = "SELECT DISTINCT c.account_number, c.first_name, c.middle_name, c.last_name, c.acc_type FROM customer c INNER JOIN"
@@ -3652,7 +3652,7 @@ public class Teller extends javax.swing.JFrame {
                         }
 
                         // Retriving transaction details from the database for the selected month
-                        try (Connection retrieveTDCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                        try (Connection retrieveTDCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                                 Statement retrieveTDStmt = retrieveTDCon.createStatement();) {
 
                             // Same SQL query as in checkingTransactionRecordSqlQuery
@@ -3930,7 +3930,7 @@ public class Teller extends javax.swing.JFrame {
                     System.out.println("Error found: " + SqlEx);
                 }
 
-                // Checks if transaction type is (D) deposit
+                // CHecking if a value was retrieved from the database
                 if (transactionNumberDB != 0) {
                     // Calling receipt generation method and passing the relevant data
                     String customerReceiptGenerationStatus = crg.CRGeneration(enteredAcountNumberInt, transactionNumberDB, "Deposit", transactionDateTimeDB);

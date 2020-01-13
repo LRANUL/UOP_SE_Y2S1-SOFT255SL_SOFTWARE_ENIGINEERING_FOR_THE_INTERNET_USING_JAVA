@@ -119,7 +119,7 @@ public class ReportGeneration{
             dailyCTTable.addCell(dailyCTTableCell);
 
             // Retrieving data from database and assigning to each cell
-            try (Connection dataRetrievalCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+            try (Connection dataRetrievalCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                 Statement dataRetrievalSTMT = dataRetrievalCon.createStatement();) {
 
                 // Assigning SQL query
@@ -241,7 +241,7 @@ public class ReportGeneration{
             monthlyCustomerTransactionReport.add(quinnIncMHeader);
 
             // Retriving customer account number from customer_trasaction relation
-            try (Connection retrievingCNCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+            try (Connection retrievingCNCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                     Statement retrievingCNStmt = retrievingCNCon.createStatement();) {
 
                 // Assigning SQL query
@@ -298,7 +298,7 @@ public class ReportGeneration{
 
                     // Customer details record data
                     // Retriving customer names from customer relation in the database
-                    try (Connection customerNamesCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    try (Connection customerNamesCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                             Statement customerNamesStmt = customerNamesCon.createStatement();) {
 
                         // Assigning SQL query
@@ -329,7 +329,7 @@ public class ReportGeneration{
 
                     // Customer details record data
                     // Retriving customer type from customer relation in the database
-                    try (Connection customerTypeCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    try (Connection customerTypeCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                             Statement customerTypeStmt = customerTypeCon.createStatement();) {
 
                         // Assigning SQL query
@@ -391,7 +391,7 @@ public class ReportGeneration{
 
                     // Transaction details record data
                     // Retriving transaction details from customer_transaction relation in the database
-                    try (Connection transactionDetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrl());
+                    try (Connection transactionDetailsCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                             Statement transactionDetailsStmt = transactionDetailsCon.createStatement();) {
 
                         // Assigning SQL query
