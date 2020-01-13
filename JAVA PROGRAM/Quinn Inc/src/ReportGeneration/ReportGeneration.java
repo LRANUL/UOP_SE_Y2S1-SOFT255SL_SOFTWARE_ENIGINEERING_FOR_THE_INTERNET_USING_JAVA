@@ -50,7 +50,7 @@ public class ReportGeneration{
         db = new DBConnection(); 
     }
     
-    public String generateManualDailyCTReport(String selectedDate, String selectdDateSql){
+    public String generateManualDailyCTReport(String selectedDate, String selectedDateSql){
         // Creating a new document A4 sized
         Document dailyCustomerTransactionsPdfDocument = new Document(PageSize.A4);
 
@@ -117,14 +117,14 @@ public class ReportGeneration{
             String dateTime = "DATE TIME";
             dailyCTTableCell = new PdfPCell(new Phrase(dateTime, header_style));
             dailyCTTable.addCell(dailyCTTableCell);
-
+            
             // Retrieving data from database and assigning to each cell
             try (Connection dataRetrievalCon = DriverManager.getConnection(db.DatabaseConnectionUrlReport());
                 Statement dataRetrievalSTMT = dataRetrievalCon.createStatement();) {
 
                 // Assigning SQL query
                 String dataRetrievalSqlQuery = "SELECT account_number, transaction_type, account_type, amount, date_time FROM customer_transaction "
-                + "WHERE convert(nvarchar(50), date_time,126) LIKE '" + selectdDateSql + "%' ";
+                + "WHERE convert(nvarchar(50), date_time,126) LIKE '" + selectedDateSql + "%' ";
                 
                 // Executing same SQL query that was used before for record verification
                 ResultSet dataRetrievalRs = dataRetrievalSTMT.executeQuery(dataRetrievalSqlQuery);
