@@ -14,3 +14,16 @@ Note: Your implementation will be evaluated in terms of how well it reflects you
 Note: You’re required to store the data in a database and retrieve data where necessary.
 Based on the user interaction analysis, you must design a GUI that allows the user to perform all the required tasks with a minimum of cognitive and physical effort. Your GUI design section of the final report must include illustrations (sketches or screen shots) of the GUI.
 Note: Your UI will be evaluated in terms of how well it supports the user interaction requirements identified in your design.
+## License
+
+**Copyright (c) Ranul Ladduwahetty. All rights reserved.**
+
+Licensed under the [MIT](LICENSE.txt) license.
+
+All files and information are copyright by Ranul Ladduwahetty, 
+and may not be duplicated, copied, modified or adapted, 
+in any way without our written permission. 
+Our product may contain our service marks or trademarks as well as those of our affiliates or other companies, 
+in the form of words, graphics, and logos.
+This product is solely an property of Ranul Ladduwahetty and holds all rights to it, any copying, redistribution, use or publication by you of any such Content, is strictly prohibited. 
+Your use of our Product and Services does not grant you any ownership rights to our Product.
